@@ -1,0 +1,142 @@
+﻿@{
+    ViewBag.Title = "Sort";
+    Layout = "~/Views/Shared/_LayoutHomeDialog.cshtml";
+}
+
+@section scripts{
+    <script type="text/javascript">
+     <!--
+        //设置菜单树形属性
+        var setting = {
+            view: {
+                showLine: true,
+                addDiyDom: addDiyDom
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            }
+        };
+
+        var IDMark_A = "_a";
+        function addDiyDom(treeId, treeNode) {
+            if (treeNode.id == "1") return;
+            var aObj = $("#" + treeNode.tId + IDMark_A);
+            var editStr = "";
+            editStr = "<input type='text' name='priority' id='" + treeNode .id+ "'  type='text' style='width:80px;' value='" + treeNode.Priority + "' onkeypress = 'return event.keyCode>=48&&event.keyCode<=57||event.keyCode==46'   />";
+            aObj.after(editStr);
+        }
+
+        function keyPress() {
+            var keyCode = event.keyCode;
+            if ((keyCode >= 48 && keyCode <= 57)){
+                          event.returnValue = true;
+            } else {
+                  event.returnValue = false;
+            }
+        }
+
+
+        $(this).ready(function () {
+                loadTreeList();
+        });
+
+
+        function edit() {
+
+            var isflag = false;
+
+            $(".menuPriority").each(function () {
+                var v=$(this).val();
+                if (v > 10000||v=="") {
+                    isflag = true;
+                }
+            })
+
+            if (isflag) {
+                $.lumos.tips("输入的值必须不能为空,且小于或等于10000");
+                return;
+            }
+
+            art.dialog.confirm(
+'确定要保存？',
+function () {
+    var l_Data = [];
+
+    $("#form1").find('input[name="priority"]').each(function () {
+
+        var id = $(this).attr("id");
+        var priority = $(this).val();
+
+       //var l_Data1 = [];
+       //l_Data1.push({ name: "id", value: id });
+       //l_Data1.push({ name: "priority", value: priority });
+
+       //l_Data.push(l_Data1);
+        l_Data.push({
+            Id: id,
+            Priority: priority
+        })
+    });
+
+
+    //var lstmodel = new Array();
+    //lstmodel.push({ UserName: '李军', Age: 32, Birthday: '1983/11/21' });
+    //lstmodel.push({ UserName: '王军', Age: 42, Birthday: '1973/11/21' });
+    //lstmodel.push({ UserName: '刘军', Age: 52, Birthday: '1963/11/21' });
+
+    //alert(JSON.stringify(l_Data));
+    //$.ajax({
+    //    url: '../Menu/EditSort',
+    //    type: 'POST',
+    //    data: JSON.stringify(l_Data),
+    //    contentType: 'application/json;charset=utf-8', //上传后直接是List，不需要反序列化
+    //    async: false,
+    //    datatype: 'json',
+    //    cache: false
+    //})
+
+
+
+    $.lumos.postJson({
+        url: "../Menu/EditSort",
+        data: JSON.stringify(l_Data),
+        success: function (d) {
+            $.lumos.parentDialog.loadTreeList();
+            $.lumos.tips(d.message);
+
+        }
+    });
+});
+            return false;
+        }
+
+        function loadTreeList() {
+
+            $.lumos.postJson({
+                url: "../Menu/GetTree?pId=" + $.lumos.getUrlParamValue("id"),
+                success: function (d) {
+                    var obj = eval(d.data);
+                     $.fn.zTree.init($("#treemenu"), setting, obj);
+                }
+            });
+
+        }
+
+  //-->
+    </script>
+}
+
+
+
+<form name="form1" method="post" id="form1">
+
+    @AntiForgery.GetHtml()
+    <ul id="treemenu" class="ztree" style="overflow: auto; "></ul>
+    <div class="btn-area" style="text-align:center;display:none;">
+        <input type="button" name="btn_Save" value="保存" id="btn_Save" class="btn btn-save" onclick="edit()" />
+    </div>
+</form>
+
+

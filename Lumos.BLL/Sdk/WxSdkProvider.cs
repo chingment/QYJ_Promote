@@ -1,0 +1,371 @@
+﻿using Lumos.Entity;
+using Lumos.Mvc;
+using Lumos.Redis;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Transactions;
+using Newtonsoft.Json;
+using Lumos.WeiXinSdk;
+using Lumos.WeiXinSdk.Tenpay;
+using System.Security.Cryptography;
+
+namespace Lumos.BLL
+{
+    public class WxSdkProvider : BaseProvider
+    {
+        private IWxConfig wxConfig = new WxConfigByTest();
+        public WxSdkProvider Instance(int merchantId)
+        {
+            WxSdkProvider p = new WxSdkProvider();
+
+            //p.Config = new WxConfigByFanJu();
+
+            switch (merchantId)
+            {
+                case 1:
+                    p.Config = new WxConfigByFanJu();
+                    break;
+                case 2:
+                    p.Config = new WxConfigByFuLi();
+                    break;
+            }
+
+            return p;
+        }
+
+        public IWxConfig Config
+        {
+            get
+            {
+                return wxConfig;
+            }
+            set
+            {
+                wxConfig = value;
+            }
+        }
+
+        public string GetPrepayId(int operater, string trade_type, string openid, string orderSn, decimal orderAmount, string goods_tag, string ip, string body)
+        {
+            CustomJsonResult result = new CustomJsonResult();
+
+
+            TenpayUtil tenpayUtil = new TenpayUtil(wxConfig);
+
+            UnifiedOrder unifiedOrder = new UnifiedOrder();
+            unifiedOrder.openid = openid;
+            unifiedOrder.out_trade_no = orderSn;//商户订单号
+            unifiedOrder.spbill_create_ip = ip;//终端IP
+            unifiedOrder.total_fee = Convert.ToInt32(orderAmount * 100);//标价金额
+            unifiedOrder.body = body;//商品描述  
+            unifiedOrder.trade_type = trade_type;
+
+            if (!string.IsNullOrEmpty(goods_tag))
+            {
+                unifiedOrder.goods_tag = goods_tag;
+            }
+
+            string prepayId = tenpayUtil.GetPrepayId(unifiedOrder);
+
+            //using (TransactionScope ts = new TransactionScope())
+            //{
+
+            //    result = new CustomJsonResult(ResultType.Success, ResultCode.Success, "操作成功");
+            //}
+
+            return prepayId;
+        }
+
+        public string GetAuthorizeUrl(string returnUrl)
+        {
+            return OAuthApi.GetAuthorizeUrl(wxConfig.AppId, string.Format(wxConfig.Oauth2RedirectUrl, returnUrl));
+        }
+
+        public WxApiSnsOauth2AccessTokenResult GetWebOauth2AccessToken(string code)
+        {
+            return OAuthApi.GetWebOauth2AccessToken(wxConfig.AppId, wxConfig.AppSecret, code);
+        }
+
+        public string GetApiAccessToken()
+        {
+            return WxUntil.GetInstance().GetAccessToken(wxConfig.AppId, wxConfig.AppSecret);
+        }
+
+        public WxApiSnsUserInfoResult GetUserInfo(string accessToken, string openId)
+        {
+            return OAuthApi.GetUserInfo(accessToken, openId);
+        }
+
+        public WxApiUserInfoResult GetUserInfoByApiToken(string openId)
+        {
+            return OAuthApi.GetUserInfoByApiToken(this.GetApiAccessToken(), openId);
+        }
+
+        public CustomJsonResult<JsApiConfigParams> GetJsApiConfigParams(string url)
+        {
+            string jsApiTicket = WxUntil.GetInstance().GetJsApiTicket(wxConfig.AppId, wxConfig.AppSecret);
+
+            JsApiConfigParams parms = new JsApiConfigParams(wxConfig.AppId, url, jsApiTicket);
+
+            return new CustomJsonResult<JsApiConfigParams>(ResultType.Success, ResultCode.Success, "", parms);
+        }
+
+        public CustomJsonResult GetJsApiPayParams(string prepayId, int orderId, string orderSn)
+        {
+            CustomJsonResult result = new CustomJsonResult();
+            JsApiPayParams parms = new JsApiPayParams(wxConfig.AppId, wxConfig.Key, prepayId, orderId, orderSn);
+
+            return new CustomJsonResult(ResultType.Success, ResultCode.Success, "", parms);
+        }
+
+        public string OrderQuery(string orderSn)
+        {
+            CustomJsonResult result = new CustomJsonResult();
+            TenpayUtil tenpayUtil = new TenpayUtil(wxConfig);
+            string xml = tenpayUtil.OrderQuery(orderSn);
+
+            return xml;
+        }
+
+        public void SendMessageByOpenId(string openId, string msg)
+        {
+            string access_token = GetApiAccessToken();
+            WxApiCustomMessagePostData postData = new WxApiCustomMessagePostData();
+            postData.msgtype = "text";
+            postData.touser = openId;
+            postData.text = new WxApiCustomTextMessage()
+            {
+                content = msg
+            };
+
+            WxApiCustomMessageSend customMessageSend = new WxApiCustomMessageSend(access_token, WxPostDataType.Json, postData);
+            WxApi c = new WxApi();
+
+            c.DoPost(customMessageSend);
+        }
+
+        public void OrderSuccess(string opendId, string orderSn, string storeName, string productskusName, decimal amount, DateTime payTime, string url)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("{\"touser\":\"" + opendId + "\",");
+            sb.Append("\"template_id\":\"vj2NZ507X1wrmY170SSJ1t1cYoMOzy6Z7dSaMeTe4sc\",");
+            sb.Append("\"url\":\"" + url + "\", ");
+            sb.Append("\"data\":{");
+            sb.Append("\"first\":{ \"value\":\"您的订单支付成功。\",\"color\":\"#173177\" },");
+            sb.Append("\"keyword1\":{ \"value\":\"" + orderSn + "\",\"color\":\"#173177\" },");
+            sb.Append("\"keyword2\":{ \"value\":\"" + productskusName + "\",\"color\":\"#173177\" },");
+            sb.Append("\"keyword3\":{ \"value\":\"" + amount.ToF2Price() + "\",\"color\":\"#173177\" },");
+            sb.Append("\"keyword4\":{ \"value\":\"" + payTime.ToUnifiedFormatDateTime() + "\",\"color\":\"#173177\" },");
+            sb.Append("\"remark\":{ \"value\":\"尊敬的顾客，请您在" + storeName + "取货，谢谢。\",\"color\":\"#FF3030\"}");
+            sb.Append("}}");
+
+            string access_token = GetApiAccessToken();
+
+            WxApiMessageTemplateSend templateSend = new WxApiMessageTemplateSend(access_token, WxPostDataType.Text, sb.ToString());
+            WxApi c = new WxApi();
+
+            c.DoPost(templateSend);
+        }
+
+        public void NotifyPick(string opendId, string orderSn, string pickAddress, string pickCode, string productskusName, DateTime lastPickTime, string url)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("{\"touser\":\"" + opendId + "\",");
+            sb.Append("\"template_id\":\"M_D_LQGahaalSEt44QI22GY5ihB4zfusTYnvJrnNvN0\",");
+            sb.Append("\"url\":\"" + url + "\", ");
+            sb.Append("\"data\":{");
+            sb.Append("\"first\":{ \"value\":\"您的订单取货码已经生成。\",\"color\":\"#173177\" },");
+            sb.Append("\"keyword1\":{ \"value\":\"" + orderSn + "\",\"color\":\"#173177\" },");
+            sb.Append("\"keyword2\":{ \"value\":\"" + productskusName + "\",\"color\":\"#173177\" },");
+            sb.Append("\"keyword3\":{ \"value\":\"" + pickAddress + "\",\"color\":\"#FF3030\" },");
+            sb.Append("\"keyword4\":{ \"value\":\"" + pickCode + "\",\"color\":\"#173177\" },");
+            sb.Append("\"remark\":{ \"value\":\"尊敬的顾客，请您在" + lastPickTime + "前去取货，否则会失效，谢谢。\",\"color\":\"#173177\"}");
+            sb.Append("}}");
+
+            string access_token = GetApiAccessToken();
+
+            WxApiMessageTemplateSend templateSend = new WxApiMessageTemplateSend(access_token, WxPostDataType.Text, sb.ToString());
+            WxApi c = new WxApi();
+
+            c.DoPost(templateSend);
+        }
+
+        public void GiftvoucherActivityNotifyPick(string body, string opendId, string orderSn, string pickAddress, string pickCode, string productskusName, DateTime lastPickTime, string url)
+        {
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("{\"touser\":\"" + opendId + "\",");
+            sb.Append("\"template_id\":\"M_D_LQGahaalSEt44QI22GY5ihB4zfusTYnvJrnNvN0\",");
+            sb.Append("\"url\":\"" + url + "\", ");
+            sb.Append("\"data\":{");
+            sb.Append("\"first\":{ \"value\":\"" + body + "。\",\"color\":\"#173177\" },");
+            sb.Append("\"keyword1\":{ \"value\":\"" + orderSn + "\",\"color\":\"#173177\" },");
+            sb.Append("\"keyword2\":{ \"value\":\"" + productskusName + "\",\"color\":\"#173177\" },");
+            sb.Append("\"keyword3\":{ \"value\":\"" + pickAddress + "\",\"color\":\"#FF3030\" },");
+            sb.Append("\"keyword4\":{ \"value\":\"" + pickCode + "\",\"color\":\"#173177\" },");
+            sb.Append("\"remark\":{ \"value\":\"请您在" + lastPickTime + "前去取货，否则取货码将会失效，谢谢。\",\"color\":\"#173177\"}");
+            sb.Append("}}");
+
+            string access_token = GetApiAccessToken();
+
+            WxApiMessageTemplateSend templateSend = new WxApiMessageTemplateSend(access_token, WxPostDataType.Text, sb.ToString());
+            WxApi c = new WxApi();
+
+            c.DoPost(templateSend);
+        }
+
+        public WxApiBaseResult MessageTemplateNotify(string opendId, string templateId, string content, string url)
+        {
+            var keywordArray = content.Split(Environment.NewLine.ToCharArray()).ToList();
+            var isHadEmptyContent = true;
+            do
+            {
+                isHadEmptyContent = keywordArray.Remove(keywordArray.Where(k => k == "").FirstOrDefault());
+
+            } while (isHadEmptyContent);
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("{\"touser\":\"" + opendId + "\",");
+            sb.Append("\"template_id\":\"" + templateId + "\",");
+            sb.Append("\"url\":\"" + url + "\", ");
+            sb.Append("\"data\":{");
+            var isFirstItemHadData = false;
+            for (int i = 0; i < keywordArray.Count; i++)
+            {
+                if (i == 0)
+                {
+                    if (keywordArray[i].IndexOf("：") > -1)
+                    {
+                        sb.Append("\"keyword" + (i + 1) + "\":{ \"value\":\"" + keywordArray[i].Split('：')[1] + "\",\"color\":\"#173177\" },");
+                    }
+                    else
+                    {
+                        isFirstItemHadData = true;
+                        sb.Append("\"first\":{ \"value\":\"" + keywordArray[i] + "\",\"color\":\"#173177\" },");
+                    }
+
+                }
+                if (i != 0 && i != keywordArray.Count - 1)
+                {
+                    if (isFirstItemHadData)
+                    {
+                        sb.Append("\"keyword" + i + "\":{ \"value\":\"" + keywordArray[i].Split('：')[1] +
+                                  "\",\"color\":\"#173177\" },");
+                    }
+                    else
+                    {
+                        sb.Append("\"keyword" + (i + 1) + "\":{ \"value\":\"" + keywordArray[i].Split('：')[1] + "\",\"color\":\"#173177\" },");
+                    }
+
+                }
+                if (i == keywordArray.Count - 1)
+                {
+                    if (keywordArray[i].IndexOf("：") > -1)
+                    {
+                        sb.Append("\"keyword" + (i + 1) + "\":{ \"value\":\"" + keywordArray[i].Split('：')[1] + "\",\"color\":\"#173177\" },");
+                    }
+                    else
+                    {
+                        sb.Append("\"remark\":{ \"value\":\"" + keywordArray[i] + "\",\"color\":\"#173177\"}");
+                    }
+                }
+            }
+            sb.Append("}}");
+
+            string access_token = GetApiAccessToken();
+            //string access_token = "pSCJi3EM2jdUP5z89PNPlPSbOvMYF8kqIpSeH-PKsQy1u3LaNBdiVGTh4DIxuY4A-C5gwR3KIXnKwqX4wWErjOGDcMUaAj_nwuk3XyM7nm8TcCl1B6gWvG60VOHmJE2tCEWbAGAUWO";
+            WxApiMessageTemplateSend templateSend = new WxApiMessageTemplateSend(access_token, WxPostDataType.Text, sb.ToString());
+            WxApi c = new WxApi();
+
+            WxApiBaseResult result = c.DoPost(templateSend);
+            return result;
+        }
+
+        public bool CheckPayNotifySign(string xml)
+        {
+
+            var dic1 = WeiXinSdk.CommonUtil.ToDictionary(xml);
+
+            if (dic1["sign"] == null)
+            {
+                return false;
+            }
+
+            string wxSign = dic1["sign"].ToString();
+
+
+            bool isFlag = true;
+            string buff = "";
+            foreach (KeyValuePair<string, object> pair in dic1)
+            {
+                if (pair.Value == null)
+                {
+                    isFlag = false;
+                    break;
+                }
+
+                if (pair.Key != "sign" && pair.Value.ToString() != "")
+                {
+                    buff += pair.Key + "=" + pair.Value + "&";
+                }
+            }
+
+            if (!isFlag)
+            {
+                return false;
+            }
+
+            buff = buff.Trim('&');
+
+
+            //在string后加入API KEY
+            buff += "&key=" + wxConfig.Key;
+            //MD5加密
+            var md5 = MD5.Create();
+            var bs = md5.ComputeHash(Encoding.UTF8.GetBytes(buff));
+            var sb = new StringBuilder();
+            foreach (byte b in bs)
+            {
+                sb.Append(b.ToString("x2"));
+            }
+            //所有字符转为大写
+            string mySign = sb.ToString().ToUpper();
+
+            if (wxSign != mySign)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+        }
+
+
+        //public string OrderPayReFund(string comCode, string orderSn, string orderReFundSn, decimal totalFee, decimal refundFee, string refundDesc)
+        //{
+        //    wxConfig = GetWxConfig(comCode);
+        //    CustomJsonResult result = new CustomJsonResult();
+        //    TenpayUtil tenpayUtil = new TenpayUtil(wxConfig);
+        //    string out_trade_no = orderSn;
+        //    string out_refund_no = orderReFundSn;
+        //    string total_fee = Convert.ToInt32(totalFee * 100).ToString();
+        //    string refund_fee = Convert.ToInt32(refundFee * 100).ToString();
+        //    string xml = tenpayUtil.OrderPayReFund(out_trade_no, out_refund_no, total_fee, refund_fee, refundDesc);
+        //    return xml;
+        //}
+
+        //public string OrderRefundQuery(string comCode, string out_refund_no)
+        //{
+        //    wxConfig = GetWxConfig(comCode);
+        //    CustomJsonResult result = new CustomJsonResult();
+        //    TenpayUtil tenpayUtil = new TenpayUtil(wxConfig);
+        //    string xml = tenpayUtil.OrderRefundQuery(out_refund_no);
+        //    return xml;
+        //}
+    }
+}
