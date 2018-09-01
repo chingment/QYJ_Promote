@@ -6,3 +6,58 @@
 
 <h2>Coupon</h2>
 
+<input type="button" value="去支付" id="btn_GoPay" class="btn" />
+
+@section scripts{
+    <script type="text/javascript">
+
+        $(function () {
+
+            //调起支付
+            $("#btn_GoPay").on("click",
+                function () {
+                    var _this = $(this);
+
+
+                    $(_this).attr("disabled", "disabled");
+
+                    var _data = $('#form1').serializeArray();
+
+
+                    $.lumos.postJson({
+                        url: "/Promote/UnifiedOrder",
+                        data: { type: "1", orderPms: { promoteId: "a999753c5fe14e26bbecad576b6a6909", promoteCouponId: "00000000000000000000000000000001" } },
+                        success: function (d) {
+
+                            if (d.result == $.lumos.resultType.success) {
+
+                                var params = d.data;
+
+                                $('#Model_OrderSn').val(params.orderSn);
+
+                                wx.chooseWXPay({
+                                    appId: params.appId,
+                                    timestamp: params.timestamp,
+                                    nonceStr: params.nonceStr,
+                                    package: params.package,
+                                    signType: params.signType,
+                                    paySign: params.paySign,
+                                    success: function (res) {
+                                        $.lumos.tips('您已支付成功');
+                                    },
+                                    cancel: function (res) {
+                                        $.lumos.tips('您已取消支付');
+                                    }
+                                });
+                            } else {
+                                $.lumos.tips(d.message);
+                                $(_btn).removeAttr("disabled");
+                            }
+                        }
+                    });
+                });
+
+
+        });
+    </script>
+}

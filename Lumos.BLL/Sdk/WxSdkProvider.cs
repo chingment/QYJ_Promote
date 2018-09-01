@@ -17,21 +17,19 @@ namespace Lumos.BLL
     public class WxSdkProvider : BaseProvider
     {
         private IWxConfig wxConfig = new WxConfigByTest();
-        public WxSdkProvider Instance(int merchantId)
+        public WxSdkProvider Instance()
         {
             WxSdkProvider p = new WxSdkProvider();
-
-            //p.Config = new WxConfigByFanJu();
-
-            switch (merchantId)
-            {
-                case 1:
-                    p.Config = new WxConfigByFanJu();
-                    break;
-                case 2:
-                    p.Config = new WxConfigByFuLi();
-                    break;
-            }
+            p.Config = new WxConfigByFanJu();
+            //switch (merchantId)
+            //{
+            //    case 1:
+            //        p.Config = new WxConfigByFanJu();
+            //        break;
+            //    case 2:
+            //        p.Config = new WxConfigByFuLi();
+            //        break;
+            //}
 
             return p;
         }
@@ -48,7 +46,7 @@ namespace Lumos.BLL
             }
         }
 
-        public string GetPrepayId(int operater, string trade_type, string openid, string orderSn, decimal orderAmount, string goods_tag, string ip, string body)
+        public string GetPrepayId(string operater, string trade_type, string openid, string orderSn, decimal orderAmount, string goods_tag, string ip, string body)
         {
             CustomJsonResult result = new CustomJsonResult();
 
@@ -113,7 +111,7 @@ namespace Lumos.BLL
             return new CustomJsonResult<JsApiConfigParams>(ResultType.Success, ResultCode.Success, "", parms);
         }
 
-        public CustomJsonResult GetJsApiPayParams(string prepayId, int orderId, string orderSn)
+        public CustomJsonResult GetJsApiPayParams(string prepayId, string orderId, string orderSn)
         {
             CustomJsonResult result = new CustomJsonResult();
             JsApiPayParams parms = new JsApiPayParams(wxConfig.AppId, wxConfig.Key, prepayId, orderId, orderSn);

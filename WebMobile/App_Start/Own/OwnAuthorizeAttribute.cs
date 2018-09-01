@@ -38,12 +38,12 @@ namespace WebMobile
 
          
             string userAgent = filterContext.HttpContext.Request.UserAgent;
-            string loginPage = OwnConfig.GetLoginPage("");
+            string loginPage = OwnWebSettingUtils.GetLoginPage("");
 
             if (userAgent.ToLower().Contains("micromessenger"))
             {
                 log.Info("去往微信浏览器授权验证");
-                loginPage = OwnConfig.WxOauth2("");
+                loginPage = OwnWebSettingUtils.WxOauth2("");
             }
             else
             {

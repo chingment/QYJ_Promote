@@ -54,6 +54,14 @@
     </Compile>
     <Compile Include="BizEnumeration.cs" />
     <Compile Include="Biz\BizSn.cs" />
+    <Compile Include="Biz\Order.cs" />
+    <Compile Include="Biz\Pms\OrderPmsByBuyPromoteCoupon.cs" />
+    <Compile Include="Biz\Pms\UnifiedOrderPms.cs" />
+    <Compile Include="Biz\ProductSku.cs" />
+    <Compile Include="Biz\Promote.cs" />
+    <Compile Include="Biz\PromoteCoupon.cs" />
+    <Compile Include="Biz\PromoteUser.cs" />
+    <Compile Include="Biz\PromoteUserRelation.cs" />
     <Compile Include="ImgSet.cs" />
     <Compile Include="EnumerationRemarkConverter.cs" />
     <Compile Include="IpInfo.cs" />

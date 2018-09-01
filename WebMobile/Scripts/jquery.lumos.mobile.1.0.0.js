@@ -489,52 +489,35 @@
             var _complete = opts.complete;
             var _isShowLoading = opts.isShowLoading
 
-            //判断__RequestVerificationToken是否存在
-            var tokeName = "__RequestVerificationToken";
-            var token = $("input[name=" + tokeName + "]");
-            var tokenValue = "";
-            if ($(token).length > 0) {
-                tokenValue = $($(token)[0]).val();
-                if (_data != null) {
-                    var isExist = false;
-                    var type = Object.prototype.toString.call(_data);
-                    if (type == "[object Array]") {
+            var postStr = "";
+            var obj = {};
+            if (_data != null) {
+                if (typeof (_data.length) != 'undefined') {
+                    $.each(_data, function (i, v) {
+                        obj[v.name] = v.value;
+                    })
 
-
-                        $.each(_data, function (i, n) {
-                            $.each(n, function (x, j) {
-                                if (j == tokeName) {
-                                    isExist = true;
-                                    return;
-                                }
-                            })
-                        });
-                        if (!isExist) {
-                            _data.push({ name: tokeName, value: tokenValue });
-                        }
-                    }
-                    else if (type == "[object Object]") {
-                        $.each(_data, function (x, j) {
-
-                            if (x == tokeName) {
-                                isExist = true;
-                                return;
-                            }
-                        })
-
-                        if (!isExist) {
-                            _data.__RequestVerificationToken = tokenValue
-                        }
-                    }
+                    postStr = JSON.stringify(obj);
+                }
+                else {
+                    postStr = JSON.stringify(_data);
                 }
             }
 
-            var handling;
+            //获取防伪标记
+            var token = $('[name=__RequestVerificationToken]').val();
+            var headers = {};
+            //防伪标记放入headers
+            //也可以将防伪标记放入data
+            headers["__RequestVerificationToken"] = token;
 
+            var handling;
+          
             $.ajax({
                 type: "Post",
                 dataType: "json",
                 async: _async,
+                headers: headers,
                 timeout: _timeout,
                 data: _data,
                 url: _url,

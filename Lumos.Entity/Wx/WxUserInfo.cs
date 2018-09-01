@@ -31,29 +31,13 @@ namespace Lumos.Entity
         public string HeadImgUrl { get; set; }
         [MaxLength(128)]
         public string UnionId { get; set; }
-        public int Creator { get; set; }
-        public DateTime CreateTime { get; set; }
-        public string Mender { get; set; }
-        public DateTime? MendTime { get; set; }
         [MaxLength(128)]
         public string AccessToken { get; set; }
         public DateTime? ExpiresIn { get; set; }
-        [MaxLength(128)]
-        public string Mobile { get; set; }
-        public string Referee { get; set; }
-
-        public bool IsSubscribed { get; set; }
-
-        public DateTime? FirstSubTime { get; set; }
-
-        public DateTime? LastSubTime { get; set; }
-
-        public DateTime? FirstCancleSubTime { get; set; }
-
-        public DateTime? LastCancleSubTime { get; set; }
-
-        public Enumeration.WxUserInfoFrom InfoFrom { get; set; }
-
+        public string Creator { get; set; }
+        public DateTime CreateTime { get; set; }
+        public string Mender { get; set; }
+        public DateTime? MendTime { get; set; }
     }
 
 }

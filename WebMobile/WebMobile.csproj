@@ -159,8 +159,6 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\Own\AllowStoreIdIsNullAttribute.cs" />
-    <Compile Include="App_Start\Own\OwnConfig.cs" />
     <Compile Include="App_Start\Own\OwnRequest.cs" />
     <Compile Include="App_Start\Own\OwnResponse.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -190,8 +188,6 @@
     <Content Include="Scripts\jquery-1.8.3.js" />
     <Content Include="Scripts\jquery-1.8.3.min.js" />
     <Content Include="Scripts\jquery.lumos.mobile.1.0.0.js" />
-    <Content Include="Static\404.html" />
-    <Content Include="Static\default1.jpg" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\MessageBox.cshtml" />
@@ -213,6 +209,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Static\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

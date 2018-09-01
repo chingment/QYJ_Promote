@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Lumos;
+using Lumos.DAL;
+using Lumos.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,13 +32,13 @@ namespace Test
     }
 
     public sealed class Master
-   {  
-       //发生猫叫时惊醒  
-       public void Wakeup(object sender, EventArgs e)
-       {  
-           Console.WriteLine("主人惊醒了...");  
-       }  
-   }
+    {
+        //发生猫叫时惊醒  
+        public void Wakeup(object sender, EventArgs e)
+        {
+            Console.WriteLine("主人惊醒了...");
+        }
+    }
 
 
     public class A
@@ -84,10 +87,80 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            A a = new B();
+            LumosDbContext CurrentDb = new LumosDbContext();
 
-            a.Show();
-            a.Cry();
+            var promoteId = "1";
+            var userId = "7";
+            var pUserId = "2";
+            var createTime = DateTime.Now;
+            var operater = "1";
+
+            var promoteUser = CurrentDb.PromoteUser.Where(m => m.UserId == userId && m.PromoteId == promoteId).FirstOrDefault();
+            if (promoteUser == null)
+            {
+                promoteUser = new PromoteUser();
+                promoteUser.Id = GuidUtil.New();
+                promoteUser.PromoteId = promoteId;
+                promoteUser.UserId = userId;
+                promoteUser.PUserId = pUserId;
+                promoteUser.IsAgent = false;
+                promoteUser.CreateTime = createTime;
+                promoteUser.Creator = operater;
+                CurrentDb.PromoteUser.Add(promoteUser);
+                CurrentDb.SaveChanges();
+            }
+
+            var promoteUsers = CurrentDb.PromoteUser.ToList();
+
+            var promoteUserFathers = GetFatherList(promoteUsers, userId).Where(m => m.UserId != userId && m.IsAgent == false).Take(3).ToList();
+
+            for (int i = 0; i < promoteUserFathers.Count; i++)
+            {
+                int dept = (i + 1);
+                Console.WriteLine("用户Id: " + userId + "是用户Id:" + promoteUserFathers[i].UserId + "的" + dept + "级分销商");
+                var promoteUserRelation = new PromoteUserRelation();
+                promoteUserRelation.Id = GuidUtil.New();
+                promoteUserRelation.UserId = promoteUserFathers[i].UserId;
+                promoteUserRelation.PromoteId = promoteId;
+                promoteUserRelation.CUserId = userId;
+                promoteUserRelation.Dept = dept;
+                promoteUserRelation.CreateTime = createTime;
+                promoteUserRelation.Creator = operater;
+                CurrentDb.PromoteUserRelation.Add(promoteUserRelation);
+                CurrentDb.SaveChanges();
+
+            }
+
+            //foreach (var item in list)
+            //{
+            //    //Console.WriteLine("父用户Id:" + item.UserId);
+
+            //    //var son = GetSonList(promoteUser, item.PUserId).ToList();
+            //    //for (int i = 0; i < son.Count; i++)
+            //    //{
+            //    //    Console.WriteLine("第" + (i + 1) + "个子用户Id:" + son[i].UserId);
+            //    //}
+
+            //}
+        }
+
+        public static IEnumerable<PromoteUser> GetFatherList(IList<PromoteUser> list, string userId)
+        {
+            var query = list.Where(p => p.UserId == userId).ToList();
+            return query.ToList().Concat(query.ToList().SelectMany(t => GetFatherList(list, t.PUserId)));
+        }
+
+        public static IEnumerable<PromoteUser> GetSons(IList<PromoteUser> list, string Fid)
+        {
+            var query = list.Where(p => p.UserId == Fid).ToList();
+            var list2 = query.Concat(GetSonList(list, Fid));
+            return list2;
+        }
+
+        public static IEnumerable<PromoteUser> GetSonList(IList<PromoteUser> list, string Fid)
+        {
+            var query = list.Where(p => p.PUserId == Fid).ToList();
+            return query.ToList().Concat(query.ToList().SelectMany(t => GetSonList(list, t.UserId)));
         }
     }
 }

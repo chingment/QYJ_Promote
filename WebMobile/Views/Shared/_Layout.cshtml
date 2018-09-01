@@ -1,5 +1,5 @@
 ﻿@{
-    var jsApiConfigParams = Lumos.BLL.SdkFactory.Wx.Instance(0).GetJsApiConfigParams(Request.Url.AbsoluteUri);
+    var jsApiConfigParams = Lumos.BLL.SdkFactory.Wx.Instance().GetJsApiConfigParams(Request.Url.AbsoluteUri);
 }
 <!DOCTYPE html>
 <html>
@@ -38,7 +38,7 @@
     <div class="gb">
         @RenderBody()
     </div>
-    <script src="~/Scripts/jquery.lumos.mobile.1.0.0.js"></script>
+    <script src="~/Scripts/jquery.lumos.mobile.1.0.0.js?@DateTime.Now.ToString("yyyyMMddHHmmss")"></script>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
     <script>
         $(function () {

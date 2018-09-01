@@ -15,6 +15,12 @@ namespace Lumos.DAL
 
     public class LumosDbContext : AuthorizeRelayDbContext
     {
+        public IDbSet<Promote> Promote { get; set; }
+        public IDbSet<PromoteCoupon> PromoteCoupon { get; set; }
+        public IDbSet<PromoteUser> PromoteUser { get; set; }
+        public IDbSet<PromoteUserRelation> PromoteUserRelation { get; set; }
+        public IDbSet<ProductSku> ProductSku { get; set; }
+        public IDbSet<Order> Order { get; set; }
         public IDbSet<WxUserInfo> WxUserInfo { get; set; }
         public IDbSet<WxMsgPushLog> WxMsgPushLog { get; set; }
         

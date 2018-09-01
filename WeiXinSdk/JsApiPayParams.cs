@@ -18,7 +18,7 @@ namespace Lumos.WeiXinSdk
 
         //扩展属性
         private string _orderSn = "";
-        private int _orderId = 0;
+        private string _orderId = "0";
         public string appId
         {
             get
@@ -75,7 +75,7 @@ namespace Lumos.WeiXinSdk
             }
         }
 
-        public int OrderId
+        public string OrderId
         {
             get
             {
@@ -91,7 +91,7 @@ namespace Lumos.WeiXinSdk
             }
         }
 
-        public JsApiPayParams(string appId, string key, string prepay_id, int orderId, string orderSn)
+        public JsApiPayParams(string appId, string key, string prepay_id, string orderId, string orderSn)
         {
             _orderSn = orderSn;
             _orderId = orderId;

@@ -8,17 +8,27 @@ namespace WebMobile
 {
     public class OwnWebSettingUtils
     {
+
         /// <summary>
         /// 获取登录的页面
         /// </summary>
         /// <returns></returns>
-        public static string GetLoginPage(string returnUrl = "")
+        public static string GetLoginPage(string returnUrl)
         {
-            string server = System.Configuration.ConfigurationManager.AppSettings["custom:LoginServerUrl"];
-            // string loginUrl = string.Format("{0}?returnUrl={1}", server, HttpUtility.UrlEncode(returnUrl));
+            //if (string.IsNullOrEmpty(returnUrl))
+            //    return "/Account/Login";
 
-            string loginUrl = string.Format("{0}", server);
-            return loginUrl;
+            return string.Format("/Account/Login?returnUrl={0}", returnUrl);
+        }
+
+        public static string WxOauth2(string returnUrl)
+        {
+
+
+            //if (string.IsNullOrEmpty(returnUrl))
+            //    return "/Home/Oauth2";
+
+            return string.Format("/Home/Oauth2?returnUrl={0}", returnUrl);
         }
 
         /// <summary>
@@ -29,6 +39,8 @@ namespace WebMobile
         {
             return "/Home/Index";
         }
+
+
 
         /// <summary>
         /// 获取网站主页的名称

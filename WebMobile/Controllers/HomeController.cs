@@ -29,7 +29,7 @@ namespace WebMobile.Controllers
         public CustomJsonResult<JsApiConfigParams> GetJsApiConfigParams(string url)
         {
 
-            return SdkFactory.Wx.Instance(0).GetJsApiConfigParams(url);
+            return SdkFactory.Wx.Instance().GetJsApiConfigParams(url);
         }
 
         [AllowAnonymous]
@@ -39,24 +39,24 @@ namespace WebMobile.Controllers
             {
                 var request = Request;
                 var code = request.QueryString["code"];
-                int merchantId = 0;
-                string returnUrl = request.QueryString["returnUrl"];
+                var returnUrl = request.QueryString["returnUrl"];
+
                 LogUtil.Info("待跳转路径：{0}" + returnUrl);
 
                 if (string.IsNullOrEmpty(code))
                 {
-                    var url = SdkFactory.Wx.Instance(merchantId).GetAuthorizeUrl(returnUrl);
+                    var url = SdkFactory.Wx.Instance().GetAuthorizeUrl(returnUrl);
                     return Redirect(url);
                 }
                 else
                 {
-                    var oauth2_Result = SdkFactory.Wx.Instance(merchantId).GetWebOauth2AccessToken(code);
+                    var oauth2_Result = SdkFactory.Wx.Instance().GetWebOauth2AccessToken(code);
                     if (oauth2_Result.errcode == null)
                     {
                         LogUtil.Info("用户OpenId:" + oauth2_Result.openid);
                         LogUtil.Info("用户AccessToken:" + oauth2_Result.access_token);
 
-                        var snsUserInfo_Result = SdkFactory.Wx.Instance(merchantId).GetUserInfo(oauth2_Result.access_token, oauth2_Result.openid);
+                        var snsUserInfo_Result = SdkFactory.Wx.Instance().GetUserInfo(oauth2_Result.access_token, oauth2_Result.openid);
                         WxUserInfo wxUserInfo = new WxUserInfo();
                         wxUserInfo.AccessToken = oauth2_Result.access_token;
                         wxUserInfo.OpenId = oauth2_Result.openid;
@@ -68,14 +68,14 @@ namespace WebMobile.Controllers
                         wxUserInfo.Country = snsUserInfo_Result.country;
                         wxUserInfo.HeadImgUrl = snsUserInfo_Result.headimgurl;
                         wxUserInfo.UnionId = snsUserInfo_Result.unionid;
-                        wxUserInfo.InfoFrom = Enumeration.WxUserInfoFrom.Authorize;
+                       
 
                         wxUserInfo = BizFactory.WxUser.CheckedUser(0, wxUserInfo, true);
                         if (wxUserInfo != null)
                         {
                             LogUtil.Info("用户Id：" + wxUserInfo.UserId);
 
-                            UserInfo userInfo = new UserInfo();                      
+                            UserInfo userInfo = new UserInfo();
                             userInfo.UserId = wxUserInfo.UserId;
                             userInfo.WxOpenId = oauth2_Result.openid;
                             userInfo.WxAccessToken = oauth2_Result.access_token;
@@ -111,15 +111,9 @@ namespace WebMobile.Controllers
 
             string xml = System.Text.Encoding.UTF8.GetString(b);
 
-            int merchantId = 1;
-            if (xml.IndexOf("[CDATA[1396636802]") > -1)
-            {
-                merchantId = 2;
-            }
-
             LogUtil.Info("接受到结果:" + xml);
             //todo
-            if (SdkFactory.Wx.Instance(merchantId).CheckPayNotifySign(xml))
+            if (SdkFactory.Wx.Instance().CheckPayNotifySign(xml))
             {
                 var result = BizFactory.Pay.ResultNotify(0, Lumos.Entity.Enumeration.OrderNotifyLogNotifyFrom.NotifyUrl, xml);
 

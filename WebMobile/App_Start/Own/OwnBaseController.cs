@@ -23,11 +23,19 @@ namespace WebMobile
     public abstract class OwnBaseController : BaseController
     {
 
-    
+
         public OwnBaseController()
         {
-           
 
+
+        }
+
+        public override string CurrentUserId
+        {
+            get
+            {
+                return OwnRequest.GetCurrentUserId();
+            }
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -67,12 +75,12 @@ namespace WebMobile
                 {
                     LogUtil.Info("用户没有登录或登录超时");
 
-                    string loginPage = OwnConfig.GetLoginPage(returnUrl);
+                    string loginPage = OwnWebSettingUtils.GetLoginPage(returnUrl);
 
                     if (userAgent.ToLower().Contains("micromessenger"))
                     {
                         LogUtil.Info("去往微信浏览器授权验证");
-                        loginPage = OwnConfig.WxOauth2(returnUrl);
+                        loginPage = OwnWebSettingUtils.WxOauth2(returnUrl);
                     }
                     else
                     {
@@ -105,7 +113,7 @@ namespace WebMobile
 
                     //if (requestUrl.IndexOf("/store/index") <= -1)
                     //{
-       
+
                     //    bool allowStoreIdIsNull = filterContext.ActionDescriptor.IsDefined(typeof(AllowStoreIdIsNullAttribute), inherit: true) || filterContext.ActionDescriptor.ControllerDescriptor.IsDefined(typeof(AllowStoreIdIsNullAttribute), inherit: true);
 
                     //    if ( allowStoreIdIsNull == false)

@@ -57,9 +57,9 @@ namespace WebMobile
             messageBox.No = Guid.NewGuid().ToString();
             messageBox.Type = MessageBoxTip.Exception;
             messageBox.Title = "抱歉,系统发生异常，如有需要请联系客服";
-            messageBox.Content = "<a href=\"javascript:void(0)\" onclick=\"window.top.location.href='" + OwnConfig.GetHomePage() + "'\">返回主页</a>";
+            messageBox.Content = "<a href=\"javascript:void(0)\" onclick=\"window.top.location.href='" + OwnWebSettingUtils.GetHomePage() + "'\">返回主页</a>";
             messageBox.IsTop = true;
-            if (OwnConfig.CanViewErrorStackTrace())
+            if (CommonUtils.CanViewErrorStackTrace())
             {
                // messageBox.ErrorStackTrace = CommonUtils.ToHtml(filterContext.Exception.Message + "\r\n" + filterContext.Exception.StackTrace);
             }

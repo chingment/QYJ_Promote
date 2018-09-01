@@ -17,8 +17,8 @@ namespace Lumos.Entity
         {
             [Remark("未知")]
             Unknow = 0,
-            [Remark("入库单号")]
-            Order2StockIn = 1
+            [Remark("订单号")]
+            Order = 1
         }
 
         public enum OrderNotifyLogNotifyFrom
@@ -55,6 +55,23 @@ namespace Lumos.Entity
             MenuClick = 3,
             [Remark("不是关键字")]
             NotKeyword = 4
+        }
+
+        public enum OrderStatus
+        {
+            [Remark("未知")]
+            Unknow = 0,
+            [Remark("已提交")]
+            Submitted = 1,
+            [Remark("待支付")]
+            WaitPay = 2,
+            [Remark("已支付")]
+            Payed = 3,
+            [Remark("已完成")]
+            Completed = 4,
+            [Remark("已失效")]
+            Cancled = 5
+
         }
     }
 }
