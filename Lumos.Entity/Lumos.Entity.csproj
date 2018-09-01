@@ -55,6 +55,7 @@
     <Compile Include="BizEnumeration.cs" />
     <Compile Include="Biz\BizSn.cs" />
     <Compile Include="Biz\Order.cs" />
+    <Compile Include="Biz\OrderDetails.cs" />
     <Compile Include="Biz\Pms\OrderPmsByBuyPromoteCoupon.cs" />
     <Compile Include="Biz\Pms\UnifiedOrderPms.cs" />
     <Compile Include="Biz\ProductSku.cs" />

@@ -21,6 +21,7 @@ namespace Lumos.DAL
         public IDbSet<PromoteUserRelation> PromoteUserRelation { get; set; }
         public IDbSet<ProductSku> ProductSku { get; set; }
         public IDbSet<Order> Order { get; set; }
+        public IDbSet<OrderDetails> OrderDetails { get; set; }
         public IDbSet<WxUserInfo> WxUserInfo { get; set; }
         public IDbSet<WxMsgPushLog> WxMsgPushLog { get; set; }
         

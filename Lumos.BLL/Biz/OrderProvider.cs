@@ -72,12 +72,31 @@ namespace Lumos.BLL
                 order.Id = GuidUtil.New();
                 order.UserId = pUserId;
                 order.Sn = SnUtil.Build(Enumeration.BizSnType.Order);
-                order.ChargeAmount = productSku.Price;
+                order.OriginalAmount = productSku.Price;
+                order.DiscountAmount = 0;
+                order.ChargeAmount = order.OriginalAmount - order.DiscountAmount;
                 order.Status = Enumeration.OrderStatus.WaitPay; //待支付状态
                 order.SubmitTime = this.DateTime;
                 order.CreateTime = this.DateTime;
                 order.Creator = pOperater;
                 CurrentDb.Order.Add(order);
+                CurrentDb.SaveChanges();
+
+
+                var orderDetails = new OrderDetails();
+                orderDetails.Id = GuidUtil.New();
+                orderDetails.UserId = pUserId;
+                orderDetails.OrderId = order.Id;
+                orderDetails.Quantity = 1;
+                orderDetails.UnitPrice = productSku.Price;
+                orderDetails.ProductSkuId = productSku.Id;
+                orderDetails.ProductSkuName = productSku.Name;
+                orderDetails.OriginalAmount = order.OriginalAmount;
+                orderDetails.DiscountAmount = order.DiscountAmount;
+                orderDetails.ChargeAmount = order.ChargeAmount;
+                orderDetails.CreateTime = order.CreateTime;
+                orderDetails.Creator = order.Creator;
+                CurrentDb.OrderDetails.Add(orderDetails);
                 CurrentDb.SaveChanges();
 
                 string goods_tag = "";
