@@ -58,6 +58,7 @@
     <Compile Include="Biz\FundTrans.cs" />
     <Compile Include="Biz\Order.cs" />
     <Compile Include="Biz\OrderDetails.cs" />
+    <Compile Include="Biz\OrderPayResultNotifyLog.cs" />
     <Compile Include="Biz\Pms\OrderPmsByBuyPromoteCoupon.cs" />
     <Compile Include="Biz\Pms\UnifiedOrderPms.cs" />
     <Compile Include="Biz\ProductSku.cs" />

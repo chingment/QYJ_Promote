@@ -1,4 +1,5 @@
 ﻿using Lumos;
+using Lumos.BLL;
 using Lumos.DAL;
 using Lumos.Entity;
 using System;
@@ -87,49 +88,53 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            LumosDbContext CurrentDb = new LumosDbContext();
+            var operater = "00000000000000000000000000000000";
+            BizFactory.Order.PayCompleted(operater, "2018090214233885209742", DateTime.Now);
+            //SnUtil.BulidOrderNo(Enumeration.BizSnType.Order);
 
-            var promoteId = "1";
-            var userId = "7";
-            var pUserId = "2";
-            var createTime = DateTime.Now;
-            var operater = "1";
+            //LumosDbContext CurrentDb = new LumosDbContext();
 
-            var promoteUser = CurrentDb.PromoteUser.Where(m => m.UserId == userId && m.PromoteId == promoteId).FirstOrDefault();
-            if (promoteUser == null)
-            {
-                promoteUser = new PromoteUser();
-                promoteUser.Id = GuidUtil.New();
-                promoteUser.PromoteId = promoteId;
-                promoteUser.UserId = userId;
-                promoteUser.PUserId = pUserId;
-                promoteUser.IsAgent = false;
-                promoteUser.CreateTime = createTime;
-                promoteUser.Creator = operater;
-                CurrentDb.PromoteUser.Add(promoteUser);
-                CurrentDb.SaveChanges();
-            }
+            //var promoteId = "a999753c5fe14e26bbecad576b6a6909";
+            //var userId = "4";
+            //var pUserId = "3";
+            //var createTime = DateTime.Now;
 
-            var promoteUsers = CurrentDb.PromoteUser.ToList();
 
-            var promoteUserFathers = GetFatherList(promoteUsers, userId).Where(m => m.UserId != userId && m.IsAgent == false).Take(3).ToList();
+            //var promoteUser = CurrentDb.PromoteUser.Where(m => m.UserId == userId && m.PromoteId == promoteId).FirstOrDefault();
+            //if (promoteUser == null)
+            //{
+            //    promoteUser = new PromoteUser();
+            //    promoteUser.Id = GuidUtil.New();
+            //    promoteUser.PromoteId = promoteId;
+            //    promoteUser.UserId = userId;
+            //    promoteUser.PUserId = pUserId;
+            //    promoteUser.IsAgent = false;
+            //    promoteUser.CreateTime = createTime;
+            //    promoteUser.Creator = operater;
+            //    CurrentDb.PromoteUser.Add(promoteUser);
+            //    CurrentDb.SaveChanges();
+            //}
 
-            for (int i = 0; i < promoteUserFathers.Count; i++)
-            {
-                int dept = (i + 1);
-                Console.WriteLine("用户Id: " + userId + "是用户Id:" + promoteUserFathers[i].UserId + "的" + dept + "级分销商");
-                var promoteUserRelation = new PromoteUserRelation();
-                promoteUserRelation.Id = GuidUtil.New();
-                promoteUserRelation.UserId = promoteUserFathers[i].UserId;
-                promoteUserRelation.PromoteId = promoteId;
-                promoteUserRelation.CUserId = userId;
-                promoteUserRelation.Dept = dept;
-                promoteUserRelation.CreateTime = createTime;
-                promoteUserRelation.Creator = operater;
-                CurrentDb.PromoteUserRelation.Add(promoteUserRelation);
-                CurrentDb.SaveChanges();
+            //var promoteUsers = CurrentDb.PromoteUser.ToList();
 
-            }
+            //var promoteUserFathers = GetFatherList(promoteUsers, userId).Where(m => m.UserId != userId && m.IsAgent == false).Take(3).ToList();
+
+            //for (int i = 0; i < promoteUserFathers.Count; i++)
+            //{
+            //    int dept = (i + 1);
+            //    Console.WriteLine("用户Id: " + userId + "是用户Id:" + promoteUserFathers[i].UserId + "的" + dept + "级分销商");
+            //    var promoteUserRelation = new PromoteUserRelation();
+            //    promoteUserRelation.Id = GuidUtil.New();
+            //    promoteUserRelation.UserId = promoteUserFathers[i].UserId;
+            //    promoteUserRelation.PromoteId = promoteId;
+            //    promoteUserRelation.CUserId = userId;
+            //    promoteUserRelation.Dept = dept;
+            //    promoteUserRelation.CreateTime = createTime;
+            //    promoteUserRelation.Creator = operater;
+            //    CurrentDb.PromoteUserRelation.Add(promoteUserRelation);
+            //    CurrentDb.SaveChanges();
+
+            //}
 
             //foreach (var item in list)
             //{

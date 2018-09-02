@@ -68,7 +68,7 @@ namespace WebMobile.Controllers
                         wxUserInfo.Country = snsUserInfo_Result.country;
                         wxUserInfo.HeadImgUrl = snsUserInfo_Result.headimgurl;
                         wxUserInfo.UnionId = snsUserInfo_Result.unionid;
-                       
+
 
                         wxUserInfo = BizFactory.WxUser.CheckedUser(0, wxUserInfo, true);
                         if (wxUserInfo != null)
@@ -102,36 +102,36 @@ namespace WebMobile.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult PayResult()
+        public ContentResult PayResult()
         {
-
             Int32 intLen = Convert.ToInt32(Request.InputStream.Length);
             byte[] b = new byte[intLen];
             Request.InputStream.Read(b, 0, intLen);
 
             string xml = System.Text.Encoding.UTF8.GetString(b);
 
-            LogUtil.Info("接受到结果:" + xml);
-            //todo
-            if (SdkFactory.Wx.Instance().CheckPayNotifySign(xml))
+            if (string.IsNullOrEmpty(xml))
             {
-                var result = BizFactory.Order.PayResultNotify(0, Lumos.Entity.Enumeration.OrderNotifyLogNotifyFrom.NotifyUrl, xml);
-
-
-                if (result.Result == ResultType.Success)
-                {
-                    Response.Write("<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>");
-                    Response.End();
-                }
+                return Content("");
             }
-            else
+
+            LogUtil.Info("接收支付结果:" + xml);
+
+            if (!SdkFactory.Wx.Instance().CheckPayNotifySign(xml))
             {
                 LogUtil.Warn("支付通知结果签名验证失败");
+                return Content("");
+            }
 
+            var result = BizFactory.Order.PayResultNotify(GuidUtil.Empty(), Enumeration.OrderNotifyLogNotifyFrom.NotifyUrl, xml);
+
+            if (result.Result == ResultType.Success)
+            {
+                Response.Write("<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>");
                 Response.End();
             }
 
-            return View();
+            return Content("");
         }
 
         [AllowAnonymous]
@@ -155,7 +155,104 @@ namespace WebMobile.Controllers
         {
             LogUtil.Info("开始接收事件推送通知");
 
+            if (Request.HttpMethod == "POST")
+            {
+                Int32 intLen = Convert.ToInt32(Request.InputStream.Length);
+                byte[] b = new byte[intLen];
+                Request.InputStream.Read(b, 0, intLen);
+                string xml = System.Text.Encoding.UTF8.GetString(b);
 
+                LogUtil.Info("接收事件推送内容:" + xml);
+
+                var baseEventMsg = WxMsgFactory.CreateMessage(xml);
+                string echoStr = "";
+                string eventKey = null;
+                LogUtil.Info("baseEventMsg内容:" + baseEventMsg);
+                if (baseEventMsg != null)
+                {
+                    var userInfo_Result = SdkFactory.Wx.Instance().GetUserInfoByApiToken(baseEventMsg.FromUserName);
+
+                    if (userInfo_Result.openid != null)
+                    {
+                        LogUtil.Info("userInfo_Result:" + JsonConvert.SerializeObject(userInfo_Result));
+
+                        var wxUserInfo = CurrentDb.WxUserInfo.Where(m => m.OpenId == userInfo_Result.openid).FirstOrDefault();
+
+                        if (wxUserInfo == null)
+                        {
+                            LogUtil.Info(string.Format("消息类型为:{0}，事件为:{1}，创建新用户:{2}", baseEventMsg.MsgType.ToString(), baseEventMsg.Event.ToString(), userInfo_Result.openid));
+                            wxUserInfo = new WxUserInfo();
+                        }
+
+                        if (baseEventMsg.Event != EventType.UNSUBSCRIBE)
+                        {
+                            wxUserInfo.OpenId = userInfo_Result.openid;
+                            wxUserInfo.Nickname = userInfo_Result.nickname;
+                            wxUserInfo.Sex = userInfo_Result.sex.ToString();
+                            wxUserInfo.Province = userInfo_Result.province;
+                            wxUserInfo.City = userInfo_Result.city;
+                            wxUserInfo.Country = userInfo_Result.country;
+                            wxUserInfo.HeadImgUrl = userInfo_Result.headimgurl;
+                            wxUserInfo.UnionId = userInfo_Result.unionid;
+                        }
+
+                        WxAutoReply wxAutoReply = null;
+                        switch (baseEventMsg.MsgType)
+                        {
+                            case MsgType.TEXT:
+                                #region TEXT
+                                #endregion
+                                break;
+                            case MsgType.EVENT:
+                                #region EVENT
+                                switch (baseEventMsg.Event)
+                                {
+                                    case EventType.SUBSCRIBE:
+                                        break;
+                                    case EventType.UNSUBSCRIBE:
+                                        break;
+                                    case EventType.SCAN:
+                                    case EventType.CLICK:
+                                    case EventType.VIEW:
+                                        break;
+                                }
+                                #endregion
+                                break;
+                        }
+
+                        var wxMsgPushLog = new WxMsgPushLog();
+                        wxMsgPushLog.UserId = wxUserInfo.UserId;
+                        wxMsgPushLog.ToUserName = baseEventMsg.ToUserName;
+                        wxMsgPushLog.FromUserName = baseEventMsg.FromUserName;
+                        wxMsgPushLog.CreateTime = DateTime.Now;
+                        wxMsgPushLog.ContentXml = xml;
+                        wxMsgPushLog.MsgId = baseEventMsg.MsgId;
+                        wxMsgPushLog.MsgType = baseEventMsg.MsgType.ToString();
+                        wxMsgPushLog.Event = baseEventMsg.Event.ToString();
+                        wxMsgPushLog.EventKey = eventKey;
+
+                        WxMsgPushLog(wxMsgPushLog);
+                    }
+                }
+
+                LogUtil.Info(string.Format("接收事件推送之后回复内容:{0}", echoStr));
+
+                Response.Write(echoStr);
+            }
+            else if (Request.HttpMethod == "GET") //微信服务器在首次验证时，需要进行一些验证，但。。。。  
+            {
+                if (string.IsNullOrEmpty(Request["echostr"]))
+                {
+                    Response.Write("无法获取微信接入信息，仅供测试！");
+
+                }
+
+                Response.Write(Request["echostr"].ToString());
+            }
+            else
+            {
+                Response.Write("wrong");
+            }
 
             Response.End();
 

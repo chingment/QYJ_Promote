@@ -27,12 +27,14 @@ namespace Lumos.DAL
         public IDbSet<Fund> Fund { get; set; }
         public IDbSet<FundTrans> FundTrans { get; set; }
         public IDbSet<PromoteProfitRate> PromoteProfitRate { get; set; }
+        public IDbSet<OrderNotifyLog> OrderNotifyLog { get; set; }
         //public FxDbContext()
         //    : base("DefaultConnection")
         //{
         //   // this.Configuration.ProxyCreationEnabled = false;
         //}
 
+        public IDbSet<BizSn> BizSn { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

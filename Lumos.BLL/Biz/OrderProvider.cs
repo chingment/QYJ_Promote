@@ -72,6 +72,8 @@ namespace Lumos.BLL
                 order.Id = GuidUtil.New();
                 order.UserId = pUserId;
                 order.Sn = SnUtil.Build(Enumeration.BizSnType.Order);
+                order.IsPromoteProfit = true;
+                order.PromoteId = promote.Id;
                 order.OriginalAmount = productSku.Price;
                 order.DiscountAmount = 0;
                 order.ChargeAmount = order.OriginalAmount - order.DiscountAmount;
@@ -125,14 +127,70 @@ namespace Lumos.BLL
             return result;
         }
 
-        public CustomJsonResult PayResultNotify(int operater, Enumeration.OrderNotifyLogNotifyFrom from, string content, string orderSn = "")
-        {
 
-            return null;
+        private static readonly object lock_PayResultNotify = new object();
+        public CustomJsonResult PayResultNotify(string operater, Enumeration.OrderNotifyLogNotifyFrom from, string content, string orderSn = "")
+        {
+            lock (lock_PayResultNotify)
+            {
+                var mod_OrderNotifyLog = new OrderNotifyLog();
+
+                switch (from)
+                {
+                    case Enumeration.OrderNotifyLogNotifyFrom.WebApp:
+                        if (content == "chooseWXPay:ok")
+                        {
+                            // PayCompleted(operater, orderSn, this.DateTime);
+                        }
+                        break;
+                    case Enumeration.OrderNotifyLogNotifyFrom.OrderQuery:
+                        var dic1 = WeiXinSdk.CommonUtil.ToDictionary(content);
+                        if (dic1.ContainsKey("out_trade_no") && dic1.ContainsKey("trade_state"))
+                        {
+                            orderSn = dic1["out_trade_no"].ToString();
+                            string trade_state = dic1["trade_state"].ToString();
+                            if (trade_state == "SUCCESS")
+                            {
+                                PayCompleted(operater, orderSn, this.DateTime);
+                            }
+                        }
+                        break;
+                    case Enumeration.OrderNotifyLogNotifyFrom.NotifyUrl:
+                        var dic2 = WeiXinSdk.CommonUtil.ToDictionary(content);
+                        if (dic2.ContainsKey("out_trade_no") && dic2.ContainsKey("result_code"))
+                        {
+                            orderSn = dic2["out_trade_no"].ToString();
+                            string result_code = dic2["result_code"].ToString();
+
+                            if (result_code == "SUCCESS")
+                            {
+                                PayCompleted(operater, orderSn, this.DateTime);
+                            }
+                        }
+                        break;
+                }
+
+                var order = CurrentDb.Order.Where(m => m.Sn == orderSn).FirstOrDefault();
+                if (order != null)
+                {
+                    mod_OrderNotifyLog.UserId = order.UserId;
+                    mod_OrderNotifyLog.OrderId = order.Id;
+                    mod_OrderNotifyLog.OrderSn = order.Sn;
+                }
+                mod_OrderNotifyLog.NotifyContent = content;
+                mod_OrderNotifyLog.NotifyFrom = from;
+                mod_OrderNotifyLog.NotifyType = Enumeration.OrderNotifyLogNotifyType.Pay;
+                mod_OrderNotifyLog.CreateTime = this.DateTime;
+                mod_OrderNotifyLog.Creator = operater;
+                CurrentDb.OrderNotifyLog.Add(mod_OrderNotifyLog);
+                CurrentDb.SaveChanges();
+
+                return new CustomJsonResult(ResultType.Success, ResultCode.Success, "");
+            }
         }
 
 
-        private CustomJsonResult PayCompleted(string pOperater, string pOrderSn, DateTime pCompletedTime)
+        public CustomJsonResult PayCompleted(string pOperater, string pOrderSn, DateTime pCompletedTime)
         {
             CustomJsonResult result = new CustomJsonResult();
 
@@ -171,10 +229,26 @@ namespace Lumos.BLL
 
                         var fund = CurrentDb.Fund.Where(m => m.UserId == item.UserId).FirstOrDefault();
 
+                        var profit = order.ChargeAmount * (promoteProfitRate.Rate / 100);
+                        fund.Balance += profit;
+                        fund.Mender = pOperater;
+                        fund.MendTime = this.DateTime;
+
+                        var fundTrans = new FundTrans();
+                        fundTrans.Id = GuidUtil.New();
+                        fundTrans.Sn = SnUtil.Build(Enumeration.BizSnType.Order);
+                        fundTrans.UserId = fund.UserId;
+                        fundTrans.ChangeType = Enumeration.FundTransChangeType.PromoteProfit;
+                        fundTrans.ChangeAmount = profit;
+                        fundTrans.Balance = fund.Balance;
+                        fundTrans.CreateTime = this.DateTime;
+                        fundTrans.Creator = pOperater;
+                        fundTrans.Description = string.Format("下级支付{0}元购买优惠卷，作为上级获得收益{1}元", order.ChargeAmount, profit);
+                        CurrentDb.FundTrans.Add(fundTrans);
+                        CurrentDb.SaveChanges();
 
                     }
                 }
-
 
                 CurrentDb.SaveChanges();
                 ts.Complete();

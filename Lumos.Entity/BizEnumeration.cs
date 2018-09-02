@@ -33,6 +33,16 @@ namespace Lumos.Entity
             OrderQuery = 3
         }
 
+        public enum OrderNotifyLogNotifyType
+        {
+            [Remark("未知")]
+            Unknow = 0,
+            [Remark("支付通知")]
+            Pay = 1,
+            [Remark("退款通知")]
+            ReFund = 2
+        }
+
         public enum WxUserInfoFrom
         {
             [Remark("未知")]
@@ -79,7 +89,7 @@ namespace Lumos.Entity
             [Remark("未知")]
             Unknow = 0,
             [Remark("分销商购买商品佣金")]
-            Distribution = 1,
+            PromoteProfit = 1,
             [Remark("分销商核销优惠卷佣金")]
             WaitPay = 2,
             [Remark("提现")]
