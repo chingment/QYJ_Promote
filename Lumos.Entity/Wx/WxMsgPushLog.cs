@@ -25,9 +25,7 @@ namespace Lumos.Entity
         public long MsgId { get; set; }
         [MaxLength(128)]
         public string Event { get; set; }
-
         public string EventKey { get; set; }
-
         public string ContentXml { get; set; }
     }
 }

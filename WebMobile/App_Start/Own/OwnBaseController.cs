@@ -87,7 +87,6 @@ namespace WebMobile
                         LogUtil.Info("去往用户登录页面验证");
                     }
 
-
                     if (isAjaxRequest)
                     {
                         MessageBoxModel messageBox = new MessageBoxModel();
@@ -105,30 +104,7 @@ namespace WebMobile
                         filterContext.Result = new RedirectResult(loginPage);
                     }
                 }
-                else
-                {
-                    //string requestUrl = filterContext.HttpContext.Request.Url.PathAndQuery.ToLower();
-
-                    //LogUtil.Info("requestUrl:"+requestUrl);
-
-                    //if (requestUrl.IndexOf("/store/index") <= -1)
-                    //{
-
-                    //    bool allowStoreIdIsNull = filterContext.ActionDescriptor.IsDefined(typeof(AllowStoreIdIsNullAttribute), inherit: true) || filterContext.ActionDescriptor.ControllerDescriptor.IsDefined(typeof(AllowStoreIdIsNullAttribute), inherit: true);
-
-                    //    if ( allowStoreIdIsNull == false)
-                    //    {
-                    //        if (!isAjaxRequest)
-                    //        {
-
-                    //            filterContext.Result = new RedirectResult(string.Format("/Store/Index?returnUrl={0}", returnUrl));
-                    //        }
-                    //    }
-                    //}
-                }
-
             }
-
         }
     }
 

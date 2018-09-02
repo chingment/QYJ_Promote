@@ -15,8 +15,6 @@ namespace WebMobile
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, Inherited = true, AllowMultiple = true)]
     public class OwnAuthorizeAttribute : AuthorizeAttribute
     {
-        ILog log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
             base.OnAuthorization(filterContext);
@@ -34,25 +32,24 @@ namespace WebMobile
         {
             base.HandleUnauthorizedRequest(filterContext);
 
-            log.InfoFormat("当前未登录的URL:{0}", filterContext.HttpContext.Request.RawUrl);
+            LogUtil.Info("当前未登录的URL:" + filterContext.HttpContext.Request.RawUrl);
 
-         
             string userAgent = filterContext.HttpContext.Request.UserAgent;
             string loginPage = OwnWebSettingUtils.GetLoginPage("");
 
             if (userAgent.ToLower().Contains("micromessenger"))
             {
-                log.Info("去往微信浏览器授权验证");
+                LogUtil.Info("去往微信浏览器授权验证");
                 loginPage = OwnWebSettingUtils.WxOauth2("");
             }
             else
             {
-                log.Info("去往用户登录页面验证");
+                LogUtil.Info("去往用户登录页面验证");
             }
 
             if (!filterContext.HttpContext.Request.IsAuthenticated)
             {
-                log.Info("用户没有登录或登录超时");
+                LogUtil.Info("用户没有登录或登录超时");
 
                 bool isAjaxRequest = filterContext.RequestContext.HttpContext.Request.IsAjaxRequest();
                 if (isAjaxRequest)
