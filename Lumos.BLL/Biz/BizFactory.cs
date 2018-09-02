@@ -8,14 +8,6 @@ namespace Lumos.BLL
 {
     public class BizFactory : BaseFactory
     {
-        public static PayProvider Pay
-        {
-            get
-            {
-                return new PayProvider();
-            }
-        }
-
         public static OrderProvider Order
         {
             get

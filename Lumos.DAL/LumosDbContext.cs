@@ -26,7 +26,7 @@ namespace Lumos.DAL
         public IDbSet<WxMsgPushLog> WxMsgPushLog { get; set; }
         public IDbSet<Fund> Fund { get; set; }
         public IDbSet<FundTrans> FundTrans { get; set; }
-
+        public IDbSet<PromoteProfitRate> PromoteProfitRate { get; set; }
         //public FxDbContext()
         //    : base("DefaultConnection")
         //{

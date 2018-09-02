@@ -124,5 +124,66 @@ namespace Lumos.BLL
 
             return result;
         }
+
+        public CustomJsonResult PayResultNotify(int operater, Enumeration.OrderNotifyLogNotifyFrom from, string content, string orderSn = "")
+        {
+
+            return null;
+        }
+
+
+        private CustomJsonResult PayCompleted(string pOperater, string pOrderSn, DateTime pCompletedTime)
+        {
+            CustomJsonResult result = new CustomJsonResult();
+
+            using (TransactionScope ts = new TransactionScope())
+            {
+                var order = CurrentDb.Order.Where(m => m.Sn == pOrderSn).FirstOrDefault();
+
+                if (order == null)
+                {
+                    return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, string.Format("找不到该订单号({0})", pOrderSn));
+                }
+
+                if (order.Status == Enumeration.OrderStatus.Payed || order.Status == Enumeration.OrderStatus.Completed)
+                {
+                    return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, string.Format("订单号({0})已经支付通知成功", pOrderSn));
+                }
+
+                if (order.Status != Enumeration.OrderStatus.WaitPay)
+                {
+                    return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, string.Format("找不到该订单号({0})", pOrderSn));
+                }
+
+                order.Status = Enumeration.OrderStatus.Payed;
+                order.PayTime = this.DateTime;
+                order.MendTime = this.DateTime;
+                order.Mender = pOperater;
+
+
+                if (order.IsPromoteProfit)
+                {
+                    var promoteUserRelations = CurrentDb.PromoteUserRelation.Where(m => m.CUserId == order.UserId && m.PromoteId == order.PromoteId).ToList();
+                    var promoteProfitRates = CurrentDb.PromoteProfitRate.Where(m => m.PromoteId == order.PromoteId).ToList();
+                    foreach (var item in promoteUserRelations)
+                    {
+                        var promoteProfitRate = promoteProfitRates.Where(m => m.Dept == item.Dept).FirstOrDefault();
+
+                        var fund = CurrentDb.Fund.Where(m => m.UserId == item.UserId).FirstOrDefault();
+
+
+                    }
+                }
+
+
+                CurrentDb.SaveChanges();
+                ts.Complete();
+
+                result = new CustomJsonResult(ResultType.Success, ResultCode.Success, string.Format("支付完成通知：订单号({0})通知成功", pOrderSn));
+            }
+
+            return result;
+        }
+
     }
 }

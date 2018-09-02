@@ -24,6 +24,10 @@ namespace Lumos.Entity
         public Enumeration.OrderStatus Status { get; set; }
         public string Creator { get; set; }
         public DateTime CreateTime { get; set; }
+        public bool IsPromoteProfit { get; set; }
+        public string PromoteId { get; set; }
+        public string Mender { get; set; }
+        public DateTime? MendTime { get; set; }
         public string WxPrepayId { get; set; }
         public DateTime? WxPrepayIdExpireTime { get; set; }
     }

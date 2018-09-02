@@ -115,7 +115,7 @@ namespace WebMobile.Controllers
             //todo
             if (SdkFactory.Wx.Instance().CheckPayNotifySign(xml))
             {
-                var result = BizFactory.Pay.ResultNotify(0, Lumos.Entity.Enumeration.OrderNotifyLogNotifyFrom.NotifyUrl, xml);
+                var result = BizFactory.Order.PayResultNotify(0, Lumos.Entity.Enumeration.OrderNotifyLogNotifyFrom.NotifyUrl, xml);
 
 
                 if (result.Result == ResultType.Success)

@@ -76,7 +76,6 @@
     <Compile Include="BaseProvider.cs" />
     <Compile Include="Biz\BizFactory.cs" />
     <Compile Include="Biz\OrderProvider.cs" />
-    <Compile Include="Biz\PayProvider.cs" />
     <Compile Include="Biz\WxUserProvider.cs" />
     <Compile Include="Factory..cs" />
     <Compile Include="Sdk\SdkFactory.cs" />
