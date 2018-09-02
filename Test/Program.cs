@@ -2,6 +2,7 @@
 using Lumos.BLL;
 using Lumos.DAL;
 using Lumos.Entity;
+using Lumos.WeiXinSdk.MsgPush;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -89,7 +90,13 @@ namespace Test
         static void Main(string[] args)
         {
             var operater = "00000000000000000000000000000000";
-            BizFactory.Order.PayCompleted(operater, "2018090214233885209742", DateTime.Now);
+
+            string xml= "<xml><ToUserName><![CDATA[gh_fc0a06a20993]]></ToUserName><FromUserName><![CDATA[oZI8Fj040-be6rlDohc6gkoPOQTQ]]></FromUserName><CreateTime>1472551036</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[user_get_card]]></Event><CardId><![CDATA[pZI8Fjwsy5fVPRBeD78J4RmqVvBc]]></CardId><IsGiveByFriend>0</IsGiveByFriend><UserCardCode><![CDATA[226009850808]]></UserCardCode><FriendUserName><![CDATA[]]></FriendUserName><OuterId>0</OuterId><OldUserCardCode><![CDATA[]]></OldUserCardCode><OuterStr><![CDATA[12b]]></OuterStr><IsRestoreMemberCard>0</IsRestoreMemberCard><IsRecommendByFriend>0</IsRecommendByFriend><UnionId>o6_bmasdasdsad6_2sgVt7hMZOPfL</UnionId></xml>";
+
+            var baseEventMsg = WxMsgFactory.CreateMessage(xml);
+
+
+            //BizFactory.Order.PayCompleted(operater, "2018090214233885209742", DateTime.Now);
             //SnUtil.BulidOrderNo(Enumeration.BizSnType.Order);
 
             //LumosDbContext CurrentDb = new LumosDbContext();

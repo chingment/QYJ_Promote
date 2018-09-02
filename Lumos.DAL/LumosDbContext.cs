@@ -28,6 +28,9 @@ namespace Lumos.DAL
         public IDbSet<FundTrans> FundTrans { get; set; }
         public IDbSet<PromoteProfitRate> PromoteProfitRate { get; set; }
         public IDbSet<OrderNotifyLog> OrderNotifyLog { get; set; }
+
+        public IDbSet<PromoteUserCoupon>  PromoteUserCoupon { get; set; }
+
         //public FxDbContext()
         //    : base("DefaultConnection")
         //{

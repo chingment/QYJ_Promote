@@ -14,7 +14,6 @@ namespace Lumos.WeiXinSdk.MsgPush
         public MsgType MsgType { get; set; }
         public long MsgId { get; set; }
         public EventType Event { get; set; }
-
         public virtual string EventKey { get; set; }
     }
 }

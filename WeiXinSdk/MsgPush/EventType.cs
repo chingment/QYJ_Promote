@@ -66,6 +66,14 @@ namespace Lumos.WeiXinSdk.MsgPush
         /// <summary>
         /// 模板消息推送
         /// </summary>
-        TEMPLATESENDJOBFINISH
+        TEMPLATESENDJOBFINISH,
+        /// <summary>
+        /// 领取卡卷
+        /// </summary>
+        USER_GET_CARD,
+        /// <summary>
+        /// 核销卡卷
+        /// </summary>
+        USER_CONSUME_CARD
     }
 }

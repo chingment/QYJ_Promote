@@ -66,6 +66,7 @@
     <Compile Include="Biz\PromoteCoupon.cs" />
     <Compile Include="Biz\PromoteProfitRate.cs" />
     <Compile Include="Biz\PromoteUser.cs" />
+    <Compile Include="Biz\PromoteUserCoupon.cs" />
     <Compile Include="Biz\PromoteUserRelation.cs" />
     <Compile Include="ImgSet.cs" />
     <Compile Include="EnumerationRemarkConverter.cs" />

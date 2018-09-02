@@ -113,6 +113,10 @@ namespace Lumos.WeiXinSdk.MsgPush
                         case EventType.CLICK:
                         case EventType.VIEW:
                             return ConvertObj<LinkEventMsg>(xml);
+                        case EventType.USER_GET_CARD:
+                            return ConvertObj<UserGetCardMsg>(xml);
+                        case EventType.USER_CONSUME_CARD:
+                            return ConvertObj<UserConsumeCardMsg>(xml);
                     }
 
                     break;

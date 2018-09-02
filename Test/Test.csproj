@@ -76,6 +76,10 @@
       <Project>{27883666-32aa-447f-aa1f-6128b76fbee8}</Project>
       <Name>Lumos</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WeiXinSdk\WeiXinSdk.csproj">
+      <Project>{a8b6b73d-f2ee-41d7-9d96-ad65b31fcdc0}</Project>
+      <Name>WeiXinSdk</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

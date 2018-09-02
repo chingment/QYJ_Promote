@@ -248,6 +248,24 @@ namespace Lumos.BLL
                         CurrentDb.SaveChanges();
 
                     }
+
+                    var orderDetails = CurrentDb.OrderDetails.Where(m => m.OrderId == order.Id).FirstOrDefault();
+
+                    var promoteCoupon = CurrentDb.PromoteCoupon.Where(m => m.ProductSkuId == orderDetails.ProductSkuId && m.PromoteId == order.PromoteId).FirstOrDefault();
+
+                    var promoteUserCoupon = new PromoteUserCoupon();
+                    promoteUserCoupon.Id = GuidUtil.New();
+                    promoteUserCoupon.PromoteId = promoteCoupon.PromoteId;
+                    promoteUserCoupon.PromoteCouponId = promoteCoupon.Id;
+                    promoteUserCoupon.WxCouponId = promoteCoupon.WxCouponId;
+                    promoteUserCoupon.IsBuy = true;
+                    promoteUserCoupon.BuyTime = this.DateTime;
+                    promoteUserCoupon.IsGet = false;
+                    promoteUserCoupon.IsConsume = false;
+                    promoteUserCoupon.Creator = pOperater;
+                    promoteUserCoupon.CreateTime = this.DateTime;
+                    CurrentDb.PromoteUserCoupon.Add(promoteUserCoupon);
+                    CurrentDb.SaveChanges();
                 }
 
                 CurrentDb.SaveChanges();

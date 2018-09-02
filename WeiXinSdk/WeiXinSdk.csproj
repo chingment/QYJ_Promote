@@ -70,6 +70,8 @@
     <Compile Include="MsgPush\EventMsg\SubEventMsg.cs" />
     <Compile Include="MsgPush\EventMsg\TextMsg.cs" />
     <Compile Include="MsgPush\EventMsg\UnSubEventMsg.cs" />
+    <Compile Include="MsgPush\EventMsg\UserConsumeCardMsg.cs" />
+    <Compile Include="MsgPush\EventMsg\UserGetCardMsg.cs" />
     <Compile Include="MsgPush\EventType.cs" />
     <Compile Include="MsgPush\WxMsgFactory.cs" />
     <Compile Include="MsgPush\MsgType.cs" />
