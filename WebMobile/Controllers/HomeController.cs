@@ -20,7 +20,7 @@ namespace WebMobile.Controllers
 {
     public class HomeController : OwnBaseController
     {
-        public ActionResult Index(int merchantId = 0)
+        public ActionResult Index()
         {
             return View();
         }
