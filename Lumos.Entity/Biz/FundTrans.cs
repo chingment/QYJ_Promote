@@ -14,6 +14,7 @@ namespace Lumos.Entity
     {
         [Key]
         public string Id { get; set; }
+        public string Sn { get; set; }
         public string UserId { get; set; }
         public Enumeration.FundTransChangeType ChangeType { get; set; }
         public decimal ChangeAmount { get; set; }

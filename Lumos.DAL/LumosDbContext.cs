@@ -24,7 +24,9 @@ namespace Lumos.DAL
         public IDbSet<OrderDetails> OrderDetails { get; set; }
         public IDbSet<WxUserInfo> WxUserInfo { get; set; }
         public IDbSet<WxMsgPushLog> WxMsgPushLog { get; set; }
-        
+        public IDbSet<Fund> Fund { get; set; }
+        public IDbSet<FundTrans> FundTrans { get; set; }
+
         //public FxDbContext()
         //    : base("DefaultConnection")
         //{
