@@ -75,9 +75,7 @@
                 url: "/Account/Login",
                 data: $('#form1').serialize(),
                 success: function (d) {
-                    alert(d.data.url)
                     if (d.result == $.lumos.resultType.success) {
-
                         window.location.href = d.data.url;
                     }
                     else {
