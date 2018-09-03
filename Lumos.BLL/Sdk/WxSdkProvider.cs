@@ -119,6 +119,12 @@ namespace Lumos.BLL
             return new CustomJsonResult(ResultType.Success, ResultCode.Success, "", parms);
         }
 
+
+        public string UploadMultimediaImage(string imageUrl)
+        {
+            return OAuthApi.UploadMultimediaImage(this.GetApiAccessToken(), imageUrl);
+        }
+
         public string OrderQuery(string orderSn)
         {
             CustomJsonResult result = new CustomJsonResult();
@@ -126,160 +132,6 @@ namespace Lumos.BLL
             string xml = tenpayUtil.OrderQuery(orderSn);
 
             return xml;
-        }
-
-        public void SendMessageByOpenId(string openId, string msg)
-        {
-            string access_token = GetApiAccessToken();
-            WxApiCustomMessagePostData postData = new WxApiCustomMessagePostData();
-            postData.msgtype = "text";
-            postData.touser = openId;
-            postData.text = new WxApiCustomTextMessage()
-            {
-                content = msg
-            };
-
-            WxApiCustomMessageSend customMessageSend = new WxApiCustomMessageSend(access_token, WxPostDataType.Json, postData);
-            WxApi c = new WxApi();
-
-            c.DoPost(customMessageSend);
-        }
-
-        public void OrderSuccess(string opendId, string orderSn, string storeName, string productskusName, decimal amount, DateTime payTime, string url)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("{\"touser\":\"" + opendId + "\",");
-            sb.Append("\"template_id\":\"vj2NZ507X1wrmY170SSJ1t1cYoMOzy6Z7dSaMeTe4sc\",");
-            sb.Append("\"url\":\"" + url + "\", ");
-            sb.Append("\"data\":{");
-            sb.Append("\"first\":{ \"value\":\"您的订单支付成功。\",\"color\":\"#173177\" },");
-            sb.Append("\"keyword1\":{ \"value\":\"" + orderSn + "\",\"color\":\"#173177\" },");
-            sb.Append("\"keyword2\":{ \"value\":\"" + productskusName + "\",\"color\":\"#173177\" },");
-            sb.Append("\"keyword3\":{ \"value\":\"" + amount.ToF2Price() + "\",\"color\":\"#173177\" },");
-            sb.Append("\"keyword4\":{ \"value\":\"" + payTime.ToUnifiedFormatDateTime() + "\",\"color\":\"#173177\" },");
-            sb.Append("\"remark\":{ \"value\":\"尊敬的顾客，请您在" + storeName + "取货，谢谢。\",\"color\":\"#FF3030\"}");
-            sb.Append("}}");
-
-            string access_token = GetApiAccessToken();
-
-            WxApiMessageTemplateSend templateSend = new WxApiMessageTemplateSend(access_token, WxPostDataType.Text, sb.ToString());
-            WxApi c = new WxApi();
-
-            c.DoPost(templateSend);
-        }
-
-        public void NotifyPick(string opendId, string orderSn, string pickAddress, string pickCode, string productskusName, DateTime lastPickTime, string url)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("{\"touser\":\"" + opendId + "\",");
-            sb.Append("\"template_id\":\"M_D_LQGahaalSEt44QI22GY5ihB4zfusTYnvJrnNvN0\",");
-            sb.Append("\"url\":\"" + url + "\", ");
-            sb.Append("\"data\":{");
-            sb.Append("\"first\":{ \"value\":\"您的订单取货码已经生成。\",\"color\":\"#173177\" },");
-            sb.Append("\"keyword1\":{ \"value\":\"" + orderSn + "\",\"color\":\"#173177\" },");
-            sb.Append("\"keyword2\":{ \"value\":\"" + productskusName + "\",\"color\":\"#173177\" },");
-            sb.Append("\"keyword3\":{ \"value\":\"" + pickAddress + "\",\"color\":\"#FF3030\" },");
-            sb.Append("\"keyword4\":{ \"value\":\"" + pickCode + "\",\"color\":\"#173177\" },");
-            sb.Append("\"remark\":{ \"value\":\"尊敬的顾客，请您在" + lastPickTime + "前去取货，否则会失效，谢谢。\",\"color\":\"#173177\"}");
-            sb.Append("}}");
-
-            string access_token = GetApiAccessToken();
-
-            WxApiMessageTemplateSend templateSend = new WxApiMessageTemplateSend(access_token, WxPostDataType.Text, sb.ToString());
-            WxApi c = new WxApi();
-
-            c.DoPost(templateSend);
-        }
-
-        public void GiftvoucherActivityNotifyPick(string body, string opendId, string orderSn, string pickAddress, string pickCode, string productskusName, DateTime lastPickTime, string url)
-        {
-
-            StringBuilder sb = new StringBuilder();
-            sb.Append("{\"touser\":\"" + opendId + "\",");
-            sb.Append("\"template_id\":\"M_D_LQGahaalSEt44QI22GY5ihB4zfusTYnvJrnNvN0\",");
-            sb.Append("\"url\":\"" + url + "\", ");
-            sb.Append("\"data\":{");
-            sb.Append("\"first\":{ \"value\":\"" + body + "。\",\"color\":\"#173177\" },");
-            sb.Append("\"keyword1\":{ \"value\":\"" + orderSn + "\",\"color\":\"#173177\" },");
-            sb.Append("\"keyword2\":{ \"value\":\"" + productskusName + "\",\"color\":\"#173177\" },");
-            sb.Append("\"keyword3\":{ \"value\":\"" + pickAddress + "\",\"color\":\"#FF3030\" },");
-            sb.Append("\"keyword4\":{ \"value\":\"" + pickCode + "\",\"color\":\"#173177\" },");
-            sb.Append("\"remark\":{ \"value\":\"请您在" + lastPickTime + "前去取货，否则取货码将会失效，谢谢。\",\"color\":\"#173177\"}");
-            sb.Append("}}");
-
-            string access_token = GetApiAccessToken();
-
-            WxApiMessageTemplateSend templateSend = new WxApiMessageTemplateSend(access_token, WxPostDataType.Text, sb.ToString());
-            WxApi c = new WxApi();
-
-            c.DoPost(templateSend);
-        }
-
-        public WxApiBaseResult MessageTemplateNotify(string opendId, string templateId, string content, string url)
-        {
-            var keywordArray = content.Split(Environment.NewLine.ToCharArray()).ToList();
-            var isHadEmptyContent = true;
-            do
-            {
-                isHadEmptyContent = keywordArray.Remove(keywordArray.Where(k => k == "").FirstOrDefault());
-
-            } while (isHadEmptyContent);
-
-            StringBuilder sb = new StringBuilder();
-            sb.Append("{\"touser\":\"" + opendId + "\",");
-            sb.Append("\"template_id\":\"" + templateId + "\",");
-            sb.Append("\"url\":\"" + url + "\", ");
-            sb.Append("\"data\":{");
-            var isFirstItemHadData = false;
-            for (int i = 0; i < keywordArray.Count; i++)
-            {
-                if (i == 0)
-                {
-                    if (keywordArray[i].IndexOf("：") > -1)
-                    {
-                        sb.Append("\"keyword" + (i + 1) + "\":{ \"value\":\"" + keywordArray[i].Split('：')[1] + "\",\"color\":\"#173177\" },");
-                    }
-                    else
-                    {
-                        isFirstItemHadData = true;
-                        sb.Append("\"first\":{ \"value\":\"" + keywordArray[i] + "\",\"color\":\"#173177\" },");
-                    }
-
-                }
-                if (i != 0 && i != keywordArray.Count - 1)
-                {
-                    if (isFirstItemHadData)
-                    {
-                        sb.Append("\"keyword" + i + "\":{ \"value\":\"" + keywordArray[i].Split('：')[1] +
-                                  "\",\"color\":\"#173177\" },");
-                    }
-                    else
-                    {
-                        sb.Append("\"keyword" + (i + 1) + "\":{ \"value\":\"" + keywordArray[i].Split('：')[1] + "\",\"color\":\"#173177\" },");
-                    }
-
-                }
-                if (i == keywordArray.Count - 1)
-                {
-                    if (keywordArray[i].IndexOf("：") > -1)
-                    {
-                        sb.Append("\"keyword" + (i + 1) + "\":{ \"value\":\"" + keywordArray[i].Split('：')[1] + "\",\"color\":\"#173177\" },");
-                    }
-                    else
-                    {
-                        sb.Append("\"remark\":{ \"value\":\"" + keywordArray[i] + "\",\"color\":\"#173177\"}");
-                    }
-                }
-            }
-            sb.Append("}}");
-
-            string access_token = GetApiAccessToken();
-            //string access_token = "pSCJi3EM2jdUP5z89PNPlPSbOvMYF8kqIpSeH-PKsQy1u3LaNBdiVGTh4DIxuY4A-C5gwR3KIXnKwqX4wWErjOGDcMUaAj_nwuk3XyM7nm8TcCl1B6gWvG60VOHmJE2tCEWbAGAUWO";
-            WxApiMessageTemplateSend templateSend = new WxApiMessageTemplateSend(access_token, WxPostDataType.Text, sb.ToString());
-            WxApi c = new WxApi();
-
-            WxApiBaseResult result = c.DoPost(templateSend);
-            return result;
         }
 
         public bool CheckPayNotifySign(string xml)

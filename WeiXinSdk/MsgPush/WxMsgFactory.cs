@@ -140,5 +140,19 @@ namespace Lumos.WeiXinSdk.MsgPush
 
             return replyText;
         }
+
+        public static string CreateReplyImage(string toUserName, string fromUserName, string media_id)
+        {
+            string replyTextFormat = @"<xml>
+<ToUserName><![CDATA[{0}]]></ToUserName>
+<FromUserName><![CDATA[{1}]]></FromUserName>
+<CreateTime>{2}</CreateTime>
+<MsgType><![CDATA[image]]></MsgType>
+<Image><MediaId><![CDATA[{3}]]></MediaId></Image>
+</xml>";
+            string replyText = string.Format(replyTextFormat, toUserName, fromUserName, DateTime.Now.ToBinary(), media_id);
+
+            return replyText;
+        }
     }
 }

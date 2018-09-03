@@ -24,6 +24,7 @@ namespace Lumos.DAL
         public IDbSet<OrderDetails> OrderDetails { get; set; }
         public IDbSet<WxUserInfo> WxUserInfo { get; set; }
         public IDbSet<WxMsgPushLog> WxMsgPushLog { get; set; }
+        public IDbSet<WxAutoReply> WxAutoReply { get; set; }
         public IDbSet<Fund> Fund { get; set; }
         public IDbSet<FundTrans> FundTrans { get; set; }
         public IDbSet<PromoteProfitRate> PromoteProfitRate { get; set; }

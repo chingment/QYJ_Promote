@@ -201,6 +201,24 @@ namespace WebMobile.Controllers
                         {
                             case MsgType.TEXT:
                                 #region TEXT
+
+                                LogUtil.Info("文本消息");
+
+                                var textMsg = (TextMsg)baseEventMsg;
+
+                                if (textMsg != null)
+                                {
+
+                                    LogUtil.Info("文本消息:" + textMsg.Content);
+
+                                    if (textMsg.Content == "秒杀券" || textMsg.Content == "秒杀卷" || textMsg.Content == "秒杀劵")
+                                    {
+                                        echoStr = WxMsgFactory.CreateReplyImage(baseEventMsg.FromUserName, baseEventMsg.ToUserName, "F463ssMKekqTeri5Ke4rrTz-YwkTh4zyTFJmPCmevjEg2QiCrVSofj3-KwGx41c4");
+                                    }
+
+                                }
+
+
                                 #endregion
                                 break;
                             case MsgType.EVENT:
@@ -243,6 +261,7 @@ namespace WebMobile.Controllers
                         }
 
                         var wxMsgPushLog = new WxMsgPushLog();
+                        wxMsgPushLog.Id = GuidUtil.New();
                         wxMsgPushLog.UserId = wxUserInfo.UserId;
                         wxMsgPushLog.ToUserName = baseEventMsg.ToUserName;
                         wxMsgPushLog.FromUserName = baseEventMsg.FromUserName;

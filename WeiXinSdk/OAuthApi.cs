@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -54,6 +55,34 @@ namespace Lumos.WeiXinSdk
             return opendIds;
         }
 
+
+        public static string UploadMultimediaImage(string accessToken, string imageUrl)
+        {
+
+            string mediaId = "";
+            string wxurl = "http://file.api.weixin.qq.com/cgi-bin/media/upload?access_token=" + accessToken + "&type=image";
+            WebClient myWebClient = new WebClient();
+            myWebClient.Credentials = CredentialCache.DefaultCredentials;
+            try
+            {
+                byte[] responseArray = myWebClient.UploadFile(wxurl, "POST", imageUrl);
+                string str_result = System.Text.Encoding.Default.GetString(responseArray, 0, responseArray.Length);
+
+                var result = Newtonsoft.Json.JsonConvert.DeserializeObject<UploadMultimediaResult>(str_result);
+
+                if (result != null)
+                {
+                    mediaId = result.media_id;
+                }
+            }
+            catch (Exception ex)
+            {
+                mediaId = "Error:" + ex.Message;
+            }
+            return mediaId;
+
+        }
+
         private static void GetUserOpenIds(ref List<string> opendIds, string accessToken, string next_openid = "")
         {
             WxApi api = new WxApi();
@@ -71,7 +100,7 @@ namespace Lumos.WeiXinSdk
 
                     if (!string.IsNullOrEmpty(userGet_Result.next_openid))
                     {
-                       
+
                         GetUserOpenIds(ref opendIds, accessToken, userGet_Result.next_openid);
                     }
                 }
