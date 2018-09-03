@@ -21,7 +21,7 @@ namespace WebMobile.Controllers
         [HttpPost]
         public CustomJsonResult UnifiedOrder(UnifiedOrderPms model)
         {
-            var result = BizFactory.Order.UnifiedOrder(this.CurrentUserId, "4", model);
+            var result = BizFactory.Order.UnifiedOrder(this.CurrentUserId, OwnRequest.GetUserInfo().WxAccessToken, model);
 
             if (result.Result == ResultType.Success)
             {

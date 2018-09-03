@@ -80,7 +80,6 @@
     <Compile Include="Factory..cs" />
     <Compile Include="Sdk\SdkFactory.cs" />
     <Compile Include="Sdk\WxConfigByFanJu.cs" />
-    <Compile Include="Sdk\WxConfigByFuLi.cs" />
     <Compile Include="Sdk\WxConfigByTest.cs" />
     <Compile Include="Sdk\WxSdkProvider.cs" />
     <Compile Include="Sdk\WxUntil.cs" />

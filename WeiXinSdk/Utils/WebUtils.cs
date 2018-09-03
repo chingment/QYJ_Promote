@@ -21,7 +21,6 @@ namespace Lumos.WeiXinSdk
         private int _timeout = 20000;
         private int _readWriteTimeout = 60000;
         private bool _ignoreSSLCheck = true;
-        private ILog log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         /// <summary>
         /// 等待请求开始返回的超时时间
         /// </summary>
@@ -47,19 +46,6 @@ namespace Lumos.WeiXinSdk
         {
             get { return this._ignoreSSLCheck; }
             set { this._ignoreSSLCheck = value; }
-        }
-
-
-        public ILog Log
-        {
-            get
-            {
-                return log;
-            }
-            set
-            {
-                log = value;
-            }
         }
 
         public static bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
@@ -106,7 +92,7 @@ namespace Lumos.WeiXinSdk
                 request.ContentType = "text/xml";
 
 
-                log.InfoFormat("提交URL：{0},参数：{1}", url, xml);
+                LogUtil.Info(string.Format("提交URL：{0},参数：{1}", url, xml));
 
 
                 byte[] data = System.Text.Encoding.UTF8.GetBytes(xml);
@@ -115,10 +101,10 @@ namespace Lumos.WeiXinSdk
                 //是否使用证书
                 if (isUseCert)
                 {
-                    Log.Debug("WxPayApi:path:" + config.SslCert_Path);
+                    LogUtil.Info("WxPayApi:path:" + config.SslCert_Path);
                     X509Certificate2 cer = new X509Certificate2(config.SslCert_Path, config.SslCert_Password, X509KeyStorageFlags.PersistKeySet);
                     request.ClientCertificates.Add(cer);
-                    Log.Debug("WxPayApi:PostXml used cert");
+                    LogUtil.Info("WxPayApi:PostXml used cert");
                 }
 
                 //往服务器写入数据
@@ -133,29 +119,29 @@ namespace Lumos.WeiXinSdk
                 StreamReader sr = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
                 result = sr.ReadToEnd().Trim();
 
-                log.InfoFormat("提交URL：{0},返回结果：{1}", url, result);
+                LogUtil.Info(string.Format("提交URL：{0},返回结果：{1}", url, result));
 
                 sr.Close();
             }
             catch (System.Threading.ThreadAbortException e)
             {
-                Log.Error("HttpService:Thread - caught ThreadAbortException - resetting.");
-                Log.ErrorFormat("Exception message: {0}", e.Message);
+                LogUtil.Error("HttpService:Thread - caught ThreadAbortException - resetting.");
+                LogUtil.Error(string.Format("Exception message: {0}", e.Message));
                 System.Threading.Thread.ResetAbort();
             }
             catch (WebException e)
             {
-                Log.ErrorFormat("HttpService:{0}", e.ToString());
+                LogUtil.Error(string.Format("HttpService:{0}", e.ToString()));
                 if (e.Status == WebExceptionStatus.ProtocolError)
                 {
-                    Log.ErrorFormat("HttpService:StatusCode :{0} ", ((HttpWebResponse)e.Response).StatusCode);
-                    Log.ErrorFormat("HttpService:StatusDescription : {0}", ((HttpWebResponse)e.Response).StatusDescription);
+                    LogUtil.Error(string.Format("HttpService:StatusCode :{0} ", ((HttpWebResponse)e.Response).StatusCode));
+                    LogUtil.Error(string.Format("HttpService:StatusDescription : {0}", ((HttpWebResponse)e.Response).StatusDescription));
                 }
 
             }
             catch (Exception e)
             {
-                Log.ErrorFormat("HttpService:{0}", e.ToString());
+                LogUtil.Error(string.Format("HttpService:{0}", e.ToString()));
             }
             finally
             {
@@ -244,7 +230,7 @@ namespace Lumos.WeiXinSdk
             {
                 url = BuildRequestUrl(url, textParams);
             }
-            Log.InfoFormat("请求url：{0}", url);
+            LogUtil.Info(string.Format("请求url：{0}", url));
             HttpWebRequest req = GetWebRequest(url, "GET", headerParams);
             req.ContentType = "application/x-www-form-urlencoded;charset=utf-8";
 

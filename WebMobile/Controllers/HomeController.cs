@@ -69,7 +69,7 @@ namespace WebMobile.Controllers
                         wxUserInfo.UnionId = snsUserInfo_Result.unionid;
 
 
-                        wxUserInfo = BizFactory.WxUser.CheckedUser(0, wxUserInfo, true);
+                        wxUserInfo = BizFactory.WxUser.CheckedUser(GuidUtil.New(), wxUserInfo);
                         if (wxUserInfo != null)
                         {
                             LogUtil.Info("用户Id：" + wxUserInfo.UserId);
@@ -79,7 +79,7 @@ namespace WebMobile.Controllers
                             userInfo.WxOpenId = oauth2_Result.openid;
                             userInfo.WxAccessToken = oauth2_Result.access_token;
                             SSOUtil.SetUserInfo(userInfo);
-
+                            Response.Cookies.Add(new HttpCookie(OwnRequest.SESSION_NAME, userInfo.Token));
                             if (!string.IsNullOrEmpty(returnUrl))
                             {
                                 return Redirect(returnUrl);

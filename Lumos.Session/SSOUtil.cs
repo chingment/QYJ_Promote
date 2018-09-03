@@ -13,6 +13,7 @@ namespace Lumos.Session
         {
             var session = new Session();
             session.Set(string.Format("{0}:{1}", sign, userInfo.Token), userInfo);
+
         }
 
         public static UserInfo GetUserInfo(string key)

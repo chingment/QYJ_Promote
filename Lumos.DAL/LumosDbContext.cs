@@ -31,6 +31,8 @@ namespace Lumos.DAL
 
         public IDbSet<PromoteUserCoupon>  PromoteUserCoupon { get; set; }
 
+        
+
         //public FxDbContext()
         //    : base("DefaultConnection")
         //{

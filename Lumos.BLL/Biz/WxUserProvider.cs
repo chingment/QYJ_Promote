@@ -15,158 +15,91 @@ namespace Lumos.BLL
     {
         private static readonly object goSettlelock = new object();
 
-        public WxUserInfo CheckedUser(int operater, WxUserInfo userInfo,bool isAuthorizationSubscribe=false)
+        public WxUserInfo CheckedUser(string pOperater, WxUserInfo pWxUserInfo)
         {
             WxUserInfo mod_UserInfo = null;
-            //LogUtil("开始检测用户信息：{0}", JsonConvert.SerializeObject(userInfo));
-            //lock (goSettlelock)
-            //{
-            //    try
-            //    {
-            //        using (TransactionScope ts = new TransactionScope())
-            //        {
-            //            mod_UserInfo = CurrentDb.WxUserInfo.Where(m => m.OpenId == userInfo.OpenId).FirstOrDefault();
-            //            if (mod_UserInfo == null)
-            //            {
-            //                var sysClientUser = new SysClientUser();
-            //                sysClientUser.UserName = string.Format("wx{0}", Guid.NewGuid().ToString().Replace("-", ""));
-            //                sysClientUser.PasswordHash = PassWordHelper.HashPassword("888888");
-            //                sysClientUser.SecurityStamp = Guid.NewGuid().ToString();
-            //                sysClientUser.RegisterTime = this.DateTime;
-            //                sysClientUser.CreateTime = this.DateTime;
-            //                sysClientUser.Creator = operater;
-            //                sysClientUser.Status = Enumeration.UserStatus.Normal;
-            //                CurrentDb.SysClientUser.Add(sysClientUser);
-            //                CurrentDb.SaveChanges();
+            LogUtil.Info(string.Format("开始检测用户信息：{0}", JsonConvert.SerializeObject(pWxUserInfo)));
+            lock (goSettlelock)
+            {
+                try
+                {
+                    using (TransactionScope ts = new TransactionScope())
+                    {
+                        mod_UserInfo = CurrentDb.WxUserInfo.Where(m => m.OpenId == pWxUserInfo.OpenId).FirstOrDefault();
+                        if (mod_UserInfo == null)
+                        {
+                            var sysClientUser = new SysClientUser();
+                            sysClientUser.Id = GuidUtil.New();
+                            sysClientUser.UserName = string.Format("wx{0}", Guid.NewGuid().ToString().Replace("-", ""));
+                            sysClientUser.PasswordHash = PassWordHelper.HashPassword("888888");
+                            sysClientUser.SecurityStamp = Guid.NewGuid().ToString();
+                            sysClientUser.RegisterTime = this.DateTime;
+                            sysClientUser.CreateTime = this.DateTime;
+                            sysClientUser.Creator = pOperater;
+                            sysClientUser.Type = Enumeration.UserType.Client;
+                            sysClientUser.Status = Enumeration.UserStatus.Normal;
+                            CurrentDb.SysClientUser.Add(sysClientUser);
+                            CurrentDb.SaveChanges();
 
-            //                mod_UserInfo = new WxUserInfo();
-            //                mod_UserInfo.UserId = sysClientUser.Id;
-            //                mod_UserInfo.OpenId = userInfo.OpenId;
-            //                mod_UserInfo.AccessToken = userInfo.AccessToken;
-            //                mod_UserInfo.ExpiresIn = userInfo.ExpiresIn;
-            //                mod_UserInfo.Nickname = userInfo.Nickname;
-            //                mod_UserInfo.Sex = userInfo.Sex;
-            //                mod_UserInfo.Province = userInfo.Province;
-            //                mod_UserInfo.City = userInfo.City;
-            //                mod_UserInfo.Country = userInfo.Country;
-            //                mod_UserInfo.HeadImgUrl = userInfo.HeadImgUrl;
-            //                mod_UserInfo.UnionId = userInfo.UnionId;
-            //                mod_UserInfo.CreateTime = this.DateTime;
-            //                mod_UserInfo.Creator = operater;
-            //                mod_UserInfo.Mobile = userInfo.Mobile;
-            //                mod_UserInfo.Referee = userInfo.Referee;
-            //                mod_UserInfo.NearStoreId = userInfo.NearStoreId;
+                            mod_UserInfo = new WxUserInfo();
+                            mod_UserInfo.Id = GuidUtil.New();
+                            mod_UserInfo.UserId = sysClientUser.Id;
+                            mod_UserInfo.OpenId = pWxUserInfo.OpenId;
+                            mod_UserInfo.AccessToken = pWxUserInfo.AccessToken;
+                            mod_UserInfo.ExpiresIn = pWxUserInfo.ExpiresIn;
+                            mod_UserInfo.Nickname = pWxUserInfo.Nickname;
+                            mod_UserInfo.Sex = pWxUserInfo.Sex;
+                            mod_UserInfo.Province = pWxUserInfo.Province;
+                            mod_UserInfo.City = pWxUserInfo.City;
+                            mod_UserInfo.Country = pWxUserInfo.Country;
+                            mod_UserInfo.HeadImgUrl = pWxUserInfo.HeadImgUrl;
+                            mod_UserInfo.UnionId = pWxUserInfo.UnionId;
+                            mod_UserInfo.CreateTime = this.DateTime;
+                            mod_UserInfo.Creator = pOperater;
+                            CurrentDb.WxUserInfo.Add(mod_UserInfo);
+                            CurrentDb.SaveChanges();
 
-            //                if (isAuthorizationSubscribe)//通过“允许XXX获取用户资料订阅”
-            //                {
-            //                    userInfo.InfoFrom = Enumeration.WxUserInfoFrom.Subscribe;
-            //                    userInfo.IsSubscribed = true;
-            //                }
-
-            //                if (userInfo.InfoFrom == Enumeration.WxUserInfoFrom.Subscribe)
-            //                {
-            //                    mod_UserInfo.IsSubscribed = userInfo.IsSubscribed;
-            //                }
-
-            //                mod_UserInfo.InfoFrom = userInfo.InfoFrom;
-            //                CurrentDb.WxUserInfo.Add(mod_UserInfo);
-            //                CurrentDb.SaveChanges();
-            //            }
-            //            else
-            //            {
-            //                mod_UserInfo.AccessToken = userInfo.AccessToken;
-            //                mod_UserInfo.ExpiresIn = userInfo.ExpiresIn;
-            //                mod_UserInfo.Nickname = userInfo.Nickname;
-            //                mod_UserInfo.Sex = userInfo.Sex;
-            //                mod_UserInfo.Province = userInfo.Province;
-            //                mod_UserInfo.City = userInfo.City;
-            //                mod_UserInfo.Country = userInfo.Country;
-            //                mod_UserInfo.HeadImgUrl = userInfo.HeadImgUrl;
-            //                mod_UserInfo.UnionId = userInfo.UnionId;
-            //                mod_UserInfo.InfoFrom = userInfo.InfoFrom;
-            //                mod_UserInfo.LastUpdateTime = this.DateTime;
-            //                mod_UserInfo.Mender = operater;
+                            var fund = new Fund();
+                            fund.Id = GuidUtil.New();
+                            fund.UserId = sysClientUser.Id;
+                            fund.Balance = 0;
+                            fund.CreateTime = this.DateTime;
+                            fund.Creator = pOperater;
+                            CurrentDb.Fund.Add(fund);
+                            CurrentDb.SaveChanges();
+                        }
+                        else
+                        {
+                            mod_UserInfo.AccessToken = pWxUserInfo.AccessToken;
+                            mod_UserInfo.ExpiresIn = pWxUserInfo.ExpiresIn;
+                            mod_UserInfo.Nickname = pWxUserInfo.Nickname;
+                            mod_UserInfo.Sex = pWxUserInfo.Sex;
+                            mod_UserInfo.Province = pWxUserInfo.Province;
+                            mod_UserInfo.City = pWxUserInfo.City;
+                            mod_UserInfo.Country = pWxUserInfo.Country;
+                            mod_UserInfo.HeadImgUrl = pWxUserInfo.HeadImgUrl;
+                            mod_UserInfo.UnionId = pWxUserInfo.UnionId;
+                            mod_UserInfo.MendTime = this.DateTime;
+                            mod_UserInfo.Mender = pOperater;
 
 
-            //                if (mod_UserInfo.NearStoreId == 0)
-            //                {
-            //                    mod_UserInfo.NearStoreId = userInfo.NearStoreId;
-            //                }
 
-            //                if (userInfo.InfoFrom == Enumeration.WxUserInfoFrom.Subscribe)
-            //                {
-            //                    mod_UserInfo.IsSubscribed = userInfo.IsSubscribed;
-            //                }
-            //            }
-
-            //            if (userInfo.InfoFrom == Enumeration.WxUserInfoFrom.Subscribe)
-            //            {
-            //                if (userInfo.IsSubscribed)
-            //                {
-            //                    if (mod_UserInfo.FirstSubTime == null)
-            //                    {
-            //                        if (userInfo.FirstSubTime != null)
-            //                        {
-            //                            Log.InfoFormat("关注时间（userInfo.FirstSubTime.Value）：{0}", userInfo.FirstSubTime.Value);
-            //                        }
-            //                        else
-            //                        {
-            //                            Log.InfoFormat("关注时间（this.DateTime）：{0}", this.DateTime);
-            //                        }
-            //                        //第一次关注，记录推荐人
-
-            //                        mod_UserInfo.Referee = userInfo.Referee;
-            //                        mod_UserInfo.FirstSubTime = userInfo.FirstSubTime ?? this.DateTime;
-            //                        //mod_UserInfo.NearStoreId = userInfo.NearStoreId;
-            //                        //实现自动送红包
+                        }
 
 
-            //                        string[] couponCodes = CommonAppSettingsUtil.GetWxSubCouponTmplCodes();
 
-            //                        if (couponCodes != null)
-            //                        {
-            //                            if (couponCodes.Length > 0)
-            //                            {
-            //                                foreach (var couponCode in couponCodes)
-            //                                {
-            //                                    Log.InfoFormat("系统自动领取优惠卷:{0}，领取到用户:{1}", couponCode, mod_UserInfo.UserId);
-            //                                    BizFactory.Coupon.Receive(operater, Enumeration.CouponSourceType.Receive, couponCode, mod_UserInfo.UserId, "关注领取");
-            //                                }
-            //                            }
-            //                        }
+                        CurrentDb.SaveChanges();
 
-            //                    }
-            //                    else
-            //                    {
-            //                        mod_UserInfo.LastSubTime = userInfo.LastSubTime;
-            //                    }
-            //                }
-            //                else
-            //                {
-            //                    if (mod_UserInfo.FirstCancleSubTime == null)
-            //                    {
-            //                        mod_UserInfo.FirstCancleSubTime = userInfo.FirstCancleSubTime;
-            //                    }
-            //                    else
-            //                    {
-            //                        mod_UserInfo.LastCancleSubTime = userInfo.LastCancleSubTime;
-            //                    }
-            //                }
-            //            }
+                        ts.Complete();
 
-
-            //            CurrentDb.SaveChanges();
-
-            //            ts.Complete();
-
-            //        }
-            //        Log.InfoFormat("结束检测用户信息：{0}", userInfo.OpenId);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        Log.Error("检查微信用户系统发生异常", ex);
-            //    }
-            //}
+                    }
+                    LogUtil.Info(string.Format("结束检测用户信息：{0}", pWxUserInfo.OpenId));
+                }
+                catch (Exception ex)
+                {
+                    LogUtil.Error("检查微信用户系统发生异常", ex);
+                }
+            }
 
             return mod_UserInfo;
         }
