@@ -56,9 +56,9 @@ namespace WebMobile.Controllers
             }
 
             UserInfo userInfo = new UserInfo();
+            userInfo.Token = GuidUtil.New();
             userInfo.UserId = result.User.Id;
             userInfo.UserName = result.User.UserName;
-            userInfo.Token = GuidUtil.New();
 
             SSOUtil.SetUserInfo(userInfo);
 

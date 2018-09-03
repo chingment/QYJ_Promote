@@ -21,9 +21,9 @@ namespace Lumos.Entity
         public bool IsBuy { get; set; }
         public DateTime BuyTime { get; set; }
         public bool IsGet { get; set; }
-        public DateTime GetTime { get; set; }
+        public DateTime? GetTime { get; set; }
         public bool IsConsume { get; set; }
-        public DateTime ConsumeTime { get; set; }
+        public DateTime? ConsumeTime { get; set; }
         public string Creator { get; set; }
         public DateTime CreateTime { get; set; }
         public string Mender { get; set; }

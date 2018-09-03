@@ -75,6 +75,7 @@ namespace WebMobile.Controllers
                             LogUtil.Info("用户Id：" + wxUserInfo.UserId);
 
                             UserInfo userInfo = new UserInfo();
+                            userInfo.Token = GuidUtil.New();
                             userInfo.UserId = wxUserInfo.UserId;
                             userInfo.WxOpenId = oauth2_Result.openid;
                             userInfo.WxAccessToken = oauth2_Result.access_token;
