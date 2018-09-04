@@ -319,13 +319,12 @@ namespace WebMobile.Controllers
             });
         }
 
-        const string Token = "f06d280ddf1e49378ab338fc3124cf40";
         private bool CheckSignature()
         {
             string signature = Request.QueryString["signature"].ToString();
             string timestamp = Request.QueryString["timestamp"].ToString();
             string nonce = Request.QueryString["nonce"].ToString();
-            string[] ArrTmp = { Token, timestamp, nonce };
+            string[] ArrTmp = { SdkFactory.Wx.Instance().GetNotifyEventUrlToken(), timestamp, nonce };
             Array.Sort(ArrTmp);
             string tmpStr = string.Join("", ArrTmp);
             tmpStr = FormsAuthentication.HashPasswordForStoringInConfigFile(tmpStr, "SHA1");

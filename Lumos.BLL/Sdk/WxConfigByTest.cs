@@ -17,7 +17,7 @@ namespace Lumos.BLL
         private string _sslCert_Path = "";
         private string _sslCert_Password = "1486589902";
         private string _oauth2RedirectUrl = "";
-
+        private string _notifyEventUrlToken = "";
 
         public WxConfigByTest()
         {
@@ -118,6 +118,18 @@ namespace Lumos.BLL
             set
             {
                 _oauth2RedirectUrl = value;
+            }
+        }
+
+        public string NotifyEventUrlToken
+        {
+            get
+            {
+                return _notifyEventUrlToken;
+            }
+            set
+            {
+                _notifyEventUrlToken = value;
             }
         }
     }

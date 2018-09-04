@@ -17,6 +17,7 @@ namespace Lumos.BLL
         private string _sslCert_Path = "E:\\Web\\cereson\\WebMobile\\cert\\apiclient_cert.p12";
         private string _sslCert_Password = "1486589902";
         private string _oauth2RedirectUrl = "http://mobile.17fanju.com/Home/Oauth2?returnUrl={0}";
+        private string _notifyEventUrlToken = "f06d280ddf1e49378ab338fc3124cf40";
 
 
         public WxConfigByFanJu()
@@ -118,6 +119,18 @@ namespace Lumos.BLL
             set
             {
                 _oauth2RedirectUrl = value;
+            }
+        }
+
+        public string NotifyEventUrlToken
+        {
+            get
+            {
+                return _notifyEventUrlToken;
+            }
+            set
+            {
+                _notifyEventUrlToken = value;
             }
         }
 

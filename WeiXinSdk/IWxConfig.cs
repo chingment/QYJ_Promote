@@ -16,5 +16,7 @@ namespace Lumos.WeiXinSdk
         string SslCert_Path { get; set; }
         string SslCert_Password { get; set; }
         string Oauth2RedirectUrl { get; set; }
+
+        string NotifyEventUrlToken { get; set; }
     }
 }

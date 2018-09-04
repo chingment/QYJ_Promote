@@ -15,8 +15,6 @@ namespace WebMobile.Controllers
     {
         public ActionResult Coupon(string promoteId, string refereeId)
         {
-
-
             return View();
         }
 

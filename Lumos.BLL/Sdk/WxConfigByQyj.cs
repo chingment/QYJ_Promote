@@ -14,11 +14,11 @@ namespace Lumos.BLL
         private string _appSecret = "9c827d75ccd716040ad7674d1cecd575";
         private string _mchId = "1503331631";
         private string _key = "153hcmut5t11v5h2fmnyzlzdreocqwfz";
-        private string _notify_Url = "http://mobile.17fanju.com/Home/PayResult";
+        private string _notify_Url = "http://qyj.17fanju.com/Home/PayResult";
         private string _sslCert_Path = "E:\\Web\\cereson\\WebMobile\\cert\\apiclient_cert.p12";
         private string _sslCert_Password = "1503331631";
-        private string _oauth2RedirectUrl = "http://mobile.17fanju.com/Home/Oauth2?returnUrl={0}";
-
+        private string _oauth2RedirectUrl = "http://qyj.17fanju.com/Home/Oauth2?returnUrl={0}";
+        private string _notifyEventUrlToken = "q92s52no875Kg8S91n574122SS570ssn";
 
         public WxConfigByQyj()
         {
@@ -119,6 +119,18 @@ namespace Lumos.BLL
             set
             {
                 _oauth2RedirectUrl = value;
+            }
+        }
+
+        public string NotifyEventUrlToken
+        {
+            get
+            {
+                return _notifyEventUrlToken;
+            }
+            set
+            {
+                _notifyEventUrlToken = value;
             }
         }
     }

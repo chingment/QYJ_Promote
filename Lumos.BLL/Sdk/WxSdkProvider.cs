@@ -20,7 +20,7 @@ namespace Lumos.BLL
         public WxSdkProvider Instance()
         {
             WxSdkProvider p = new WxSdkProvider();
-            p.Config = new WxConfigByFanJu();
+            p.Config = new WxConfigByQyj();
             //switch (merchantId)
             //{
             //    case 1:
@@ -117,6 +117,11 @@ namespace Lumos.BLL
             JsApiPayParams parms = new JsApiPayParams(wxConfig.AppId, wxConfig.Key, prepayId, orderId, orderSn);
 
             return new CustomJsonResult(ResultType.Success, ResultCode.Success, "", parms);
+        }
+
+        public string GetNotifyEventUrlToken()
+        {
+            return wxConfig.NotifyEventUrlToken;
         }
 
         public string GetCardApiTicket()
