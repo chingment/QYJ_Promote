@@ -349,6 +349,7 @@ namespace WebMobile.Controllers
                 promoteUser.Id = GuidUtil.New();
                 promoteUser.PromoteId = promoteId;
                 promoteUser.UserId = userId;
+                promoteUser.PUserId = null;
                 promoteUser.IsAgent = true;
                 promoteUser.CreateTime = DateTime.Now;
                 promoteUser.Creator = userId;
