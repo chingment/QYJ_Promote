@@ -12,7 +12,7 @@ namespace WebMobile.Controllers
 
     public class PromoteController : OwnBaseController
     {
-        public ActionResult Coupon(string id)
+        public ActionResult Coupon(string promoteId, string refereeId)
         {
             return View();
         }

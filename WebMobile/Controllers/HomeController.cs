@@ -237,7 +237,7 @@ namespace WebMobile.Controllers
                                         #region  USER_GET_CARD
                                         var userGetCardMsg = (UserGetCardMsg)baseEventMsg;
 
-                                        var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.UserId == wxUserInfo.UserId).FirstOrDefault();
+                                        var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.UserId == wxUserInfo.UserId && m.WxCouponId == userGetCardMsg.CardId).FirstOrDefault();
 
                                         if (promoteUserCoupon != null)
                                         {

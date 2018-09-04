@@ -9,14 +9,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Lumos.Entity
 {
-    [Table("PromoteProfitRate")]
-    public class PromoteProfitRate
+    [Table("PromoteProfitSet")]
+    public class PromoteProfitSet
     {
         [Key]
         public string Id { get; set; }
         public string PromoteId { get; set; }
+        public Enumeration.PromoteProfitSetValueType ValueType { get; set; }
+        public decimal Value { get; set; }
         public int Dept { get; set; }
-        public decimal Rate { get; set; }
         public string Creator { get; set; }
         public DateTime CreateTime { get; set; }
     }

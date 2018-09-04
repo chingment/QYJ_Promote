@@ -95,5 +95,13 @@ namespace Lumos.Entity
             [Remark("提现")]
             Wtihdraw = 3
         }
+
+        public enum PromoteProfitSetValueType
+        {
+            [Remark("未知")]
+            Unknow = 0,
+            [Remark("固定金额")]
+            FixedAmount = 1
+        }
     }
 }
