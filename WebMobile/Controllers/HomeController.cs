@@ -15,6 +15,10 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Lumos;
 using Lumos.Session;
+using ZXing;
+using ZXing.QrCode;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace WebMobile.Controllers
 {
@@ -213,7 +217,8 @@ namespace WebMobile.Controllers
 
                                     if (textMsg.Content == "秒杀券" || textMsg.Content == "秒杀卷" || textMsg.Content == "秒杀劵")
                                     {
-                                        echoStr = WxMsgFactory.CreateReplyImage(baseEventMsg.FromUserName, baseEventMsg.ToUserName, "F463ssMKekqTeri5Ke4rrTz-YwkTh4zyTFJmPCmevjEg2QiCrVSofj3-KwGx41c4");
+                                        string media_Id = GetWxPromoteImgMediaId("a999753c5fe14e26bbecad576b6a6909", wxUserInfo.UserId);
+                                        echoStr = WxMsgFactory.CreateReplyImage(baseEventMsg.FromUserName, baseEventMsg.ToUserName, media_Id);
                                     }
 
                                 }
@@ -334,5 +339,67 @@ namespace WebMobile.Controllers
                 return false;
             }
         }
+
+        public string GetWxPromoteImgMediaId(string promoteId, string userId)
+        {
+            var promoteUser = CurrentDb.PromoteUser.Where(m => m.PromoteId == promoteId && m.UserId == userId).FirstOrDefault();
+            if (promoteUser == null)
+            {
+                promoteUser = new PromoteUser();
+                promoteUser.Id = GuidUtil.New();
+                promoteUser.PromoteId = promoteId;
+                promoteUser.UserId = userId;
+                promoteUser.IsAgent = true;
+                promoteUser.CreateTime = DateTime.Now;
+                promoteUser.Creator = userId;
+                CurrentDb.PromoteUser.Add(promoteUser);
+                CurrentDb.SaveChanges();
+            }
+
+            if (string.IsNullOrEmpty(promoteUser.WxPromoteImgMediaId))
+            {
+                System.Drawing.Image oImg = System.Drawing.Image.FromFile(Server.MapPath("~/Static/Promote/promote_bg_1.jpg"));
+                BarcodeWriter writer = new BarcodeWriter();
+                writer.Format = BarcodeFormat.QR_CODE;
+                QrCodeEncodingOptions options = new QrCodeEncodingOptions();
+                options.DisableECI = true;
+                //设置内容编码
+                options.CharacterSet = "UTF-8";
+                //设置二维码的宽度和高度
+                options.Width = 500;
+                options.Height = 500;
+                //设置二维码的边距,单位不是固定像素
+                options.Margin = 1;
+                writer.Options = options;
+                System.Drawing.Image oImg1 = writer.Write(string.Format("http://qyj.17fanju.com/Promote/Coupon?promoteId={0}&refereeId={1}", promoteId, userId));
+                System.Drawing.Bitmap map = new Bitmap(oImg);
+                oImg.Dispose();
+                Graphics g = Graphics.FromImage(map);
+                g.InterpolationMode = InterpolationMode.HighQualityBilinear;
+                SolidBrush brush = new SolidBrush(Color.Green);
+                PointF P = new PointF(100, 100);
+                Font f = new Font("Arial", 20);
+                g.DrawImage(oImg1, 75, 540, 77, 77);//画二维码图片          
+
+                string path = Server.MapPath("~/Static/Promote/User/") + GuidUtil.New() + ".jpg";
+
+                map.Save(path, System.Drawing.Imaging.ImageFormat.Jpeg);
+                f.Dispose();
+                g.Dispose();
+
+                string media_Id = SdkFactory.Wx.Instance().UploadMultimediaImage(path);
+
+                promoteUser.WxPromoteImgMediaId = media_Id;
+                CurrentDb.SaveChanges();
+
+                return media_Id;
+            }
+            else
+            {
+                return promoteUser.WxPromoteImgMediaId;
+            }
+
+        }
+
     }
 }

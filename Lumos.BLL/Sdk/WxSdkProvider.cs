@@ -119,6 +119,12 @@ namespace Lumos.BLL
             return new CustomJsonResult(ResultType.Success, ResultCode.Success, "", parms);
         }
 
+        public string GetCardApiTicket()
+        {
+            string cardApiTicket = WxUntil.GetInstance().GetCardApiTicket(wxConfig.AppId, wxConfig.AppSecret);
+            return cardApiTicket;
+        }
+
 
         public string UploadMultimediaImage(string imageUrl)
         {

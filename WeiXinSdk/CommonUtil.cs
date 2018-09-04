@@ -32,7 +32,7 @@ namespace Lumos.WeiXinSdk
 
                 }
 
-                if (pair.Key != "sign" && pair.Value!=null&& pair.Value.ToString() != "")
+                if (pair.Key != "sign" && pair.Value != null && pair.Value.ToString() != "")
                 {
                     buff += pair.Key + "=" + pair.Value + "&";
                 }
@@ -96,6 +96,38 @@ namespace Lumos.WeiXinSdk
             return paySign;
         }
 
+
+        public static string MakeCardSign(Dictionary<string, string> parameters)
+        {
+            StringBuilder sb = new StringBuilder();
+
+
+            var vDic = parameters.OrderBy(o => o.Value);
+
+
+            foreach (KeyValuePair<string, string> k in vDic)
+            {
+                sb.Append(k.Value);
+            }
+
+
+            //var vDic = (from objDic in parameters orderby objDic.Value ascending select objDic);
+
+            //建立SHA1对象
+            SHA1 sha = new SHA1CryptoServiceProvider();
+            //将mystr转换成byte[] 
+            ASCIIEncoding enc = new ASCIIEncoding();
+            byte[] dataToHash = enc.GetBytes(sb.ToString());
+            //Hash运算
+            byte[] dataHashed = sha.ComputeHash(dataToHash);
+            //将运算结果转换成string
+            string hash = BitConverter.ToString(dataHashed).Replace("-", "");
+
+            string paySign = hash.ToLower();
+
+            return paySign;
+        }
+
         public static SortedDictionary<string, object> ToDictionary(string xml)
         {
             SortedDictionary<string, object> m_values = new SortedDictionary<string, object>();
@@ -118,7 +150,7 @@ namespace Lumos.WeiXinSdk
             }
 
             return m_values;
-        } 
-     
+        }
+
     }
 }

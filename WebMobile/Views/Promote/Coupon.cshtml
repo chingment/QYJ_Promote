@@ -18,11 +18,9 @@
                 function () {
                     var _this = $(this);
 
-
                     $(_this).attr("disabled", "disabled");
 
                     var _data = $('#form1').serializeArray();
-
 
                     $.lumos.postJson({
                         url: "/Promote/UnifiedOrder",
@@ -33,8 +31,6 @@
 
                                 var params = d.data;
 
-                                $('#Model_OrderSn').val(params.orderSn);
-
                                 wx.chooseWXPay({
                                     appId: params.appId,
                                     timestamp: params.timestamp,
@@ -44,6 +40,7 @@
                                     paySign: params.paySign,
                                     success: function (res) {
                                         $.lumos.tips('您已支付成功');
+                                        payResultNotify(params.orderSn, res.errMsg, "/Promote/PayResult?isSuccessed=True&orderSn=" + params.orderSn);
                                     },
                                     cancel: function (res) {
                                         $.lumos.tips('您已取消支付');
@@ -59,5 +56,22 @@
 
 
         });
+
+
+
+        function payResultNotify(orderSn, res, url) {
+
+            $.lumos.postJson({
+                url: "/Promote/PayNotifyResult",
+                data: { orderSn: orderSn, res: res },
+                success: function (d) {
+                    if (d.result == $.lumos.resultType.success) {
+                        if (url != "") {
+                            window.location.href = url;
+                        }
+                    }
+                }
+            });
+        }
     </script>
 }

@@ -52,6 +52,8 @@
     <Compile Include="Get\IWxApiGetRequest.cs" />
     <Compile Include="Get\WxApiAccessToken.cs" />
     <Compile Include="Get\WxApiAccessTokenResult.cs" />
+    <Compile Include="Get\WxApiGetCardApiTicket.cs" />
+    <Compile Include="Get\WxApiGetCardApiTicketResult.cs" />
     <Compile Include="Get\WxApiJsApiTicket.cs" />
     <Compile Include="Get\WxApiJsApiTicketResult.cs" />
     <Compile Include="Get\WxApiSnsOauth2AccessToken.cs" />
@@ -112,6 +114,7 @@
     <Compile Include="Utils\WebUtils.cs" />
     <Compile Include="WxApi.cs" />
     <Compile Include="WxApiBaseResult.cs" />
+    <Compile Include="Model\WxCard.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Post\Model\" />

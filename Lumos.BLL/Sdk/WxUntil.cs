@@ -123,5 +123,45 @@ namespace Lumos.BLL
 
         }
 
+
+        public string GetCardApiTicket(string appId, string appSecret)
+        {
+
+            string key = string.Format("Wx_AppId_{0}_CardApiTicket", appId);
+
+            var redis = new RedisClient<string>();
+            var jsApiTicket = redis.KGetString(key);
+
+            if (jsApiTicket == null)
+            {
+                WxApi c = new WxApi();
+
+                string access_token = GetAccessToken(appId, appSecret);
+
+                var wxApiGetCardApiTicket = new WxApiGetCardApiTicket(access_token);
+
+                var wxApiGetCardApiTicketResult = c.DoGet(wxApiGetCardApiTicket);
+                if (string.IsNullOrEmpty(wxApiGetCardApiTicketResult.ticket))
+                {
+                    log.InfoFormat("获取微信JsApiTicket，key：{0}，已过期，Api重新获取失败", key);
+                }
+                else
+                {
+                    log.InfoFormat("获取微信JsApiTicket，key：{0}，value：{1}，已过期，重新获取成功", key, wxApiGetCardApiTicketResult.ticket);
+
+                    jsApiTicket = wxApiGetCardApiTicketResult.ticket;
+
+                    redis.KSet(key, jsApiTicket, new TimeSpan(0, 30, 0));
+                }
+            }
+            else
+            {
+                log.InfoFormat("获取微信JsApiTicket，key：{0}，value：{1}", key, jsApiTicket);
+            }
+
+            return jsApiTicket;
+
+        }
+
     }
 }

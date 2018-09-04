@@ -48,6 +48,15 @@ namespace Lumos.WeiXinSdk
             return snsUserInfo_Result;
         }
 
+        public static WxApiGetCardApiTicketResult GetCardApiTicket(string accessToken)
+        {
+            var api = new WxApi();
+            var getCardApiTicket = new WxApiGetCardApiTicket(accessToken);
+            var getCardApiTicket_Result = api.DoGet(getCardApiTicket);
+            return getCardApiTicket_Result;
+        }
+
+
         public static List<string> GetUserOpenIds(string accessToken)
         {
             var opendIds = new List<string>();

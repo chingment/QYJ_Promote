@@ -194,6 +194,7 @@ namespace Lumos.BLL
                     mod_OrderNotifyLog.OrderId = order.Id;
                     mod_OrderNotifyLog.OrderSn = order.Sn;
                 }
+                mod_OrderNotifyLog.Id = GuidUtil.New();
                 mod_OrderNotifyLog.NotifyContent = content;
                 mod_OrderNotifyLog.NotifyFrom = from;
                 mod_OrderNotifyLog.NotifyType = Enumeration.OrderNotifyLogNotifyType.Pay;

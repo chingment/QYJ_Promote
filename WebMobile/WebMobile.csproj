@@ -150,6 +150,12 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="zxing">
+      <HintPath>..\..\QYJ_Promote\packages\ZXing.Net.0.16.0\lib\net45\zxing.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing.presentation">
+      <HintPath>..\..\QYJ_Promote\packages\ZXing.Net.0.16.0\lib\net45\zxing.presentation.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Owin">
@@ -185,6 +191,7 @@
     <None Include="log4net.config">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="index.html" />
     <Content Include="Scripts\jquery-1.8.3.js" />
     <Content Include="Scripts\jquery-1.8.3.min.js" />
     <Content Include="Scripts\jquery.lumos.mobile.1.0.0.js" />
@@ -197,6 +204,7 @@
     <Content Include="Views\Home\NotifyEvent.cshtml" />
     <Content Include="Views\Home\Oauth2.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Promote\PayResult.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>

@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "Coupon";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Coupon</h2>
+
+<input type="button" value="领取代金卷到卡包" id="btn_GetCoupon" class="btn" />
+
+@section scripts{
+    <script type="text/javascript">
+
+        $(function () {
+
+
+
+
+
+            //调起支付
+            $("#btn_GetCoupon").on("click",
+                function () {
+                    var _this = $(this);
+
+                    $.lumos.postJson({
+                        url: "/Promote/GetCardList",
+                        data: { promoteId: "a999753c5fe14e26bbecad576b6a6909" },
+                        success: function (d) {
+
+                            //alert(JSON.stringify(d));
+
+                            var cards = d.data;
+
+                           // alert(JSON.stringify(cards));
+
+                            var cardList = [];
+
+                            for (var p in cards) {//遍历json数组时，这么写p为索引，0,1
+                                //alert(cards[p].cardId);
+
+                                cardList.push({cardId:cards[p].cardId,cardExt:cards[p].cardExt});
+                            }
+
+                            //alert(JSON.stringify(cardList))
+
+                            //cardList.push({})
+
+                            wx.addCard({
+                                cardList: cardList,
+                                success: function (res) {
+                                    alert('已添加卡券：' + JSON.stringify(res.cardList));
+                                },
+                                cancel: function (res) {
+                                    alert(JSON.stringify(res))
+                                }
+                            });
+
+                        }
+                    });
+
+
+
+
+
+                });
+
+
+        });
+
+    </script>
+}

@@ -20,5 +20,7 @@ namespace Lumos.Entity
         public bool IsAgent { get; set; }
         public string Creator { get; set; }
         public DateTime CreateTime { get; set; }
+
+        public string WxPromoteImgMediaId { get; set; }
     }
 }
