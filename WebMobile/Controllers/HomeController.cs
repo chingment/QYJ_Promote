@@ -217,7 +217,8 @@ namespace WebMobile.Controllers
 
                                     if (textMsg.Content == "秒杀券" || textMsg.Content == "秒杀卷" || textMsg.Content == "秒杀劵")
                                     {
-                                        string media_Id = GetWxPromoteImgMediaId("a999753c5fe14e26bbecad576b6a6909", wxUserInfo.UserId);
+                                        string promoteId = "a999753c5fe14e26bbecad576b6a6909";
+                                        string media_Id = GetWxPromoteImgMediaId(promoteId, wxUserInfo.UserId);
                                         echoStr = WxMsgFactory.CreateReplyImage(baseEventMsg.FromUserName, baseEventMsg.ToUserName, media_Id);
                                     }
 
@@ -389,7 +390,7 @@ namespace WebMobile.Controllers
                 g.Dispose();
 
                 string media_Id = SdkFactory.Wx.Instance().UploadMultimediaImage(path);
-                promoteUser.WxPromoteImgUrl = string.Format("http://qyj.17fanju.com/Static/Promote/User/{0}.jpg", key);
+                promoteUser.PromoteImgUrl = string.Format("http://qyj.17fanju.com/Static/Promote/User/{0}.jpg", key);
                 promoteUser.WxPromoteImgMediaId = media_Id;
                 CurrentDb.SaveChanges();
 
