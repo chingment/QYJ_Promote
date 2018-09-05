@@ -189,6 +189,16 @@
     <Content Include="Content\images\promote20180910\btn_personal.png" />
     <Content Include="Content\images\promote20180910\btn_buy.png" />
     <Content Include="Content\images\promote20180910\btn_invite.png" />
+    <Content Include="Content\images\promote20180910\bg_01.jpg" />
+    <Content Include="Content\images\promote20180910\bg_02.jpg" />
+    <Content Include="Content\images\promote20180910\bg_03.jpg" />
+    <Content Include="Content\images\promote20180910\bg_04.jpg" />
+    <Content Include="Content\images\promote20180910\bg_suc_01.jpg" />
+    <Content Include="Content\images\promote20180910\bg_suc_02.jpg" />
+    <Content Include="Content\images\promote20180910\bg_suc_03.jpg" />
+    <Content Include="Content\images\promote20180910\bg_suc_04.jpg" />
+    <Content Include="Content\images\promote20180910\btn_opencoupon.png" />
+    <Content Include="Content\images\promote20180910\btn_getcoupon.png" />
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

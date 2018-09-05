@@ -3,7 +3,56 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Coupon</h2>
+@section styles{
+    <style type="text/css">
+        body {
+            /*background-image: url(~/Static/Promote/promote_a999753c5fe14e26bbecad576b6a6909.jpg);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;*/
+        }
+
+        img {
+            border: 0px;
+            padding: 0px;
+            margin: 0px;
+            display: inherit;
+            width: 100%;
+        }
+    </style>
+
+}
+
+<div class="gbr gbr-main">
+
+    <div>
+        <img src="~/Content/images/promote20180910/bg_suc_01.jpg" />
+    </div>
+    <div style="position: relative;">
+        <img src="~/Content/images/promote20180910/bg_suc_02.jpg" />
+
+
+        <div style="position: absolute;width:100%;top:0px;text-align: center;">
+                <img id="btn_GetCoupon" src="~/Content/images/promote20180910/btn_getcoupon.png" style="width:100px;margin-right:15px;display: inline-block" />
+        </div>
+
+
+    </div>
+    <div>
+        <img src="~/Content/images/promote20180910/bg_suc_03.jpg" />
+    </div>
+    <div style="position: relative;">
+        <img src="~/Content/images/promote20180910/bg_suc_04.jpg" />
+
+
+        <div style="position: absolute;width:100%;top:0px;text-align: center;">
+            <img id="btn_GoPersonal" src="~/Content/images/promote20180910/btn_invite.png" style="width:100px;display: inline-block;" />
+        </div>
+
+       
+
+
+    </div>
+</div>
 
 <input type="button" value="领取代金卷到卡包" id="btn_GetCoupon" class="btn" />
 
