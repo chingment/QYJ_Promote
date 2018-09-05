@@ -23,11 +23,12 @@
     <div style="position: relative;">
         <img src="~/Content/images/promote20180910/bg_suc_04.jpg" />
 
-
-        <div style="position: absolute;width:100%;top:0px;text-align: center;">
-            <img id="btn_GoPersonal" src="~/Content/images/promote20180910/btn_invite.png" style="width:100px;display: inline-block;" />
-        </div>
-
+        @if (Model.PromoteIsEnd)
+        {
+            <div style="position: absolute;width:100%;top:0px;text-align: center;">
+                <img id="btn_GoPersonal" src="~/Content/images/promote20180910/btn_invite.png" style="width:100px;display: inline-block;" />
+            </div>
+        }
 
 
 

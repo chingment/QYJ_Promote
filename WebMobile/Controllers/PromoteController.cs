@@ -35,7 +35,7 @@ namespace WebMobile.Controllers
             {
                 if (promote.EndTime < DateTime.Now)
                 {
-                    model.IsEnd = true;
+                    model.PromoteIsEnd = true;
                 }
             }
 
@@ -44,7 +44,31 @@ namespace WebMobile.Controllers
 
         public ActionResult PayResult(string promoteId, string orderSn, bool isSuccessed = false)
         {
-            return View();
+            var model = new PayResultViewModel();
+
+
+            model.PromoteId = promoteId;
+            model.OrderSn = orderSn;
+            model.IsSuccessed = isSuccessed;
+
+
+            var promote = CurrentDb.Promote.Where(m => m.Id == model.PromoteId).FirstOrDefault();
+            if (promote != null)
+            {
+                if (promote.EndTime < DateTime.Now)
+                {
+                    model.PromoteIsEnd = true;
+                }
+            }
+
+            var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.PromoteId == model.PromoteId && m.UserId == this.CurrentUserId).FirstOrDefault();
+
+            if (promoteUserCoupon != null)
+            {
+                model.IsGetCoupon = promoteUserCoupon.IsGet;
+            }
+
+            return View(model);
         }
 
         [HttpPost]

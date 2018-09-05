@@ -11,8 +11,10 @@ namespace WebMobile.Models.Promote
 
         public string OrderSn { get; set; }
 
-        public string IsSuccessed { get; set; }
+        public bool IsSuccessed { get; set; }
 
-        public string IsGetCoupon { get; set; }
+        public bool IsGetCoupon { get; set; }
+
+        public bool PromoteIsEnd { get; set; }
     }
 }
