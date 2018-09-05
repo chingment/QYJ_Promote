@@ -10,16 +10,9 @@
     <div style="position: relative;">
         <img src="~/Content/images/promote20180910/bg_suc_02.jpg" />
 
-
         <div style="position: absolute;width:100%;top:0px;text-align: center;">
-            @if (Model.IsGetCoupon)
-            {
-                <img id="btn_OpenCoupon" src="~/Content/images/promote20180910/btn_opencoupon.png" style="width:100px;margin-right:15px;display: inline-block;" />
-            }
-            else
-            {
-                <img id="btn_GetCoupon" src="~/Content/images/promote20180910/btn_getcoupon.png" style="width:100px;margin-right:15px;display: inline-block;" />
-            }
+            <img id="btn_OpenCoupon" src="~/Content/images/promote20180910/btn_opencoupon.png" style="width:100px;margin-right:15px;display: inline-block;display:none;" />
+            <img id="btn_GetCoupon" src="~/Content/images/promote20180910/btn_getcoupon.png" style="width:100px;margin-right:15px;display: inline-block;" />
         </div>
 
 
@@ -48,6 +41,16 @@
 
             var promoteId = "@Model.PromoteId";
             var refereeId = "@(OwnRequest.GetUserInfo().UserId)";
+            var isGetCoupon=@(Model.IsGetCoupon==true?"true":"false");
+
+            if(isGetCoupon=="true") {
+                $('#btn_OpenCoupon').show();
+                $('#btn_GetCoupon').hide();
+            }
+            else  {
+                $('#btn_OpenCoupon').hide();
+                $('#btn_GetCoupon').show();
+            }
 
             $("#btn_GetCoupon").on("click",
                 function () {
