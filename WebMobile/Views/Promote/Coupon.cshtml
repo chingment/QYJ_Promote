@@ -1,26 +1,6 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "全优加放大招啦！9.10元秒杀代金券";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-@section styles{
-    <style type="text/css">
-        body {
-            /*background-image: url(~/Static/Promote/promote_a999753c5fe14e26bbecad576b6a6909.jpg);
-            background-repeat: no-repeat;
-            background-size: 100% 100%;*/
-        }
-
-        img {
-            border: 0px;
-            padding: 0px;
-            margin: 0px;
-            display: inherit;
-            width: 100%;
-        }
-    </style>
-
 }
 
 <div class="gbr gbr-main">
@@ -37,7 +17,7 @@
                 <img id="btn_GoPay" src="~/Content/images/promote20180910/btn_buy.png" style="width:100px;margin-right:15px;display: inline-block" />
             </div>
             <div style="width:50%;float:left;text-align:left;">
-                <img src="~/Content/images/promote20180910/btn_invite.png" style="width:100px;margin-left:15px;display: inline-block" />
+                <img id="btn_GoInvite" src="~/Content/images/promote20180910/btn_invite.png" style="width:100px;margin-left:15px;display: inline-block" />
             </div>
         </div>
 
@@ -57,12 +37,12 @@
     </div>
 </div>
 
+
 @section scripts{
     <script type="text/javascript">
 
         $(function () {
 
-            //调起支付
             $("#btn_GoPay").on("click",
                 function () {
                     var _this = $(this);
@@ -103,12 +83,29 @@
                     });
                 });
 
-
-
             $('#btn_GoPersonal').on("click", function () {
 
                 $.lumos.tips("该功能9月15日开通敬请期待！")
             });
+
+            $('#btn_GoInvite').on("click",
+             function () {
+                
+                 var scrollTop = document.body.scrollTop;//网页被卷去的高
+                 $("#modal_Invite").css({ top: scrollTop + "px" });
+                 $("#modal_Invite").show();
+                 $("#share_container").show();
+
+                 $('#modal_Invite').bind("touchmove",
+                     function (e) {
+                         e.preventDefault();
+                     });
+                 $("#modal_Invite").bind("mousewheel",
+                     function (e) {
+                         //阻止浏览器默认方法
+                         e.preventDefault();
+                     });
+             });
 
         });
 

@@ -2,28 +2,7 @@
     ViewBag.Title = "恭喜您，抢购成功";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-@section styles{
-    <style type="text/css">
-        body {
-            /*background-image: url(~/Static/Promote/promote_a999753c5fe14e26bbecad576b6a6909.jpg);
-            background-repeat: no-repeat;
-            background-size: 100% 100%;*/
-        }
-
-        img {
-            border: 0px;
-            padding: 0px;
-            margin: 0px;
-            display: inherit;
-            width: 100%;
-        }
-    </style>
-
-}
-
 <div class="gbr gbr-main">
-
     <div>
         <img src="~/Content/images/promote20180910/bg_suc_01.jpg" />
     </div>
@@ -62,8 +41,52 @@
     <script type="text/javascript">
 
         $(function () {
-
             var promoteId = "a999753c5fe14e26bbecad576b6a6909";
+            var refereeId = "b999753c5fe14e26bbecad576b6a6909";
+
+            var shareTitle = '全优加放大招啦！';
+            var shareDesc = '9.10秒杀代金券7200元';
+            var shareLink = 'http://mobile.17fanju.com/Promote/Coupon?promoteId=' + promoteId + '&refereeId=' + refereeId;
+            var shareImgUrl = 'http://mobile.17fanju.com/Content/images/promote20180910/share_icon.jpg';
+            wx.ready(function () {
+
+
+                wx.onMenuShareAppMessage({
+                    title: shareTitle,
+                    desc: shareDesc,
+                    link: shareLink,
+                    imgUrl: shareImgUrl,
+                    trigger: function (res) {
+                    },
+                    success: function (res) {
+
+                    },
+                    cancel: function (res) {
+
+                    },
+                    fail: function (res) {
+                    }
+                });
+
+                wx.onMenuShareTimeline({
+                    title: shareTitle,
+                    link: shareLink,
+                    imgUrl: shareImgUrl,
+                    trigger: function (res) {
+
+                    },
+                    success: function (res) {
+
+                    },
+                    cancel: function (res) {
+
+                    },
+                    fail: function (res) {
+
+                    }
+                });
+
+            });
 
             $("#btn_GetCoupon").on("click",
                 function () {

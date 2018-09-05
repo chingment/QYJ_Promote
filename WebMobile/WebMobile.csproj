@@ -199,6 +199,8 @@
     <Content Include="Content\images\promote20180910\bg_suc_04.jpg" />
     <Content Include="Content\images\promote20180910\btn_opencoupon.png" />
     <Content Include="Content\images\promote20180910\btn_getcoupon.png" />
+    <Content Include="Content\images\promote20180910\share_fly.png" />
+    <Content Include="Content\images\promote20180910\share_icon.png" />
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
