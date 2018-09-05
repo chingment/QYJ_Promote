@@ -144,7 +144,7 @@ namespace WebMobile.Controllers
                     WxCard card = new WxCard();
                     card.cardId = card_id;
                     card.cardExt = Newtonsoft.Json.JsonConvert.SerializeObject(cardExt);
-                    //card.code = item.WxCouponOpenCode;
+                    card.code = item.WxCouponOpenCode;
                     cardList.Add(card);
                 }
 

@@ -12,7 +12,14 @@
 
 
         <div style="position: absolute;width:100%;top:0px;text-align: center;">
-            <img id="btn_GetCoupon" src="~/Content/images/promote20180910/btn_getcoupon.png" style="width:100px;margin-right:15px;display: inline-block" />
+            @if (Model.IsGetCoupon)
+            {
+                <img id="btn_OpenCoupon" src="~/Content/images/promote20180910/btn_opencoupon.png" style="width:100px;margin-right:15px;display: inline-block;" />
+            }
+            else
+            {
+                <img id="btn_GetCoupon" src="~/Content/images/promote20180910/btn_getcoupon.png" style="width:100px;margin-right:15px;display: inline-block;" />
+            }
         </div>
 
 
@@ -61,6 +68,8 @@
                                 cardList: cardList,
                                 success: function (res) {
                                     $.lumos.tips('成功领取卡券');
+                                    $('#btn_OpenCoupon').show();
+                                    $('#btn_GetCoupon').hide();
                                     addCouponNotifyResult(cardList);
                                 },
                                 cancel: function (res) {
