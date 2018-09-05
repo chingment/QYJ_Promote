@@ -5,12 +5,14 @@ using System.Web;
 
 namespace WebMobile.Models.Promote
 {
-    public class CouponViewModel
+    public class PayResultViewModel
     {
         public string PromoteId { get; set; }
 
-        public string PromoteCouponId { get; set; }
+        public string OrderSn { get; set; }
 
-        public bool IsEnd { get; set; }
+        public string IsSuccessed { get; set; }
+
+        public string IsGetCoupon { get; set; }
     }
 }

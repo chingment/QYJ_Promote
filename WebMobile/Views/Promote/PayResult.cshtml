@@ -1,4 +1,4 @@
-﻿
+﻿@model WebMobile.Models.Promote.PayResultViewModel
 @{
     ViewBag.Title = "恭喜您，抢购成功";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -34,15 +34,14 @@
     </div>
 </div>
 
-@*<input type="button" value="领取代金卷到卡包" id="btn_GetCoupon" class="btn" />
-
-    <input type="button" value="打开卡卷" id="btn_OpenCoupon" class="btn" />*@
-
 @section scripts{
     <script type="text/javascript">
 
         $(function () {
-         
+
+            var promoteId = "@Model.PromoteId";
+            var refereeId = "@(OwnRequest.GetUserInfo().UserId)";
+
             $("#btn_GetCoupon").on("click",
                 function () {
                     var _this = $(this);
@@ -97,6 +96,74 @@
                   }
               });
           });
+
+            var shareTitle = '全优加9月放大招啦！';
+            var shareDesc = '9.10元抢购代金券7200元 邀请好友买券报课还可获500元现金奖';
+            var shareLink = 'http://mobile.17fanju.com/Promote/Coupon?promoteId=' + promoteId + '&refereeId=' + refereeId;
+            var shareImgUrl = 'http://mobile.17fanju.com/Content/images/promote20180910/share_icon.png';
+            wx.ready(function () {
+
+                wx.onMenuShareAppMessage({
+                    title: shareTitle,
+                    desc: shareDesc,
+                    link: shareLink,
+                    imgUrl: shareImgUrl,
+                    trigger: function (res) {
+                    },
+                    success: function (res) {
+
+                    },
+                    cancel: function (res) {
+
+                    },
+                    fail: function (res) {
+                    }
+                });
+
+                wx.onMenuShareTimeline({
+                    title: shareTitle,
+                    link: shareLink,
+                    imgUrl: shareImgUrl,
+                    trigger: function (res) {
+
+                    },
+                    success: function (res) {
+
+                    },
+                    cancel: function (res) {
+
+                    },
+                    fail: function (res) {
+
+                    }
+                });
+
+            });
+
+            $("#modal_Invite").on("click",
+              function (e) {
+                  $("#modal_Invite").hide();
+              });
+
+
+            $('#btn_GoInvite').on("click",
+             function () {
+
+                 var scrollTop = document.body.scrollTop;//网页被卷去的高
+                 $("#modal_Invite").css({ top: scrollTop + "px" });
+                 $("#modal_Invite").show();
+                 $("#share_container").show();
+
+                 $('#modal_Invite').bind("touchmove",
+                     function (e) {
+                         e.preventDefault();
+                     });
+                 $("#modal_Invite").bind("mousewheel",
+                     function (e) {
+                         //阻止浏览器默认方法
+                         e.preventDefault();
+                     });
+             });
 
         });
 

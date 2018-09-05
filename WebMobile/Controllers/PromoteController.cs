@@ -20,19 +20,29 @@ namespace WebMobile.Controllers
             model.PromoteId = "a999753c5fe14e26bbecad576b6a6909";
             model.PromoteCouponId = "00000000000000000000000000000001";
 
+
             var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.UserId == this.CurrentUserId && m.PromoteId == model.PromoteId && m.PromoteCouponId == model.PromoteCouponId).FirstOrDefault();
             if (promoteUserCoupon != null)
             {
                 if (promoteUserCoupon.IsBuy)
                 {
-                    return Redirect("~/Promote/PayResult?");
+                    return Redirect("~/Promote/PayResult?promoteId=" + model.PromoteId + "&orderSn=" + promoteUserCoupon.OrderSn + "&isSuccessed=True");
+                }
+            }
+
+            var promote = CurrentDb.Promote.Where(m => m.Id == model.PromoteId).FirstOrDefault();
+            if (promote != null)
+            {
+                if (promote.EndTime < DateTime.Now)
+                {
+                    model.IsEnd = true;
                 }
             }
 
             return View(model);
         }
 
-        public ActionResult PayResult(string orderSn, bool isSuccessed = false)
+        public ActionResult PayResult(string promoteId, string orderSn, bool isSuccessed = false)
         {
             return View();
         }

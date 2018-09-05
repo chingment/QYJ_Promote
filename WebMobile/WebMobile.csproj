@@ -183,6 +183,7 @@
     <Compile Include="Models\Account\LoginViewModel.cs" />
     <Compile Include="Models\Home\SearchCondition.cs" />
     <Compile Include="Models\Promote\CouponViewModel.cs" />
+    <Compile Include="Models\Promote\PayResultViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
