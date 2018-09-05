@@ -41,53 +41,7 @@
     <script type="text/javascript">
 
         $(function () {
-            var promoteId = "a999753c5fe14e26bbecad576b6a6909";
-            var refereeId = "b999753c5fe14e26bbecad576b6a6909";
-
-            var shareTitle = '全优加放大招啦！';
-            var shareDesc = '9.10秒杀代金券7200元';
-            var shareLink = 'http://mobile.17fanju.com/Promote/Coupon?promoteId=' + promoteId + '&refereeId=' + refereeId;
-            var shareImgUrl = 'http://mobile.17fanju.com/Content/images/promote20180910/share_icon.jpg';
-            wx.ready(function () {
-
-
-                wx.onMenuShareAppMessage({
-                    title: shareTitle,
-                    desc: shareDesc,
-                    link: shareLink,
-                    imgUrl: shareImgUrl,
-                    trigger: function (res) {
-                    },
-                    success: function (res) {
-
-                    },
-                    cancel: function (res) {
-
-                    },
-                    fail: function (res) {
-                    }
-                });
-
-                wx.onMenuShareTimeline({
-                    title: shareTitle,
-                    link: shareLink,
-                    imgUrl: shareImgUrl,
-                    trigger: function (res) {
-
-                    },
-                    success: function (res) {
-
-                    },
-                    cancel: function (res) {
-
-                    },
-                    fail: function (res) {
-
-                    }
-                });
-
-            });
-
+         
             $("#btn_GetCoupon").on("click",
                 function () {
                     var _this = $(this);
@@ -118,8 +72,6 @@
 
                 });
 
-
-
             $("#btn_OpenCoupon").on("click",
           function () {
               var _this = $(this);
@@ -146,7 +98,6 @@
           });
 
         });
-
 
         function addCouponNotifyResult(cards) {
 
