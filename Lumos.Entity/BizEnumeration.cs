@@ -101,7 +101,9 @@ namespace Lumos.Entity
             [Remark("未知")]
             Unknow = 0,
             [Remark("固定金额")]
-            FixedAmount = 1
+            FixedAmount = 1,
+            [Remark("比例")]
+            RateAmount = 2
         }
     }
 }

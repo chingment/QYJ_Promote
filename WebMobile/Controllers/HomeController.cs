@@ -381,14 +381,15 @@ namespace WebMobile.Controllers
                 Font f = new Font("Arial", 20);
                 g.DrawImage(oImg1, 75, 540, 77, 77);//画二维码图片          
 
-                string path = Server.MapPath("~/Static/Promote/User/") + GuidUtil.New() + ".jpg";
+                string key = GuidUtil.New();
+                string path = Server.MapPath("~/Static/Promote/User/") + key + ".jpg";
 
                 map.Save(path, System.Drawing.Imaging.ImageFormat.Jpeg);
                 f.Dispose();
                 g.Dispose();
 
                 string media_Id = SdkFactory.Wx.Instance().UploadMultimediaImage(path);
-
+                promoteUser.WxPromoteImgUrl = string.Format("http://qyj.17fanju.com/Static/Promote/User/{0}.jpg", key);
                 promoteUser.WxPromoteImgMediaId = media_Id;
                 CurrentDb.SaveChanges();
 
