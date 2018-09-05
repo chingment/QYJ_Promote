@@ -21,6 +21,6 @@ namespace Lumos.WeiXinSdk
 
         public string cardExt { get; set; }
 
-        public string code { get; set; }
+        //public string code { get; set; }
     }
 }
