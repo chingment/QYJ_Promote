@@ -46,7 +46,7 @@ namespace Lumos.BLL
             }
         }
 
-        public string GetPrepayId(string operater, string trade_type, string openid, string orderSn, decimal orderAmount, string goods_tag, string ip, string body)
+        public string GetPrepayId(string operater, string trade_type, string openid, string orderSn, decimal orderAmount, string goods_tag, string ip, string body, DateTime? time_expire = null)
         {
             CustomJsonResult result = new CustomJsonResult();
 
@@ -60,6 +60,10 @@ namespace Lumos.BLL
             unifiedOrder.total_fee = Convert.ToInt32(orderAmount * 100);//标价金额
             unifiedOrder.body = body;//商品描述  
             unifiedOrder.trade_type = trade_type;
+            if (time_expire != null)
+            {
+                unifiedOrder.time_expire = time_expire.Value.ToString("yyyyMMddHHmmss");
+            }
 
             if (!string.IsNullOrEmpty(goods_tag))
             {

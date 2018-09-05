@@ -72,7 +72,6 @@ namespace Lumos.BLL
                         return new CustomJsonResult<Order>(ResultType.Failure, ResultCode.Failure, "找不到用户微信信息", null);
                     }
 
-
                     var order = new Order();
                     order.Id = GuidUtil.New();
                     order.UserId = pUserId;
@@ -83,6 +82,7 @@ namespace Lumos.BLL
                     order.DiscountAmount = 0;
                     order.ChargeAmount = order.OriginalAmount - order.DiscountAmount;
                     order.Status = Enumeration.OrderStatus.WaitPay; //待支付状态
+                    order.WxPrepayIdExpireTime = this.DateTime.AddMinutes(5);
                     order.SubmitTime = this.DateTime;
                     order.CreateTime = this.DateTime;
                     order.Creator = pOperater;
@@ -104,6 +104,7 @@ namespace Lumos.BLL
                     orderDetails.ChargeAmount = order.ChargeAmount;
                     orderDetails.CreateTime = order.CreateTime;
                     orderDetails.Creator = order.Creator;
+
                     CurrentDb.OrderDetails.Add(orderDetails);
                     CurrentDb.SaveChanges();
 
@@ -112,16 +113,17 @@ namespace Lumos.BLL
                     string goods_tag = "";
                     if (order.ChargeAmount > 0)
                     {
-                        string prepayId = SdkFactory.Wx.Instance().GetPrepayId(pOperater, "JSAPI", wxUserInfo.OpenId, order.Sn, 0.01m, goods_tag, Common.CommonUtils.GetIP(), productSku.Name);
+                        string prepayId = SdkFactory.Wx.Instance().GetPrepayId(pOperater, "JSAPI", wxUserInfo.OpenId, order.Sn, 0.01m, goods_tag, Common.CommonUtils.GetIP(), productSku.Name, order.WxPrepayIdExpireTime);
 
                         if (string.IsNullOrEmpty(prepayId))
                         {
-                            //LogUtil.ErrorFormat("去结算，订单号（{0}）生成在微信支付中生成不到预支付订单号", mod_Order.Sn);
+                            LogUtil.Error("去结算，微信支付中生成预支付订单失败");
+
+                            return new CustomJsonResult<Lumos.Entity.Order>(ResultType.Failure, ResultCode.Failure, "微信支付中生成预支付订单失败", order);
                         }
                         else
                         {
                             order.WxPrepayId = prepayId;
-                            order.WxPrepayIdExpireTime = this.DateTime.AddMinutes(119);
                         }
                     }
 

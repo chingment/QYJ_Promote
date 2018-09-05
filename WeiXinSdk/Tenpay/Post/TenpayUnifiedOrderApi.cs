@@ -43,7 +43,7 @@ namespace Lumos.WeiXinSdk.Tenpay
             sParams.Add("out_trade_no", order.out_trade_no);//商户订单号
             sParams.Add("total_fee", order.total_fee);//标价金额
             sParams.Add("body", order.body);//商品描述   
-
+            sParams.Add("time_expire", order.time_expire);//订单过期时间  
             if (order.trade_type == "JSAPI")
             {
                 sParams.Add("openid", order.openid);//用户标识   
@@ -53,7 +53,7 @@ namespace Lumos.WeiXinSdk.Tenpay
             {
                 sParams.Add("goods_tag", order.goods_tag);//商品优惠标识  
             }
-            if(order.trade_type == "MWEB")
+            if (order.trade_type == "MWEB")
             {
                 sParams.Add("scene_info", "{\"h5_info\": {\"type\":\"Wap\",\"wap_url\": \"http://mobile.17fanju.com\",\"wap_name\": \"贩聚社团\"}}");//场景信息
             }
