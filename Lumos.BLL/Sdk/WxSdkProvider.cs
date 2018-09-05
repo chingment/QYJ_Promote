@@ -20,7 +20,7 @@ namespace Lumos.BLL
         public WxSdkProvider Instance()
         {
             WxSdkProvider p = new WxSdkProvider();
-            p.Config = new WxConfigByQyj();
+            p.Config = new WxConfigByFanJu();
             //switch (merchantId)
             //{
             //    case 1:

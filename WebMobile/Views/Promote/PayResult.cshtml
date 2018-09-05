@@ -7,64 +7,95 @@
 
 <input type="button" value="领取代金卷到卡包" id="btn_GetCoupon" class="btn" />
 
+<input type="button" value="打开卡卷" id="btn_OpenCoupon" class="btn" />
+
 @section scripts{
     <script type="text/javascript">
 
         $(function () {
 
+            var promoteId = "a999753c5fe14e26bbecad576b6a6909";
 
-
-
-
-            //调起支付
             $("#btn_GetCoupon").on("click",
                 function () {
                     var _this = $(this);
 
                     $.lumos.postJson({
                         url: "/Promote/GetCardList",
-                        data: { promoteId: "a999753c5fe14e26bbecad576b6a6909" },
+                        data: { promoteId: promoteId },
                         success: function (d) {
 
-                            //alert(JSON.stringify(d));
-
                             var cards = d.data;
-
-                           // alert(JSON.stringify(cards));
-
                             var cardList = [];
-
-                            for (var p in cards) {//遍历json数组时，这么写p为索引，0,1
-                                //alert(cards[p].cardId);
-
-                                cardList.push({cardId:cards[p].cardId,cardExt:cards[p].cardExt});
+                            for (var p in cards) {
+                                cardList.push({ cardId: cards[p].cardId, cardExt: cards[p].cardExt });
                             }
-
-                            //alert(JSON.stringify(cardList))
-
-                            //cardList.push({})
 
                             wx.addCard({
                                 cardList: cardList,
                                 success: function (res) {
-                                    alert('已添加卡券：' + JSON.stringify(res.cardList));
+                                    $.lumos.tips('成功领取卡券');
+                                    addCouponNotifyResult(cardList);
                                 },
                                 cancel: function (res) {
-                                    alert(JSON.stringify(res))
                                 }
                             });
 
                         }
                     });
 
-
-
-
-
                 });
 
 
+
+            $("#btn_OpenCoupon").on("click",
+          function () {
+              var _this = $(this);
+
+
+              $.lumos.postJson({
+                  url: "/Promote/GetCardList",
+                  data: { promoteId: promoteId },
+                  success: function (d) {
+                      var cards = d.data;
+                      var cardList = [];
+                      for (var p in cards) {
+                          cardList.push({ cardId: cards[p].cardId, code: cards[p].code });
+                      }
+
+                      wx.openCard({
+                          cardList: cardList,
+                          cancel: function (res) {
+
+                          }
+                      });
+                  }
+              });
+          });
+
         });
+
+
+        function addCouponNotifyResult(cards) {
+
+
+            var cardList = [];
+            for (var p in cards) {
+                if (cards[p].isSuccess) {
+                    cardList.push({ wxCouponId: cards[p].cardId, wxCouponOpenCode: cards[p].code });
+                }
+            }
+
+            $.lumos.postJson({
+                url: "/Promote/AddCouponNotifyResult",
+                data: { promoteId: promoteId, coupons: cardList },
+                success: function (d) {
+                    if (d.result == $.lumos.resultType.success) {
+
+                    }
+                }
+            });
+        }
 
     </script>
 }

@@ -18,22 +18,27 @@ namespace Lumos
 
         public static void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            LogUtil.Info(filterContext.RequestContext.HttpContext.Request.RawUrl);
+            //LogUtil.Info(filterContext.RequestContext.HttpContext.Request.RawUrl);
         }
 
         public static void OnActionExecuted(ActionExecutedContext filterContext)
         {
-
+            StringBuilder sb = new StringBuilder();
+            sb.Append("请求路径:" + filterContext.RequestContext.HttpContext.Request.RawUrl+"\rn");
+            sb.Append("请求时间:" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "\rn");
+            sb.Append("Url参数:" + MonitorLog.GetCollections(filterContext.HttpContext.Request.QueryString) + "\rn");
+            sb.Append("Form参数:" + MonitorLog.GetCollections(filterContext.HttpContext.Request.Form) + "\rn");
+            LogUtil.Info(sb.ToString());
         }
 
         public static void OnResultExecuting(ResultExecutingContext filterContext)
         {
-
+            //LogUtil.Info(filterContext.RequestContext.HttpContext.Request.RawUrl);
         }
 
         public static void OnResultExecuted(ResultExecutedContext filterContext)
         {
-
+            //LogUtil.Info(filterContext.RequestContext.HttpContext.Request.RawUrl);
         }
 
 
@@ -155,41 +160,39 @@ namespace Lumos
         //         );
         //   }
 
-        //   /// <summary>
-        //   /// 获取Post 或Get 参数
-        //   /// </summary>
-        //   /// <param name="Collections"></param>
-        //   /// <returns></returns>
-        //   public string GetCollections(NameValueCollection Collections)
-        //   {
-        //       string Parameters = string.Empty;
-        //       if (Collections == null || Collections.Count == 0)
-        //       {
-        //           return Parameters;
-        //       }
-        //       foreach (string key in Collections.Keys)
-        //       {
-        //           if (key != null)
-        //           {
-        //               string k = key.ToLower();
-        //               if (k.IndexOf("password") == -1 && k.IndexOf("pwd") == -1)
-        //               {
+
+        public static string GetCollections(NameValueCollection Collections)
+        {
+            string Parameters = string.Empty;
+            if (Collections == null || Collections.Count == 0)
+            {
+                return Parameters;
+            }
+
+            foreach (string key in Collections.Keys)
+            {
+                if (key != null)
+                {
+                    string k = key.ToLower();
+                    if (k.IndexOf("password") == -1 && k.IndexOf("pwd") == -1)
+                    {
 
 
-        //                   Parameters += string.Format("{0}={1}&", key, Collections[key]);
-        //               }
-        //               else
-        //               {
-        //                   Parameters += string.Format("{0}={1}&", key, "");
-        //               }
-        //           }
-        //       }
-        //       if (!string.IsNullOrWhiteSpace(Parameters) && Parameters.EndsWith("&"))
-        //       {
-        //           Parameters = Parameters.Substring(0, Parameters.Length - 1);
-        //       }
-        //       return Parameters;
-        //   }
+                        Parameters += string.Format("{0}={1}&", key, Collections[key]);
+                    }
+                    else
+                    {
+                        Parameters += string.Format("{0}={1}&", key, "");
+                    }
+                }
+            }
+            if (!string.IsNullOrWhiteSpace(Parameters) && Parameters.EndsWith("&"))
+            {
+                Parameters = Parameters.Substring(0, Parameters.Length - 1);
+            }
+
+            return Parameters;
+        }
     }
 
 }

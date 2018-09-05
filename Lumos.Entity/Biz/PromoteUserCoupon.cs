@@ -17,6 +17,7 @@ namespace Lumos.Entity
         public string PromoteId { get; set; }
         public string PromoteCouponId { get; set; }
         public string WxCouponId { get; set; }
+        public string WxCouponOpenCode { get; set; }
         public string UserId { get; set; }
         public bool IsBuy { get; set; }
         public DateTime BuyTime { get; set; }

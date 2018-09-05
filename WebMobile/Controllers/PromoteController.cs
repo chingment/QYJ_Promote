@@ -19,7 +19,7 @@ namespace WebMobile.Controllers
         }
 
         public ActionResult PayResult(string orderSn, bool isSuccessed = false)
-        {
+        { 
             return View();
         }
 
@@ -58,44 +58,92 @@ namespace WebMobile.Controllers
         {
             List<WxCard> cardList = new List<WxCard>();
 
-            string api_ticket = SdkFactory.Wx.Instance().GetCardApiTicket();
+            var promoteUserCoupons = CurrentDb.PromoteUserCoupon.Where(m => m.PromoteId == promoteId).ToList();
 
-            LogUtil.Info("CardApiTicket:" + api_ticket);
+            if (promoteUserCoupons.Count > 0)
+            {
+                string api_ticket = SdkFactory.Wx.Instance().GetCardApiTicket();
 
-            string timestamp = CommonUtil.GetTimeStamp();
-            string nonce_str = CommonUtil.GetNonceStr();
-            string card_id = "ptakHv_v1qDj94DkZ21AMuVOt304";
-            string code = "";
-            string openid = "";
+                LogUtil.Info("CardApiTicket:" + api_ticket);
 
-            Dictionary<string, string> sParams = new Dictionary<string, string>();
+                foreach (var item in promoteUserCoupons)
+                {
+                    string timestamp = CommonUtil.GetTimeStamp();
+                    string nonce_str = CommonUtil.GetNonceStr();
+                    string card_id = item.WxCouponId;
+                    string code = "";
+                    string openid = "";
 
-            sParams.Add("nonce_str", nonce_str);
-            sParams.Add("timestamp", timestamp);
-            sParams.Add("card_id", card_id);
-            sParams.Add("code", "");
-            sParams.Add("openid", "");
-            sParams.Add("api_ticket", api_ticket);
+                    Dictionary<string, string> sParams = new Dictionary<string, string>();
 
-            string signature = Lumos.WeiXinSdk.CommonUtil.MakeCardSign(sParams);
+                    sParams.Add("nonce_str", nonce_str);
+                    sParams.Add("timestamp", timestamp);
+                    sParams.Add("card_id", card_id);
+                    sParams.Add("code", "");
+                    sParams.Add("openid", "");
+                    sParams.Add("api_ticket", api_ticket);
 
-            WxCardExt cardExt = new WxCardExt();
+                    string signature = Lumos.WeiXinSdk.CommonUtil.MakeCardSign(sParams);
 
-            cardExt.code = code;
-            cardExt.openid = openid;
-            cardExt.timestamp = timestamp;
-            cardExt.signature = signature;
-            cardExt.nonce_str = nonce_str;
+                    WxCardExt cardExt = new WxCardExt();
 
-            WxCard card = new WxCard();
-            card.cardId = card_id;
-            card.cardExt = Newtonsoft.Json.JsonConvert.SerializeObject(cardExt);
+                    cardExt.code = code;
+                    cardExt.openid = openid;
+                    cardExt.timestamp = timestamp;
+                    cardExt.signature = signature;
+                    cardExt.nonce_str = nonce_str;
 
-            cardList.Add(card);
+                    WxCard card = new WxCard();
+                    card.cardId = card_id;
+                    card.cardExt = Newtonsoft.Json.JsonConvert.SerializeObject(cardExt);
+                    card.code = item.WxCouponOpenCode;
+                    cardList.Add(card);
+                }
 
-            LogUtil.Info("cardList:" + Newtonsoft.Json.JsonConvert.SerializeObject(cardList));
+                LogUtil.Info("cardList:" + Newtonsoft.Json.JsonConvert.SerializeObject(cardList));
+
+            }
 
             return new CustomJsonResult(ResultType.Success, ResultCode.Success, "", cardList);
         }
+
+
+        [HttpPost]
+        public CustomJsonResult AddCouponNotifyResult(AddCouponNotifyResultModel model)
+        {
+
+            var promoteUserCoupons = CurrentDb.PromoteUserCoupon.Where(m => m.PromoteId == model.PromoteId && m.UserId == this.CurrentUserId).ToList();
+
+            foreach (var item in promoteUserCoupons)
+            {
+                var coupon = model.Coupons.Where(m => m.WxCouponId == item.WxCouponId).FirstOrDefault();
+                if (coupon != null)
+                {
+                    item.WxCouponOpenCode = coupon.WxCouponOpenCode;
+                    item.Mender = this.CurrentUserId;
+                    item.MendTime = DateTime.Now;
+                }
+            }
+
+            CurrentDb.SaveChanges();
+
+            return new CustomJsonResult(ResultType.Success, ResultCode.Success, "保存成功");
+        }
+
     }
+
+    public class AddCouponNotifyResultModel
+    {
+        public string PromoteId { get; set; }
+
+        public List<CouponResult> Coupons { get; set; }
+    }
+
+    public class CouponResult
+    {
+        public string WxCouponId { get; set; }
+
+        public string WxCouponOpenCode { get; set; }
+    }
+
 }
