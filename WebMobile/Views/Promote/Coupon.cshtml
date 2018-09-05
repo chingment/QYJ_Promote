@@ -1,4 +1,5 @@
-﻿@{
+﻿@model WebMobile.Models.Promote.CouponViewModel
+@{
     ViewBag.Title = "全优加放大招啦！9.10元秒杀代金券";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -53,7 +54,7 @@
 
                     $.lumos.postJson({
                         url: "/Promote/UnifiedOrder",
-                        data: { type: "1", orderPms: { promoteId: "a999753c5fe14e26bbecad576b6a6909", promoteCouponId: "00000000000000000000000000000001" } },
+                        data: { type: "1", orderPms: { promoteId: "@Model.PromoteId", promoteCouponId: "@Model.PromoteCouponId" } },
                         success: function (d) {
 
                             if (d.result == $.lumos.resultType.success) {
@@ -90,7 +91,7 @@
 
             $('#btn_GoInvite').on("click",
              function () {
-                
+
                  var scrollTop = document.body.scrollTop;//网页被卷去的高
                  $("#modal_Invite").css({ top: scrollTop + "px" });
                  $("#modal_Invite").show();

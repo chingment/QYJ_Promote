@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebMobile.Models.Promote;
 
 namespace WebMobile.Controllers
 {
@@ -15,11 +16,24 @@ namespace WebMobile.Controllers
     {
         public ActionResult Coupon(string promoteId, string refereeId)
         {
-            return View();
+            var model = new CouponViewModel();
+            model.PromoteId = "a999753c5fe14e26bbecad576b6a6909";
+            model.PromoteCouponId = "00000000000000000000000000000001";
+
+            var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.UserId == this.CurrentUserId && m.PromoteId == model.PromoteId && m.PromoteCouponId == model.PromoteCouponId).FirstOrDefault();
+            if (promoteUserCoupon != null)
+            {
+                if (promoteUserCoupon.IsBuy)
+                {
+                    return Redirect("~/Promote/PayResult?");
+                }
+            }
+
+            return View(model);
         }
 
         public ActionResult PayResult(string orderSn, bool isSuccessed = false)
-        { 
+        {
             return View();
         }
 
