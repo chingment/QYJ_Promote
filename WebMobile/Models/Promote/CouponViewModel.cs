@@ -12,5 +12,7 @@ namespace WebMobile.Models.Promote
         public string PromoteCouponId { get; set; }
 
         public bool PromoteIsEnd { get; set; }
+
+        public string RefereeId { get; set; }
     }
 }

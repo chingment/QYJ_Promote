@@ -18,7 +18,7 @@ namespace Lumos.Entity
     public class UnifiedOrderPms
     {
         public UnifiedOrderType Type { get; set; }
-
+        public string RefereeId { get; set; }
         public Dictionary<string, string> OrderPms { get; set; }
     }
 }

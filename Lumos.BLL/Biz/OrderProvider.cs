@@ -18,13 +18,13 @@ namespace Lumos.BLL
             {
                 case UnifiedOrderType.BuyPromoteCoupon:
                     var orderPmsByBuyPromoteCoupon = Newtonsoft.Json.JsonConvert.DeserializeObject<OrderPmsByBuyPromoteCoupon>(strOrderPms);
-                    result = UnifiedOrderByBuyPromoteCoupon(pOperater, pUserId, orderPmsByBuyPromoteCoupon);
+                    result = UnifiedOrderByBuyPromoteCoupon(pOperater, pUserId, pPayPms.RefereeId, orderPmsByBuyPromoteCoupon);
                     break;
             }
             return result;
         }
 
-        private CustomJsonResult<Order> UnifiedOrderByBuyPromoteCoupon(string pOperater, string pUserId, OrderPmsByBuyPromoteCoupon pms)
+        private CustomJsonResult<Order> UnifiedOrderByBuyPromoteCoupon(string pOperater, string pUserId, string pRefereeId, OrderPmsByBuyPromoteCoupon pms)
         {
             var result = new CustomJsonResult<Order>();
 
@@ -78,6 +78,7 @@ namespace Lumos.BLL
                     order.Sn = SnUtil.Build(Enumeration.BizSnType.Order);
                     order.IsPromoteProfit = true;
                     order.PromoteId = promote.Id;
+                    order.RefereeId = pRefereeId;
                     order.OriginalAmount = productSku.Price;
                     order.DiscountAmount = 0;
                     order.ChargeAmount = order.OriginalAmount - order.DiscountAmount;
@@ -285,6 +286,9 @@ namespace Lumos.BLL
                     promoteUserCoupon.IsConsume = false;
                     promoteUserCoupon.Creator = pOperater;
                     promoteUserCoupon.CreateTime = this.DateTime;
+                    promoteUserCoupon.RefereeId = order.RefereeId;
+                    promoteUserCoupon.OrderId = order.Id;
+                    promoteUserCoupon.OrderSn = order.Sn;
                     CurrentDb.PromoteUserCoupon.Add(promoteUserCoupon);
                     CurrentDb.SaveChanges();
                 }

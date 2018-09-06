@@ -30,5 +30,7 @@ namespace Lumos.Entity
         public DateTime? MendTime { get; set; }
         public string WxPrepayId { get; set; }
         public DateTime? WxPrepayIdExpireTime { get; set; }
+        
+        public string RefereeId { get; set; }
     }
 }

@@ -19,7 +19,7 @@ namespace WebMobile.Controllers
             var model = new CouponViewModel();
             model.PromoteId = "a999753c5fe14e26bbecad576b6a6909";
             model.PromoteCouponId = "00000000000000000000000000000001";
-
+            model.RefereeId = refereeId;
 
             var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.UserId == this.CurrentUserId && m.PromoteId == model.PromoteId && m.PromoteCouponId == model.PromoteCouponId).FirstOrDefault();
             if (promoteUserCoupon != null)
