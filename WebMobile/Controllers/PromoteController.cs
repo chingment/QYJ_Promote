@@ -66,6 +66,11 @@ namespace WebMobile.Controllers
             if (promoteUserCoupon != null)
             {
                 model.IsGetCoupon = promoteUserCoupon.IsGet;
+
+                if (!promoteUserCoupon.IsBuy)
+                {
+                    return Redirect("~/Promote/Coupon?promoteId=" + model.PromoteId + "&refereeId=" + promoteUserCoupon.RefereeId);
+                }
             }
 
             return View(model);
@@ -108,6 +113,13 @@ namespace WebMobile.Controllers
             List<WxCard> cardList = new List<WxCard>();
 
             var promoteUserCoupons = CurrentDb.PromoteUserCoupon.Where(m => m.PromoteId == promoteId).ToList();
+
+            var promoteUserCouponsByBuyCount = promoteUserCoupons.Where(m => m.IsBuy == true).Count();
+
+            if (promoteUserCouponsByBuyCount == 0)
+            {
+                return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, "未购买卡券，不能操作！", cardList);
+            }
 
             if (promoteUserCoupons.Count > 0)
             {
