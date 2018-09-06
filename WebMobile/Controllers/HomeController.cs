@@ -251,6 +251,7 @@ namespace WebMobile.Controllers
                                             promoteUserCoupon.GetTime = DateTime.Now;
                                             promoteUserCoupon.Mender = GuidUtil.Empty();
                                             promoteUserCoupon.MendTime = DateTime.Now;
+                                            promoteUserCoupon.WxCouponDecryptCode = userGetCardMsg.UserCardCode;
                                             CurrentDb.SaveChanges();
                                         }
 
@@ -258,6 +259,19 @@ namespace WebMobile.Controllers
                                         break;
                                     case EventType.USER_CONSUME_CARD://核销卡卷
                                         #region USER_CONSUME_CARD
+
+                                        var userConsumeCardMsg = (UserConsumeCardMsg)baseEventMsg;
+
+                                        var promoteUserCoupon2 = CurrentDb.PromoteUserCoupon.Where(m => m.UserId == wxUserInfo.UserId && m.WxCouponId == userConsumeCardMsg.CardId && m.WxCouponDecryptCode == userConsumeCardMsg.UserCardCode).FirstOrDefault();
+
+                                        if (promoteUserCoupon2 != null)
+                                        {
+                                            promoteUserCoupon2.IsConsume = true;
+                                            promoteUserCoupon2.ConsumeTime = DateTime.Now;
+                                            promoteUserCoupon2.Mender = GuidUtil.Empty();
+                                            promoteUserCoupon2.MendTime = DateTime.Now;
+                                            CurrentDb.SaveChanges();
+                                        }
 
                                         #endregion
                                         break;

@@ -77,6 +77,7 @@ namespace WebMobile.Controllers
             LogUtil.Info("进入UnifiedOrder");
             LogUtil.Info("用户.CurrentUserId:" + this.CurrentUserId);
 
+
             var result = BizFactory.Order.UnifiedOrder(this.CurrentUserId, this.CurrentUserId, model);
 
             if (result.Result == ResultType.Success)
@@ -174,12 +175,14 @@ namespace WebMobile.Controllers
                 var coupon = model.Coupons.Where(m => m.WxCouponId == item.WxCouponId).FirstOrDefault();
                 if (coupon != null)
                 {
-                    string decryptCode = SdkFactory.Wx.Instance().CardCodeDecrypt(coupon.WxCouponEncryptCode);
-
-                    LogUtil.Info("解密CODE:" + decryptCode);
-
                     item.WxCouponEncryptCode = coupon.WxCouponEncryptCode;
-                    item.WxCouponDecryptCode = decryptCode;
+
+                    if (string.IsNullOrEmpty(item.WxCouponDecryptCode))
+                    {
+                        string decryptCode = SdkFactory.Wx.Instance().CardCodeDecrypt(coupon.WxCouponEncryptCode);
+                        LogUtil.Info("解密CODE:" + decryptCode);
+                        item.WxCouponDecryptCode = decryptCode;
+                    }
                     item.Mender = this.CurrentUserId;
                     item.MendTime = DateTime.Now;
                 }

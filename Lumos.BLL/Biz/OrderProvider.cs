@@ -72,6 +72,12 @@ namespace Lumos.BLL
                         return new CustomJsonResult<Order>(ResultType.Failure, ResultCode.Failure, "找不到用户微信信息", null);
                     }
 
+                    var orderByBuyedCount = CurrentDb.Order.Where(m => m.UserId == pUserId && m.PromoteId == pms.PromoteId && m.Status == Enumeration.OrderStatus.Payed).Count();
+                    if (orderByBuyedCount > 0)
+                    {
+                        return new CustomJsonResult<Order>(ResultType.Failure, ResultCode.Failure, "您已成功抢购", null);
+                    }
+
                     var order = new Order();
                     order.Id = GuidUtil.New();
                     order.UserId = pUserId;
