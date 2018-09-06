@@ -356,6 +356,7 @@ namespace WebMobile.Controllers
 
         public string GetWxPromoteImgMediaId(string promoteId, string userId)
         {
+            var wxUserInfo = CurrentDb.WxUserInfo.Where(m => m.UserId == userId).FirstOrDefault();
             var promoteUser = CurrentDb.PromoteUser.Where(m => m.PromoteId == promoteId && m.UserId == userId).FirstOrDefault();
             if (promoteUser == null)
             {
@@ -396,6 +397,17 @@ namespace WebMobile.Controllers
                 Font f = new Font("Arial", 20);
                 g.DrawImage(oImg1, 75, 540, 77, 77);//画二维码图片          
 
+
+                if(wxUserInfo!=null)
+                {
+                    if (!string.IsNullOrEmpty(wxUserInfo.HeadImgUrl))
+                    {
+                        var oImg4 = CirclePhoto(wxUserInfo.HeadImgUrl, 100);
+
+                        g.DrawImage(oImg4, 620, 1655, 150, 150);
+                    }
+                }
+
                 string key = GuidUtil.New();
                 string path = Server.MapPath("~/Static/Promote/User/") + key + ".jpg";
 
@@ -413,6 +425,44 @@ namespace WebMobile.Controllers
             else
             {
                 return promoteUser.WxPromoteImgMediaId;
+            }
+
+        }
+
+
+        public static Bitmap CirclePhoto(string urlPath, int size)
+        {
+
+            try
+            {
+                System.Net.WebRequest webreq = System.Net.WebRequest.Create(urlPath);
+                System.Net.WebResponse webres = webreq.GetResponse();
+                System.IO.Stream stream = webres.GetResponseStream();
+                Image img1 = System.Drawing.Image.FromStream(stream);
+                stream.Dispose();
+
+                Bitmap b = new Bitmap(size, size);
+                using (Graphics g = Graphics.FromImage(b))
+                {
+                    g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                    g.DrawImage(img1, 0, 0, b.Width, b.Height);
+                    int r = Math.Min(b.Width, b.Height) / 2;
+                    PointF c = new PointF(b.Width / 2.0F, b.Height / 2.0F);
+                    for (int h = 0; h < b.Height; h++)
+                        for (int w = 0; w < b.Width; w++)
+                            if ((int)Math.Pow(r, 2) < ((int)Math.Pow(w * 1.0 - c.X, 2) + (int)Math.Pow(h * 1.0 - c.Y, 2)))
+                            {
+                                b.SetPixel(w, h, Color.Transparent);
+                            }
+                    //画背景色圆
+                    using (Pen p = new Pen(System.Drawing.SystemColors.Control))
+                        g.DrawEllipse(p, 0, 0, b.Width, b.Height);
+                }
+                return b;
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
 
         }

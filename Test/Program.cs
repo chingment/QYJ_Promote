@@ -94,7 +94,7 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            OAuthApi.CardCodeDecrypt("13_uev3UiFHaQYf_qG882v2w9_FBz8a18dIRMjWG1Axv7Wv4mpOLDzwgJB1tySq5QaT__5IBYRNrURk_K_T1GoHshkvWPasfTtIip2V5BzdNEBHNqIO1I3_SPRNIv0gfDUE7zlE-POZHdQo2aOKVDHhAHALTX", "ftp40hZGeN2MQYDTWpH4q93CwcrbioZuSXfi16qfI4o=");
+            //OAuthApi.CardCodeDecrypt("13_uev3UiFHaQYf_qG882v2w9_FBz8a18dIRMjWG1Axv7Wv4mpOLDzwgJB1tySq5QaT__5IBYRNrURk_K_T1GoHshkvWPasfTtIip2V5BzdNEBHNqIO1I3_SPRNIv0gfDUE7zlE-POZHdQo2aOKVDHhAHALTX", "ftp40hZGeN2MQYDTWpH4q93CwcrbioZuSXfi16qfI4o=");
             var operater = "00000000000000000000000000000000";
 
             //BizFactory.Order.PayResultNotify(operater, Enumeration.OrderNotifyLogNotifyFrom.WebApp, "fdfsf", "2018090218544434811746");
@@ -139,11 +139,17 @@ namespace Test
             Graphics g = Graphics.FromImage(map);
             g.InterpolationMode = InterpolationMode.HighQualityBilinear;
             SolidBrush brush = new SolidBrush(Color.Green);
-            PointF P = new PointF(100, 100);
+            PointF P = new PointF(600, 100);
             Font f = new Font("Arial", 20);
             //g.DrawString(nickName, f, brush, 310, 542);
-            g.DrawImage(oImg1, 75, 540, 77, 77);//画二维码图片
-                                                // g.DrawImage(oImg3, 85, 730, 220, 220);//画二维码图片
+            g.DrawImage(oImg1, 320, 1655, 150, 150);//画二维码图片
+
+
+            var oImg4 = CirclePhoto("http://thirdwx.qlogo.cn/mmopen/vi_32/6zcicmSoM5yjdWG9MoHydE6suFUGaHsKATFUPU7yU4d7PhLcsKWj51NhxA4PichkuYkYAflFOloKOKCSNhIeD4mQ/132", 100);
+
+            g.DrawImage(oImg4, 620, 1655, 150, 150);
+
+            // g.DrawImage(oImg3, 85, 730, 220, 220);//画二维码图片
             map.Save("d:\\hb3.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
             f.Dispose();
             g.Dispose();
@@ -207,6 +213,62 @@ namespace Test
             //    //}
 
             //}
+        }
+
+        //public static Image get_image(string url)
+        //{
+        //    System.Drawing.Image img1 = null;
+        //    try
+        //    {
+        //        System.Net.WebRequest webreq = System.Net.WebRequest.Create(url);
+        //        System.Net.WebResponse webres = webreq.GetResponse();
+        //        System.IO.Stream stream = webres.GetResponseStream();
+        //        img1 = System.Drawing.Image.FromStream(stream);
+        //        System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(img1);
+        //        stream.Dispose();
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return null;
+        //    }
+        //    return img1;
+        //}
+
+        public static Bitmap CirclePhoto(string urlPath, int size)
+        {
+
+            try
+            {
+                System.Net.WebRequest webreq = System.Net.WebRequest.Create(urlPath);
+                System.Net.WebResponse webres = webreq.GetResponse();
+                System.IO.Stream stream = webres.GetResponseStream();
+                Image img1 = System.Drawing.Image.FromStream(stream);
+                stream.Dispose();
+
+                Bitmap b = new Bitmap(size, size);
+                using (Graphics g = Graphics.FromImage(b))
+                {
+                    g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                    g.DrawImage(img1, 0, 0, b.Width, b.Height);
+                    int r = Math.Min(b.Width, b.Height) / 2;
+                    PointF c = new PointF(b.Width / 2.0F, b.Height / 2.0F);
+                    for (int h = 0; h < b.Height; h++)
+                        for (int w = 0; w < b.Width; w++)
+                            if ((int)Math.Pow(r, 2) < ((int)Math.Pow(w * 1.0 - c.X, 2) + (int)Math.Pow(h * 1.0 - c.Y, 2)))
+                            {
+                                b.SetPixel(w, h, Color.Transparent);
+                            }
+                    //画背景色圆
+                    using (Pen p = new Pen(System.Drawing.SystemColors.Control))
+                        g.DrawEllipse(p, 0, 0, b.Width, b.Height);
+                }
+                return b;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
         }
 
         public static IEnumerable<PromoteUser> GetFatherList(IList<PromoteUser> list, string userId)
