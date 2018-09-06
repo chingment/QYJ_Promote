@@ -28,11 +28,11 @@ a {
 	cursor: pointer;
 }
 
-    a, a:active, a:visited, a:hover, a:focus {
-        color: #000;
-        text-decoration: none;
-        cursor: pointer;
-    }
+a, a:active, a:visited, a:hover, a:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
 /*颜色*/
 .orange {
 	color: #F67C03;
@@ -58,8 +58,8 @@ a {
 }
 
 .operate {
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
+	cursor: pointer;
+	-webkit-tap-highlight-color: transparent;
 }
 
 .nav-numtip {
@@ -125,7 +125,7 @@ a {
 
 
 .item-empty-tips {
-    margin-top: -5px;
+	margin-top: -5px;
 	padding: 10px 0 14px 0px;
 	text-align: center;
 	width: 100%;
@@ -134,25 +134,25 @@ a {
 	display: none;
 }
 
-.item-empty-tips{
-    position: relative;
+.item-empty-tips {
+	position: relative;
 }
 
-.item-empty-tips:before,.item-empty-tips:after{
-    content: '';
-    position: absolute;
-    top: 1.125rem;
-    background: #bbb;
-    width: 3rem;
-    height: 1px;
+.item-empty-tips:before, .item-empty-tips:after {
+	content: '';
+	position: absolute;
+	top: 1.125rem;
+	background: #bbb;
+	width: 3rem;
+	height: 1px;
 }
 
 .item-empty-tips:before {
-    left: 27%;
+	left: 27%;
 }
 
 .item-empty-tips:after {
-    right: 27%;
+	right: 27%;
 }
 
 /*按钮*/
@@ -216,8 +216,9 @@ a {
 	border-top: 1px solid rgba(0,0,0,0.1);
 	border-bottom: 0px;
 }
+
 .bdr1 {
-    border-right: 1px solid rgba(0,0,0,0.1);
+	border-right: 1px solid rgba(0,0,0,0.1);
 }
 
 /*分割*/
@@ -229,7 +230,7 @@ a {
 	height: 1px;
 	border: 0;
 	background: rgba(0,0,0,0.1);
-    width: 100%;
+	width: 100%;
 }
 
 .divide-bar {
@@ -254,18 +255,100 @@ a {
 }
 
 .el-hide {
-    display: none;
+	display: none;
 }
 
 .go-back-top {
-            bottom: 7rem;
-            background-size: 200px 200px;
-            background-position: -85px -80px;
-            background-image: url(/Content/imgs/jd-search-sprites.png);
-            position: fixed;
-            z-index: 100;
-            right: 1.15rem;
-            width: 35px;
-            height: 35px;
-            display:none;
-        }
+	bottom: 7rem;
+	background-size: 200px 200px;
+	background-position: -85px -80px;
+	background-image: url(/Content/imgs/jd-search-sprites.png);
+	position: fixed;
+	z-index: 100;
+	right: 1.15rem;
+	width: 35px;
+	height: 35px;
+	display: none;
+}
+
+
+
+/* #### Mobile Phones Portrait #### */  
+@media screen and (max-device-width: 480px) and (orientation: portrait){  
+/* some CSS here */  
+
+.btn-com {
+		width: 80px;
+	}
+
+}  
+  
+/* #### Mobile Phones Landscape #### */  
+@media screen and (max-device-width: 640px) and (orientation: landscape){  
+/* some CSS here */  
+
+.btn-com {
+		width: 80px;
+	}
+}  
+  
+/* #### Mobile Phones Portrait or Landscape #### */  
+@media screen and (max-device-width: 640px){  
+/* some CSS here */  
+
+.btn-com {
+		width: 80px;
+	}
+
+}  
+  
+/* #### iPhone 4+ Portrait or Landscape #### */  
+@media screen and (min-device-width: 320px) and (-webkit-min-device-pixel-ratio: 2){  
+/* some CSS here */  
+
+.btn-com {
+		width: 80px;
+	}
+
+}  
+  
+/* #### iPhone 5 Portrait or Landscape #### */  
+@media (device-height: 568px) and (device-width: 320px) and (-webkit-min-device-pixel-ratio: 2){  
+/* some CSS here */  
+
+.btn-com {
+		width: 100px;
+	}
+
+}  
+  
+/* #### iPhone 6 and 6 plus Portrait or Landscape #### */  
+@media (min-device-height: 667px) and (min-device-width: 375px) and (-webkit-min-device-pixel-ratio: 3){  
+/* some CSS here */  
+
+.btn-com {
+		width: 100px;
+	}
+
+}  
+  
+/* #### Tablets Portrait or Landscape #### */  
+@media screen and (min-device-width: 768px) and (max-device-width: 1024px){  
+/* some CSS here */  
+
+.btn-com {
+		width: 100px;
+	}
+
+}  
+  
+/* #### Desktops #### */  
+@media screen and (min-width: 1024px){  
+/* some CSS here */  
+
+
+.btn-com {
+		width: 100px;
+	}
+
+} 
