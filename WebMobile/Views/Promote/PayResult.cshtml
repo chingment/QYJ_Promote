@@ -69,7 +69,7 @@
                             for (var p in cards) {
                                 cardList.push({ cardId: cards[p].cardId, cardExt: cards[p].cardExt });
                             }
-
+                          
                             wx.addCard({
                                 cardList: cardList,
                                 success: function (res) {

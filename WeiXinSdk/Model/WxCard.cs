@@ -13,8 +13,6 @@ namespace Lumos.WeiXinSdk
         public string timestamp { get; set; }
         public string signature { get; set; }
         public string nonce_str { get; set; }
-
-        public string outer_str { get; set; }
     }
 
     public class WxCard

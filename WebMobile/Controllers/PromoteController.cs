@@ -112,7 +112,7 @@ namespace WebMobile.Controllers
         {
             List<WxCard> cardList = new List<WxCard>();
 
-            var promoteUserCoupons = CurrentDb.PromoteUserCoupon.Where(m => m.PromoteId == promoteId).ToList();
+            var promoteUserCoupons = CurrentDb.PromoteUserCoupon.Where(m => m.PromoteId == promoteId && m.UserId == this.CurrentUserId).ToList();
 
             var promoteUserCouponsByBuyCount = promoteUserCoupons.Where(m => m.IsBuy == true).Count();
 
@@ -134,7 +134,7 @@ namespace WebMobile.Controllers
                     string card_id = item.WxCouponId;
                     string code = "";
                     string openid = "";
-                    string outer_str = "123461";
+
                     Dictionary<string, string> sParams = new Dictionary<string, string>();
 
                     sParams.Add("nonce_str", nonce_str);
@@ -154,7 +154,6 @@ namespace WebMobile.Controllers
                     cardExt.timestamp = timestamp;
                     cardExt.signature = signature;
                     cardExt.nonce_str = nonce_str;
-                    cardExt.outer_str = outer_str;
                     WxCard card = new WxCard();
                     card.cardId = card_id;
                     card.cardExt = Newtonsoft.Json.JsonConvert.SerializeObject(cardExt);
