@@ -61,16 +61,27 @@ namespace WebMobile.Controllers
                 }
             }
 
+            bool isGoBuy = false;
+
             var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.PromoteId == model.PromoteId && m.UserId == this.CurrentUserId).FirstOrDefault();
 
-            if (promoteUserCoupon != null)
+            if (promoteUserCoupon == null)
+            {
+                isGoBuy = true;
+            }
+            else
             {
                 model.IsGetCoupon = promoteUserCoupon.IsGet;
 
                 if (!promoteUserCoupon.IsBuy)
                 {
-                    return Redirect("~/Promote/Coupon?promoteId=" + model.PromoteId + "&refereeId=" + promoteUserCoupon.RefereeId);
+                    isGoBuy = true;
                 }
+            }
+
+            if (isGoBuy)
+            {
+                return Redirect("~/Promote/Coupon?promoteId=" + model.PromoteId + "&refereeId=" + promoteUserCoupon.RefereeId);
             }
 
             return View(model);

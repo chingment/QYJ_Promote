@@ -395,10 +395,10 @@ namespace WebMobile.Controllers
                 SolidBrush brush = new SolidBrush(Color.Green);
                 PointF P = new PointF(100, 100);
                 Font f = new Font("Arial", 20);
-                g.DrawImage(oImg1, 75, 540, 77, 77);//画二维码图片          
+                g.DrawImage(oImg1, 320, 1655, 150, 150);//画二维码图片      
 
 
-                if(wxUserInfo!=null)
+                if (wxUserInfo!=null)
                 {
                     if (!string.IsNullOrEmpty(wxUserInfo.HeadImgUrl))
                     {
