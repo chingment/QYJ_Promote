@@ -101,6 +101,11 @@ namespace Lumos.BLL
             return OAuthApi.GetUserInfo(accessToken, openId);
         }
 
+        public string CardCodeDecrypt(string encrypt_code)
+        {
+            return OAuthApi.CardCodeDecrypt(this.GetApiAccessToken(), encrypt_code);
+        }
+
         public WxApiUserInfoResult GetUserInfoByApiToken(string openId)
         {
             return OAuthApi.GetUserInfoByApiToken(this.GetApiAccessToken(), openId);
@@ -139,6 +144,8 @@ namespace Lumos.BLL
         {
             return OAuthApi.UploadMultimediaImage(this.GetApiAccessToken(), imageUrl);
         }
+
+
 
         public string OrderQuery(string orderSn)
         {
@@ -209,6 +216,8 @@ namespace Lumos.BLL
             }
 
         }
+
+
 
 
         //public string OrderPayReFund(string comCode, string orderSn, string orderReFundSn, decimal totalFee, decimal refundFee, string refundDesc)

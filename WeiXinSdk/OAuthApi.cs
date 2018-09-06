@@ -92,6 +92,15 @@ namespace Lumos.WeiXinSdk
 
         }
 
+
+        public static string CardCodeDecrypt(string accessToken, string encrypt_code)
+        {
+            var api = new WxApi();
+            var wxApiCardCodeDecrpt = new WxApiCardCodeDecrpt(accessToken, WxPostDataType.Text, "{\"encrypt_code\":\"" + encrypt_code + "\"}");
+            var wxApiCardCodeDecrpt_Result = api.DoPost(wxApiCardCodeDecrpt);
+            return wxApiCardCodeDecrpt_Result.code;
+        }
+
         private static void GetUserOpenIds(ref List<string> opendIds, string accessToken, string next_openid = "")
         {
             WxApi api = new WxApi();

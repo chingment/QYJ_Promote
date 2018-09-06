@@ -512,7 +512,7 @@
             headers["__RequestVerificationToken"] = token;
 
             var handling;
-          
+
             $.ajax({
                 type: "Post",
                 dataType: "json",

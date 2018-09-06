@@ -78,6 +78,8 @@
     <Compile Include="MsgPush\WxMsgFactory.cs" />
     <Compile Include="MsgPush\MsgType.cs" />
     <Compile Include="Post\UploadMultimediaResult.cs" />
+    <Compile Include="Post\WxApiCardCodeDecrpt.cs" />
+    <Compile Include="Post\WxApiCardCodeDecrptResult.cs" />
     <Compile Include="Post\WxApiCustomMessagePostData.cs" />
     <Compile Include="Post\WxApiCustomMessageSend.cs" />
     <Compile Include="Post\WxApiQrCodeCreateRequest.cs" />

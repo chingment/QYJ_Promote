@@ -144,7 +144,7 @@ namespace WebMobile.Controllers
                     WxCard card = new WxCard();
                     card.cardId = card_id;
                     card.cardExt = Newtonsoft.Json.JsonConvert.SerializeObject(cardExt);
-                    card.code = item.WxCouponOpenCode;
+                    card.code = item.WxCouponDecryptCode;
                     cardList.Add(card);
                 }
 
@@ -167,7 +167,12 @@ namespace WebMobile.Controllers
                 var coupon = model.Coupons.Where(m => m.WxCouponId == item.WxCouponId).FirstOrDefault();
                 if (coupon != null)
                 {
-                    item.WxCouponOpenCode = coupon.WxCouponOpenCode;
+                    string decryptCode = SdkFactory.Wx.Instance().CardCodeDecrypt(coupon.WxCouponEncryptCode);
+
+                    LogUtil.Info("解密CODE:" + decryptCode);
+
+                    item.WxCouponEncryptCode = coupon.WxCouponEncryptCode;
+                    item.WxCouponDecryptCode = decryptCode;
                     item.Mender = this.CurrentUserId;
                     item.MendTime = DateTime.Now;
                 }
@@ -191,7 +196,7 @@ namespace WebMobile.Controllers
     {
         public string WxCouponId { get; set; }
 
-        public string WxCouponOpenCode { get; set; }
+        public string WxCouponEncryptCode { get; set; }
     }
 
 }

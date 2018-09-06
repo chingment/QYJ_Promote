@@ -94,6 +94,7 @@ namespace Test
     {
         static void Main(string[] args)
         {
+            OAuthApi.CardCodeDecrypt("13_uev3UiFHaQYf_qG882v2w9_FBz8a18dIRMjWG1Axv7Wv4mpOLDzwgJB1tySq5QaT__5IBYRNrURk_K_T1GoHshkvWPasfTtIip2V5BzdNEBHNqIO1I3_SPRNIv0gfDUE7zlE-POZHdQo2aOKVDHhAHALTX", "ftp40hZGeN2MQYDTWpH4q93CwcrbioZuSXfi16qfI4o=");
             var operater = "00000000000000000000000000000000";
 
             //BizFactory.Order.PayResultNotify(operater, Enumeration.OrderNotifyLogNotifyFrom.WebApp, "fdfsf", "2018090218544434811746");
