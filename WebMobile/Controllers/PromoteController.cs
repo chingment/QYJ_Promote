@@ -122,7 +122,7 @@ namespace WebMobile.Controllers
                     string card_id = item.WxCouponId;
                     string code = "";
                     string openid = "";
-
+                    string outer_str = "123461";
                     Dictionary<string, string> sParams = new Dictionary<string, string>();
 
                     sParams.Add("nonce_str", nonce_str);
@@ -130,6 +130,7 @@ namespace WebMobile.Controllers
                     sParams.Add("card_id", card_id);
                     sParams.Add("code", "");
                     sParams.Add("openid", "");
+                    //sParams.Add("outer_id", outer_id);
                     sParams.Add("api_ticket", api_ticket);
 
                     string signature = Lumos.WeiXinSdk.CommonUtil.MakeCardSign(sParams);
@@ -141,7 +142,7 @@ namespace WebMobile.Controllers
                     cardExt.timestamp = timestamp;
                     cardExt.signature = signature;
                     cardExt.nonce_str = nonce_str;
-
+                    cardExt.outer_str = outer_str;
                     WxCard card = new WxCard();
                     card.cardId = card_id;
                     card.cardExt = Newtonsoft.Json.JsonConvert.SerializeObject(cardExt);
