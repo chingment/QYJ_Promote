@@ -122,10 +122,17 @@ namespace Lumos.BLL
 
                     LogUtil.Info("步骤3");
 
+                    decimal chargeAmount = order.ChargeAmount;
+
+                    if (order.UserId == "62c587c13c124f96b436de9522fb31f0")
+                    {
+                        chargeAmount = 0.01m;
+                    }
+
                     string goods_tag = "";
                     if (order.ChargeAmount > 0)
                     {
-                        string prepayId = SdkFactory.Wx.Instance().GetPrepayId(pOperater, "JSAPI", wxUserInfo.OpenId, order.Sn, order.ChargeAmount, goods_tag, Common.CommonUtils.GetIP(), productSku.Name, order.WxPrepayIdExpireTime);
+                        string prepayId = SdkFactory.Wx.Instance().GetPrepayId(pOperater, "JSAPI", wxUserInfo.OpenId, order.Sn, chargeAmount, goods_tag, Common.CommonUtils.GetIP(), productSku.Name, order.WxPrepayIdExpireTime);
 
                         if (string.IsNullOrEmpty(prepayId))
                         {

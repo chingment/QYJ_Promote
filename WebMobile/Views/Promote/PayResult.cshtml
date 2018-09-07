@@ -4,6 +4,113 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section styles{
+    <style type="text/css">
+        .popd {
+            /*display: none;*/
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            position: fixed;
+            background: rgba(0,0,0,0.3);
+            z-index: 100;
+        }
+
+        .popd-outer {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+        }
+
+        .popd-inter {
+            width: 300px;
+            height: 340px;
+            position: absolute;
+            left: -150px;
+            top: -170px;
+            border: 2px solid #fff;
+            background: #fff;
+            border-radius: 10px 9px 5px 8px;
+        }
+
+
+        .list-input {
+            border-top: 1px solid #E5E5E5;
+            background-color: #fff;
+        }
+
+        .list-input-item {
+            border-bottom: 1px solid #E5E5E5;
+            padding: 0px 8px;
+        }
+
+        .list-input-item, .list-input .item-left,
+        .list-input-item .item-right {
+            height: 45px;
+            line-height: 45px;
+        }
+
+        .list-input-item .item-left {
+            width: 95%;
+            display: inline-flex;
+        }
+
+        .list-input-item .item-left img {
+            height: 16px;
+            width: 16px;
+            padding: 15px 10px 16px 0px;
+        }
+
+        .list-input-item .item-name {
+            width: 75px;
+            white-space: nowrap;
+        }
+
+        .list-input-item .item-right {
+            width: 5%;
+        }
+
+        .list-input-item .item-right img {
+            height: 18px;
+            padding: 14px 0px;
+        }
+
+        .list-input input {
+            border: 0;
+            height: 1.5em;
+            font-size: 1em;
+            padding-left: 0;
+            color: #222;
+            background-color: white;
+            outline: 0 none;
+            text-decoration: none;
+        }
+
+
+        .list-input-item .item-left {
+            width: 100%;
+            display: inline-flex;
+        }
+
+
+        .list-input-item .item-name {
+            width: 140px;
+            text-align: right;
+            padding-right: 5px;
+            color: #fb6088;
+        }
+
+
+        .list-input-item .fr {
+            float: right;
+            width: 100%;
+            text-align: left;
+        }
+    </style>
+
+}
+
 <div class="gbr gbr-main">
     <div>
         <img src="~/Content/images/promote20180910/bg_suc_01.jpg" />
@@ -37,6 +144,99 @@
         </div>
     </div>
 </div>
+
+<div class="popd" style="display:none">
+    <div class="popd-outer">
+
+        <div class="popd-inter">
+            <div class="popd-close" style="position: absolute; right: -6px;top:-16px;"> <img src="~/Content/images/promote20180910/popd_close.png" style="width:32px;height:32px;" /></div>
+            <div>
+                <p style="color:#fb6088;text-align:center;font-size:18px;font-weight:bold; line-height:24px;margin-top:20px;">领取卡券</p>
+                <p style="color:#fb6088;text-align:center;font-size:18px;font-weight:bold; line-height:24px;">请先填写以下信息</p>
+
+                <div style="margin-top:20px;margin-bottom:20px;">
+
+                    <ul class="list-input" style="overflow:hidden">
+                        <li class="list-input-item">
+                            <div class="item-left fl">
+                                <div class="item-name fl"><span>姓名</span></div>
+                                <div class="item-value fr">
+
+                                    <input id="txt_ctName" placeholder="请输入姓名" type="text" style="width:100%;" />
+
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-input-item">
+                            <div class="item-left fl">
+                                <div class="item-name fl"><span>手机号码</span></div>
+                                <div class="item-value fr">
+
+                                    <input id="txt_ctPhone" placeholder="请输入手机号码" type="number" style="width:100%;" />
+
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-input-item">
+                            <div class="item-left fl">
+                                <div class="item-name fl"><span>是否学员</span></div>
+                                <div class="item-value fr">
+
+                                    <span> <input id="rd_ctIsStudent_1" name="rd_ctIsStudent" type="radio" value="1" checked /><label for="rd_ctIsStudent_1">是</label> </span>
+                                    <span> <input id="rd_ctIsStudent_0" name="rd_ctIsStudent" type="radio" value="0" /><label for="rd_ctIsStudent_0">否</label> </span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-input-item">
+                            <div class="item-left fl">
+                                <div class="item-name fl"><span>校区选择</span></div>
+                                <div class="item-value fr">
+
+                                    <select id="sel_ctSchool">
+                                        <option value="">请选择</option>
+                                        <option value="越秀校">越秀校</option>
+                                        <option value="天润校">天润校</option>
+                                        <option value="合生广场校">合生广场校</option>
+                                        <option value="光大花园校">光大花园校</option>
+                                        <option value="嘉仕花园校">嘉仕花园校</option>
+                                        <option value="珠江帝景校">珠江帝景校</option>
+                                        <option value="颐景华苑校">颐景华苑校</option>
+                                        <option value="洛溪校">洛溪校</option>
+                                        <option value="喜盈雅境校">喜盈雅境校</option>
+                                        <option value="花样年华校">花样年华校</option>
+                                        <option value="金沙御苑校">金沙御苑校</option>
+                                        <option value="金海岸校">金海岸校</option>
+                                        <option value="金沙洲校">金沙洲校</option>
+                                        <option value="华发四季校">华发四季校</option>
+                                        <option value="白云尚城校">白云尚城校</option>
+                                        <option value="增城新塘校">增城新塘校</option>
+                                        <option value="增城凤凰城校">增城凤凰城校</option>
+                                        <option value="中海金沙湾校">中海金沙湾校</option>
+                                        <option value="千灯湖校">千灯湖校</option>
+                                        <option value="深圳龙岗校">深圳龙岗校</option>
+                                        <option value="深圳宝安校">深圳宝安校</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div style="text-align:center;">
+                    <img id="btn_Pop_Sure" src="~/Content/images/promote20180910/btn_submit.png" class="btn-com" style="display: inline-block;" />
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
 @section scripts{
     <script type="text/javascript">
 
@@ -59,30 +259,7 @@
                 function () {
                     var _this = $(this);
 
-                    $.lumos.postJson({
-                        url: "/Promote/GetCardList",
-                        data: { promoteId: promoteId },
-                        success: function (d) {
-
-                            var cards = d.data;
-                            var cardList = [];
-                            for (var p in cards) {
-                                cardList.push({ cardId: cards[p].cardId, cardExt: cards[p].cardExt });
-                            }
-
-                            wx.addCard({
-                                cardList: cardList,
-                                success: function (res) {
-                                    add_cardList=res.cardList;
-                                    addCouponNotifyResult(add_cardList);
-                                },
-                                cancel: function (res) {
-
-                                }
-                            });
-
-                        }
-                    });
+                    getCard();
 
                 });
 
@@ -179,6 +356,50 @@
                      });
              });
 
+
+
+            $('#btn_Pop_Sure').on("click",
+         function () {
+
+             var ctName=$('#txt_ctName').val();
+             var ctPhone=$('#txt_ctPhone').val();
+             var ctIsStudent=$('input[name=rd_ctIsStudent]:checked').val();
+             var ctSchool=$('#sel_ctSchool').find('option:selected').val();
+
+             if(trim(ctName)=="") {
+                 $.lumos.tips("请输入姓名");
+                 return false;
+             }
+
+             if(trim(ctPhone)=="") {
+                 $.lumos.tips("请输入电话号码");
+                 return false;
+             }
+
+             if(trim(ctSchool)=="") {
+                 $.lumos.tips("请选择校区");
+                 return false;
+             }
+
+             $.lumos.postJson({
+                 url: "/Promote/EditPromoteUserInfo",
+                 isShowLoading:true,
+                 data: { promoteId: promoteId,ctName:ctName,ctPhone:ctPhone,ctIsStudent:ctIsStudent,ctSchool:ctSchool },
+                 success: function (d) {
+                     if (d.result == $.lumos.resultType.success) {
+                         $('.popd').hide();
+                         getCard();
+                     }
+                 }
+             });
+         });
+
+
+            $(".popd-close").on("click",
+   function (e) {
+       $(".popd").hide();
+   });
+
         });
 
         function addCouponNotifyResult(cards) {
@@ -207,5 +428,47 @@
             });
         }
 
+
+        function getCard(){
+
+            $.lumos.postJson({
+                url: "/Promote/GetCardList",
+                data: { promoteId: promoteId },
+                isShowLoading:true,
+                success: function (d) {
+
+                    if (d.result == $.lumos.resultType.success) {
+                        var cards = d.data;
+                        var cardList = [];
+                        for (var p in cards) {
+                            cardList.push({ cardId: cards[p].cardId, cardExt: cards[p].cardExt });
+                        }
+
+                        wx.addCard({
+                            cardList: cardList,
+                            success: function (res) {
+                                add_cardList=res.cardList;
+                                addCouponNotifyResult(add_cardList);
+                            },
+                            cancel: function (res) {
+
+                            }
+                        });
+                    }
+                    else{
+                        if(d.code=="4001") {
+                            $('.popd').show();
+                        }
+                        else {
+                            $.lumos.tips(d.messages);
+                        }
+                    }
+                }
+            });
+        }
+
+        function trim(str){ //删除左右两端的空格
+            return str.replace(/(^\s*)|(\s*$)/g, "");
+        }
     </script>
 }

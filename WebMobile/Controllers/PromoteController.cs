@@ -52,37 +52,37 @@ namespace WebMobile.Controllers
             model.IsSuccessed = isSuccessed;
 
 
-            var promote = CurrentDb.Promote.Where(m => m.Id == model.PromoteId).FirstOrDefault();
-            if (promote != null)
-            {
-                if (promote.EndTime < DateTime.Now)
-                {
-                    model.PromoteIsEnd = true;
-                }
-            }
+            //var promote = CurrentDb.Promote.Where(m => m.Id == model.PromoteId).FirstOrDefault();
+            //if (promote != null)
+            //{
+            //    if (promote.EndTime < DateTime.Now)
+            //    {
+            //        model.PromoteIsEnd = true;
+            //    }
+            //}
 
-            bool isGoBuy = false;
+            //bool isGoBuy = false;
 
-            var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.PromoteId == model.PromoteId && m.UserId == this.CurrentUserId).FirstOrDefault();
+            //var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.PromoteId == model.PromoteId && m.UserId == this.CurrentUserId).FirstOrDefault();
 
-            if (promoteUserCoupon == null)
-            {
-                isGoBuy = true;
-            }
-            else
-            {
-                model.IsGetCoupon = promoteUserCoupon.IsGet;
+            //if (promoteUserCoupon == null)
+            //{
+            //    isGoBuy = true;
+            //}
+            //else
+            //{
+            //    model.IsGetCoupon = promoteUserCoupon.IsGet;
 
-                if (!promoteUserCoupon.IsBuy)
-                {
-                    isGoBuy = true;
-                }
-            }
+            //    if (!promoteUserCoupon.IsBuy)
+            //    {
+            //        isGoBuy = true;
+            //    }
+            //}
 
-            if (isGoBuy)
-            {
-                return Redirect("~/Promote/Coupon?promoteId=" + model.PromoteId + "&refereeId=" + promoteUserCoupon.RefereeId);
-            }
+            //if (isGoBuy)
+            //{
+            //    return Redirect("~/Promote/Coupon?promoteId=" + model.PromoteId + "&refereeId=" + promoteUserCoupon.RefereeId);
+            //}
 
             return View(model);
         }
@@ -121,7 +121,7 @@ namespace WebMobile.Controllers
             LogUtil.Info(string.Format("用户通知订单号({0})支付结果:{1}", orderSn, res));
 
             bool isPaySuccessed = false;
-            var result = BizFactory.Order.PayResultNotify(this.CurrentUserId, Enumeration.OrderNotifyLogNotifyFrom.WebApp, res, orderSn,out isPaySuccessed);
+            var result = BizFactory.Order.PayResultNotify(this.CurrentUserId, Enumeration.OrderNotifyLogNotifyFrom.WebApp, res, orderSn, out isPaySuccessed);
 
             return result;
         }
@@ -131,6 +131,7 @@ namespace WebMobile.Controllers
         {
             List<WxCard> cardList = new List<WxCard>();
 
+            string userId = this.CurrentUserId;
             var promoteUserCoupons = CurrentDb.PromoteUserCoupon.Where(m => m.PromoteId == promoteId && m.UserId == this.CurrentUserId).ToList();
 
             var promoteUserCouponsByBuyCount = promoteUserCoupons.Where(m => m.IsBuy == true).Count();
@@ -139,6 +140,16 @@ namespace WebMobile.Controllers
             {
                 return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, "未购买卡券，不能操作！", cardList);
             }
+
+
+            var promoteUser = CurrentDb.PromoteUser.Where(m => m.PromoteId == promoteId && m.UserId == this.CurrentUserId).FirstOrDefault();
+
+            if (string.IsNullOrEmpty(promoteUser.CtName))
+            {
+                return new CustomJsonResult(ResultType.Failure, ResultCode.FormImperfect, "请先完成信息", cardList);
+            }
+
+
 
             if (promoteUserCoupons.Count > 0)
             {
@@ -194,6 +205,105 @@ namespace WebMobile.Controllers
             return new CustomJsonResult(ResultType.Success, ResultCode.Success, "", cardList);
         }
 
+
+
+        [HttpPost]
+        public CustomJsonResult EditPromoteUserInfo(EditPromoteUserInfoViewModel model)
+        {
+
+            var promoteUser = CurrentDb.PromoteUser.Where(m => m.UserId == this.CurrentUserId && m.PromoteId == model.PromoteId).FirstOrDefault();
+
+            if (promoteUser != null)
+            {
+                promoteUser.CtName = model.CtName;
+                promoteUser.CtPhone = model.CtPhone;
+                promoteUser.CtIsStudent = model.CtIsStudent;
+                promoteUser.CtSchool = model.CtSchool;
+                CurrentDb.SaveChanges();
+            }
+
+            return new CustomJsonResult(ResultType.Success, ResultCode.Success, "保存成功");
+        }
+
+        //[HttpPost]
+        //public CustomJsonResult GetCardList(string promoteId)
+        //{
+        //    List<WxCard> cardList = new List<WxCard>();
+
+        //    var promoteUserCoupons = CurrentDb.PromoteUserCoupon.Where(m => m.PromoteId == promoteId && m.UserId == this.CurrentUserId).ToList();
+
+        //    var promoteUserCouponsByBuyCount = promoteUserCoupons.Where(m => m.IsBuy == true).Count();
+
+        //    if (promoteUserCouponsByBuyCount == 0)
+        //    {
+        //        return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, "未购买卡券，不能操作！", cardList);
+        //    }
+
+        //    if (promoteUserCouponsByBuyCount == 0)
+        //    {
+        //        return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, "未购买卡券，不能操作！", cardList);
+        //    }
+
+        //    var promoteUser = CurrentDb.PromoteUser.Where(m => m.PromoteId == promoteId && m.UserId == this.CurrentUserId).FirstOrDefault();
+
+        //    if (string.IsNullOrEmpty(promoteUser.CtName))
+        //    {
+        //        return new CustomJsonResult(ResultType.Failure, ResultCode.FormImperfect, "请先完成信息", cardList);
+        //    }
+
+        //    if (promoteUserCoupons.Count > 0)
+        //    {
+        //        string api_ticket = SdkFactory.Wx.Instance().GetCardApiTicket();
+
+        //        LogUtil.Info("CardApiTicket:" + api_ticket);
+
+        //        foreach (var item in promoteUserCoupons)
+        //        {
+        //            string timestamp = CommonUtil.GetTimeStamp();
+        //            string nonce_str = CommonUtil.GetNonceStr();
+        //            string card_id = item.WxCouponId;
+        //            string code = "";
+        //            string openid = "";
+
+        //            Dictionary<string, string> sParams = new Dictionary<string, string>();
+
+        //            sParams.Add("nonce_str", nonce_str);
+        //            sParams.Add("timestamp", timestamp);
+        //            sParams.Add("card_id", card_id);
+        //            sParams.Add("code", "");
+        //            sParams.Add("openid", "");
+        //            //sParams.Add("outer_id", outer_id);
+        //            sParams.Add("api_ticket", api_ticket);
+
+        //            string signature = Lumos.WeiXinSdk.CommonUtil.MakeCardSign(sParams);
+
+        //            WxCardExt cardExt = new WxCardExt();
+
+        //            cardExt.code = code;
+        //            cardExt.openid = openid;
+        //            cardExt.timestamp = timestamp;
+        //            cardExt.signature = signature;
+        //            cardExt.nonce_str = nonce_str;
+        //            WxCard card = new WxCard();
+        //            card.cardId = card_id;
+        //            card.cardExt = Newtonsoft.Json.JsonConvert.SerializeObject(cardExt);
+        //            string decryptCode = item.WxCouponDecryptCode;
+        //            if (string.IsNullOrEmpty(item.WxCouponDecryptCode))
+        //            {
+        //                decryptCode = SdkFactory.Wx.Instance().CardCodeDecrypt(item.WxCouponEncryptCode);
+        //            }
+
+        //            card.code = decryptCode;
+
+        //            cardList.Add(card);
+        //        }
+
+        //        LogUtil.Info("cardList:" + Newtonsoft.Json.JsonConvert.SerializeObject(cardList));
+
+        //    }
+
+        //    return new CustomJsonResult(ResultType.Success, ResultCode.Success, "", cardList);
+        //}
 
         [HttpPost]
         public CustomJsonResult AddCouponNotifyResult(AddCouponNotifyResultModel model)

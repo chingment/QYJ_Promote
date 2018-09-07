@@ -22,5 +22,9 @@ namespace Lumos.Entity
         public DateTime CreateTime { get; set; }
         public string WxPromoteImgMediaId { get; set; }
         public string PromoteImgUrl { get; set; }
+        public string CtName { get; set; }
+        public string CtPhone { get; set; }
+        public string CtIsStudent { get; set; }
+        public string CtSchool { get; set; }
     }
 }

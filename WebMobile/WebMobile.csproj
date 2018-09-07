@@ -187,6 +187,7 @@
     <Compile Include="Models\Home\SearchCondition.cs" />
     <Compile Include="Models\Promote\AccessLogModel.cs" />
     <Compile Include="Models\Promote\CouponViewModel.cs" />
+    <Compile Include="Models\Promote\EditPromoteUserInfoViewModel.cs" />
     <Compile Include="Models\Promote\PayResultViewModel.cs" />
     <Compile Include="Models\Promote\ShareLogModel.cs" />
     <Compile Include="Models\ReportModel.cs" />
@@ -675,6 +676,7 @@
     <Content Include="Content\Back\Scripts\themes\SolidBox\js\theme.js" />
     <Content Include="Content\Back\Scripts\themes\SolidBox\Preview.jpg" />
     <Content Include="Content\Back\Scripts\themes\SolidBox\style\style.css" />
+    <Content Include="Content\images\loading.gif" />
     <Content Include="Content\images\promote20180910\bg.jpg" />
     <Content Include="Content\images\promote20180910\btn_personal.png" />
     <Content Include="Content\images\promote20180910\btn_buy.png" />
@@ -689,8 +691,10 @@
     <Content Include="Content\images\promote20180910\bg_suc_04.jpg" />
     <Content Include="Content\images\promote20180910\btn_opencoupon.png" />
     <Content Include="Content\images\promote20180910\btn_getcoupon.png" />
+    <Content Include="Content\images\promote20180910\popd_close.png" />
     <Content Include="Content\images\promote20180910\share_fly.png" />
     <Content Include="Content\images\promote20180910\share_icon.png" />
+    <Content Include="Content\images\promote20180910\btn_submit.png" />
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

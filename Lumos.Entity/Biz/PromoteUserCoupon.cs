@@ -34,5 +34,6 @@ namespace Lumos.Entity
         public DateTime? MendTime { get; set; }
 
         public string RefereeId { get; set; }
+
     }
 }
