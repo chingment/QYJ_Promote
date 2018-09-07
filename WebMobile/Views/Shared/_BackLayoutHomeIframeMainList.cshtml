@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "_LayoutHomeIframeMain";
+    Layout = "~/Views/Shared/_BackLayout.cshtml";
+}
+@section styles{
+    @RenderSection("styles", required: false)
+}
+@section scripts{
+    @RenderSection("scripts", required: false)
+}
+
+@RenderBody()
+@section scriptsbyend{
+    @RenderSection("scriptsbyend", required: false)
+}
+
+

@@ -257,6 +257,11 @@ namespace WebMobile.Controllers
             return new CustomJsonResult(ResultType.Success, ResultCode.Success, "");
 
         }
+
+
+
+
+
     }
 
     public class AddCouponNotifyResultModel
