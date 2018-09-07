@@ -63,8 +63,10 @@
     <Compile Include="Biz\Pms\UnifiedOrderPms.cs" />
     <Compile Include="Biz\ProductSku.cs" />
     <Compile Include="Biz\Promote.cs" />
+    <Compile Include="Biz\PromoteAccessLog.cs" />
     <Compile Include="Biz\PromoteCoupon.cs" />
     <Compile Include="Biz\PromoteProfitSet.cs" />
+    <Compile Include="Biz\PromoteShareLog.cs" />
     <Compile Include="Biz\PromoteUser.cs" />
     <Compile Include="Biz\PromoteUserCoupon.cs" />
     <Compile Include="Biz\PromoteUserRelation.cs" />

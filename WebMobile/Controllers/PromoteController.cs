@@ -216,6 +216,47 @@ namespace WebMobile.Controllers
             return new CustomJsonResult(ResultType.Success, ResultCode.Success, "保存成功");
         }
 
+
+        [HttpPost]
+        public CustomJsonResult ShareLog(ShareLogModel model)
+        {
+
+            var promoteShareLog = new PromoteShareLog();
+            promoteShareLog.Id = GuidUtil.New();
+            promoteShareLog.UserId = this.CurrentUserId;
+            promoteShareLog.ShareLink = model.ShareLink;
+            promoteShareLog.RefereeId = model.RefereeId;
+            promoteShareLog.PromoteId = model.PromoteId;
+            promoteShareLog.Type = model.Type;
+            promoteShareLog.CreateTime = DateTime.Now;
+            promoteShareLog.Creator = this.CurrentUserId;
+
+            CurrentDb.PromoteShareLog.Add(promoteShareLog);
+            CurrentDb.SaveChanges();
+
+            return new CustomJsonResult(ResultType.Success, ResultCode.Success, "");
+
+        }
+
+        [HttpPost]
+        public CustomJsonResult AccessLog(AccessLogModel model)
+        {
+
+            var promoteAccessLog = new PromoteAccessLog();
+            promoteAccessLog.Id = GuidUtil.New();
+            promoteAccessLog.UserId = this.CurrentUserId;
+            promoteAccessLog.AccessUrl = model.AccessUrl;
+            promoteAccessLog.RefereeId = model.RefereeId;
+            promoteAccessLog.PromoteId = model.PromoteId;
+            promoteAccessLog.CreateTime = DateTime.Now;
+            promoteAccessLog.Creator = this.CurrentUserId;
+
+            CurrentDb.PromoteAccessLog.Add(promoteAccessLog);
+            CurrentDb.SaveChanges();
+
+            return new CustomJsonResult(ResultType.Success, ResultCode.Success, "");
+
+        }
     }
 
     public class AddCouponNotifyResultModel

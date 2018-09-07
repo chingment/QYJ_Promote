@@ -69,7 +69,7 @@
                             for (var p in cards) {
                                 cardList.push({ cardId: cards[p].cardId, cardExt: cards[p].cardExt });
                             }
-                          
+
                             wx.addCard({
                                 cardList: cardList,
                                 success: function (res) {
@@ -125,7 +125,7 @@
                     trigger: function (res) {
                     },
                     success: function (res) {
-
+                        shareLog(promoteId, "", shareLink, 1);
                     },
                     cancel: function (res) {
 
@@ -139,7 +139,7 @@
                     link: shareLink,
                     imgUrl: shareImgUrl,
                     trigger: function (res) {
-
+                        shareLog(promoteId, "", shareLink, 2);
                     },
                     success: function (res) {
 

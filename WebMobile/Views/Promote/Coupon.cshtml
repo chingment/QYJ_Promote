@@ -56,6 +56,9 @@
             var promoteCouponId = "@Model.PromoteCouponId";
             var refereeId = "@Model.RefereeId";
             var userId = "@(OwnRequest.GetUserInfo().UserId)";
+
+            accessLog(promoteId, refereeId, window.document.location.href);
+
             $("#btn_GoPay").on("click",
                 function () {
                     var _this = $(this);
@@ -115,7 +118,7 @@
                     trigger: function (res) {
                     },
                     success: function (res) {
-
+                        shareLog(promoteId, refereeId, shareLink, 1);
                     },
                     cancel: function (res) {
 
@@ -132,7 +135,7 @@
 
                     },
                     success: function (res) {
-
+                        shareLog(promoteId, refereeId, shareLink, 2);
                     },
                     cancel: function (res) {
 
@@ -187,5 +190,7 @@
                 }
             });
         }
+
+
     </script>
 }

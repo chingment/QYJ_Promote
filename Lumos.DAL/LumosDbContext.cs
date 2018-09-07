@@ -32,7 +32,9 @@ namespace Lumos.DAL
 
         public IDbSet<PromoteUserCoupon>  PromoteUserCoupon { get; set; }
 
-        
+        public IDbSet<PromoteAccessLog> PromoteAccessLog { get; set; }
+        public IDbSet<PromoteShareLog> PromoteShareLog { get; set; }
+
 
         //public FxDbContext()
         //    : base("DefaultConnection")

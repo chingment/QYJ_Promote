@@ -92,8 +92,6 @@
             margin-left: -5px;
             margin-right: -6px;
         }
-
-
     </style>
     <script type="text/javascript">
 
@@ -108,6 +106,28 @@
             });
 
         }
+
+
+        function accessLog(promoteId, refereeId, accessUrl) {
+
+            $.lumos.postJson({
+                url: "/Promote/AccessLog",
+                data: { promoteId: promoteId, refereeId: refereeId, accessUrl: accessUrl },
+                success: function (d) {
+                }
+            });
+        }
+
+        function shareLog(promoteId, refereeId, shareLink, type) {
+            $.lumos.postJson({
+                url: "/Promote/ShareLog",
+                data: { promoteId: promoteId, refereeId: refereeId, shareLink: shareLink, type: type },
+                success: function (d) {
+
+                }
+            });
+        }
+
     </script>
 </head>
 <body>
@@ -167,7 +187,7 @@
                 ]
             });
 
- 
+
         })
     </script>
     @RenderSection("scripts", required: false)
