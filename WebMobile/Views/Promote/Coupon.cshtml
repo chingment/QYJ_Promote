@@ -54,7 +54,7 @@
 
             var promoteId = "@Model.PromoteId";
             var promoteCouponId = "@Model.PromoteCouponId";
-            var refereeId = "@Model.RefereeId";
+            var refereeId = "@(Model.RefereeId==null?Request.QueryString["refereeId"]: Model.RefereeId)";
             var userId = "@(OwnRequest.GetUserInfo().UserId)";
 
             accessLog(promoteId, refereeId, window.document.location.href);
