@@ -17,42 +17,42 @@ namespace Lumos.BLL.Task
         public CustomJsonResult Run()
         {
             CustomJsonResult result = new CustomJsonResult();
-
-
             var orders = OrderCacheUtil.GetCheckPayStatusQueue();
+            LogUtil.Info(string.Format("共有{0}条待支付订单查询状态", orders.Count));
 
-            LogUtil.Info(string.Format("共有{0}条待支付", orders.Count));
-            LogUtil.Info(string.Format("开始执行订单查询,时间:{0}", this.DateTime));
+            LogUtil.Info(string.Format("开始执行订单查询,时间：{0}", this.DateTime));
             foreach (var m in orders)
             {
-                if (m.WxPrepayIdExpireTime >= DateTime.Now)
+                LogUtil.Info(string.Format("查询订单号：{0}"));
+
+                if (m.WxPrepayIdExpireTime != null)
                 {
-                    LogUtil.Info(string.Format("开始执行订单号{0}，时间:{1}", m.Sn, this.DateTime));
+                    if (m.WxPrepayIdExpireTime.Value.AddMinutes(1) >= DateTime.Now)
+                    {
+                        string xml = SdkFactory.Wx.Instance().OrderQuery(m.Sn);
 
-                    string xml = SdkFactory.Wx.Instance().OrderQuery(m.Sn);
+                        LogUtil.Info(string.Format("订单号：{0},结果文件:{1}", m.Sn, xml));
 
-                    LogUtil.Info(string.Format("查询订单号（{0}）的结果文件:{1}", m.Sn, xml));
+                        bool isPaySuccessed = false;
+                        BizFactory.Order.PayResultNotify(GuidUtil.Empty(), Entity.Enumeration.OrderNotifyLogNotifyFrom.OrderQuery, xml, m.Sn, out isPaySuccessed);
 
-                    bool isPaySuccessed = false;
-                    BizFactory.Order.PayResultNotify(GuidUtil.Empty(), Entity.Enumeration.OrderNotifyLogNotifyFrom.OrderQuery, xml, m.Sn, out isPaySuccessed);
+                        if (isPaySuccessed)
+                        {
+                            OrderCacheUtil.ExitQueue4CheckPayStatus(m.Sn);
 
-                    if (isPaySuccessed)
+                            LogUtil.Info(string.Format("订单号：{0},支付成功,删除缓存", m.Sn));
+                        }
+                    }
+                    else
                     {
                         OrderCacheUtil.ExitQueue4CheckPayStatus(m.Sn);
-                    }
 
-                    LogUtil.Info(string.Format("结束执行订单号{0}，时间:{1}", m.Sn, this.DateTime));
-                }
-                else
-                {
-                    OrderCacheUtil.ExitQueue4CheckPayStatus(m.Sn);
+                        LogUtil.Info(string.Format("订单号：{0},已经过期,删除缓存", m.Sn));
+                    }
                 }
             }
 
             LogUtil.Info(string.Format("结束执行订单查询,时间:{0}", this.DateTime));
-
-
-            CurrentDb.SaveChanges();
 
 
             return result;
