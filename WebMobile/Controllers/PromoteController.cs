@@ -108,6 +108,13 @@ namespace WebMobile.Controllers
             }
         }
 
+
+        [HttpPost]
+        public CustomJsonResult CancleOrder(string orderSn, string res)
+        {
+            return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, "");
+        }
+
         [HttpPost]
         public CustomJsonResult PayNotifyResult(string orderSn, string res)
         {
