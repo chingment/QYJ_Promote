@@ -45,9 +45,16 @@ namespace Lumos.BLL.Task
                     }
                     else
                     {
-                        OrderCacheUtil.ExitQueue4CheckPayStatus(m.Sn);
-
-                        LogUtil.Info(string.Format("订单号：{0},已经过期,删除缓存", m.Sn));
+                        var order = CurrentDb.Order.Where(q => q.Sn == m.Sn).FirstOrDefault();
+                        if (order != null)
+                        {
+                            order.Status = Enumeration.OrderStatus.Cancled;
+                            order.Mender = GuidUtil.Empty();
+                            order.CancelReason = "订单支付有效时间过期";
+                            CurrentDb.SaveChanges();
+                            OrderCacheUtil.ExitQueue4CheckPayStatus(m.Sn);
+                            LogUtil.Info(string.Format("订单号：{0},已经过期,删除缓存", m.Sn));
+                        }
                     }
                 }
             }
