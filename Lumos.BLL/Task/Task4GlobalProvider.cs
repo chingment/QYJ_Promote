@@ -50,6 +50,7 @@ namespace Lumos.BLL.Task
                         {
                             order.Status = Enumeration.OrderStatus.Cancled;
                             order.Mender = GuidUtil.Empty();
+                            order.MendTime = this.DateTime;
                             order.CancelReason = "订单支付有效时间过期";
                             CurrentDb.SaveChanges();
                             OrderCacheUtil.ExitQueue4CheckPayStatus(m.Sn);
