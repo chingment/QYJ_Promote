@@ -110,7 +110,7 @@ namespace WebMobile.Controllers
 
                         switch (c)
                         {
-                            case 2:
+                            case 1:
 
                                 td_value = dtData.Rows[r][c].ToString().Trim();
                                 if (td_value == "True")
@@ -123,7 +123,7 @@ namespace WebMobile.Controllers
                                 }
 
                                 break;
-                            case 4:
+                            case 3:
 
                                 td_value = dtData.Rows[r][c].ToString().Trim();
                                 if (td_value == "True")
@@ -233,7 +233,7 @@ namespace WebMobile.Controllers
 
                         switch (c)
                         {
-                            case 2:
+                            case 1:
 
                                 td_value = dtData.Rows[r][c].ToString().Trim();
                                 if (td_value == "True")
@@ -246,7 +246,7 @@ namespace WebMobile.Controllers
                                 }
 
                                 break;
-                            case 4:
+                            case 3:
 
                                 td_value = dtData.Rows[r][c].ToString().Trim();
                                 if (td_value == "True")
@@ -259,7 +259,7 @@ namespace WebMobile.Controllers
                                 }
 
                                 break;
-                            case 6:
+                            case 5:
 
                                 td_value = dtData.Rows[r][c].ToString().Trim();
                                 if (td_value == "True")
@@ -333,9 +333,9 @@ namespace WebMobile.Controllers
             else
             {
                 #region POST
-                StringBuilder sql = new StringBuilder(" select b.Nickname,a.[Type],a.Creator,a.CreateTime from PromoteShareLog a left join WxUserInfo  b on a.UserId=b.UserId ");
+                StringBuilder sql = new StringBuilder(" select b.Nickname,a.CreateTime,a.[Type],a.ShareLink from PromoteShareLog a left join WxUserInfo  b on a.UserId=b.UserId ");
 
-                sql.Append(" where 1=l ");
+                sql.Append(" where 1=1 ");
 
 
                 if (model.StartTime != null)
@@ -365,10 +365,19 @@ namespace WebMobile.Controllers
 
                         switch (c)
                         {
-                            //case 2:
-                            //    break;
-                            //case 4:
-                            //    break;
+                            case 2:
+
+                                td_value = dtData.Rows[r][c].ToString().Trim();
+                                if (td_value == "1")
+                                {
+                                    td_value = "微信好友";
+                                }
+                                else
+                                {
+                                    td_value = "微信朋友圈";
+                                }
+
+                                break;
                             default:
                                 td_value = dtData.Rows[r][c].ToString().Trim();
                                 break;
