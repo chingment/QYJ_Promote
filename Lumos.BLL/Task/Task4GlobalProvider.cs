@@ -23,7 +23,7 @@ namespace Lumos.BLL.Task
             LogUtil.Info(string.Format("开始执行订单查询,时间：{0}", this.DateTime));
             foreach (var m in orders)
             {
-                LogUtil.Info(string.Format("查询订单号：{0}"));
+                LogUtil.Info(string.Format("查询订单号：{0}", m.Sn));
 
                 if (m.WxPrepayIdExpireTime != null)
                 {
