@@ -727,6 +727,8 @@
     <Content Include="Views\Admin\Main.cshtml" />
     <Content Include="Views\Admin\PromoteCouponBuyRecord.cshtml" />
     <Content Include="Views\Shared\_BackLayoutHomeMainReport.cshtml" />
+    <Content Include="Views\Admin\PromoteCouponConsumeRecord.cshtml" />
+    <Content Include="Views\Admin\PromoteShareRecord.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>

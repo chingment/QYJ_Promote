@@ -8,6 +8,20 @@
             exception: 3,
         },
 
+        operateType: {
+            add: "1",
+            update: "2",
+            del: "3",
+            save: "4",
+            submit: "5",
+            pass: "6",
+            reject: "7",
+            refuse: "8",
+            cancle: "9",
+            search: "101",
+            exportExcel: "102"
+        },
+
         isNullOrEmpty: function (obj) {
             if (obj == null) {
                 return true;
@@ -462,7 +476,7 @@
             }
 
             //window.top.tips(message);
-            art.dialog.tips(message,3000);
+            art.dialog.tips(message, 3000);
             return false;
         },
 

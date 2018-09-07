@@ -20,7 +20,7 @@
     <script src="~/Content/Back/Scripts/jquery.form.js"></script>
     <script src="~/Content/Back/Scripts/chosen.jquery.js"></script>
     <script src="~/Content/Back/Scripts/jquery.cookie.js"></script>
-    <script src="~/Content/Back/Scripts/query.lumos.back.1.0.0.js@(DateTime.Now.ToString("yyyyMMddHHmmss"))"></script>
+    <script src="~/Content/Back/Scripts/jquery.lumos.back.1.0.0.js?@(DateTime.Now.ToString("yyyyMMddHHmmss"))"></script>
     <script src="~/Content/Back/Scripts/jquery.resizeEnd.js"></script>
     <script type="text/javascript">
         (function ($) {
@@ -89,27 +89,16 @@
             });
 
 
-            $("input[childname$='child']").multiSelect();
+          
+
+           // $(".uploadimg").initUploadImage();
 
 
-            $(".uploadimg").initUploadImage();
+            //$("#tab1").tab();
+
+            //$('.chosen-select').chosen({ search_contains: true });
 
 
-            $("#tab1").tab();
-
-            $('.chosen-select').chosen({ search_contains: true });
-
-            $('#btn_select_mrchUser').live('click', function () {
-                var dialogtitle = "选择";
-                var l_title = $(this).attr("dialog-title")
-                if (typeof l_title != 'undefined') {
-                    dialogtitle = l_title;
-                }
-                art.dialog.open('/Biz/Merchant/ListBySelect', {
-                    id: "openDialog565", title: l_title, width: '600px', height: '480px', lock: true, drag: false, cancelVal: '关闭', cancel: true
-                });
-
-            });
 
 
         });
