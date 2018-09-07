@@ -78,9 +78,9 @@ namespace WebMobile.Controllers
             else
             {
                 #region POST
-                StringBuilder sql = new StringBuilder("select b.Nickname,a.BuyTime,a.IsBuy,a.IsGet,a.GetTime from PromoteUserCoupon a left join WxUserInfo  b on a.UserId=b.UserId ");
+                StringBuilder sql = new StringBuilder("select b.Nickname,a.IsBuy,a.BuyTime,a.IsGet,a.GetTime from PromoteUserCoupon a left join WxUserInfo  b on a.UserId=b.UserId ");
 
-                sql.Append(" where a.BuyTime!=null ");
+                sql.Append(" where a.BuyTime is not null ");
 
 
                 if (model.StartTime != null)
@@ -110,10 +110,32 @@ namespace WebMobile.Controllers
 
                         switch (c)
                         {
-                            //case 2:
-                            //    break;
-                            //case 4:
-                            //    break;
+                            case 2:
+
+                                td_value = dtData.Rows[r][c].ToString().Trim();
+                                if (td_value == "True")
+                                {
+                                    td_value = "已支付";
+                                }
+                                else
+                                {
+                                    td_value = "未支付";
+                                }
+
+                                break;
+                            case 4:
+
+                                td_value = dtData.Rows[r][c].ToString().Trim();
+                                if (td_value == "True")
+                                {
+                                    td_value = "已领取";
+                                }
+                                else
+                                {
+                                    td_value = "未领取";
+                                }
+
+                                break;
                             default:
                                 td_value = dtData.Rows[r][c].ToString().Trim();
                                 break;
@@ -179,9 +201,9 @@ namespace WebMobile.Controllers
             else
             {
                 #region POST
-                StringBuilder sql = new StringBuilder("select b.Nickname,a.BuyTime,a.IsBuy,a.IsGet,a.GetTime,a.IsConsume,a.ConsumeTime from PromoteUserCoupon a left join WxUserInfo  b on a.UserId=b.UserId ");
+                StringBuilder sql = new StringBuilder("select b.Nickname,a.IsBuy,a.BuyTime,a.IsGet,a.GetTime,a.IsConsume,a.ConsumeTime from PromoteUserCoupon a left join WxUserInfo  b on a.UserId=b.UserId ");
 
-                sql.Append(" where a.BuyTime!=null ");
+                sql.Append(" where a.BuyTime is not null ");
 
 
                 if (model.StartTime != null)
@@ -211,10 +233,45 @@ namespace WebMobile.Controllers
 
                         switch (c)
                         {
-                            //case 2:
-                            //    break;
-                            //case 4:
-                            //    break;
+                            case 2:
+
+                                td_value = dtData.Rows[r][c].ToString().Trim();
+                                if (td_value == "True")
+                                {
+                                    td_value = "已支付";
+                                }
+                                else
+                                {
+                                    td_value = "未支付";
+                                }
+
+                                break;
+                            case 4:
+
+                                td_value = dtData.Rows[r][c].ToString().Trim();
+                                if (td_value == "True")
+                                {
+                                    td_value = "已领取";
+                                }
+                                else
+                                {
+                                    td_value = "未领取";
+                                }
+
+                                break;
+                            case 6:
+
+                                td_value = dtData.Rows[r][c].ToString().Trim();
+                                if (td_value == "True")
+                                {
+                                    td_value = "已核销";
+                                }
+                                else
+                                {
+                                    td_value = "未核销";
+                                }
+
+                                break;
                             default:
                                 td_value = dtData.Rows[r][c].ToString().Trim();
                                 break;
@@ -276,7 +333,7 @@ namespace WebMobile.Controllers
             else
             {
                 #region POST
-                StringBuilder sql = new StringBuilder(" b.Nickname,a.[Type],a.Creator,a.CreateTime from PromoteShareLog a left join WxUserInfo  b on a.UserId=b.UserId ");
+                StringBuilder sql = new StringBuilder(" select b.Nickname,a.[Type],a.Creator,a.CreateTime from PromoteShareLog a left join WxUserInfo  b on a.UserId=b.UserId ");
 
                 sql.Append(" where 1=l ");
 
