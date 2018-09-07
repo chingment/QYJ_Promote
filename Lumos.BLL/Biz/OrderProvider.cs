@@ -120,7 +120,7 @@ namespace Lumos.BLL
                     string goods_tag = "";
                     if (order.ChargeAmount > 0)
                     {
-                        string prepayId = SdkFactory.Wx.Instance().GetPrepayId(pOperater, "JSAPI", wxUserInfo.OpenId, order.Sn, 0.01m, goods_tag, Common.CommonUtils.GetIP(), productSku.Name, order.WxPrepayIdExpireTime);
+                        string prepayId = SdkFactory.Wx.Instance().GetPrepayId(pOperater, "JSAPI", wxUserInfo.OpenId, order.Sn, order.ChargeAmount, goods_tag, Common.CommonUtils.GetIP(), productSku.Name, order.WxPrepayIdExpireTime);
 
                         if (string.IsNullOrEmpty(prepayId))
                         {
