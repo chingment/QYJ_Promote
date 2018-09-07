@@ -107,6 +107,47 @@
             width: 100%;
             text-align: left;
         }
+
+
+        .radio {
+            width: 23px;
+            height: 23px;
+            border-radius: 50%;
+            position: relative;
+            -webkit-appearance: none;
+            -webkit-tap-highlight-color: rgba(255,0,0,0);
+            outline: none;
+            border: none;
+            background-repeat: repeat;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .radio::after {
+            content: '';
+            width: 23px;
+            height: 23px;
+            -webkit-appearance: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border: 1px solid gray;
+            border-radius: 50%;
+            padding: 0.4rem;
+            background-clip: content-box;
+            box-sizing: border-box;
+        }
+
+        .radio:checked::after {
+            outline: none;
+            background-color: #dc3729;
+            border: 1px solid #dc3729;
+            background-clip: content-box;
+            -webkit-appearance: none;
+            background-repeat: repeat;
+            -webkit-background-clip: content-box;
+            -webkit-text-fill-color: #dc3729;
+        }
     </style>
 
 }
@@ -172,7 +213,7 @@
                                 <div class="item-name fl"><span>手机号码</span></div>
                                 <div class="item-value fr">
 
-                                    <input id="txt_ctPhone" placeholder="请输入手机号码" type="number" style="width:100%;" />
+                                    <input id="txt_ctPhone" placeholder="请输入手机号码" type="text" style="width:100%;" />
 
                                 </div>
                             </div>
@@ -182,8 +223,8 @@
                                 <div class="item-name fl"><span>是否学员</span></div>
                                 <div class="item-value fr">
 
-                                    <span> <input id="rd_ctIsStudent_1" name="rd_ctIsStudent" type="radio" value="1" checked /><label for="rd_ctIsStudent_1">是</label> </span>
-                                    <span> <input id="rd_ctIsStudent_0" name="rd_ctIsStudent" type="radio" value="0" /><label for="rd_ctIsStudent_0">否</label> </span>
+                                    <span> <input id="rd_ctIsStudent_1" name="rd_ctIsStudent" class="radio" type="radio" value="1" checked /><label for="rd_ctIsStudent_1">是</label> </span>
+                                    <span> <input id="rd_ctIsStudent_0" name="rd_ctIsStudent" class="radio" type="radio" value="0" /><label for="rd_ctIsStudent_0">否</label> </span>
                                 </div>
                             </div>
                         </li>

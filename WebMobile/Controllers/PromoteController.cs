@@ -52,37 +52,37 @@ namespace WebMobile.Controllers
             model.IsSuccessed = isSuccessed;
 
 
-            //var promote = CurrentDb.Promote.Where(m => m.Id == model.PromoteId).FirstOrDefault();
-            //if (promote != null)
-            //{
-            //    if (promote.EndTime < DateTime.Now)
-            //    {
-            //        model.PromoteIsEnd = true;
-            //    }
-            //}
+            var promote = CurrentDb.Promote.Where(m => m.Id == model.PromoteId).FirstOrDefault();
+            if (promote != null)
+            {
+                if (promote.EndTime < DateTime.Now)
+                {
+                    model.PromoteIsEnd = true;
+                }
+            }
 
-            //bool isGoBuy = false;
+            bool isGoBuy = false;
 
-            //var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.PromoteId == model.PromoteId && m.UserId == this.CurrentUserId).FirstOrDefault();
+            var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.PromoteId == model.PromoteId && m.UserId == this.CurrentUserId).FirstOrDefault();
 
-            //if (promoteUserCoupon == null)
-            //{
-            //    isGoBuy = true;
-            //}
-            //else
-            //{
-            //    model.IsGetCoupon = promoteUserCoupon.IsGet;
+            if (promoteUserCoupon == null)
+            {
+                isGoBuy = true;
+            }
+            else
+            {
+                model.IsGetCoupon = promoteUserCoupon.IsGet;
 
-            //    if (!promoteUserCoupon.IsBuy)
-            //    {
-            //        isGoBuy = true;
-            //    }
-            //}
+                if (!promoteUserCoupon.IsBuy)
+                {
+                    isGoBuy = true;
+                }
+            }
 
-            //if (isGoBuy)
-            //{
-            //    return Redirect("~/Promote/Coupon?promoteId=" + model.PromoteId + "&refereeId=" + promoteUserCoupon.RefereeId);
-            //}
+            if (isGoBuy)
+            {
+                return Redirect("~/Promote/Coupon?promoteId=" + model.PromoteId + "&refereeId=" + promoteUserCoupon.RefereeId);
+            }
 
             return View(model);
         }

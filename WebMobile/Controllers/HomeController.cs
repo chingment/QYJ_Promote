@@ -188,124 +188,115 @@ namespace WebMobile.Controllers
                     {
                         LogUtil.Info("userInfo_Result:" + JsonConvert.SerializeObject(userInfo_Result));
 
-                        var wxUserInfo = CurrentDb.WxUserInfo.Where(m => m.OpenId == userInfo_Result.openid).FirstOrDefault();
+                        var wxUserInfo = new WxUserInfo();
 
-                        if (wxUserInfo == null)
-                        {
-                            LogUtil.Info(string.Format("消息类型为:{0}，事件为:{1}，创建新用户:{2}", baseEventMsg.MsgType.ToString(), baseEventMsg.Event.ToString(), userInfo_Result.openid));
-                            wxUserInfo = new WxUserInfo();
-                            wxUserInfo.Id = GuidUtil.New();
-                        }
-
-                        if (baseEventMsg.Event != EventType.UNSUBSCRIBE)
-                        {
-                            wxUserInfo.OpenId = userInfo_Result.openid;
-                            wxUserInfo.Nickname = userInfo_Result.nickname;
-                            wxUserInfo.Sex = userInfo_Result.sex.ToString();
-                            wxUserInfo.Province = userInfo_Result.province;
-                            wxUserInfo.City = userInfo_Result.city;
-                            wxUserInfo.Country = userInfo_Result.country;
-                            wxUserInfo.HeadImgUrl = userInfo_Result.headimgurl;
-                            wxUserInfo.UnionId = userInfo_Result.unionid;
-                        }
+                        wxUserInfo.OpenId = userInfo_Result.openid;
+                        wxUserInfo.Nickname = userInfo_Result.nickname;
+                        wxUserInfo.Sex = userInfo_Result.sex.ToString();
+                        wxUserInfo.Province = userInfo_Result.province;
+                        wxUserInfo.City = userInfo_Result.city;
+                        wxUserInfo.Country = userInfo_Result.country;
+                        wxUserInfo.HeadImgUrl = userInfo_Result.headimgurl;
+                        wxUserInfo.UnionId = userInfo_Result.unionid;
 
                         wxUserInfo = BizFactory.WxUser.CheckedUser(GuidUtil.New(), wxUserInfo);
 
- 
-
-                        WxAutoReply wxAutoReply = null;
-                        switch (baseEventMsg.MsgType)
+                        if (wxUserInfo != null)
                         {
-                            case MsgType.TEXT:
-                                #region TEXT
+                            var wxAutoReply = new WxAutoReply();
+                            switch (baseEventMsg.MsgType)
+                            {
+                                case MsgType.TEXT:
+                                    #region TEXT
 
-                                LogUtil.Info("文本消息");
+                                    LogUtil.Info("文本消息");
 
-                                var textMsg = (TextMsg)baseEventMsg;
+                                    var textMsg = (TextMsg)baseEventMsg;
 
-                                if (textMsg != null)
-                                {
-
-                                    LogUtil.Info("文本消息:" + textMsg.Content);
-
-                                    if (textMsg.Content == "代金券" || textMsg.Content == "代金卷" || textMsg.Content == "代金劵")
+                                    if (textMsg != null)
                                     {
-                                        string promoteId = "a999753c5fe14e26bbecad576b6a6909";
-                                        string media_Id = GetWxPromoteImgMediaId(promoteId, wxUserInfo.UserId);
-                                        echoStr = WxMsgFactory.CreateReplyImage(baseEventMsg.FromUserName, baseEventMsg.ToUserName, media_Id);
+
+                                        LogUtil.Info("文本消息:" + textMsg.Content);
+
+                                        if (textMsg.Content == "代金券" || textMsg.Content == "代金卷" || textMsg.Content == "代金劵")
+                                        {
+                                            string promoteId = "a999753c5fe14e26bbecad576b6a6909";
+                                            string media_Id = GetWxPromoteImgMediaId(promoteId, wxUserInfo.UserId);
+                                            echoStr = WxMsgFactory.CreateReplyImage(baseEventMsg.FromUserName, baseEventMsg.ToUserName, media_Id);
+                                        }
+
                                     }
 
-                                }
 
+                                    #endregion
+                                    break;
+                                case MsgType.EVENT:
+                                    #region EVENT
+                                    switch (baseEventMsg.Event)
+                                    {
+                                        case EventType.SUBSCRIBE://订阅
+                                            break;
+                                        case EventType.UNSUBSCRIBE://取消订阅
+                                            break;
+                                        case EventType.SCAN://扫描二维码
+                                        case EventType.CLICK://单击按钮
+                                        case EventType.VIEW://链接按钮
+                                            break;
+                                        case EventType.USER_GET_CARD://领取卡卷
+                                            #region  USER_GET_CARD
+                                            var userGetCardMsg = (UserGetCardMsg)baseEventMsg;
 
-                                #endregion
-                                break;
-                            case MsgType.EVENT:
-                                #region EVENT
-                                switch (baseEventMsg.Event)
-                                {
-                                    case EventType.SUBSCRIBE://订阅
-                                        break;
-                                    case EventType.UNSUBSCRIBE://取消订阅
-                                        break;
-                                    case EventType.SCAN://扫描二维码
-                                    case EventType.CLICK://单击按钮
-                                    case EventType.VIEW://链接按钮
-                                        break;
-                                    case EventType.USER_GET_CARD://领取卡卷
-                                        #region  USER_GET_CARD
-                                        var userGetCardMsg = (UserGetCardMsg)baseEventMsg;
+                                            var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.UserId == wxUserInfo.UserId && m.WxCouponId == userGetCardMsg.CardId).FirstOrDefault();
 
-                                        var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.UserId == wxUserInfo.UserId && m.WxCouponId == userGetCardMsg.CardId).FirstOrDefault();
+                                            if (promoteUserCoupon != null)
+                                            {
+                                                promoteUserCoupon.IsGet = true;
+                                                promoteUserCoupon.GetTime = DateTime.Now;
+                                                promoteUserCoupon.Mender = GuidUtil.Empty();
+                                                promoteUserCoupon.MendTime = DateTime.Now;
+                                                promoteUserCoupon.WxCouponDecryptCode = userGetCardMsg.UserCardCode;
+                                                CurrentDb.SaveChanges();
+                                            }
 
-                                        if (promoteUserCoupon != null)
-                                        {
-                                            promoteUserCoupon.IsGet = true;
-                                            promoteUserCoupon.GetTime = DateTime.Now;
-                                            promoteUserCoupon.Mender = GuidUtil.Empty();
-                                            promoteUserCoupon.MendTime = DateTime.Now;
-                                            promoteUserCoupon.WxCouponDecryptCode = userGetCardMsg.UserCardCode;
-                                            CurrentDb.SaveChanges();
-                                        }
+                                            #endregion
+                                            break;
+                                        case EventType.USER_CONSUME_CARD://核销卡卷
+                                            #region USER_CONSUME_CARD
 
-                                        #endregion
-                                        break;
-                                    case EventType.USER_CONSUME_CARD://核销卡卷
-                                        #region USER_CONSUME_CARD
+                                            var userConsumeCardMsg = (UserConsumeCardMsg)baseEventMsg;
 
-                                        var userConsumeCardMsg = (UserConsumeCardMsg)baseEventMsg;
+                                            var promoteUserCoupon2 = CurrentDb.PromoteUserCoupon.Where(m => m.UserId == wxUserInfo.UserId && m.WxCouponId == userConsumeCardMsg.CardId && m.WxCouponDecryptCode == userConsumeCardMsg.UserCardCode).FirstOrDefault();
 
-                                        var promoteUserCoupon2 = CurrentDb.PromoteUserCoupon.Where(m => m.UserId == wxUserInfo.UserId && m.WxCouponId == userConsumeCardMsg.CardId && m.WxCouponDecryptCode == userConsumeCardMsg.UserCardCode).FirstOrDefault();
+                                            if (promoteUserCoupon2 != null)
+                                            {
+                                                promoteUserCoupon2.IsConsume = true;
+                                                promoteUserCoupon2.ConsumeTime = DateTime.Now;
+                                                promoteUserCoupon2.Mender = GuidUtil.Empty();
+                                                promoteUserCoupon2.MendTime = DateTime.Now;
+                                                CurrentDb.SaveChanges();
+                                            }
 
-                                        if (promoteUserCoupon2 != null)
-                                        {
-                                            promoteUserCoupon2.IsConsume = true;
-                                            promoteUserCoupon2.ConsumeTime = DateTime.Now;
-                                            promoteUserCoupon2.Mender = GuidUtil.Empty();
-                                            promoteUserCoupon2.MendTime = DateTime.Now;
-                                            CurrentDb.SaveChanges();
-                                        }
+                                            #endregion
+                                            break;
+                                    }
+                                    #endregion
+                                    break;
+                            }
 
-                                        #endregion
-                                        break;
-                                }
-                                #endregion
-                                break;
+                            var wxMsgPushLog = new WxMsgPushLog();
+                            wxMsgPushLog.Id = GuidUtil.New();
+                            wxMsgPushLog.UserId = wxUserInfo.UserId;
+                            wxMsgPushLog.ToUserName = baseEventMsg.ToUserName;
+                            wxMsgPushLog.FromUserName = baseEventMsg.FromUserName;
+                            wxMsgPushLog.CreateTime = DateTime.Now;
+                            wxMsgPushLog.ContentXml = xml;
+                            wxMsgPushLog.MsgId = baseEventMsg.MsgId;
+                            wxMsgPushLog.MsgType = baseEventMsg.MsgType.ToString();
+                            wxMsgPushLog.Event = baseEventMsg.Event.ToString();
+                            wxMsgPushLog.EventKey = eventKey;
+
+                            WxMsgPushLog(wxMsgPushLog);
                         }
-
-                        var wxMsgPushLog = new WxMsgPushLog();
-                        wxMsgPushLog.Id = GuidUtil.New();
-                        wxMsgPushLog.UserId = wxUserInfo.UserId;
-                        wxMsgPushLog.ToUserName = baseEventMsg.ToUserName;
-                        wxMsgPushLog.FromUserName = baseEventMsg.FromUserName;
-                        wxMsgPushLog.CreateTime = DateTime.Now;
-                        wxMsgPushLog.ContentXml = xml;
-                        wxMsgPushLog.MsgId = baseEventMsg.MsgId;
-                        wxMsgPushLog.MsgType = baseEventMsg.MsgType.ToString();
-                        wxMsgPushLog.Event = baseEventMsg.Event.ToString();
-                        wxMsgPushLog.EventKey = eventKey;
-
-                        WxMsgPushLog(wxMsgPushLog);
                     }
                 }
 
