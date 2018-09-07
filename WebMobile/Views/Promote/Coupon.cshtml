@@ -69,6 +69,7 @@
 
                     $.lumos.postJson({
                         url: "/Promote/UnifiedOrder",
+                        isShowLoading: true,
                         data: { type: "1", refereeId: refereeId, orderPms: { promoteId: promoteId, promoteCouponId: promoteCouponId } },
                         success: function (d) {
 
