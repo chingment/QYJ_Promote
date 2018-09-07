@@ -14,6 +14,7 @@ namespace Lumos.Entity
     {
         [Key]
         public string Id { get; set; }
+       
         public string UserId { get; set; }
         public string PUserId { get; set; }
         public string PromoteId { get; set; }

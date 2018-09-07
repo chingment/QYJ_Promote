@@ -194,6 +194,7 @@ namespace WebMobile.Controllers
                         {
                             LogUtil.Info(string.Format("消息类型为:{0}，事件为:{1}，创建新用户:{2}", baseEventMsg.MsgType.ToString(), baseEventMsg.Event.ToString(), userInfo_Result.openid));
                             wxUserInfo = new WxUserInfo();
+                            wxUserInfo.Id = GuidUtil.New();
                         }
 
                         if (baseEventMsg.Event != EventType.UNSUBSCRIBE)
@@ -207,6 +208,10 @@ namespace WebMobile.Controllers
                             wxUserInfo.HeadImgUrl = userInfo_Result.headimgurl;
                             wxUserInfo.UnionId = userInfo_Result.unionid;
                         }
+
+                        wxUserInfo = BizFactory.WxUser.CheckedUser(GuidUtil.New(), wxUserInfo);
+
+ 
 
                         WxAutoReply wxAutoReply = null;
                         switch (baseEventMsg.MsgType)

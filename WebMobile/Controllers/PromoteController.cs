@@ -144,12 +144,15 @@ namespace WebMobile.Controllers
 
             var promoteUser = CurrentDb.PromoteUser.Where(m => m.PromoteId == promoteId && m.UserId == this.CurrentUserId).FirstOrDefault();
 
-            if (string.IsNullOrEmpty(promoteUser.CtName))
+            if (promoteUser == null)
             {
                 return new CustomJsonResult(ResultType.Failure, ResultCode.FormImperfect, "请先完成信息", cardList);
             }
 
-
+            if (string.IsNullOrEmpty(promoteUser.CtName))
+            {
+                return new CustomJsonResult(ResultType.Failure, ResultCode.FormImperfect, "请先完成信息", cardList);
+            }
 
             if (promoteUserCoupons.Count > 0)
             {
@@ -213,14 +216,25 @@ namespace WebMobile.Controllers
 
             var promoteUser = CurrentDb.PromoteUser.Where(m => m.UserId == this.CurrentUserId && m.PromoteId == model.PromoteId).FirstOrDefault();
 
-            if (promoteUser != null)
+            if (promoteUser == null)
+            {
+                promoteUser = new PromoteUser();
+                promoteUser.Id = GuidUtil.New();
+                promoteUser.CtName = model.CtName;
+                promoteUser.CtPhone = model.CtPhone;
+                promoteUser.CtIsStudent = model.CtIsStudent;
+                promoteUser.CtSchool = model.CtSchool;
+                CurrentDb.PromoteUser.Add(promoteUser);
+            }
+            else
             {
                 promoteUser.CtName = model.CtName;
                 promoteUser.CtPhone = model.CtPhone;
                 promoteUser.CtIsStudent = model.CtIsStudent;
                 promoteUser.CtSchool = model.CtSchool;
-                CurrentDb.SaveChanges();
             }
+
+            CurrentDb.SaveChanges();
 
             return new CustomJsonResult(ResultType.Success, ResultCode.Success, "保存成功");
         }
