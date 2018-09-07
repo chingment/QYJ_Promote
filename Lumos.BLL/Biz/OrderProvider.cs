@@ -1,4 +1,5 @@
 ﻿using Lumos.Entity;
+using Lumos.Redis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -134,6 +135,8 @@ namespace Lumos.BLL
                         }
                     }
 
+                    OrderCacheUtil.EnterQueue4CheckPayStatus(order.Sn, order);
+
                     LogUtil.Info("步骤4");
 
                     CurrentDb.SaveChanges();
@@ -153,12 +156,12 @@ namespace Lumos.BLL
             }
         }
 
-
         private static readonly object lock_PayResultNotify = new object();
-        public CustomJsonResult PayResultNotify(string operater, Enumeration.OrderNotifyLogNotifyFrom from, string content, string orderSn = "")
+        public CustomJsonResult PayResultNotify(string operater, Enumeration.OrderNotifyLogNotifyFrom from, string content, string orderSn, out bool isPaySuccessed)
         {
             lock (lock_PayResultNotify)
             {
+                bool m_isPaySuccessed = false;
                 var mod_OrderNotifyLog = new OrderNotifyLog();
 
                 switch (from)
@@ -177,6 +180,7 @@ namespace Lumos.BLL
                             string trade_state = dic1["trade_state"].ToString();
                             if (trade_state == "SUCCESS")
                             {
+                                m_isPaySuccessed = true;
                                 PayCompleted(operater, orderSn, this.DateTime);
                             }
                         }
@@ -190,6 +194,7 @@ namespace Lumos.BLL
 
                             if (result_code == "SUCCESS")
                             {
+                                m_isPaySuccessed = true;
                                 PayCompleted(operater, orderSn, this.DateTime);
                             }
                         }
@@ -212,10 +217,11 @@ namespace Lumos.BLL
                 CurrentDb.OrderNotifyLog.Add(mod_OrderNotifyLog);
                 CurrentDb.SaveChanges();
 
+                isPaySuccessed = m_isPaySuccessed;
+
                 return new CustomJsonResult(ResultType.Success, ResultCode.Success, "");
             }
         }
-
 
         public CustomJsonResult PayCompleted(string pOperater, string pOrderSn, DateTime pCompletedTime)
         {
@@ -302,11 +308,13 @@ namespace Lumos.BLL
                 CurrentDb.SaveChanges();
                 ts.Complete();
 
+
                 result = new CustomJsonResult(ResultType.Success, ResultCode.Success, string.Format("支付完成通知：订单号({0})通知成功", pOrderSn));
             }
 
             return result;
         }
+
 
     }
 }

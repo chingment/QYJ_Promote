@@ -19,21 +19,34 @@ namespace Lumos.BLL.Task
             CustomJsonResult result = new CustomJsonResult();
 
 
-            var orders = CurrentDb.Order.Where(m => m.Status == Enumeration.OrderStatus.WaitPay && m.WxPrepayIdExpireTime >= DateTime.Now).ToList();
+            var orders = OrderCacheUtil.GetCheckPayStatusQueue();
 
             LogUtil.Info(string.Format("共有{0}条待支付", orders.Count));
             LogUtil.Info(string.Format("开始执行订单查询,时间:{0}", this.DateTime));
             foreach (var m in orders)
             {
-                LogUtil.Info(string.Format("开始执行订单号{0}，时间:{1}", m.Sn, this.DateTime));
+                if (m.WxPrepayIdExpireTime >= DateTime.Now)
+                {
+                    LogUtil.Info(string.Format("开始执行订单号{0}，时间:{1}", m.Sn, this.DateTime));
 
-                string xml = SdkFactory.Wx.Instance().OrderQuery(m.Sn);
+                    string xml = SdkFactory.Wx.Instance().OrderQuery(m.Sn);
 
-                LogUtil.Info(string.Format("查询订单号（{0}）的结果文件:{1}", m.Sn, xml));
+                    LogUtil.Info(string.Format("查询订单号（{0}）的结果文件:{1}", m.Sn, xml));
 
-                BizFactory.Order.PayResultNotify(GuidUtil.Empty(), Entity.Enumeration.OrderNotifyLogNotifyFrom.OrderQuery, xml, m.Sn);
+                    bool isPaySuccessed = false;
+                    BizFactory.Order.PayResultNotify(GuidUtil.Empty(), Entity.Enumeration.OrderNotifyLogNotifyFrom.OrderQuery, xml, m.Sn, out isPaySuccessed);
 
-                LogUtil.Info(string.Format("结束执行订单号{0}，时间:{1}", m.Sn, this.DateTime));
+                    if (isPaySuccessed)
+                    {
+                        OrderCacheUtil.ExitQueue4CheckPayStatus(m.Sn);
+                    }
+
+                    LogUtil.Info(string.Format("结束执行订单号{0}，时间:{1}", m.Sn, this.DateTime));
+                }
+                else
+                {
+                    OrderCacheUtil.ExitQueue4CheckPayStatus(m.Sn);
+                }
             }
 
             LogUtil.Info(string.Format("结束执行订单查询,时间:{0}", this.DateTime));

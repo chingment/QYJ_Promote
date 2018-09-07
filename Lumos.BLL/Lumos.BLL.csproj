@@ -75,6 +75,7 @@
     </Compile>
     <Compile Include="BaseProvider.cs" />
     <Compile Include="Biz\BizFactory.cs" />
+    <Compile Include="Biz\OrderCacheUtil.cs" />
     <Compile Include="Biz\OrderProvider.cs" />
     <Compile Include="Biz\WxUserProvider.cs" />
     <Compile Include="Factory..cs" />

@@ -127,7 +127,15 @@ namespace WebMobile.Controllers
                 return Content("");
             }
 
-            var result = BizFactory.Order.PayResultNotify(GuidUtil.Empty(), Enumeration.OrderNotifyLogNotifyFrom.NotifyUrl, xml);
+            string orderSn = "";
+            var dic2 = Lumos.WeiXinSdk.CommonUtil.ToDictionary(xml);
+            if (dic2.ContainsKey("out_trade_no") && dic2.ContainsKey("result_code"))
+            {
+                orderSn = dic2["out_trade_no"].ToString();
+            }
+
+            bool isPaySuccessed = false;
+            var result = BizFactory.Order.PayResultNotify(GuidUtil.Empty(), Enumeration.OrderNotifyLogNotifyFrom.NotifyUrl, xml, orderSn, out isPaySuccessed);
 
             if (result.Result == ResultType.Success)
             {
@@ -398,7 +406,7 @@ namespace WebMobile.Controllers
                 g.DrawImage(oImg1, 320, 1655, 150, 150);//画二维码图片      
 
 
-                if (wxUserInfo!=null)
+                if (wxUserInfo != null)
                 {
                     if (!string.IsNullOrEmpty(wxUserInfo.HeadImgUrl))
                     {

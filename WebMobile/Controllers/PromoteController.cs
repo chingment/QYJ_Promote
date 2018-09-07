@@ -120,7 +120,8 @@ namespace WebMobile.Controllers
         {
             LogUtil.Info(string.Format("用户通知订单号({0})支付结果:{1}", orderSn, res));
 
-            var result = BizFactory.Order.PayResultNotify(this.CurrentUserId, Enumeration.OrderNotifyLogNotifyFrom.WebApp, res, orderSn);
+            bool isPaySuccessed = false;
+            var result = BizFactory.Order.PayResultNotify(this.CurrentUserId, Enumeration.OrderNotifyLogNotifyFrom.WebApp, res, orderSn,out isPaySuccessed);
 
             return result;
         }
