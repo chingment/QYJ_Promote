@@ -11,16 +11,20 @@ namespace Lumos.BLL
 {
     public class OrderProvider : BaseProvider
     {
+        private static readonly object lock_UnifiedOrder = new object();
         public CustomJsonResult<Order> UnifiedOrder(string pOperater, string pUserId, UnifiedOrderPms pPayPms)
         {
             CustomJsonResult<Order> result = new CustomJsonResult<Order>();
-            var strOrderPms = Newtonsoft.Json.JsonConvert.SerializeObject(pPayPms.OrderPms);
-            switch (pPayPms.Type)
+            lock (lock_UnifiedOrder)
             {
-                case UnifiedOrderType.BuyPromoteCoupon:
-                    var orderPmsByBuyPromoteCoupon = Newtonsoft.Json.JsonConvert.DeserializeObject<OrderPmsByBuyPromoteCoupon>(strOrderPms);
-                    result = UnifiedOrderByBuyPromoteCoupon(pOperater, pUserId, pPayPms.RefereeId, orderPmsByBuyPromoteCoupon);
-                    break;
+                var strOrderPms = Newtonsoft.Json.JsonConvert.SerializeObject(pPayPms.OrderPms);
+                switch (pPayPms.Type)
+                {
+                    case UnifiedOrderType.BuyPromoteCoupon:
+                        var orderPmsByBuyPromoteCoupon = Newtonsoft.Json.JsonConvert.DeserializeObject<OrderPmsByBuyPromoteCoupon>(strOrderPms);
+                        result = UnifiedOrderByBuyPromoteCoupon(pOperater, pUserId, pPayPms.RefereeId, orderPmsByBuyPromoteCoupon);
+                        break;
+                }
             }
             return result;
         }
