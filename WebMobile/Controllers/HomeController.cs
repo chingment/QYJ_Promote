@@ -44,11 +44,14 @@ namespace WebMobile.Controllers
                 var code = request.QueryString["code"];
                 var returnUrl = request.QueryString["returnUrl"];
 
-                LogUtil.Info("待跳转路径：{0}" + returnUrl);
+                LogUtil.Info("待跳转路径：" + returnUrl);
 
                 if (string.IsNullOrEmpty(code))
                 {
                     var url = SdkFactory.Wx.Instance().GetAuthorizeUrl(returnUrl);
+
+                    LogUtil.Info("待跳转路径2：" + url);
+
                     return Redirect(url);
                 }
                 else
