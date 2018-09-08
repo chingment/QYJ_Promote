@@ -47,13 +47,39 @@ namespace Lumos.BLL
                             mod_UserInfo.OpenId = pWxUserInfo.OpenId;
                             mod_UserInfo.AccessToken = pWxUserInfo.AccessToken;
                             mod_UserInfo.ExpiresIn = pWxUserInfo.ExpiresIn;
-                            mod_UserInfo.Nickname = pWxUserInfo.Nickname;
-                            mod_UserInfo.Sex = pWxUserInfo.Sex;
-                            mod_UserInfo.Province = pWxUserInfo.Province;
-                            mod_UserInfo.City = pWxUserInfo.City;
-                            mod_UserInfo.Country = pWxUserInfo.Country;
-                            mod_UserInfo.HeadImgUrl = pWxUserInfo.HeadImgUrl;
-                            mod_UserInfo.UnionId = pWxUserInfo.UnionId;
+                            if (pWxUserInfo.Nickname != null)
+                            {
+                                mod_UserInfo.Nickname = pWxUserInfo.Nickname;
+                            }
+                            if (pWxUserInfo.Sex != null)
+                            {
+                                mod_UserInfo.Sex = pWxUserInfo.Sex;
+                            }
+
+                            if (pWxUserInfo.Province != null)
+                            {
+                                mod_UserInfo.Province = pWxUserInfo.Province;
+                            }
+
+                            if (pWxUserInfo.City != null)
+                            {
+                                mod_UserInfo.City = pWxUserInfo.City;
+                            }
+
+                            if (pWxUserInfo.Country != null)
+                            {
+                                mod_UserInfo.Country = pWxUserInfo.Country;
+                            }
+
+                            if (pWxUserInfo.HeadImgUrl != null)
+                            {
+                                mod_UserInfo.HeadImgUrl = pWxUserInfo.HeadImgUrl;
+                            }
+
+                            if (pWxUserInfo.UnionId != null)
+                            {
+                                mod_UserInfo.UnionId = pWxUserInfo.UnionId;
+                            }
                             mod_UserInfo.CreateTime = this.DateTime;
                             mod_UserInfo.Creator = pOperater;
                             CurrentDb.WxUserInfo.Add(mod_UserInfo);
@@ -72,18 +98,42 @@ namespace Lumos.BLL
                         {
                             mod_UserInfo.AccessToken = pWxUserInfo.AccessToken;
                             mod_UserInfo.ExpiresIn = pWxUserInfo.ExpiresIn;
-                            mod_UserInfo.Nickname = pWxUserInfo.Nickname;
-                            mod_UserInfo.Sex = pWxUserInfo.Sex;
-                            mod_UserInfo.Province = pWxUserInfo.Province;
-                            mod_UserInfo.City = pWxUserInfo.City;
-                            mod_UserInfo.Country = pWxUserInfo.Country;
-                            mod_UserInfo.HeadImgUrl = pWxUserInfo.HeadImgUrl;
-                            mod_UserInfo.UnionId = pWxUserInfo.UnionId;
+
+                            if (pWxUserInfo.Nickname != null)
+                            {
+                                mod_UserInfo.Nickname = pWxUserInfo.Nickname;
+                            }
+                            if (pWxUserInfo.Sex != null)
+                            {
+                                mod_UserInfo.Sex = pWxUserInfo.Sex;
+                            }
+
+                            if (pWxUserInfo.Province != null)
+                            {
+                                mod_UserInfo.Province = pWxUserInfo.Province;
+                            }
+
+                            if (pWxUserInfo.City != null)
+                            {
+                                mod_UserInfo.City = pWxUserInfo.City;
+                            }
+
+                            if (pWxUserInfo.Country != null)
+                            {
+                                mod_UserInfo.Country = pWxUserInfo.Country;
+                            }
+
+                            if (pWxUserInfo.HeadImgUrl != null)
+                            {
+                                mod_UserInfo.HeadImgUrl = pWxUserInfo.HeadImgUrl;
+                            }
+
+                            if (pWxUserInfo.UnionId != null)
+                            {
+                                mod_UserInfo.UnionId = pWxUserInfo.UnionId;
+                            }
                             mod_UserInfo.MendTime = this.DateTime;
                             mod_UserInfo.Mender = pOperater;
-
-
-
                         }
 
 
