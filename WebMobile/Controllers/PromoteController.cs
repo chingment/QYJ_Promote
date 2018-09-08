@@ -220,6 +220,9 @@ namespace WebMobile.Controllers
             {
                 promoteUser = new PromoteUser();
                 promoteUser.Id = GuidUtil.New();
+                promoteUser.PromoteId = model.PromoteId;
+                promoteUser.UserId = this.CurrentUserId;
+                promoteUser.IsAgent = true;
                 promoteUser.CtName = model.CtName;
                 promoteUser.CtPhone = model.CtPhone;
                 promoteUser.CtIsStudent = model.CtIsStudent;
