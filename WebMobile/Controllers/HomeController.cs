@@ -91,8 +91,9 @@ namespace WebMobile.Controllers
 
                             LogUtil.Info("返回路径：" + returnUrl);
 
+                           // string s_returnUrl = HttpUtility.UrlDecode(returnUrl);
 
-                            string s_returnUrl = HttpUtility.HtmlDecode(returnUrl);
+                            string s_returnUrl = HttpUtility.UrlDecode(returnUrl);
                             if (!string.IsNullOrEmpty(s_returnUrl))
                             {
                                 return Redirect(s_returnUrl);

@@ -68,7 +68,11 @@ namespace WebMobile
 
                 if (!string.IsNullOrEmpty(returnUrl))
                 {
-                    returnUrl = System.Web.HttpUtility.HtmlEncode(returnUrl);
+                    LogUtil.Info("OwnBaseController1->returnUrl:" + returnUrl);
+
+                    returnUrl = System.Web.HttpUtility.UrlEncode(returnUrl);
+
+                    LogUtil.Info("OwnBaseController2->returnUrl:" + returnUrl);
                 }
 
                 if (userInfo == null)

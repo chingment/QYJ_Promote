@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Lumos.WeiXinSdk
 {
@@ -11,6 +12,8 @@ namespace Lumos.WeiXinSdk
     {
         public static string GetAuthorizeUrl(string appId, string redirectUrl)
         {
+            redirectUrl = HttpUtility.UrlEncode(redirectUrl);
+            LogUtil.Info("redirectUrl:" + redirectUrl);
             var url = string.Format("https://open.weixin.qq.com/connect/oauth2/authorize?appid={0}&redirect_uri=" + redirectUrl + "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect", appId);
 
             return url;
