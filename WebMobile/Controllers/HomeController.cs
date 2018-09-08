@@ -85,9 +85,14 @@ namespace WebMobile.Controllers
                             userInfo.WxAccessToken = oauth2_Result.access_token;
                             SSOUtil.SetUserInfo(userInfo);
                             Response.Cookies.Add(new HttpCookie(OwnRequest.SESSION_NAME, userInfo.Token));
-                            if (!string.IsNullOrEmpty(returnUrl))
+
+                            LogUtil.Info("返回路径：" + returnUrl);
+
+
+                            string s_returnUrl = HttpUtility.HtmlDecode(returnUrl);
+                            if (!string.IsNullOrEmpty(s_returnUrl))
                             {
-                                return Redirect(returnUrl);
+                                return Redirect(s_returnUrl);
                             }
                         }
 

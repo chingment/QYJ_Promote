@@ -16,6 +16,9 @@ namespace WebMobile.Controllers
     {
         public ActionResult Coupon(string promoteId, string refereeId)
         {
+            
+
+            //refereeId =00000000000000000000000000000000
             var model = new CouponViewModel();
             model.PromoteId = "a999753c5fe14e26bbecad576b6a6909";
             model.PromoteCouponId = "00000000000000000000000000000001";

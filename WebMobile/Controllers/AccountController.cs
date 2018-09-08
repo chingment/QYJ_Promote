@@ -22,6 +22,11 @@ namespace WebMobile.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+
+            //string a = "/Promote/Coupon?promoteId=a999753c5fe14e26bbecad576b6a6909&amp;refereeId=00000000000000000000000000000000";
+
+            //string c = HttpUtility.HtmlDecode(a);
+
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -64,7 +69,7 @@ namespace WebMobile.Controllers
 
 
             Response.Cookies.Add(new HttpCookie(OwnRequest.SESSION_NAME, userInfo.Token));
-        
+
 
             gotoViewModel.Url = model.ReturnUrl;
 
