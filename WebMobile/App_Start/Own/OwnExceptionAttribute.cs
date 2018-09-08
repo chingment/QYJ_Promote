@@ -56,18 +56,18 @@ namespace WebMobile
             MessageBoxModel messageBox = new MessageBoxModel();
             messageBox.No = Guid.NewGuid().ToString();
             messageBox.Type = MessageBoxTip.Exception;
-            messageBox.Title = "抱歉,系统发生异常，如有需要请联系客服";
+            messageBox.Title = "抱歉,系统发生异常，如有需要请联系客服 020-82310186";
             messageBox.Content = "<a href=\"javascript:void(0)\" onclick=\"window.top.location.href='" + OwnWebSettingUtils.GetHomePage() + "'\">返回主页</a>";
             messageBox.IsTop = true;
             if (CommonUtils.CanViewErrorStackTrace())
             {
-               // messageBox.ErrorStackTrace = CommonUtils.ToHtml(filterContext.Exception.Message + "\r\n" + filterContext.Exception.StackTrace);
+                // messageBox.ErrorStackTrace = CommonUtils.ToHtml(filterContext.Exception.Message + "\r\n" + filterContext.Exception.StackTrace);
             }
 
             //判断是否异步调用
             if (isAjaxRequest)
             {
-                CustomJsonResult jsonResult = new CustomJsonResult(ResultType.Exception,ResultCode.Exception, messageBox.Title, messageBox);
+                CustomJsonResult jsonResult = new CustomJsonResult(ResultType.Exception, ResultCode.Exception, messageBox.Title, messageBox);
                 //jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
                 filterContext.Result = jsonResult;
                 filterContext.Result.ExecuteResult(filterContext);

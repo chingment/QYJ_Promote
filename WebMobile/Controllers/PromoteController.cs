@@ -224,6 +224,8 @@ namespace WebMobile.Controllers
                 promoteUser.CtPhone = model.CtPhone;
                 promoteUser.CtIsStudent = model.CtIsStudent;
                 promoteUser.CtSchool = model.CtSchool;
+                promoteUser.CreateTime = DateTime.Now;
+                promoteUser.Creator = this.CurrentUserId;
                 CurrentDb.PromoteUser.Add(promoteUser);
             }
             else
