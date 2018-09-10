@@ -44,7 +44,7 @@ namespace WebMobile.Controllers
                 var code = request.QueryString["code"];
                 var returnUrl = request.QueryString["returnUrl"];
 
-                LogUtil.Info("待跳转路径：" + returnUrl);
+                LogUtil.Info("returnUrl=>" + (returnUrl == null ? "" : returnUrl.ToString()));
 
                 if (string.IsNullOrEmpty(code))
                 {
@@ -89,11 +89,14 @@ namespace WebMobile.Controllers
                             SSOUtil.SetUserInfo(userInfo);
                             Response.Cookies.Add(new HttpCookie(OwnRequest.SESSION_NAME, userInfo.Token));
 
-                            LogUtil.Info("返回路径：" + returnUrl);
-
-                           // string s_returnUrl = HttpUtility.UrlDecode(returnUrl);
-
+                            LogUtil.Info("returnUrl.UrlDecode 前：" + returnUrl);
                             string s_returnUrl = HttpUtility.UrlDecode(returnUrl);
+                            LogUtil.Info("returnUrl.UrlDecode 后：" + s_returnUrl);
+                            s_returnUrl = s_returnUrl.Replace("|", "&");
+                            LogUtil.Info("returnUrl.UrlDecode 替换|，&：" + s_returnUrl);
+
+                            LogUtil.Info("returnUrl 最后返回：" + s_returnUrl);
+
                             if (!string.IsNullOrEmpty(s_returnUrl))
                             {
                                 return Redirect(s_returnUrl);

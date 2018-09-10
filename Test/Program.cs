@@ -97,6 +97,21 @@ namespace Test
             //OAuthApi.CardCodeDecrypt("13_uev3UiFHaQYf_qG882v2w9_FBz8a18dIRMjWG1Axv7Wv4mpOLDzwgJB1tySq5QaT__5IBYRNrURk_K_T1GoHshkvWPasfTtIip2V5BzdNEBHNqIO1I3_SPRNIv0gfDUE7zlE-POZHdQo2aOKVDHhAHALTX", "ftp40hZGeN2MQYDTWpH4q93CwcrbioZuSXfi16qfI4o=");
             var operater = "00000000000000000000000000000000";
 
+            string refereeId = "dadd";
+            string s_returnUrl = "http://qyj.17fanju.com/Promote/Coupon?promoteId=a999753c5fe14e26bbecad576b6a6909&";
+            if (s_returnUrl.IndexOf("refereeId") < 0)
+            {
+                var b = s_returnUrl.Substring(s_returnUrl.Length - 1);
+                if (b == "&")
+                {
+                    s_returnUrl += "refereeId=" + refereeId;
+                }
+                else
+                {
+                    s_returnUrl += "&refereeId=" + refereeId;
+                }
+            }
+
             //BizFactory.Order.PayResultNotify(operater, Enumeration.OrderNotifyLogNotifyFrom.WebApp, "fdfsf", "2018090218544434811746");
 
             //Dictionary<string, string> sParams = new Dictionary<string, string>();
@@ -116,43 +131,43 @@ namespace Test
 
             //OAuthApi.UploadMultimediaImage("13_biDPYMhICk8L9pCaDLBYdYdCrHRpYjUSUfACRKGgr8ezw-lxqQxYLYXKTkWVwo6fKju-5XjZ675hOk7w7r3zV5I8KoqjFajap6gaJK2PAhoWujJCLf03E4j0er-ZLs3VU_1e7B69QUl-TwX_FFGhAFAYYZ", "d:\\hb1.jpg");
 
-            System.Drawing.Image oImg = System.Drawing.Image.FromFile("d:\\hb1.jpg");
+            //System.Drawing.Image oImg = System.Drawing.Image.FromFile("d:\\hb1.jpg");
 
 
-            BarcodeWriter writer = new BarcodeWriter();
-            writer.Format = BarcodeFormat.QR_CODE;
-            QrCodeEncodingOptions options = new QrCodeEncodingOptions();
-            options.DisableECI = true;
-            //设置内容编码
-            options.CharacterSet = "UTF-8";
-            //设置二维码的宽度和高度
-            options.Width = 500;
-            options.Height = 500;
-            //设置二维码的边距,单位不是固定像素
-            options.Margin = 1;
-            writer.Options = options;
+            //BarcodeWriter writer = new BarcodeWriter();
+            //writer.Format = BarcodeFormat.QR_CODE;
+            //QrCodeEncodingOptions options = new QrCodeEncodingOptions();
+            //options.DisableECI = true;
+            ////设置内容编码
+            //options.CharacterSet = "UTF-8";
+            ////设置二维码的宽度和高度
+            //options.Width = 500;
+            //options.Height = 500;
+            ////设置二维码的边距,单位不是固定像素
+            //options.Margin = 1;
+            //writer.Options = options;
 
-            System.Drawing.Image oImg1 = writer.Write("http://www.qq.com");
+            //System.Drawing.Image oImg1 = writer.Write("http://www.qq.com");
 
-            System.Drawing.Bitmap map = new Bitmap(oImg);
-            oImg.Dispose();
-            Graphics g = Graphics.FromImage(map);
-            g.InterpolationMode = InterpolationMode.HighQualityBilinear;
-            SolidBrush brush = new SolidBrush(Color.Green);
-            PointF P = new PointF(600, 100);
-            Font f = new Font("Arial", 20);
-            //g.DrawString(nickName, f, brush, 310, 542);
-            g.DrawImage(oImg1, 320, 1655, 150, 150);//画二维码图片
+            //System.Drawing.Bitmap map = new Bitmap(oImg);
+            //oImg.Dispose();
+            //Graphics g = Graphics.FromImage(map);
+            //g.InterpolationMode = InterpolationMode.HighQualityBilinear;
+            //SolidBrush brush = new SolidBrush(Color.Green);
+            //PointF P = new PointF(600, 100);
+            //Font f = new Font("Arial", 20);
+            ////g.DrawString(nickName, f, brush, 310, 542);
+            //g.DrawImage(oImg1, 320, 1655, 150, 150);//画二维码图片
 
 
-            var oImg4 = CirclePhoto("http://thirdwx.qlogo.cn/mmopen/vi_32/6zcicmSoM5yjdWG9MoHydE6suFUGaHsKATFUPU7yU4d7PhLcsKWj51NhxA4PichkuYkYAflFOloKOKCSNhIeD4mQ/132", 100);
+            //var oImg4 = CirclePhoto("http://thirdwx.qlogo.cn/mmopen/vi_32/6zcicmSoM5yjdWG9MoHydE6suFUGaHsKATFUPU7yU4d7PhLcsKWj51NhxA4PichkuYkYAflFOloKOKCSNhIeD4mQ/132", 100);
 
-            g.DrawImage(oImg4, 620, 1655, 150, 150);
+            //g.DrawImage(oImg4, 620, 1655, 150, 150);
 
-            // g.DrawImage(oImg3, 85, 730, 220, 220);//画二维码图片
-            map.Save("d:\\hb3.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
-            f.Dispose();
-            g.Dispose();
+            //// g.DrawImage(oImg3, 85, 730, 220, 220);//画二维码图片
+            //map.Save("d:\\hb3.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+            //f.Dispose();
+            //g.Dispose();
 
 
             //BizFactory.Order.PayCompleted(operater, "2018090214233885209742", DateTime.Now);
