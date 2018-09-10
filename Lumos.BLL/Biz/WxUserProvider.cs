@@ -153,5 +153,54 @@ namespace Lumos.BLL
 
             return mod_UserInfo;
         }
+
+        public void UpdateAllUserInfo(string pOperater)
+        {
+            var wxUserInfo = CurrentDb.WxUserInfo.ToList();
+            foreach (var item in wxUserInfo)
+            {
+                var userInfo_Result = SdkFactory.Wx.Instance().GetUserInfoByApiToken(item.OpenId);
+                if (userInfo_Result != null)
+                {
+                    if (userInfo_Result.nickname != null)
+                    {
+                        item.Nickname = userInfo_Result.nickname;
+                    }
+
+                    item.Sex = userInfo_Result.sex.ToString();
+
+
+                    if (userInfo_Result.province != null)
+                    {
+                        item.Province = userInfo_Result.province;
+                    }
+
+                    if (userInfo_Result.city != null)
+                    {
+                        item.City = userInfo_Result.city;
+                    }
+
+                    if (userInfo_Result.country != null)
+                    {
+                        item.Country = userInfo_Result.country;
+                    }
+
+                    if (userInfo_Result.headimgurl != null)
+                    {
+                        item.HeadImgUrl = userInfo_Result.headimgurl;
+                    }
+
+                    if (userInfo_Result.unionid != null)
+                    {
+                        item.UnionId = userInfo_Result.unionid;
+                    }
+
+                    item.MendTime = this.DateTime;
+                    item.Mender = pOperater;
+                }
+
+                CurrentDb.SaveChanges();
+            }
+        }
     }
 }
