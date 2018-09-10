@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace WebMobile.Models
+namespace WebMobile.Areas.Wb.Models.Report
 {
     public class ReportModel
     {

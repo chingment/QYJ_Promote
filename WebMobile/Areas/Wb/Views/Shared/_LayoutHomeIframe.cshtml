@@ -9,18 +9,18 @@
     <meta content="" name="description">
     <title>@ViewBag.Title</title>
     <link href="~/favicon.ico" type="image/x-icon" rel="shortcut icon" />
-    <link href="~/Content/Back/Css/base/Site.css" rel="stylesheet" />
+    <link href="~/Areas/Wb/Content/base/Site.css" rel="stylesheet" />
     @RenderSection("styles", required: false)
-    <script src="~/Content/Back/Scripts/ArtDialog/artDialog.source.js?skin=default"></script>
-    <script src="~/Content/Back/Scripts/ArtDialog/iframeTools.source.js"></script>
-    <script src="~/Content/Back/Scripts/DatePicker/WdatePicker.js"></script>
-    <script src="~/Content/Back/Scripts/jquery-1.8.3.min.js"></script>
-    <script src="~/Content/Back/Scripts/json2.js"></script>
-    <script src="~/Content/Back/Scripts/jquery.form.js"></script>
-    <script src="~/Content/Back/Scripts/chosen.jquery.js"></script>
-    <script src="~/Content/Back/Scripts/jquery.cookie.js"></script>
-    <script src="~/Content/Back/Scripts/jquery.lumos.back.1.0.0.js?@(DateTime.Now.ToString("yyyyMMddHHmmss"))"></script>
-    <script src="~/Content/Back/Scripts/jquery.resizeEnd.js"></script>
+    <script src="~/Areas/Wb/Scripts/ArtDialog/artDialog.source.js?skin=default"></script>
+    <script src="~/Areas/Wb/Scripts/ArtDialog/iframeTools.source.js"></script>
+    <script src="~/Areas/Wb/Scripts/DatePicker/WdatePicker.js"></script>
+    <script src="~/Areas/Wb/Scripts/jquery-1.8.3.min.js"></script>
+    <script src="~/Areas/Wb/Scripts/json2.js"></script>
+    <script src="~/Areas/Wb/Scripts/jquery.form.js"></script>
+    <script src="~/Areas/Wb/Scripts/chosen.jquery.js"></script>
+    <script src="~/Areas/Wb/Scripts/jquery.cookie.js"></script>
+    <script src="~/Areas/Wb/Scripts/jquery.lumos.back.1.0.0.js?@(DateTime.Now.ToString("yyyyMMddHHmmss"))"></script>
+    <script src="~/Areas/Wb/Scripts/jquery.resizeEnd.js"></script>
 
     <script type="text/javascript">
 
@@ -197,12 +197,40 @@
                 <div class="content clearfix">
                     <ul class="content-left">
                         <li>
-                            <span class="title"></span>
+                            <span class="title">@OwnWebSettingUtils.GetWebName()</span>
                         </li>
                     </ul>
                     <ul class="content-right btn-dropdownmenu">
 
-                     
+                        @if (OwnRequest.IsLogin())
+                        {
+                            <li>
+                                <a href="/Wb/home/main" target="iframeMain">
+                                    <span class="title">
+                                        主界面
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="parent">
+                                <a href="javascript:void(0)" class="directory">
+                                    <span class="title">
+                                        欢迎您,@OwnRequest.GetUserNameWithSymbol()
+                                    </span>
+                                    <span class="more"></span>
+                                </a>
+                                <ul class="children">
+                                    <li><a href="/Wb/Home/ChangePassword" target="iframeMain">修改密码</a></li>
+                                    <li>
+                                        @using (Html.BeginForm("LogOff", "Home", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                                        {
+
+                                        }
+                                        <a href="javascript:document.getElementById('logoutForm').submit()">退出</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+
                     </ul>
                     <div class="clear"></div>
                 </div>
@@ -220,17 +248,17 @@
                                     <span><span class="icon icon_navmenu_level1_common"></span><span>报表查看</span></span>
                                     <ul class="children">
                                         <li>
-                                            <a gotopage="/Admin/PromoteCouponBuyRecord" target="iframeMain">
+                                            <a gotopage="/Wb/Biz/Report/PromoteCouponBuyRecord" target="iframeMain">
                                                 <span class="icon"></span><span>卡券购买记录</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a gotopage="/Admin/PromoteCouponConsumeRecord" target="iframeMain">
+                                            <a gotopage="/Wb/Biz/Report/PromoteCouponConsumeRecord" target="iframeMain">
                                                 <span class="icon"></span><span>卡券核销记录</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a gotopage="/Admin/PromoteShareRecord" target="iframeMain">
+                                            <a gotopage="/Wb/Biz/Report/PromoteShareRecord" target="iframeMain">
                                                 <span class="icon"></span><span>活动分享记录</span>
                                             </a>
                                         </li>
@@ -241,12 +269,12 @@
                         <dd class="content-right">
                             <div class="gbr-row gbr-row-breadcrumb">
                                 <ul class="breadcrumb">
-                                    <li><a target="iframeMain" href="/home/main" class="root">&nbsp;</a></li>
+                                    <li><a target="iframeMain" href="/Wb/home/main" class="root">&nbsp;</a></li>
                                     <li><span class="site">主界面</span></li>
                                 </ul>
                             </div>
                             <div class="gbr-row gbr-row-functionpage">
-                                <iframe src="/Admin/Main" id="iframeMain" name="iframeMain" style="width:100%;"></iframe>
+                                <iframe src="/Wb/home/Main" id="iframeMain" name="iframeMain" style="width:100%;"></iframe>
                                 @RenderBody()
                             </div>
                         </dd>

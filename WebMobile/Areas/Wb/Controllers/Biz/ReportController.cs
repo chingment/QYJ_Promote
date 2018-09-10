@@ -2,7 +2,6 @@
 using Lumos.Common;
 using Lumos.DAL;
 using Lumos.Entity;
-using Lumos.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,9 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using WebMobile.Models.Admin;
+using WebMobile.Areas.Wb.Models.Report;
 
-namespace WebMobile.Controllers
+namespace WebMobile.Areas.Wb.Controllers
 {
     public class ReportTable
     {
@@ -33,19 +32,8 @@ namespace WebMobile.Controllers
         }
     }
 
-    public class AdminController : BaseController
+    public class ReportController : WebMobile.Areas.Wb.Own.OwnBaseController
     {
-        // GET: Admin
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        public ActionResult Main()
-        {
-            return View();
-        }
-
         public ActionResult PromoteCouponBuyRecord(PromoteCouponBuyRecordViewModel model)
         {
             StringBuilder sbTable = new StringBuilder();

@@ -10,18 +10,18 @@
     <meta content="" name="description">
     <title>@ViewBag.Title</title>
     <link href="~/favicon.ico" type="image/x-icon" rel="shortcut icon" />
-    <link href="~/Content/Back/Css/base/Site.css" rel="stylesheet" />
+    <link href="/Areas/Wb/Content/base/Site.css" rel="stylesheet" />
     @RenderSection("styles", required: false)
-    <script src="~/Content/Back/Scripts/ArtDialog/artDialog.source.js?skin=default"></script>
-    <script src="~/Content/Back/Scripts/ArtDialog/iframeTools.source.js"></script>
-    <script src="~/Content/Back/Scripts/DatePicker/WdatePicker.js"></script>
-    <script src="~/Content/Back/Scripts/jquery-1.8.3.min.js"></script>
-    <script src="~/Content/Back/Scripts/json2.js"></script>
-    <script src="~/Content/Back/Scripts/jquery.form.js"></script>
-    <script src="~/Content/Back/Scripts/chosen.jquery.js"></script>
-    <script src="~/Content/Back/Scripts/jquery.cookie.js"></script>
-    <script src="~/Content/Back/Scripts/jquery.lumos.back.1.0.0.js?@(DateTime.Now.ToString("yyyyMMddHHmmss"))"></script>
-    <script src="~/Content/Back/Scripts/jquery.resizeEnd.js"></script>
+    <script src="~/Areas/Wb/Scripts/ArtDialog/artDialog.source.js?skin=default"></script>
+    <script src="~/Areas/Wb/Scripts/ArtDialog/iframeTools.source.js"></script>
+    <script src="~/Areas/Wb/Scripts/DatePicker/WdatePicker.js"></script>
+    <script src="~/Areas/Wb/Scripts/jquery-1.8.3.min.js"></script>
+    <script src="~/Areas/Wb/Scripts/json2.js"></script>
+    <script src="~/Areas/Wb/Scripts/jquery.form.js"></script>
+    <script src="~/Areas/Wb/Scripts/chosen.jquery.js"></script>
+    <script src="~/Areas/Wb/Scripts/jquery.cookie.js"></script>
+    <script src="~/Areas/Wb/Scripts/jquery.lumos.back.1.0.0.js?@(DateTime.Now.ToString("yyyyMMddHHmmss"))"></script>
+    <script src="~/Areas/Wb/Scripts/jquery.resizeEnd.js"></script>
     <script type="text/javascript">
         (function ($) {
 
@@ -37,7 +37,7 @@
 
                     function getImgVerifyCode() {
 
-                        $("#" + opts.imgId).attr("src", "/Common/GetImgVerifyCode?name=" + opts.sessionName + "&date=" + new Date().getTime());
+                        $("#" + opts.imgId).attr("src", "/Wb/Common/GetImgVerifyCode?name=" + opts.sessionName + "&date=" + new Date().getTime());
 
                     }
 

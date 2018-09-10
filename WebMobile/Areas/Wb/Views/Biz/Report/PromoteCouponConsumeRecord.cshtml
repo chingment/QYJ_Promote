@@ -1,6 +1,6 @@
-﻿@model WebMobile.Models.Admin.PromoteCouponBuyRecordViewModel
+﻿@model WebMobile.Areas.Wb.Models.Report.PromoteCouponBuyRecordViewModel
 @{
-    Layout = "~/Views/Shared/_BackLayoutHomeMainReport.cshtml";
+    Layout = "~/Areas/Wb/Views/Shared/_LayoutHomeMainReport.cshtml";
 }
 
 
@@ -17,7 +17,7 @@
             return l_Data;
         }
 
-        var url = "/Admin/PromoteShareRecord";
+        var url = "/Admin/PromoteCouponConsumeRecord";
 
         function search() {
             $.lumos.postJson({
