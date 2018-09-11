@@ -62,9 +62,7 @@ namespace Lumos.BLL.Task
 
             LogUtil.Info(string.Format("结束执行订单查询,时间:{0}", this.DateTime));
 
-
-
-
+  
             return result;
         }
     }
