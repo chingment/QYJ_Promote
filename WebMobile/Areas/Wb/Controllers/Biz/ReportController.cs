@@ -42,10 +42,16 @@ namespace WebMobile.Areas.Wb.Controllers
             sbTable.Append("<tr>");
             sbTable.Append("<th>序号</th>");
             sbTable.Append("<th>昵称</th>");
+            sbTable.Append("<th>姓名</th>");
+            sbTable.Append("<th>手机</th>");
+            sbTable.Append("<th>校区</th>");
+            sbTable.Append("<th>支付时间</th>");
             sbTable.Append("<th>支付状态</th>");
             sbTable.Append("<th>支付时间</th>");
             sbTable.Append("<th>领取状态</th>");
             sbTable.Append("<th>领取时间</th>");
+            sbTable.Append("<th>核销状态</th>");
+            sbTable.Append("<th>核销时间</th>");
             sbTable.Append("</tr>");
             sbTable.Append("</thead>");
             sbTable.Append("<tbody>");
@@ -56,7 +62,7 @@ namespace WebMobile.Areas.Wb.Controllers
             if (Request.HttpMethod == "GET")
             {
                 #region GET
-                sbTable.Replace("{content}", "<tr><td colspan=\"6\"></td></tr>");
+                sbTable.Replace("{content}", "<tr><td colspan=\"12\"></td></tr>");
 
                 model.TableHtml = sbTable.ToString();
                 return View(model);
@@ -66,7 +72,7 @@ namespace WebMobile.Areas.Wb.Controllers
             else
             {
                 #region POST
-                StringBuilder sql = new StringBuilder("select b.Nickname,a.IsBuy,a.BuyTime,a.IsGet,a.GetTime from PromoteUserCoupon a left join WxUserInfo  b on a.UserId=b.UserId ");
+                StringBuilder sql = new StringBuilder(" b.Nickname,c.CtName,c.CtPhone,c.CtIsStudent, CtSchool,  a.IsBuy,a.BuyTime,a.IsGet,a.GetTime,a.IsConsume,a.ConsumeTime from PromoteUserCoupon a left join WxUserInfo  b on a.UserId=b.UserId left join PromoteUser c on a.userId=c.UserId ");
 
                 sql.Append(" where a.BuyTime is not null ");
 
@@ -98,7 +104,20 @@ namespace WebMobile.Areas.Wb.Controllers
 
                         switch (c)
                         {
-                            case 1:
+                            case 3:
+
+                                td_value = dtData.Rows[r][c].ToString().Trim();
+                                if (td_value == "" || td_value == "0")
+                                {
+                                    td_value = "否";
+                                }
+                                else
+                                {
+                                    td_value = "是";
+                                }
+
+                                break;
+                            case 5:
 
                                 td_value = dtData.Rows[r][c].ToString().Trim();
                                 if (td_value == "True")
@@ -111,7 +130,7 @@ namespace WebMobile.Areas.Wb.Controllers
                                 }
 
                                 break;
-                            case 3:
+                            case 7:
 
                                 td_value = dtData.Rows[r][c].ToString().Trim();
                                 if (td_value == "True")
@@ -121,6 +140,19 @@ namespace WebMobile.Areas.Wb.Controllers
                                 else
                                 {
                                     td_value = "未领取";
+                                }
+
+                                break;
+                            case 9:
+
+                                td_value = dtData.Rows[r][c].ToString().Trim();
+                                if (td_value == "True")
+                                {
+                                    td_value = "已核销";
+                                }
+                                else
+                                {
+                                    td_value = "未核销";
                                 }
 
                                 break;
