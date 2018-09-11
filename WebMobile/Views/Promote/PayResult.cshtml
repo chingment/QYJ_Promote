@@ -180,7 +180,8 @@
             }
             else
             {
-                <img class="btn-com" id="btn_GoInvite" src="~/Content/images/promote20180910/btn_invite.png" style="display: inline-block;" />
+                <img class="btn-com" id="btn_GoInvite" src="~/Content/images/promote20180910/btn_invite.png" style="display: inline-block;margin-right:10px;" />
+                <img class="btn-com" id="btn_GoPersonal" src="~/Content/images/promote20180910/btn_personal.png" style="display: inline-block; margin-left:10px;" />
             }
         </div>
     </div>
@@ -328,6 +329,10 @@
               });
 
           });
+
+            $('#btn_GoPersonal').on("click", function () {
+                $.lumos.tips("该功能9月15日开通敬请期待！")
+            });
 
             var shareTitle = '全优加9月放大招啦！9.1元抢购代金券7200元';
             var shareDesc = '9.10元抢购代金券7200元\n邀请好友买券报课\n还可获500元现金奖';
