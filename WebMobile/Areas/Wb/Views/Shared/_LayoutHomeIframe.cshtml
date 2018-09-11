@@ -61,15 +61,14 @@
 
 
                 window.frames[target].document.location = gotopage;
+
+
+
+                reinitIframe();
             });
-
-
-
-            //getMessageTipCount();
 
             setInterval("reinitIframe()", 200);
 
-            //setInterval("getMessageTipCount()", 5000);
 
         });
 
@@ -79,7 +78,11 @@
                 var bHeight = iframe.contentWindow.document.body.scrollHeight;
                 var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
                 var height = Math.max(bHeight, dHeight);
-                iframe.height = height;
+
+                var heightss = $(iframe).contents().find("body").height()
+                var height = Math.max(bHeight, dHeight);
+
+                iframe.height = heightss;
             } catch (ex) { }
         }
 
