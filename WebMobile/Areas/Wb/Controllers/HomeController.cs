@@ -116,16 +116,21 @@ namespace WebMobile.Areas.Wb.Controllers
         {
             OwnRequest.Quit();
 
-            return Redirect( WebMobile.Areas.Wb.Own.OwnWebSettingUtils.GetLoginPage(""));
+            return Redirect(WebMobile.Areas.Wb.Own.OwnWebSettingUtils.GetLoginPage(""));
         }
 
         [HttpPost]
         public CustomJsonResult ChangePassword(ChangePasswordViewModel model)
         {
 
-            SysFactory.AuthorizeRelay.ChangePassword(this.CurrentUserId, this.CurrentUserId, model.OldPassword, model.NewPassword);
+            var result = SysFactory.AuthorizeRelay.ChangePassword(this.CurrentUserId, this.CurrentUserId, model.OldPassword, model.NewPassword);
 
-            return Json(ResultType.Success, "点击<a href=\"" + OwnWebSettingUtils.GetLoginPage("") + "\">登录</a>");
+            if (result.Result == ResultType.Success)
+            {
+                return Json(ResultType.Success, "点击<a href=\"" + Wb.Own.OwnWebSettingUtils.GetLoginPage("") + "\">登录</a>");
+            }
+
+            return result;
 
         }
     }

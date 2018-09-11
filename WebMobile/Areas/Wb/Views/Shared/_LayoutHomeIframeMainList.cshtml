@@ -7,8 +7,16 @@
     @RenderSection("styles", required: false)
 }
 @section scripts{
+    <script src="~/Areas/Wb/Scripts/jquery.formValidator.js"></script>
+    <script src="~/Areas/Wb/Scripts/jquery.formValidatorRegex.js"></script>
+    <script src="~/Areas/Wb/Scripts/Jquery.tree/jquery.ztree.core-3.2.js"></script>
+    <script src="~/Areas/Wb/Scripts/Jquery.tree/jquery.ztree.excheck-3.2.js"></script>
+
     @RenderSection("scripts", required: false)
 }
+
+
+
 
 @RenderBody()
 @section scriptsbyend{

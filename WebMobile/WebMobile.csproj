@@ -297,6 +297,7 @@
     <Content Include="Areas\Wb\Views\Biz\Report\PromoteCouponBuyRecord.cshtml" />
     <Content Include="Areas\Wb\Views\Biz\Report\PromoteCouponConsumeRecord.cshtml" />
     <Content Include="Areas\Wb\Views\Biz\Report\PromoteShareRecord.cshtml" />
+    <Content Include="Areas\Wb\Views\Home\ChangePassword.cshtml" />
     <None Include="log4net.config">
       <SubType>Designer</SubType>
     </None>
