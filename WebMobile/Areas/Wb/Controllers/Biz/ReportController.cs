@@ -44,8 +44,8 @@ namespace WebMobile.Areas.Wb.Controllers
             sbTable.Append("<th>昵称</th>");
             sbTable.Append("<th>姓名</th>");
             sbTable.Append("<th>手机</th>");
+            sbTable.Append("<th>是否学院</th>");
             sbTable.Append("<th>校区</th>");
-            sbTable.Append("<th>支付时间</th>");
             sbTable.Append("<th>支付状态</th>");
             sbTable.Append("<th>支付时间</th>");
             sbTable.Append("<th>领取状态</th>");
@@ -178,7 +178,7 @@ namespace WebMobile.Areas.Wb.Controllers
                 }
                 else
                 {
-                    NPOIExcelHelper.HtmlTable2Excel(reportTable.Html, "商品SKU信息报表");
+                    NPOIExcelHelper.HtmlTable2Excel(reportTable.Html, "卡卷购买记录报表");
 
                     return Json(ResultType.Success, "");
                 }
@@ -284,7 +284,7 @@ namespace WebMobile.Areas.Wb.Controllers
                 }
                 else
                 {
-                    NPOIExcelHelper.HtmlTable2Excel(reportTable.Html, "商品SKU信息报表");
+                    NPOIExcelHelper.HtmlTable2Excel(reportTable.Html, "活动分享记录报表");
 
                     return Json(ResultType.Success, "");
                 }

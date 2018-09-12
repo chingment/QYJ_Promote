@@ -32,7 +32,7 @@
         }
 
         function exportExcel() {
-            $.lumos.download(url, GetParams(operateType.exportExcel), 'post');
+            $.lumos.download(url, GetParams($.lumos.operateType.exportExcel), 'post');
         };
 
     </script>
@@ -49,6 +49,7 @@
             </div>
             <div class="filter">
                 <input type="button" value="查询" class="btn btn-search" />
+                <input type="button" value="导出" class="btn btn-export-excel" />
             </div>
 
             <div class="filter" style="float:right">
