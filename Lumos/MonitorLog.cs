@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Lumos
@@ -15,6 +16,41 @@ namespace Lumos
     /// </summary>
     public static class MonitorLog
     {
+        #region "获取Ip"
+        /// <summary>
+        /// 获取Ip
+        /// </summary>
+        /// <param name="rq"></param>
+        /// <returns></returns>
+        public static string GetIP()
+        {
+            string userIP = "";
+            try
+            {
+                HttpContext rq = HttpContext.Current;
+                HttpRequest Request = HttpContext.Current.Request;
+                // 如果使用代理，获取真实IP
+                if (rq.Request.ServerVariables["HTTP_X_FORWARDED_FOR"] != "")
+                {
+                    userIP = rq.Request.ServerVariables["REMOTE_ADDR"];
+                }
+                else
+                {
+                    userIP = rq.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+                }
+                if (userIP == null || userIP == "")
+                {
+                    userIP = rq.Request.UserHostAddress;
+                }
+            }
+            catch
+            {
+                userIP = "error ip";
+            }
+            return userIP;
+
+        }
+        #endregion
 
         public static void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -24,10 +60,11 @@ namespace Lumos
         public static void OnActionExecuted(ActionExecutedContext filterContext)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("请求路径:" + filterContext.RequestContext.HttpContext.Request.RawUrl+"\rn");
-            sb.Append("请求时间:" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "\rn");
-            sb.Append("Url参数:" + MonitorLog.GetCollections(filterContext.HttpContext.Request.QueryString) + "\rn");
-            sb.Append("Form参数:" + MonitorLog.GetCollections(filterContext.HttpContext.Request.Form) + "\rn");
+            sb.Append("Ip地址:" + GetIP() + "\r\n");
+            sb.Append("请求路径:" + filterContext.RequestContext.HttpContext.Request.RawUrl + "\r\n");
+            sb.Append("请求时间:" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "\r\n");
+            sb.Append("Url参数:" + MonitorLog.GetCollections(filterContext.HttpContext.Request.QueryString) + "\r\n");
+            sb.Append("Form参数:" + MonitorLog.GetCollections(filterContext.HttpContext.Request.Form) + "\r\n");
             LogUtil.Info(sb.ToString());
         }
 
