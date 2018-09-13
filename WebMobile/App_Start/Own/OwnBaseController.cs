@@ -108,6 +108,11 @@ namespace WebMobile
                         filterContext.Result = new RedirectResult(loginPage);
                     }
                 }
+                else
+                {
+
+                    LogUtil.Info("用户Id:" + this.CurrentUserId);
+                }
             }
         }
     }
