@@ -44,7 +44,7 @@ namespace WebMobile.Areas.Wb.Controllers
             sbTable.Append("<th>昵称</th>");
             sbTable.Append("<th>姓名</th>");
             sbTable.Append("<th>手机</th>");
-            sbTable.Append("<th>是否学院</th>");
+            sbTable.Append("<th>是否学员</th>");
             sbTable.Append("<th>校区</th>");
             sbTable.Append("<th>支付状态</th>");
             sbTable.Append("<th>支付时间</th>");

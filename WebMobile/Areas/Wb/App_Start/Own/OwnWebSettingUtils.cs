@@ -43,7 +43,7 @@ namespace WebMobile.Areas.Wb.Own
         /// <returns></returns>
         public static string GetWebName()
         {
-            return "微信活动分享分销系统";
+            return "微信活动分销系统平台";
         }
     }
 }

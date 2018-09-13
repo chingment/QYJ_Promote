@@ -57,7 +57,7 @@ namespace WebMobile
         /// <returns></returns>
         public static string GetWebName()
         {
-            return "贩聚社团商家平台";
+            return "微信活动分销系统平台";
         }
 
     }

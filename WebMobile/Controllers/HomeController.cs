@@ -201,7 +201,7 @@ namespace WebMobile.Controllers
                         LogUtil.Info("userInfo_Result:" + JsonConvert.SerializeObject(userInfo_Result));
 
                         var wxUserInfo = new WxUserInfo();
-
+         
                         wxUserInfo.OpenId = userInfo_Result.openid;
                         wxUserInfo.Nickname = userInfo_Result.nickname;
                         wxUserInfo.Sex = userInfo_Result.sex.ToString();
