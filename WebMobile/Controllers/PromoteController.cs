@@ -132,6 +132,8 @@ namespace WebMobile.Controllers
         [HttpPost]
         public CustomJsonResult GetCardList(string promoteId)
         {
+            LogUtil.Info("用户:" + this.CurrentUserId + ",领取卡券");
+
             List<WxCard> cardList = new List<WxCard>();
 
             string userId = this.CurrentUserId;
@@ -216,6 +218,7 @@ namespace WebMobile.Controllers
         [HttpPost]
         public CustomJsonResult EditPromoteUserInfo(EditPromoteUserInfoViewModel model)
         {
+            LogUtil.Info("用户:" + this.CurrentUserId + ",提交卡券信息");
 
             var promoteUser = CurrentDb.PromoteUser.Where(m => m.UserId == this.CurrentUserId && m.PromoteId == model.PromoteId).FirstOrDefault();
 
