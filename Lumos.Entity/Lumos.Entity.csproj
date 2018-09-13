@@ -70,6 +70,7 @@
     <Compile Include="Biz\PromoteUser.cs" />
     <Compile Include="Biz\PromoteUserCoupon.cs" />
     <Compile Include="Biz\PromoteUserRelation.cs" />
+    <Compile Include="Biz\Withraw.cs" />
     <Compile Include="ImgSet.cs" />
     <Compile Include="EnumerationRemarkConverter.cs" />
     <Compile Include="IpInfo.cs" />

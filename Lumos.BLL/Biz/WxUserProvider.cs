@@ -88,7 +88,9 @@ namespace Lumos.BLL
                             var fund = new Fund();
                             fund.Id = GuidUtil.New();
                             fund.UserId = sysClientUser.Id;
-                            fund.Balance = 0;
+                            fund.CurrentBalance = 0;
+                            fund.AvailableBalance = 0;
+                            fund.LockBalance = 0;
                             fund.CreateTime = this.DateTime;
                             fund.Creator = pOperater;
                             CurrentDb.Fund.Add(fund);

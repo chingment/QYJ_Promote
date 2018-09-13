@@ -105,5 +105,19 @@ namespace Lumos.Entity
             [Remark("比例")]
             RateAmount = 2
         }
+
+        public enum WithdrawStatus
+        {
+            [Remark("未知")]
+            Unknow = 0,
+            [Remark("申请")]
+            Apply = 1,
+            [Remark("处理中")]
+            Handing = 2,
+            [Remark("成功")]
+            Success = 3,
+            [Remark("失败")]
+            Failure = 4
+        }
     }
 }

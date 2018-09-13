@@ -184,6 +184,7 @@
     <Compile Include="Areas\Wb\WbAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PersonalController.cs" />
     <Compile Include="Controllers\PromoteController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -335,6 +336,7 @@
     <Folder Include="Areas\Wb\Scripts\Jquery.tree\" />
     <Folder Include="Areas\Wb\Scripts\kindeditor\" />
     <Folder Include="Areas\Wb\Scripts\themes\" />
+    <Folder Include="Views\Personal\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
