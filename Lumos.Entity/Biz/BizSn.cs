@@ -11,13 +11,13 @@ namespace Lumos.Entity
     [Table("BizSn")]
     public class BizSn
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        public int IncrNum { get; set; }
+
         [Key]
-        public string Id { get; set; }
-        public Enumeration.BizSnType Type { get; set; }
-        public string Code { get; set; }
-        public string Name { get; set; }
-        public string Prefix { get; set; }
-        public string CurrentSn { get; set; }
+        public string IncrDate { get; set; }
 
     }
 }

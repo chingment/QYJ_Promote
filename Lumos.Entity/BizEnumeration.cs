@@ -88,10 +88,10 @@ namespace Lumos.Entity
         {
             [Remark("未知")]
             Unknow = 0,
-            [Remark("分销商购买商品佣金")]
-            PromoteProfit = 1,
-            [Remark("分销商核销优惠卷佣金")]
-            WaitPay = 2,
+            [Remark("购买商品")]
+            PurchaseGoods = 1,
+            [Remark("核销优惠卷")]
+            ConsumeCoupon = 2,
             [Remark("提现")]
             Wtihdraw = 3
         }

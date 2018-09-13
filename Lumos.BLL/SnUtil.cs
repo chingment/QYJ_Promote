@@ -4,58 +4,73 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Lumos.BLL
 {
     public class SnUtil
     {
 
-        public static string Build(Entity.Enumeration.BizSnType type)
+        private static readonly object lock_GetIncrNum = new object();
+
+        private static int GetIncrNum()
+        {
+
+            lock (lock_GetIncrNum)
+            {
+                try
+                {
+                    using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
+                    {
+                        LumosDbContext _dbContext = new LumosDbContext();
+
+                        string date = DateTime.Now.ToString("yyyy-MM-dd");
+
+                        var bizSn = _dbContext.BizSn.Where(m => m.IncrDate == date).FirstOrDefault();
+                        if (bizSn == null)
+                        {
+                            throw new Exception("业务流水号生成发生异常，错误编码：001");
+                        }
+
+                        bizSn.IncrNum += 1;
+
+                        _dbContext.SaveChanges();
+                        ts.Complete();
+
+                        return bizSn.IncrNum;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LogUtil.Error("业务流水号生成发生异常，错误编码：005", ex);
+
+                    throw new Exception("业务流水号生成发生异常，错误编码：005");
+                }
+            }
+
+        }
+
+        public static string Build(Entity.Enumeration.BizSnType snType, string userId)
         {
 
             string prefix = "";
-            Random ran = new Random();
-            string dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff") + ran.Next(1000, 9999);
 
-
-            string sn = prefix + dateTime;
-            return sn;
-        }
-
-
-        public static string BulidOrderNo(Entity.Enumeration.BizSnType type)
-        {
-            LumosDbContext CurrentDb = new LumosDbContext();
-
-            var bizSn = CurrentDb.BizSn.Where(m => m.Type == type).FirstOrDefault();
-            if (bizSn == null)
+            switch (snType)
             {
-                Random ran = new Random();
-                string dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff") + ran.Next(1000, 9999);
-
-                return "error sn";
+                case Entity.Enumeration.BizSnType.Order:
+                    prefix = "61";
+                    break;
             }
 
+            ThreadSafeRandom ran = new ThreadSafeRandom();
 
-            //var orderType = type.ToString();
-            //var bizSn = CurrentDb.BizSn.FirstOrDefault(x => x.Type == type);
-            //var bizSnStart = DateTime.Now.ToString("yyMMdd-");
-            //var bizSnEnd = "1";
-            //if (bizSn != null)
-            //{
-            //    if (bizSn.OrderNo.Split('-')[0] != orderType + flowNoStart)
-            //    {
-            //        flowNoEnd = (int.Parse(flowNo.OrderNo.Split('-')[1]) + 1).ToString();
-            //    }
-            //}
-            //else
-            //{
-            //    db.FlowNo.Add(new FlowNo { OrderNo = flowNoStart + flowNoEnd.PadLeft(5, '0'), OrderType = orderType, Remark = "New" });
-            //}
-            //return orderType + flowNoStart + flowNoEnd.PadLeft(5, '0');
 
-            return "";
+            string part0 = ran.Next(100, 999).ToString();
+            string part1 = DateTime.Now.ToString("yyyyMMddHHmmss");
+            string part2 = GetIncrNum().ToString().PadLeft(5, '0');
+
+            string sn = prefix + part2 + part1 + part0;
+            return sn;
         }
-
     }
 }

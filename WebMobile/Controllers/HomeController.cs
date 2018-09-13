@@ -281,11 +281,14 @@ namespace WebMobile.Controllers
 
                                             if (promoteUserCoupon2 != null)
                                             {
-                                                promoteUserCoupon2.IsConsume = true;
-                                                promoteUserCoupon2.ConsumeTime = DateTime.Now;
-                                                promoteUserCoupon2.Mender = GuidUtil.Empty();
-                                                promoteUserCoupon2.MendTime = DateTime.Now;
-                                                CurrentDb.SaveChanges();
+                                                if (promoteUserCoupon2.IsConsume == false)
+                                                {
+                                                    promoteUserCoupon2.IsConsume = true;
+                                                    promoteUserCoupon2.ConsumeTime = DateTime.Now;
+                                                    promoteUserCoupon2.Mender = GuidUtil.Empty();
+                                                    promoteUserCoupon2.MendTime = DateTime.Now;
+                                                    CurrentDb.SaveChanges();
+                                                }
                                             }
 
                                             #endregion

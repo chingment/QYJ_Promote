@@ -17,6 +17,8 @@ namespace Lumos.BLL.Task
         public CustomJsonResult Run()
         {
             CustomJsonResult result = new CustomJsonResult();
+
+            #region 检查支付状态
             var orders = OrderCacheUtil.GetCheckPayStatusQueue();
             LogUtil.Info(string.Format("共有{0}条待支付订单查询状态", orders.Count));
 
@@ -61,8 +63,41 @@ namespace Lumos.BLL.Task
             }
 
             LogUtil.Info(string.Format("结束执行订单查询,时间:{0}", this.DateTime));
+            #endregion
 
-  
+
+            #region 检查优惠卷核销状态
+
+
+            var promoteUserCoupons = CurrentDb.PromoteUserCoupon.Where(m => m.IsConsume == true).ToList();
+
+            foreach (var item in promoteUserCoupons)
+            {
+                var profit = 500m;
+                var fund = CurrentDb.Fund.Where(m => m.UserId == item.UserId).FirstOrDefault();
+                fund.CurrentBalance += profit;
+                fund.AvailableBalance += profit;
+                fund.Mender = GuidUtil.New();
+                fund.MendTime = this.DateTime;
+
+
+                var fundTrans = new FundTrans();
+                fundTrans.Id = GuidUtil.New();
+                fundTrans.UserId = item.UserId;
+                fundTrans.Balance = fund.CurrentBalance;
+                fundTrans.ChangeAmount = profit;
+                fundTrans.ChangeType = Enumeration.FundTransChangeType.ConsumeCoupon;
+                fundTrans.CreateTime = this.DateTime;
+                fundTrans.Creator = GuidUtil.New();
+                fundTrans.Description = "";
+                CurrentDb.FundTrans.Add(fundTrans);
+
+
+            }
+
+
+            #endregion
+
             return result;
         }
     }

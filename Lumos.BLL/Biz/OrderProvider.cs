@@ -86,7 +86,7 @@ namespace Lumos.BLL
                     var order = new Order();
                     order.Id = GuidUtil.New();
                     order.UserId = pUserId;
-                    order.Sn = SnUtil.Build(Enumeration.BizSnType.Order);
+                    order.Sn = SnUtil.Build(Enumeration.BizSnType.Order, order.UserId);
                     order.IsPromoteProfit = true;
                     order.PromoteId = promote.Id;
                     order.RefereeId = pRefereeId;
