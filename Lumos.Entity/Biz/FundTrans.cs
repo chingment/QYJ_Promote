@@ -18,7 +18,9 @@ namespace Lumos.Entity
         public string UserId { get; set; }
         public Enumeration.FundTransChangeType ChangeType { get; set; }
         public decimal ChangeAmount { get; set; }
-        public decimal Balance { get; set; }
+        public decimal CurrentBalance { get; set; }
+        public decimal LockBalance { get; set; }
+        public decimal AvailableBalance { get; set; }
         public string Description { get; set; }
         public string Creator { get; set; }
         public DateTime CreateTime { get; set; }

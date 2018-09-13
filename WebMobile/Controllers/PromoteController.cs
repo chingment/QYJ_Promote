@@ -16,7 +16,7 @@ namespace WebMobile.Controllers
     {
         public ActionResult Coupon(string promoteId, string refereeId)
         {
-            
+
 
             //refereeId =00000000000000000000000000000000
             var model = new CouponViewModel();
@@ -96,8 +96,8 @@ namespace WebMobile.Controllers
             LogUtil.Info("进入UnifiedOrder");
             LogUtil.Info("用户.CurrentUserId:" + this.CurrentUserId);
 
-
-            var result = BizFactory.Order.UnifiedOrder(this.CurrentUserId, this.CurrentUserId, model);
+            model.UserId = this.CurrentUserId;
+            var result = BizFactory.Order.UnifiedOrder(this.CurrentUserId, model);
 
             if (result.Result == ResultType.Success)
             {

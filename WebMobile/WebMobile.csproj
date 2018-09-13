@@ -186,6 +186,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PersonalController.cs" />
     <Compile Include="Controllers\PromoteController.cs" />
+    <Compile Include="Controllers\WithdrawController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -337,6 +338,7 @@
     <Folder Include="Areas\Wb\Scripts\kindeditor\" />
     <Folder Include="Areas\Wb\Scripts\themes\" />
     <Folder Include="Views\Personal\" />
+    <Folder Include="Views\Withdraw\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

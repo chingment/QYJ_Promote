@@ -35,6 +35,8 @@ namespace Lumos.DAL
         public IDbSet<PromoteAccessLog> PromoteAccessLog { get; set; }
         public IDbSet<PromoteShareLog> PromoteShareLog { get; set; }
 
+        public IDbSet<Withdraw>  Withdraw { get; set; }
+
 
         //public FxDbContext()
         //    : base("DefaultConnection")

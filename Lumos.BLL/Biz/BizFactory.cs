@@ -16,6 +16,14 @@ namespace Lumos.BLL
             }
         }
 
+        public static WithdrawProvider Withdraw
+        {
+            get
+            {
+                return new WithdrawProvider();
+            }
+        }
+
         public static WxUserProvider WxUser
         {
             get

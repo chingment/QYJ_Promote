@@ -7,10 +7,10 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Lumos.Entity.Biz
+namespace Lumos.Entity
 {
-    [Table("Withraw")]
-    public class Withraw
+    [Table("Withdraw")]
+    public class Withdraw
     {
         [Key]
         public string Id { get; set; }
