@@ -198,7 +198,10 @@ namespace WebMobile.Controllers
                     string decryptCode = item.WxCouponDecryptCode;
                     if (string.IsNullOrEmpty(item.WxCouponDecryptCode))
                     {
-                        decryptCode = SdkFactory.Wx.Instance().CardCodeDecrypt(item.WxCouponEncryptCode);
+                        if (!string.IsNullOrEmpty(item.WxCouponEncryptCode))
+                        {
+                            decryptCode = SdkFactory.Wx.Instance().CardCodeDecrypt(item.WxCouponEncryptCode);
+                        }
                     }
 
                     card.code = decryptCode;
