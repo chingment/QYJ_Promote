@@ -83,6 +83,7 @@ namespace Lumos.BLL.Task
 
                 var fundTrans = new FundTrans();
                 fundTrans.Id = GuidUtil.New();
+                fundTrans.Sn = SnUtil.Build(Enumeration.BizSnType.FundTrans, item.UserId);
                 fundTrans.UserId = item.UserId;
                 fundTrans.Balance = fund.CurrentBalance;
                 fundTrans.ChangeAmount = profit;

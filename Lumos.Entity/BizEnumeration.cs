@@ -18,7 +18,11 @@ namespace Lumos.Entity
             [Remark("未知")]
             Unknow = 0,
             [Remark("订单号")]
-            Order = 1
+            Order = 1,
+            [Remark("资金流水号")]
+            FundTrans = 2,
+            [Remark("提现单号")]
+            Withraw = 3
         }
 
         public enum OrderNotifyLogNotifyFrom
