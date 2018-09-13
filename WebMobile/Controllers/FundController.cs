@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace WebMobile.Controllers
 {
-    public class FundTransController : Controller
+    public class FundController : Controller
     {
         // GET: FundTrans
         public ActionResult Index()
