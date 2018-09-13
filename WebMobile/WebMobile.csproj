@@ -183,9 +183,12 @@
     <Compile Include="Areas\Wb\Models\Home\LoginViewModel.cs" />
     <Compile Include="Areas\Wb\WbAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\FundTransController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\CouponController.cs" />
     <Compile Include="Controllers\PersonalController.cs" />
     <Compile Include="Controllers\PromoteController.cs" />
+    <Compile Include="Controllers\ShareLogController.cs" />
     <Compile Include="Controllers\WithdrawController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -337,7 +340,10 @@
     <Folder Include="Areas\Wb\Scripts\Jquery.tree\" />
     <Folder Include="Areas\Wb\Scripts\kindeditor\" />
     <Folder Include="Areas\Wb\Scripts\themes\" />
+    <Folder Include="Views\FundTrans\" />
+    <Folder Include="Views\MyCoupon\" />
     <Folder Include="Views\Personal\" />
+    <Folder Include="Views\ShareLog\" />
     <Folder Include="Views\Withdraw\" />
   </ItemGroup>
   <ItemGroup>

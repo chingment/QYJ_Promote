@@ -347,7 +347,10 @@ namespace WebMobile.Controllers
                     {
                         string decryptCode = SdkFactory.Wx.Instance().CardCodeDecrypt(coupon.WxCouponEncryptCode);
                         LogUtil.Info("解密CODE:" + decryptCode);
-                        item.WxCouponDecryptCode = decryptCode;
+                        if (string.IsNullOrEmpty(decryptCode))
+                        {
+                            item.WxCouponDecryptCode = decryptCode;
+                        }
                     }
                     item.Mender = this.CurrentUserId;
                     item.MendTime = DateTime.Now;
