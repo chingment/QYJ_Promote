@@ -201,6 +201,7 @@
     <Compile Include="App_Start\Own\OwnStaticResource.cs" />
     <Compile Include="App_Start\Own\OwnStatisticsTrackerAttribute.cs" />
     <Compile Include="Models\Account\LoginViewModel.cs" />
+    <Compile Include="Models\Fund\SearchCondition.cs" />
     <Compile Include="Models\Home\SearchCondition.cs" />
     <Compile Include="Models\OwnBaseViewModel.cs" />
     <Compile Include="Models\Personal\IndexViewModel.cs" />
@@ -269,10 +270,10 @@
     <Content Include="Areas\Wb\Scripts\owl.carousel.js" />
     <Content Include="Areas\Wb\Scripts\respond.js" />
     <Content Include="Areas\Wb\Scripts\respond.min.js" />
+    <Content Include="Content\images\list_nav_item_icon_sharelog.png" />
     <Content Include="Content\images\personal_info_headerimg.jpg" />
     <Content Include="Content\images\loading.gif" />
     <Content Include="Content\images\list_nav_item_icon_next.png" />
-    <Content Include="Content\images\list_nav_item_icon_telphone.png" />
     <Content Include="Content\images\promote20180910\bg.jpg" />
     <Content Include="Content\images\promote20180910\btn_personal.png" />
     <Content Include="Content\images\promote20180910\btn_buy.png" />
@@ -291,10 +292,10 @@
     <Content Include="Content\images\promote20180910\share_fly.png" />
     <Content Include="Content\images\promote20180910\share_icon.png" />
     <Content Include="Content\images\promote20180910\btn_submit.png" />
-    <Content Include="Content\images\list_nav_item_icon_sharelog.png" />
     <Content Include="Content\images\list_nav_item_icon_mycoupon.png" />
     <Content Include="Content\images\list_nav_item_icon_withdraw.png" />
     <Content Include="Content\images\personal_info_s1_bg.png" />
+    <Content Include="Content\images\list_nav_item_icon_telphone.png" />
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -337,6 +338,7 @@
     <Content Include="Views\Shared\_LayoutMainTabBar.cshtml" />
     <Content Include="Views\Shared\_LayoutNavigationBar.cshtml" />
     <Content Include="Views\Personal\Index.cshtml" />
+    <Content Include="Views\Fund\MyTrans.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>

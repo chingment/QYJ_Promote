@@ -68,12 +68,15 @@ namespace WebMobile.Controllers
 
             var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.PromoteId == model.PromoteId && m.UserId == this.CurrentUserId).FirstOrDefault();
 
+            string refereeId = GuidUtil.Empty();
             if (promoteUserCoupon == null)
             {
                 isGoBuy = true;
             }
             else
             {
+                refereeId = promoteUserCoupon.RefereeId;
+
                 model.IsGetCoupon = promoteUserCoupon.IsGet;
 
                 if (!promoteUserCoupon.IsBuy)
@@ -84,7 +87,7 @@ namespace WebMobile.Controllers
 
             if (isGoBuy)
             {
-                return Redirect("~/Promote/Coupon?promoteId=" + model.PromoteId + "&refereeId=" + promoteUserCoupon.RefereeId);
+                return Redirect("~/Promote/Coupon?promoteId=" + model.PromoteId + "&refereeId=" + refereeId);
             }
 
             return View(model);
