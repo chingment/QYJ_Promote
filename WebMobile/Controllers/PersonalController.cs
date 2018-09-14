@@ -10,6 +10,8 @@ namespace WebMobile.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.ShowHeader = false;
+
             return View();
         }
     }

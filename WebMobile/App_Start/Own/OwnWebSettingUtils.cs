@@ -62,7 +62,7 @@ namespace WebMobile
 
         public static string GerServicePhone()
         {
-            return "020-1111";
+            return "020-82310186";
         }
 
     }
