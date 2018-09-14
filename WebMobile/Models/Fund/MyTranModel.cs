@@ -13,6 +13,8 @@ namespace WebMobile.Models.Fund
 
         public string ChangeType { get; set; }
 
+        public string ChangeFeature { get; set; }
+
         public string TransTime { get; set; }
 
         public string Description { get; set; }

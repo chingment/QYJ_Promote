@@ -56,6 +56,26 @@
             width: 18px;
             padding: 14px 0px;
         }
+
+
+
+        .list-empty .msg {
+            text-align: center;
+            font-size: 18px;
+            line-height: 24px;
+        }
+
+        .amountfeature-1 {
+            color: #e8541e;
+        }
+
+        .amountfeature-2 {
+            color: #000;
+        }
+
+        .amountfeature-3 {
+            color: #000;
+        }
     </style>
 }
 
@@ -67,7 +87,7 @@
 @section scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#list_orders").loadDataUl({
+            $("#list_trans").loadDataUl({
                 url: "/Fund/GetMyTrans",
                 pageIndex: 0,
                 searchParams: $("#form1").serializeArray(),
@@ -78,15 +98,25 @@
 
                     var l_StrRows = "";
 
+                    l_StrRows += '<li class="list-nav1-item">';
+                    l_StrRows += '<div class="item-left fl">';
+                    l_StrRows += '<div class="item-txt-h1"><span>' + p_row.changeType + '</span></div>';
+                    l_StrRows += '<div class="item-txt-h2"><span>' + p_row.transTime + '</span></div>';
+                    l_StrRows += '</div>';
+                    l_StrRows += '<div class="item-right fl">';
+                    l_StrRows += '<div class="item-txt fr"><span class="amountfeature-' + p_row.changeFeature + '">' + p_row.changeAmount + '</span></div>';
+                    l_StrRows += '</div>';
+                    l_StrRows += '</li>';
+
 
                     return l_StrRows;
                 },
                 success: function (res) {
-                    //if (res.rows.length > 0) {
-                    //    $(".empty-cart").hide();
-                    //} else {
-                    //    $(".empty-cart").show();
-                    //}
+                    if (res.rows.length > 0) {
+                        $(".list-empty").hide();
+                    } else {
+                        $(".list-empty").show();
+                    }
                 }
             });
         });
@@ -94,23 +124,10 @@
 }
 
 
-<ul class="list-nav1 bdt0 pdlr14">
-    <li class="list-nav1-item">
-        <div class="item-left fl">
-            <div class="item-txt-h1"><span>提现</span></div>
-            <div class="item-txt-h2"><span>2018-09-14 23:23:22</span></div>
-        </div>
-        <div class="item-right fl">
-            <div class="item-txt fr"><span>-500.00</span></div>
-        </div>
-    </li>
-    <li class="list-nav1-item">
-        <div class="item-left fl">
-            <div class="item-txt-h1"><span>提现</span></div>
-            <div class="item-txt-h2"><span>2018-09-14 23:23:22</span></div>
-        </div>
-        <div class="item-right fl">
-            <div class="item-txt fr"><span>+500.00</span></div>
-        </div>
-    </li>
-</ul>
+<ul id="list_trans" class="list-nav1 bdt0 pdlr14"></ul>
+
+<div class="list-empty">
+    <div class="msg">
+        <span>数据为空</span>
+    </div>
+</div>
