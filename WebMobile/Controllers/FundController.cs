@@ -20,7 +20,6 @@ namespace WebMobile.Controllers
         [HttpPost]
         public CustomJsonResult GetMyTrans(SearchCondition model)
         {
-
             var query = (from o in CurrentDb.FundTrans
                          where
                          o.UserId == this.CurrentUserId
@@ -34,22 +33,34 @@ namespace WebMobile.Controllers
 
             var list = query.ToList();
 
-            List<object> oList = new List<object>();
+            List<MyTranModel> oList = new List<MyTranModel>();
 
             foreach (var item in list)
             {
-                //var orderList = new OrderList();
-                //orderList.Id = item.Id;
-                //orderList.Sn = item.Sn;
-                //orderList.ChargeAmount = item.ChargeAmount;
-                //orderList.Status = (int)item.Status;
-                //orderList.StatusName = item.Status.GetCnName();
-                //orderList.CancelReason = item.CancledReason;
-                //orderList.Description = item.Description;
-                //orderList.ActivityId = item.ActivityId;
+                var myTran = new MyTranModel();
+                myTran.Sn = item.Sn;
+                myTran.ChangeAmount = "+" + item.ChangeAmount.ToF2Price();
 
+                switch (item.ChangeType)
+                {
+                    case Enumeration.FundTransChangeType.ConsumeCoupon:
+                        myTran.ChangeType = "分享用户核销优惠券";
+                        myTran.Sign = "1";
+                        break;
+                    case Enumeration.FundTransChangeType.WtihdrawApply:
+                        myTran.ChangeType = "提现";
+                        myTran.Sign = "2";
+                        break;
+                    default:
+                        myTran.ChangeType = "交易";
+                        myTran.Sign = "3";
+                        break;
+                }
 
-                oList.Add(new { });
+                myTran.TransTime = item.CreateTime.ToUnifiedFormatDateTime();
+                myTran.Description = item.Description;
+
+                oList.Add(myTran);
             }
 
             PageEntity pageEntity = new PageEntity { PageSize = pageSize, TotalRecord = total, Rows = oList };

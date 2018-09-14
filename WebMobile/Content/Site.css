@@ -135,6 +135,53 @@ a, a:active, a:visited, a:hover, a:focus {
 	text-align: center;
 }
 
+.header {
+	position: fixed;
+	top: 0;
+	z-index: 9999;
+	left: 0;
+	background-color: #fff;
+	width: 100%;
+}
+
+.header-container {
+	padding: 0px 8px;
+	height: 45px;
+	border-bottom: 0px solid #C0C0C0;
+}
+
+.header-container > .item-left {
+	top: 0px;
+	position: absolute;
+	height: 45px;
+}
+
+.header-container > .item-middle {
+	width: 80px;
+	margin: 0 auto;
+	height: 45px;
+	line-height: 45px;
+	text-align: center;
+}
+
+.header-container > .item-middle img {
+	height: 44px;
+	margin: 0px auto;
+	margin: 0px auto;
+	display: block;
+}
+
+.header-container > .item-right {
+	right: 8px;
+	top: 8px;
+	position: absolute;
+}
+
+.header-container > .item-left .title {
+	color: #111111;
+	font-size: 32px;
+	line-height: 44px;
+}
 
 .list-nav {
 	border-top: 1px solid #f6f6f6;

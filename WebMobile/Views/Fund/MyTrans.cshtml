@@ -1,17 +1,116 @@
-﻿
-@{
-    Layout = null;
+﻿@{
+    ViewBag.Title = "资金流水";
+    Layout = "~/Views/Shared/_LayoutNavigationBar.cshtml";
 }
 
-<!DOCTYPE html>
+@section styles{
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>MyTrans</title>
-</head>
-<body>
-    <div> 
-    </div>
-</body>
-</html>
+    <style type="text/css">
+        .list-nav1 {
+            border-top: 0px solid #f6f6f6;
+        }
+
+        .list-nav1-item {
+            border-bottom: 1px solid #f6f6f6;
+            padding: 0px 8px 5px 8px;
+        }
+
+        .list-nav1 > .list-nav1-item:last-child {
+            border-bottom: 0px;
+        }
+
+        .list-nav1-item, .list-nav1-item .item-left,
+        .list-nav1-item .item-right {
+            height: 50px;
+            line-height: 50px;
+        }
+
+        .list-nav1-item .item-left {
+            width: 80%;
+        }
+
+        .list-nav1-item .item-left .item-txt-h1 {
+            height: 35px;
+            line-height: 35px;
+        }
+
+        .list-nav1-item .item-left .item-txt-h2 {
+            height: 15px;
+            line-height: 15px;
+            font-size: 12px;
+            color: #999;
+        }
+
+        .list-nav1-item .item-left img {
+            height: 16px;
+            width: 16px;
+            padding: 15px 10px 16px 0px;
+        }
+
+        .list-nav1-item .item-right {
+            width: 20%;
+        }
+
+        .list-nav1-item .item-right img {
+            height: 18px;
+            width: 18px;
+            padding: 14px 0px;
+        }
+    </style>
+}
+
+@section headerleft{
+    <span class="title">资金流水</span>
+}
+
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#list_orders").loadDataUl({
+                url: "/Fund/GetMyTrans",
+                pageIndex: 0,
+                searchParams: $("#form1").serializeArray(),
+                searchButtonId: "btn_Search",
+                loadmoreButtonId: "btn_More",
+                containerId: "form1",
+                rowDataCombie: function (p_index, p_row) {
+
+                    var l_StrRows = "";
+
+
+                    return l_StrRows;
+                },
+                success: function (res) {
+                    //if (res.rows.length > 0) {
+                    //    $(".empty-cart").hide();
+                    //} else {
+                    //    $(".empty-cart").show();
+                    //}
+                }
+            });
+        });
+    </script>
+}
+
+
+<ul class="list-nav1 bdt0 pdlr14">
+    <li class="list-nav1-item">
+        <div class="item-left fl">
+            <div class="item-txt-h1"><span>提现</span></div>
+            <div class="item-txt-h2"><span>2018-09-14 23:23:22</span></div>
+        </div>
+        <div class="item-right fl">
+            <div class="item-txt fr"><span>-500.00</span></div>
+        </div>
+    </li>
+    <li class="list-nav1-item">
+        <div class="item-left fl">
+            <div class="item-txt-h1"><span>提现</span></div>
+            <div class="item-txt-h2"><span>2018-09-14 23:23:22</span></div>
+        </div>
+        <div class="item-right fl">
+            <div class="item-txt fr"><span>+500.00</span></div>
+        </div>
+    </li>
+</ul>

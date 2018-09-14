@@ -1,5 +1,18 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string hide = "hide";
+    if (ViewBag.ShowHeader == null)
+    {
+        hide = "show";
+    }
+    else
+    {
+        if ((bool)ViewBag.ShowHeader)
+        {
+            hide = "show";
+        }
+    }
 }
 
 @section styles{
@@ -10,7 +23,7 @@
     @RenderSection("scripts", required: false)
 }
 
-<div id="header" class="header">
+<div id="header" class="header @hide">
     <div class="header-container">
         <div class="item-left">
             @RenderSection("headerleft", required: false)
@@ -23,6 +36,6 @@
         </div>
     </div>
 </div>
-<div class="hr45"></div>
+<div class="hr45 @hide"></div>
 
 @RenderBody()

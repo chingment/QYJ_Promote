@@ -201,6 +201,7 @@
     <Compile Include="App_Start\Own\OwnStaticResource.cs" />
     <Compile Include="App_Start\Own\OwnStatisticsTrackerAttribute.cs" />
     <Compile Include="Models\Account\LoginViewModel.cs" />
+    <Compile Include="Models\Fund\MyTranModel.cs" />
     <Compile Include="Models\Fund\SearchCondition.cs" />
     <Compile Include="Models\Home\SearchCondition.cs" />
     <Compile Include="Models\OwnBaseViewModel.cs" />
@@ -336,9 +337,10 @@
     <Content Include="Views\Promote\PayResult.cshtml" />
     <Content Include="Views\Shared\_LayoutMainTabBar_Personal.cshtml" />
     <Content Include="Views\Shared\_LayoutMainTabBar.cshtml" />
-    <Content Include="Views\Shared\_LayoutNavigationBar.cshtml" />
+    <Content Include="Views\Shared\_LayoutMainNavigationBar.cshtml" />
     <Content Include="Views\Personal\Index.cshtml" />
     <Content Include="Views\Fund\MyTrans.cshtml" />
+    <Content Include="Views\Shared\_LayoutNavigationBar.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>
@@ -356,7 +358,6 @@
     <Folder Include="Areas\Wb\Scripts\Jquery.tree\" />
     <Folder Include="Areas\Wb\Scripts\kindeditor\" />
     <Folder Include="Areas\Wb\Scripts\themes\" />
-    <Folder Include="Views\FundTrans\" />
     <Folder Include="Views\MyCoupon\" />
     <Folder Include="Views\ShareLog\" />
     <Folder Include="Views\Withdraw\" />
