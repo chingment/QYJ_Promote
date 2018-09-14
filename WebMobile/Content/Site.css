@@ -200,6 +200,7 @@ a, a:active, a:visited, a:hover, a:focus {
 .list-nav-item .item-right {
 	height: 45px;
 	line-height: 45px;
+	-webkit-tap-highlight-color: rgba(255,255,255,0);
 }
 
 .list-nav-item .item-left {
