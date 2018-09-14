@@ -51,7 +51,10 @@ namespace Lumos.BLL
 
                                         var model = ((JObject)this.Pms).ToObject<ReidsMqByCalProfitByCouponConsumeModel>();
                                         var strjson_model = Newtonsoft.Json.JsonConvert.SerializeObject(model);
-                                        Console.WriteLine("正在处理信息，消息类型为佣金计算-{0},具体参数：{1}", this.Type.GetCnName(), strjson_model);
+
+                                        string msg = string.Format("正在处理信息，消息类型为佣金计算-{0},具体参数：{1}", this.Type.GetCnName(), strjson_model);
+                                        LogUtil.Info(msg);
+                                        Console.WriteLine(msg);
 
                                         var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.UserId == model.UserId && m.WxCouponId == model.WxCouponId && m.WxCouponDecryptCode == model.WxCouponDecryptCode).FirstOrDefault();
 
