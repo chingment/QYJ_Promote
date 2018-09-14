@@ -536,7 +536,7 @@
             }).done(function (d) {
 
                 if (_isShowLoading) {
-                    $.lumos.loading.hide();
+                    setTimeout(function () { $.lumos.loading.hide() }, 1000);
                 }
 
                 if (d.result == $.lumos.resultType.exception) {
@@ -602,6 +602,8 @@
             return s;
         }
 
+        var isEnd = false;/*结束标志*/
+        var isRefresh = false;/*刷新标志*/
 
         //加载数据
         function getList(currentPageIndex, searchparams, isShowLoading) {
@@ -626,7 +628,6 @@
             if (currentPageIndex == 0) {
                 $(_thisTable).html('');
             }
-
 
             var l_StrRows = ""; //行数据
 
@@ -662,10 +663,16 @@
 
                     var tr_body = $(_thisTable);
 
-                    if (list_Data.length == 0) {
+                  
+                    if (list_Data == null || list_Data.length == 0) {
+                 
                         $(_thisTable).hide();
+                        $(".list-result").show();
+                        $('.list-result .tips').text('~数据为空哦');
                     }
                     else {
+                        $(".list-result").hide();
+                        $('.list-result .tips').text('');
                         $(_thisTable).show();
                     }
 
@@ -690,6 +697,8 @@
                         $(objRow).data("keyval", p_row);
                         $(objRow).find('.keyval').data("keyval", p_row);
                     });
+
+
                 }
             });
         }
@@ -709,32 +718,83 @@
             getList(currentPageIndex, _searchParams, true);
         });
 
-        var isEnd = false;/*结束标志*/
-        $(window).scroll(function () {
-            if (isEnd == true) {
-                return;
-            }
 
-            // 当滚动到最底部以上100像素时， 加载新内容
-            // 核心代码
-            if ($(document).height() - $(this).scrollTop() - $(this).height() < 100) {
+        var touchStart, touchEnd, touchDiff = 80;
+        $(window).on({
+            'touchstart': function (e) {
+                //$('.list-result .tips').text("正在加载数据");
+                touchStart = e.originalEvent.changedTouches[0].clientY;
+            },
+            'touchend': function (e) {
+                $('.list-result .tips').text("正在加载数据");
+                touchEnd = e.originalEvent.changedTouches[0].clientY;
+                var diff = touchStart - touchEnd;
+                if (diff >= touchDiff) { // direction down
+                    if ($(window).scrollTop() + $(window).height() >= $(document).height()) { // scroll bottom
+                        var l_pageCount = $(_thisTable).data('pageCount');
+                        var l_currentPageIndex = $(_thisTable).data('currentPageIndex')
 
-                var l_pageCount = $(_thisTable).data('pageCount');
-                var l_currentPageIndex = $(_thisTable).data('currentPageIndex')
+                        l_currentPageIndex++;
 
-                l_currentPageIndex++;
+                        _searchParams = opts.searchParams;
 
-                _searchParams = opts.searchParams;
+                        if (l_currentPageIndex != l_pageCount) {
+                            getList(l_currentPageIndex, _searchParams, true);
+                        }
+                        else {
+                            $('.list-result .tips').text('~到底了哦~');
+                            $('.list-result').show();
 
-                if (l_currentPageIndex != l_pageCount) {
-                    getList(l_currentPageIndex, _searchParams, true);
-                }
-                else {
-                    $('.item-empty-tips span').text('~到底了哦~');
-                    $('.item-empty-tips').show();
+                        }
+                    }
+                } else { // direction up
+                    if ($(window).scrollTop() <= 0) { // scroll top
+                        getList(0, _searchParams, true);
+                    }
                 }
             }
         });
+
+
+        //$(window).unbind('scroll').scroll(function () {
+        //    if (isEnd == true) {
+        //        return;
+        //    }
+
+        //    if (isRefresh == true) {
+        //        return;
+        //    }
+
+        //    if ($(document).scrollTop() <= 0) {
+        //        isRefresh = true;
+        //        console.log("dasdda:")
+        //        getList(0, _searchParams, true);
+        //        isRefresh = false;
+        //        return;
+        //    }
+
+        //    // 当滚动到最底部以上100像素时， 加载新内容
+        //    // 核心代码
+        //    if ($(document).height() - $(this).scrollTop() - $(this).height() < 100) {
+
+        //        var l_pageCount = $(_thisTable).data('pageCount');
+        //        var l_currentPageIndex = $(_thisTable).data('currentPageIndex')
+
+        //        l_currentPageIndex++;
+
+        //        _searchParams = opts.searchParams;
+
+        //        if (l_currentPageIndex != l_pageCount) {
+        //            getList(l_currentPageIndex, _searchParams, true);
+        //        }
+        //        else {
+
+        //            $('.list-empty .tips').text('~到底了哦~');
+        //            $('.item-empty .tips').show();
+
+        //        }
+        //    }
+        //});
 
         this.loadData = function (index) {
             var pageIndex = $(_thisTable).data('currentPageIndex');

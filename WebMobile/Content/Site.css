@@ -87,8 +87,8 @@ a, a:active, a:visited, a:hover, a:focus {
 }
 
 
-.hr45 {
-	height: 45px;
+.hr60 {
+	height: 60px;
 }
 
 /*提示框*/
@@ -145,8 +145,8 @@ a, a:active, a:visited, a:hover, a:focus {
 }
 
 .header-container {
-	padding: 0px 8px;
-	height: 45px;
+	padding: 0px 17px;
+	height: 60px;
 	border-bottom: 0px solid #C0C0C0;
 }
 
@@ -159,13 +159,13 @@ a, a:active, a:visited, a:hover, a:focus {
 .header-container > .item-middle {
 	width: 80px;
 	margin: 0 auto;
-	height: 45px;
-	line-height: 45px;
+	height: 60px;
+	line-height: 60px;
 	text-align: center;
 }
 
 .header-container > .item-middle img {
-	height: 44px;
+	height: 60px;
 	margin: 0px auto;
 	margin: 0px auto;
 	display: block;
@@ -180,7 +180,7 @@ a, a:active, a:visited, a:hover, a:focus {
 .header-container > .item-left .title {
 	color: #111111;
 	font-size: 32px;
-	line-height: 44px;
+	line-height: 60px;
 }
 
 .list-nav {

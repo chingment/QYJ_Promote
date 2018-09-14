@@ -12,7 +12,7 @@
 
         .list-nav1-item {
             border-bottom: 1px solid #f6f6f6;
-            padding: 0px 8px 5px 8px;
+            padding: 5px 8px 5px 8px;
         }
 
         .list-nav1 > .list-nav1-item:last-child {
@@ -57,12 +57,16 @@
             padding: 14px 0px;
         }
 
+        .list-result {
+            display: none;
+        }
 
-
-        .list-empty .msg {
+        .list-result .tips {
             text-align: center;
             font-size: 18px;
             line-height: 24px;
+            color: #999;
+            margin: 30px;
         }
 
         .amountfeature-1 {
@@ -112,11 +116,7 @@
                     return l_StrRows;
                 },
                 success: function (res) {
-                    if (res.rows.length > 0) {
-                        $(".list-empty").hide();
-                    } else {
-                        $(".list-empty").show();
-                    }
+
                 }
             });
         });
@@ -126,8 +126,8 @@
 
 <ul id="list_trans" class="list-nav1 bdt0 pdlr14"></ul>
 
-<div class="list-empty">
-    <div class="msg">
-        <span>数据为空</span>
+<div class="list-result">
+    <div class="tips">
+        <span></span>
     </div>
 </div>

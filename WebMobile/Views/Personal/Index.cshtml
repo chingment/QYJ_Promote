@@ -8,6 +8,16 @@
     @OwnStaticScriptsResource.Render("owl.carousel.min.js")
     <script type="text/javascript">
 
+        $(document).ready(function () {
+
+
+            $('.noopen').on('click', function () {
+
+                $.lumos.tips("该功能9月18日开通敬请期待！")
+
+            });
+
+        });
 
     </script>
 }
@@ -38,7 +48,7 @@
 
         <div class="item-bottom">
             <div class="item-left fl">
-                <span class="btn-s1">
+                <span class="btn-s1 noopen">
                     <span class="text">资金提现</span>
                 </span>
             </div>
@@ -58,7 +68,7 @@
 
 <ul class="list-nav bdt0 pdlr14">
     <li class="list-nav-item">
-        <div class="item-left fl">
+        <div class="item-left fl noopen">
             <div class="item-icon fl"><img src="~/Content/images/list_nav_item_icon_mycoupon.png" alt="" /> </div>
             <div class="item-txt fl"><span>我的优惠券</span></div>
         </div>
@@ -68,17 +78,17 @@
         </div>
     </li>
     <li class="list-nav-item">
-        <div class="item-left fl">
+        <div class="item-left fl noopen">
             <div class="item-icon fl"><img src="~/Content/images/list_nav_item_icon_withdraw.png" alt="" /> </div>
             <div class="item-txt fl"><span>提现记录</span></div>
         </div>
-        <div class="item-right fl">
+        <div class="item-right fl noopen">
             <div class="item-txt fr"><span></span></div>
             <div class="item-icon fr"><img src="~/Content/images/list_nav_item_icon_next.png" alt="" /></div>
         </div>
     </li>
     <li class="list-nav-item">
-        <div class="item-left fl">
+        <div class="item-left fl noopen">
             <div class="item-icon fl"><img src="~/Content/images/list_nav_item_icon_sharelog.png" alt="" /> </div>
             <div class="item-txt fl"><span>分享记录</span></div>
         </div>
