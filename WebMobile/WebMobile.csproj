@@ -202,6 +202,8 @@
     <Compile Include="App_Start\Own\OwnStatisticsTrackerAttribute.cs" />
     <Compile Include="Models\Account\LoginViewModel.cs" />
     <Compile Include="Models\Home\SearchCondition.cs" />
+    <Compile Include="Models\OwnBaseViewModel.cs" />
+    <Compile Include="Models\Personal\IndexViewModel.cs" />
     <Compile Include="Models\Promote\AccessLogModel.cs" />
     <Compile Include="Models\Promote\CouponViewModel.cs" />
     <Compile Include="Models\Promote\EditPromoteUserInfoViewModel.cs" />
@@ -270,6 +272,7 @@
     <Content Include="Content\images\personal_info_headerimg.jpg" />
     <Content Include="Content\images\loading.gif" />
     <Content Include="Content\images\list_nav_item_icon_next.png" />
+    <Content Include="Content\images\list_nav_item_icon_telphone.png" />
     <Content Include="Content\images\promote20180910\bg.jpg" />
     <Content Include="Content\images\promote20180910\btn_personal.png" />
     <Content Include="Content\images\promote20180910\btn_buy.png" />

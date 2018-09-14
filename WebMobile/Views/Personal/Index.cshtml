@@ -1,6 +1,6 @@
-﻿
+﻿@model WebMobile.Models.Personal.IndexViewModel
 @{
-    ViewBag.Title = "个人";
+    ViewBag.Title = "个人中心";
     Layout = "~/Views/Shared/_LayoutMainTabBar_Personal.cshtml";
 }
 
@@ -12,34 +12,38 @@
     </script>
 }
 
-<div class="personal-info-s1">
+<div class="personal-info-s1" style="margin-top:29px">
     <div class="personal-info-s1-container">
         <img src="~/Content/images/personal_info_s1_bg.png" />
 
         <div class="item-top">
 
-            @*<div class="item-headimg fl">
-                    <img src="~/Content/images/personal_info_headerimg.jpg" />
+            <div class="item-left fl talign-c">
+                <div class="content">
+                    <div class="item-headimg fl">
+                        <img src="@(Model.HeadImgUrl==null?"~/Content/images/personal_info_headerimg.jpg":Model.HeadImgUrl)" alt="" />
+                    </div>
+                    <div class="item-nickname fl">
+                        @Model.Nickname
+                    </div>
                 </div>
-                <div class="item-info fl">
-                    <div>邱庆文</div>
-                </div>*@
-
+            </div>
+            <div class="item-right fl talign-c">
+                <div class="content">
+                    <div class="item-ac-title"><span> 账户余额（元）</span></div>
+                    <div class="item-ac-number">@Model.AvailableBalance</div>
+                </div>
+            </div>
         </div>
 
         <div class="item-bottom">
-
-            <div class="item-left fl talign-c"  style="width: 50%; height: 100%; position: relative;">
-                <span  class="btn-s1"  style="position: absolute;
-    left: 25%;
-    top: 30%;" >
-                    <span class="text" >提现佣金</span>
+            <div class="item-left fl">
+                <span class="btn-s1">
+                    <span class="text">资金提现</span>
                 </span>
             </div>
-            <div class="item-right fl talign-c" style="width: 50%;  height: 100%; position: relative;">
-                <span class="btn-s1"  style="position: absolute;
-    right: 25%;
-    top: 30%;">
+            <div class="item-right fl">
+                <span class="btn-s1">
                     <span>资金流水</span>
                 </span>
             </div>
@@ -83,7 +87,7 @@
     </li>
     <li class="list-nav-item">
         <div class="item-left fl">
-            <div class="item-icon fl"><img src="" alt="" /> </div>
+            <div class="item-icon fl"><img src="~/Content/images/list_nav_item_icon_telphone.png" alt="" /> </div>
             <div class="item-txt fl"><span>客服电话 <a href="tel:@OwnWebSettingUtils.GerServicePhone()" style="color:#666666;">@OwnWebSettingUtils.GerServicePhone()</a></span></div>
         </div>
         <div class="item-right fl">
