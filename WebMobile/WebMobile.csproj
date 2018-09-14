@@ -165,6 +165,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\Own\HmlExtension.cs" />
     <Compile Include="App_Start\Own\NPOIExcelHelper.cs" />
     <Compile Include="App_Start\Own\OwnRequest.cs" />
     <Compile Include="App_Start\Own\OwnResponse.cs" />
@@ -266,7 +267,9 @@
     <Content Include="Areas\Wb\Scripts\owl.carousel.js" />
     <Content Include="Areas\Wb\Scripts\respond.js" />
     <Content Include="Areas\Wb\Scripts\respond.min.js" />
+    <Content Include="Content\images\personal_info_headerimg.jpg" />
     <Content Include="Content\images\loading.gif" />
+    <Content Include="Content\images\list_nav_item_icon_next.png" />
     <Content Include="Content\images\promote20180910\bg.jpg" />
     <Content Include="Content\images\promote20180910\btn_personal.png" />
     <Content Include="Content\images\promote20180910\btn_buy.png" />
@@ -285,6 +288,10 @@
     <Content Include="Content\images\promote20180910\share_fly.png" />
     <Content Include="Content\images\promote20180910\share_icon.png" />
     <Content Include="Content\images\promote20180910\btn_submit.png" />
+    <Content Include="Content\images\list_nav_item_icon_sharelog.png" />
+    <Content Include="Content\images\list_nav_item_icon_mycoupon.png" />
+    <Content Include="Content\images\list_nav_item_icon_withdraw.png" />
+    <Content Include="Content\images\personal_info_s1_bg.png" />
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -323,6 +330,10 @@
     <Content Include="Views\Home\Oauth2.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Promote\PayResult.cshtml" />
+    <Content Include="Views\Shared\_LayoutMainTabBar_Personal.cshtml" />
+    <Content Include="Views\Shared\_LayoutMainTabBar.cshtml" />
+    <Content Include="Views\Shared\_LayoutNavigationBar.cshtml" />
+    <Content Include="Views\Personal\Index.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>
@@ -342,7 +353,6 @@
     <Folder Include="Areas\Wb\Scripts\themes\" />
     <Folder Include="Views\FundTrans\" />
     <Folder Include="Views\MyCoupon\" />
-    <Folder Include="Views\Personal\" />
     <Folder Include="Views\ShareLog\" />
     <Folder Include="Views\Withdraw\" />
   </ItemGroup>

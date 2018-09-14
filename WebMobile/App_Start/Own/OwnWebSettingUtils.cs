@@ -60,5 +60,10 @@ namespace WebMobile
             return "微信活动分销系统平台";
         }
 
+        public static string GerServicePhone()
+        {
+            return "020-1111";
+        }
+
     }
 }

@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewBag.Title = "个人";
+    Layout = "~/Views/Shared/_LayoutMainTabBar_Personal.cshtml";
+}
+
+@section scripts{
+    @OwnStaticScriptsResource.Render("owl.carousel.min.js")
+    <script type="text/javascript">
+
+
+    </script>
+}
+
+<div class="personal-info-s1">
+    <div class="personal-info-s1-container">
+        <img src="~/Content/images/personal_info_s1_bg.png" />
+
+        <div class="item-top">
+
+            @*<div class="item-headimg fl">
+                    <img src="~/Content/images/personal_info_headerimg.jpg" />
+                </div>
+                <div class="item-info fl">
+                    <div>邱庆文</div>
+                </div>*@
+
+        </div>
+
+        <div class="item-bottom">
+
+            <div class="item-left fl talign-c"  style="width: 50%; height: 100%; position: relative;">
+                <span  class="btn-s1"  style="position: absolute;
+    left: 25%;
+    top: 30%;" >
+                    <span class="text" >提现佣金</span>
+                </span>
+            </div>
+            <div class="item-right fl talign-c" style="width: 50%;  height: 100%; position: relative;">
+                <span class="btn-s1"  style="position: absolute;
+    right: 25%;
+    top: 30%;">
+                    <span>资金流水</span>
+                </span>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="hr"></div>
+
+<ul class="list-nav bdt0 pdlr14">
+    <li class="list-nav-item">
+        <div class="item-left fl">
+            <div class="item-icon fl"><img src="~/Content/images/list_nav_item_icon_mycoupon.png" alt="" /> </div>
+            <div class="item-txt fl"><span>我的优惠券</span></div>
+        </div>
+        <div class="item-right fl">
+            <div class="item-txt fr"><span></span></div>
+            <div class="item-icon fr"><img src="~/Content/images/list_nav_item_icon_next.png" alt="" /> </div>
+        </div>
+    </li>
+    <li class="list-nav-item">
+        <div class="item-left fl">
+            <div class="item-icon fl"><img src="~/Content/images/list_nav_item_icon_withdraw.png" alt="" /> </div>
+            <div class="item-txt fl"><span>提现记录</span></div>
+        </div>
+        <div class="item-right fl">
+            <div class="item-txt fr"><span></span></div>
+            <div class="item-icon fr"><img src="~/Content/images/list_nav_item_icon_next.png" alt="" /></div>
+        </div>
+    </li>
+    <li class="list-nav-item">
+        <div class="item-left fl">
+            <div class="item-icon fl"><img src="~/Content/images/list_nav_item_icon_sharelog.png" alt="" /> </div>
+            <div class="item-txt fl"><span>分享记录</span></div>
+        </div>
+        <div class="item-right fl">
+            <div class="item-txt fr"><span></span></div>
+            <div class="item-icon fr"><img src="~/Content/images/list_nav_item_icon_next.png" alt="" /></div>
+        </div>
+    </li>
+    <li class="list-nav-item">
+        <div class="item-left fl">
+            <div class="item-icon fl"><img src="" alt="" /> </div>
+            <div class="item-txt fl"><span>客服电话 <a href="tel:@OwnWebSettingUtils.GerServicePhone()" style="color:#666666;">@OwnWebSettingUtils.GerServicePhone()</a></span></div>
+        </div>
+        <div class="item-right fl">
+            <div class="item-txt fr"><span></span></div>
+            <div class="item-icon fr"> </div>
+        </div>
+    </li>
+</ul>

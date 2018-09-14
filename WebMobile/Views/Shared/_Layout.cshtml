@@ -12,7 +12,7 @@
     <meta http-equiv="Pragma" CONTENT="no-cache">
     <title>@ViewBag.Title</title>
     <script src="~/Scripts/jquery-1.8.3.min.js"></script>
-    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/Site.css?@DateTime.Now.ToUnifiedFormatDateTime()" rel="stylesheet" />
     @RenderSection("styles", required: false)
     <style type="text/css">
         body {
