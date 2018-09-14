@@ -28,6 +28,24 @@ namespace Lumos.BLL.Task
 
         public void QueueList()
         {
+
+            //var promoteUserCoupons = CurrentDb.PromoteUserCoupon.Where(m => m.IsConsume == true).ToList();
+
+            //foreach (var item in promoteUserCoupons)
+            //{
+            //    var reidsMqByCalProfitModel = new ReidsMqByCalProfitModel();
+            //    var reidsMqByCalProfitByCouponConsumeModel = new ReidsMqByCalProfitByCouponConsumeModel();
+            //    reidsMqByCalProfitModel.Type = ReidsMqByCalProfitType.CouponConsume;
+
+            //    reidsMqByCalProfitByCouponConsumeModel.UserId = item.UserId;
+            //    reidsMqByCalProfitByCouponConsumeModel.WxCouponDecryptCode = item.WxCouponDecryptCode;
+            //    reidsMqByCalProfitByCouponConsumeModel.WxCouponId = item.WxCouponId;
+
+            //    reidsMqByCalProfitModel.Pms = reidsMqByCalProfitByCouponConsumeModel;
+
+            //    ReidsMqFactory.CalProfit.Push(reidsMqByCalProfitModel);
+            //}
+
             ReidsMqByCalProfit redisMq = new ReidsMqByCalProfit();
             while (true)
             {

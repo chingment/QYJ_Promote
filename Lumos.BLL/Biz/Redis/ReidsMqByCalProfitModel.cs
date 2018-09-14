@@ -70,7 +70,13 @@ namespace Lumos.BLL
                                             return;
                                         }
 
-                                        if (promoteUserCoupon.IsConsume == false)
+                                        if (promoteUserCoupon.UserId == promoteUserCoupon.RefereeId)
+                                        {
+                                            LogUtil.Info("用户和推荐人是同一个人:" + model.UserId);
+                                            return;
+                                        }
+
+                                        if (promoteUserCoupon.IsConsume == true)
                                         {
                                             LogUtil.Info("用户:" + model.UserId + ",已核销");
                                             return;
