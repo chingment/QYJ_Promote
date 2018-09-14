@@ -32,83 +32,92 @@ namespace Lumos.BLL
 
         public object Pms { get; set; }
 
-
+        private static readonly object lock_Handle = new object();
         public void Handle()
         {
-
-            if (this.Pms != null)
+            lock (lock_Handle)
             {
-                try
+                if (this.Pms != null)
                 {
-                    using (LumosDbContext CurrentDb = new LumosDbContext())
+                    try
                     {
-                        using (TransactionScope ts = new TransactionScope())
+                        using (LumosDbContext CurrentDb = new LumosDbContext())
                         {
-                            switch (this.Type)
+                            using (TransactionScope ts = new TransactionScope())
                             {
-                                case ReidsMqByCalProfitType.CouponConsume:
+                                switch (this.Type)
+                                {
+                                    case ReidsMqByCalProfitType.CouponConsume:
 
-                                    var model = ((JObject)this.Pms).ToObject<ReidsMqByCalProfitByCouponConsumeModel>();
-                                    var strjson_model = Newtonsoft.Json.JsonConvert.SerializeObject(model);
-                                    Console.WriteLine("正在处理信息，消息类型为佣金计算-{0},具体参数：{1}", this.Type.GetCnName(), strjson_model);
+                                        var model = ((JObject)this.Pms).ToObject<ReidsMqByCalProfitByCouponConsumeModel>();
+                                        var strjson_model = Newtonsoft.Json.JsonConvert.SerializeObject(model);
+                                        Console.WriteLine("正在处理信息，消息类型为佣金计算-{0},具体参数：{1}", this.Type.GetCnName(), strjson_model);
 
-                                    var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.UserId == model.UserId && m.WxCouponId == model.WxCouponId && m.WxCouponDecryptCode == model.WxCouponDecryptCode).FirstOrDefault();
+                                        var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.UserId == model.UserId && m.WxCouponId == model.WxCouponId && m.WxCouponDecryptCode == model.WxCouponDecryptCode).FirstOrDefault();
 
-                                    if (promoteUserCoupon.RefereeId == null)
-                                    {
-                                        return;
-                                    }
+                                        if (promoteUserCoupon == null)
+                                        {
+                                            LogUtil.Info("用户:" + model.UserId + ",找不到卡券");
+                                        }
 
-                                    if (promoteUserCoupon != null)
-                                    {
+                                        if (promoteUserCoupon.RefereeId == null)
+                                        {
+                                            LogUtil.Info("用户:" + model.UserId + ",推荐人为空");
+
+                                            return;
+                                        }
+
                                         if (promoteUserCoupon.IsConsume == false)
                                         {
-                                            promoteUserCoupon.IsConsume = true;
-                                            promoteUserCoupon.ConsumeTime = DateTime.Now;
-                                            promoteUserCoupon.Mender = GuidUtil.Empty();
-                                            promoteUserCoupon.MendTime = DateTime.Now;
-
-                                            var fund = CurrentDb.Fund.Where(m => m.UserId == promoteUserCoupon.RefereeId).FirstOrDefault();
-                                            if (fund == null)
-                                            {
-                                                return;
-                                            }
-
-                                            decimal profit = 500m;
-                                            fund.CurrentBalance += profit;
-                                            fund.AvailableBalance += profit;
-                                            fund.MendTime = DateTime.Now;
-                                            fund.Mender = GuidUtil.Empty();
-
-                                            var fundTrans = new FundTrans();
-                                            fundTrans.Id = GuidUtil.New();
-                                            fundTrans.Sn = SnUtil.Build(Enumeration.BizSnType.FundTrans, fund.UserId);
-                                            fundTrans.UserId = fund.UserId;
-                                            fundTrans.ChangeType = Enumeration.FundTransChangeType.ConsumeCoupon;
-                                            fundTrans.ChangeAmount = profit;
-                                            fundTrans.CurrentBalance = fund.CurrentBalance;
-                                            fundTrans.AvailableBalance = fund.AvailableBalance;
-                                            fundTrans.LockBalance = fund.LockBalance;
-                                            fundTrans.CreateTime = DateTime.Now;
-                                            fundTrans.Creator = GuidUtil.Empty();
-                                            fundTrans.Description = string.Format("您推荐的用户核销优惠券，得到奖金:{0}元", profit.ToF2Price());
-                                            CurrentDb.FundTrans.Add(fundTrans);
-
+                                            LogUtil.Info("用户:" + model.UserId + ",已核销");
+                                            return;
                                         }
-                                    }
 
-                                    break;
+                                        promoteUserCoupon.IsConsume = true;
+                                        promoteUserCoupon.ConsumeTime = DateTime.Now;
+                                        promoteUserCoupon.Mender = GuidUtil.Empty();
+                                        promoteUserCoupon.MendTime = DateTime.Now;
 
+                                        var fund = CurrentDb.Fund.Where(m => m.UserId == promoteUserCoupon.RefereeId).FirstOrDefault();
+                                        if (fund == null)
+                                        {
+                                            return;
+                                        }
+
+                                        decimal profit = 500m;
+                                        fund.CurrentBalance += profit;
+                                        fund.AvailableBalance += profit;
+                                        fund.MendTime = DateTime.Now;
+                                        fund.Mender = GuidUtil.Empty();
+
+                                        var fundTrans = new FundTrans();
+                                        fundTrans.Id = GuidUtil.New();
+                                        fundTrans.Sn = SnUtil.Build(Enumeration.BizSnType.FundTrans, fund.UserId);
+                                        fundTrans.UserId = fund.UserId;
+                                        fundTrans.ChangeType = Enumeration.FundTransChangeType.ConsumeCoupon;
+                                        fundTrans.ChangeAmount = profit;
+                                        fundTrans.CurrentBalance = fund.CurrentBalance;
+                                        fundTrans.AvailableBalance = fund.AvailableBalance;
+                                        fundTrans.LockBalance = fund.LockBalance;
+                                        fundTrans.CreateTime = DateTime.Now;
+                                        fundTrans.Creator = GuidUtil.Empty();
+                                        fundTrans.Description = string.Format("您推荐的用户核销优惠券，得到奖金:{0}元", profit.ToF2Price());
+                                        CurrentDb.FundTrans.Add(fundTrans);
+
+
+                                        break;
+
+                                }
+
+                                CurrentDb.SaveChanges();
+                                ts.Complete();
                             }
-
-                            CurrentDb.SaveChanges();
-                            ts.Complete();
                         }
                     }
-                }
-                catch (Exception ex)
-                {
-                    LogUtil.Error("消息队列，处理信息-佣金计算发生异常", ex);
+                    catch (Exception ex)
+                    {
+                        LogUtil.Error("消息队列，处理信息-佣金计算发生异常", ex);
+                    }
                 }
             }
         }

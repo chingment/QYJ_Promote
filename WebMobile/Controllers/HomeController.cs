@@ -277,6 +277,21 @@ namespace WebMobile.Controllers
 
                                             var userConsumeCardMsg = (UserConsumeCardMsg)baseEventMsg;
 
+                                            if (userConsumeCardMsg != null)
+                                            {
+                                                var reidsMqByCalProfitModel = new ReidsMqByCalProfitModel();
+                                                var reidsMqByCalProfitByCouponConsumeModel = new ReidsMqByCalProfitByCouponConsumeModel();
+                                                reidsMqByCalProfitModel.Type = ReidsMqByCalProfitType.CouponConsume;
+
+                                                reidsMqByCalProfitByCouponConsumeModel.UserId = wxUserInfo.UserId;
+                                                reidsMqByCalProfitByCouponConsumeModel.WxCouponDecryptCode = userConsumeCardMsg.UserCardCode;
+                                                reidsMqByCalProfitByCouponConsumeModel.WxCouponId = userConsumeCardMsg.CardId;
+
+                                                reidsMqByCalProfitModel.Pms = reidsMqByCalProfitByCouponConsumeModel;
+
+                                                ReidsMqFactory.CalProfit.Push(reidsMqByCalProfitModel);
+                                            }
+
 
                                             #endregion
                                             break;

@@ -24,22 +24,26 @@ namespace Task4Global
             LogUtil.SetTrackId();
             LogUtil.Info("程序开始运行");
 
+
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    var model = new ReidsMqByCalProfitModel();
+            //    var model1 = new ReidsMqByCalProfitByCouponConsumeModel();
+            //    model.Type = ReidsMqByCalProfitType.CouponConsume;
+
+            //    model1.UserId = "00000000000000000000000000000000";
+            //    model1.WxCouponDecryptCode = "45533";
+            //    model1.WxCouponId = "ptakHv55vK3806ymFdidGzhV-RqY";
+
+            //    model.Pms = model1;
+
+            //    ReidsMqFactory.CalProfit.Push(model);
+            //}
+
             ShowWindow(Process.GetCurrentProcess().MainWindowHandle, 2);//隐藏本dos窗体, 0: 后台执行；1:正常启动；2:最小化到任务栏；3:最大化
 
             try
             {
-                var model = new ReidsMqByCalProfitModel();
-                var model1 = new ReidsMqByCalProfitByCouponConsumeModel();
-                model.Type = ReidsMqByCalProfitType.CouponConsume;
-
-                model1.UserId = "00000000000000000000000000000000";
-                model1.WxCouponDecryptCode = "45533";
-                model1.WxCouponId = "ptakHv55vK3806ymFdidGzhV-RqY";
-
-                model.Pms = model1;
-
-                ReidsMqFactory.CalProfit.Push(model);
-
                 string taskProvider = System.Configuration.ConfigurationManager.AppSettings["custom:Task4Provider"];
                 Task4Factory.Launcher.Launch(taskProvider);
             }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Lumos.BLL.Task
 {
-    public class Task4CalculateProfitProvider : BaseProvider, ITask
+    public class Task4CalProfitProvider : BaseProvider, ITask
     {
         private int ThreadCount = 1;
 
