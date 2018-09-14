@@ -10,7 +10,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Task4Global
+namespace Task4CalculateProfit
 {
     class Program
     {
@@ -28,18 +28,6 @@ namespace Task4Global
 
             try
             {
-                var model = new ReidsMqByCalProfitModel();
-                var model1 = new ReidsMqByCalProfitByCouponConsumeModel();
-                model.Type = ReidsMqByCalProfitType.CouponConsume;
-
-                model1.UserId = "00000000000000000000000000000000";
-                model1.WxCouponDecryptCode = "45533";
-                model1.WxCouponId = "ptakHv55vK3806ymFdidGzhV-RqY";
-
-                model.Pms = model1;
-
-                ReidsMqFactory.CalProfit.Push(model);
-
                 string taskProvider = System.Configuration.ConfigurationManager.AppSettings["custom:Task4Provider"];
                 Task4Factory.Launcher.Launch(taskProvider);
             }

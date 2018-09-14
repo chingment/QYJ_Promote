@@ -277,19 +277,6 @@ namespace WebMobile.Controllers
 
                                             var userConsumeCardMsg = (UserConsumeCardMsg)baseEventMsg;
 
-                                            var promoteUserCoupon2 = CurrentDb.PromoteUserCoupon.Where(m => m.UserId == wxUserInfo.UserId && m.WxCouponId == userConsumeCardMsg.CardId && m.WxCouponDecryptCode == userConsumeCardMsg.UserCardCode).FirstOrDefault();
-
-                                            if (promoteUserCoupon2 != null)
-                                            {
-                                                if (promoteUserCoupon2.IsConsume == false)
-                                                {
-                                                    promoteUserCoupon2.IsConsume = true;
-                                                    promoteUserCoupon2.ConsumeTime = DateTime.Now;
-                                                    promoteUserCoupon2.Mender = GuidUtil.Empty();
-                                                    promoteUserCoupon2.MendTime = DateTime.Now;
-                                                    CurrentDb.SaveChanges();
-                                                }
-                                            }
 
                                             #endregion
                                             break;

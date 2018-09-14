@@ -1,18 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{640A898E-2B63-4A12-AC93-2C61D718CC6C}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{07512FBE-69F4-44E3-B2C7-812992040930}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Lumos.BLL</RootNamespace>
-    <AssemblyName>Lumos.BLL</AssemblyName>
+    <RootNamespace>Task4CalculateProfit</RootNamespace>
+    <AssemblyName>Task4CalculateProfit</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +25,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -37,84 +41,46 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\log4net465\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="NPinyin">
-      <HintPath>..\packages\NPinyin-0.2.4588.20158-bin\NPinyin.dll</HintPath>
-    </Reference>
-    <Reference Include="StackExchange.Redis, Version=1.2.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="StackExchange.Redis">
       <HintPath>..\packages\StackExchange.Redis.1.2.6\lib\net45\StackExchange.Redis.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Transactions" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Mvc">
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.0.0\lib\net45\System.Web.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\AssemblyInfo.cs">
-      <Link>Properties\AssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="BaseProvider.cs" />
-    <Compile Include="Biz\BizFactory.cs" />
-    <Compile Include="Biz\OrderCacheUtil.cs" />
-    <Compile Include="Biz\OrderProvider.cs" />
-    <Compile Include="Biz\Redis\ReidsMqByCalProfit.cs" />
-    <Compile Include="Biz\Redis\ReidsMqByCalProfitModel.cs" />
-    <Compile Include="Biz\Redis\ReidsMqFactory.cs" />
-    <Compile Include="Biz\WithdrawProvider.cs" />
-    <Compile Include="Biz\WxUserProvider.cs" />
-    <Compile Include="Factory..cs" />
-    <Compile Include="Sdk\SdkFactory.cs" />
-    <Compile Include="Sdk\WxConfigByFanJu.cs" />
-    <Compile Include="Sdk\WxConfigByQyj.cs" />
-    <Compile Include="Sdk\WxConfigByTest.cs" />
-    <Compile Include="Sdk\WxSdkProvider.cs" />
-    <Compile Include="Sdk\WxUntil.cs" />
-    <Compile Include="SnUtil.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sys\AuthorizeRelayProvider.cs" />
-    <Compile Include="Sys\SysAppKeySecretProvider.cs" />
-    <Compile Include="Sys\SysFactory.cs" />
-    <Compile Include="Sys\SysItemCacheUpdateTimeProvider.cs" />
-    <Compile Include="Sys\SysUserProvider.cs" />
-    <Compile Include="Task\BaseProgram.cs" />
-    <Compile Include="Task\ITask.cs" />
-    <Compile Include="Task\Launcher.cs" />
-    <Compile Include="Task\Task4CalculateProfitProvider.cs" />
-    <Compile Include="Task\Task4Factory.cs" />
-    <Compile Include="Task\Task4GlobalProvider.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Lumos.BLL\Lumos.BLL.csproj">
+      <Project>{640a898e-2b63-4a12-ac93-2c61d718cc6c}</Project>
+      <Name>Lumos.BLL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Lumos.Common\Lumos.Common.csproj">
       <Project>{241bdf50-401f-44bf-81cd-acc2ffc3a952}</Project>
       <Name>Lumos.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Lumos.Entity\Lumos.Entity.csproj">
-      <Project>{c19704c7-7d89-42e8-9f15-d8c1a1a0c525}</Project>
-      <Name>Lumos.Entity</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Lumos.DAL\Lumos.DAL.csproj">
       <Project>{0e039414-2a2e-48b4-8db7-c4346106fa68}</Project>
       <Name>Lumos.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lumos.Entity\Lumos.Entity.csproj">
+      <Project>{c19704c7-7d89-42e8-9f15-d8c1a1a0c525}</Project>
+      <Name>Lumos.Entity</Name>
     </ProjectReference>
     <ProjectReference Include="..\Lumos.MVC\Lumos.Mvc.csproj">
       <Project>{ed113ad7-1b20-4b05-8961-9b701e51734c}</Project>
@@ -128,16 +94,7 @@
       <Project>{27883666-32aa-447f-aa1f-6128b76fbee8}</Project>
       <Name>Lumos</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MySDK\MySDK.csproj">
-      <Project>{8479fcaf-4aef-40d4-b76d-246282522fb7}</Project>
-      <Name>MySDK</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WeiXinSdk\WeiXinSdk.csproj">
-      <Project>{a8b6b73d-f2ee-41d7-9d96-ad65b31fcdc0}</Project>
-      <Name>WeiXinSdk</Name>
-    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

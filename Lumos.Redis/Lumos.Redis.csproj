@@ -57,6 +57,8 @@
     <Compile Include="RedisClient.cs" />
     <Compile Include="RedisManager.cs" />
     <Compile Include="Redlock.cs" />
+    <Compile Include="ReidsMqBaseObject.cs" />
+    <Compile Include="ReidsMqObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lumos\Lumos.csproj">

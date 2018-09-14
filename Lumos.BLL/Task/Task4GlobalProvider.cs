@@ -69,33 +69,6 @@ namespace Lumos.BLL.Task
             #region 检查优惠卷核销状态
 
 
-            var promoteUserCoupons = CurrentDb.PromoteUserCoupon.Where(m => m.IsConsume == true).ToList();
-
-            foreach (var item in promoteUserCoupons)
-            {
-                var profit = 500m;
-                var fund = CurrentDb.Fund.Where(m => m.UserId == item.RefereeId).FirstOrDefault();
-                fund.CurrentBalance += profit;
-                fund.AvailableBalance += profit;
-                fund.Mender = GuidUtil.New();
-                fund.MendTime = this.DateTime;
-
-                var fundTrans = new FundTrans();
-                fundTrans.Id = GuidUtil.New();
-                fundTrans.Sn = SnUtil.Build(Enumeration.BizSnType.FundTrans, item.RefereeId);
-                fundTrans.UserId = item.UserId;
-                fundTrans.CurrentBalance = fund.CurrentBalance;
-                fundTrans.ChangeAmount = profit;
-                fundTrans.ChangeType = Enumeration.FundTransChangeType.ConsumeCoupon;
-                fundTrans.CreateTime = this.DateTime;
-                fundTrans.Creator = GuidUtil.New();
-                fundTrans.Description = string.Format("您推荐的用户核销优惠券，得到奖金:{0}元", profit.ToF2Price());
-                CurrentDb.FundTrans.Add(fundTrans);
-
-
-            }
-
-
             #endregion
 
             return result;
