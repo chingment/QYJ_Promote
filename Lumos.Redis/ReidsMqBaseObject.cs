@@ -10,7 +10,7 @@ namespace Lumos.Redis
 {
     public abstract class ReidsMqBaseObject
     {
-        protected virtual string DB_Name { get; set; }
+        //protected virtual string DB_Name { get; set; }
         protected string AddSysCustomKey(string oldKey)
         {
             return oldKey;

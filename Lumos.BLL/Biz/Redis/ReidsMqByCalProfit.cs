@@ -10,9 +10,9 @@ namespace Lumos.BLL
     
     public class ReidsMqByCalProfit : ReidsMqObject<ReidsMqByCalProfitModel>
     {
-        protected override string MessageQueueType { get { return "Order_Create"; } }
+        protected override string MessageQueueKeyName { get { return "MqByCalProfit"; } }
         protected override bool IsTran { get { return false; } }
 
-        protected override string DB_Name { get { return "Order_DBName"; } }
+        //protected override string DB_Name { get { return "Order_DBName"; } }
     }
 }

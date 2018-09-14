@@ -15,7 +15,7 @@ namespace Lumos.Redis
     {
         protected virtual bool IsTran { get; set; }
 
-        protected virtual string MessageQueueType { get; set; }
+        protected virtual string MessageQueueKeyName { get; set; }
 
         /// <summary>
         /// 将指定的值插入到存储在键的列表尾部
@@ -55,7 +55,7 @@ namespace Lumos.Redis
         /// <param name="t"></param>
         public void Push(T t)
         {
-            Push(MessageQueueType, t);
+            Push(MessageQueueKeyName, t);
         }
         /// <summary>
         /// 出队
@@ -63,7 +63,7 @@ namespace Lumos.Redis
         /// <returns></returns>
         public T Pop()
         {
-            var keyInfo = AddSysCustomKey(MessageQueueType);
+            var keyInfo = AddSysCustomKey(MessageQueueKeyName);
             var redisManager = RedisManager.Manager;
             var lockdb = redisManager.GetDatabase(-1);
             var db = redisManager.GetDatabase();
@@ -107,7 +107,7 @@ namespace Lumos.Redis
         {
             var redisManager = RedisManager.Manager;
             var db = redisManager.GetDatabase();
-            var keyInfo = AddSysCustomKey(MessageQueueType);
+            var keyInfo = AddSysCustomKey(MessageQueueKeyName);
             var l = db.ListLength(keyInfo);
 
             return Convert.ToInt32(l);
