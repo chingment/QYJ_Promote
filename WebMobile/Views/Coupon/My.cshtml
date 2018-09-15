@@ -127,13 +127,14 @@
 @section scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#list_trans").loadDataUl({
+
+            $("#list_coupon").loadDataUl({
                 url: "/Coupon/GetMy",
                 pageIndex: 0,
-                searchParams: $("#form1").serializeArray(),
+                searchParams: $("#list_coupon").serializeArray(),
                 searchButtonId: "btn_Search",
                 loadmoreButtonId: "btn_More",
-                containerId: "form1",
+                containerId: "list_coupon",
                 rowDataCombie: function (p_index, p_row) {
 
                     var l_StrRows = "";
@@ -157,25 +158,51 @@
                     l_StrRows += '<div class="description">' + p_row.description + '</div>';
                     l_StrRows += '</div>';
                     l_StrRows += '<div class="item-right">';
-                    l_StrRows += '<span class="btn">打开</span>';
+
+                    switch (p_row.status) {
+                        case 1:
+                            //l_StrRows += '<span class="btn keyval" operate="get">领取</span>';
+                            break;
+                        case 2:
+                            l_StrRows += '<span class="btn keyval" operate="open">打开</span>';
+                            break;
+                        default:
+                            l_StrRows += '<span>' + p_row.statusName + '</span>';
+                            break;
+                    }
+
                     l_StrRows += '</div>';
                     l_StrRows += '</div>';
                     l_StrRows += '</li>';
 
                     return l_StrRows;
                 },
-                success: function (res) {
+                operate: {
+                    "open": function (obj) {
+                        alert(obj.wxCouponId)
+                        var cardList = [];
+                        cardList.push({ cardId: obj.wxCouponId, code: obj.wxCouponDecryptCode });
+                        wx.openCard({
+                            cardList: cardList,
+                            cancel: function (res) {
 
+                            }
+                        });
 
+                    },
+                    "get": function (obj) {
 
+                        //alert(obj)
+                    }
                 }
             });
+
         });
     </script>
 }
 
 
-<ul id="list_trans" class="list-coupon bdt0 pdlr14" style="margin-top:2px;"></ul>
+<ul id="list_coupon" class="list-coupon bdt0 pdlr14" style="margin-top:2px;"></ul>
 
 <div class="list-result">
     <div class="tips">

@@ -663,9 +663,9 @@
 
                     var tr_body = $(_thisTable);
 
-                  
+
                     if (list_Data == null || list_Data.length == 0) {
-                 
+
                         $(_thisTable).hide();
                         $(".list-result").show();
                         $('.list-result .tips').text('~数据为空哦');
@@ -696,6 +696,7 @@
 
                         $(objRow).data("keyval", p_row);
                         $(objRow).find('.keyval').data("keyval", p_row);
+
                     });
 
 
@@ -722,10 +723,10 @@
         var touchStart, touchEnd, touchDiff = 80;
         $(window).on({
             'touchstart': function (e) {
-                //$('.list-result .tips').text("正在加载数据");
                 touchStart = e.originalEvent.changedTouches[0].clientY;
             },
             'touchend': function (e) {
+                //alert("2")
                 $('.list-result .tips').text("正在加载数据");
                 touchEnd = e.originalEvent.changedTouches[0].clientY;
                 var diff = touchStart - touchEnd;
@@ -748,7 +749,7 @@
                         }
                     }
                 } else { // direction up
-                    if ($(window).scrollTop() <= 0) { // scroll top
+                    if ($(window).scrollTop() <= -60) { // scroll top
                         getList(0, _searchParams, true);
                     }
                 }
@@ -795,6 +796,19 @@
         //        }
         //    }
         //});
+
+        if (opts.operate != null) {
+            $.each(opts.operate, function (btnclassname, f) {
+                $(_container).find("*[operate=" + btnclassname + "]").live("click", function () {
+                    var keyval = undefined;
+                    if ($(this).hasClass('keyval')) {
+                        keyval = $(this).data("keyval");
+                    }
+                    f(keyval);
+                });
+            });
+        }
+
 
         this.loadData = function (index) {
             var pageIndex = $(_thisTable).data('currentPageIndex');
