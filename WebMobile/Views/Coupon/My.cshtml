@@ -1,0 +1,244 @@
+﻿@{
+    ViewBag.Title = "资金流水";
+    Layout = "~/Views/Shared/_LayoutNavigationBar.cshtml";
+}
+
+@section styles{
+
+    <style type="text/css">
+        .list-coupon > .item {
+            border-radius: 1rem;
+            height: 8rem;
+            position: relative;
+            box-shadow: 2px 5px 8px 2px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+            padding: 0rem 0.8rem 0rem 0.8rem;
+        }
+
+        .list-coupon .item-top {
+            height: 5.4rem;
+            overflow: hidden;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .list-coupon .item-top > view {
+            height: 5.4rem;
+            display: inline-block;
+            overflow: hidden;
+        }
+
+        .list-coupon .item-top .item-left {
+            width: 200px;
+        }
+
+        .list-coupon .item-top .item-middle {
+            flex: 1;
+        }
+
+        .list-coupon .item-top .item-right {
+            width: 200px;
+            text-align: right;
+            line-height: 5.4rem;
+        }
+
+        .list-coupon .item-top .amount, .list-coupon .item-top .name {
+            height: 3.4rem;
+            line-height: 3.4rem;
+        }
+
+        .list-coupon .item-top .discounttip, .list-coupon .item-top .validdate {
+            height: 2rem;
+            line-height: 2rem;
+        }
+
+        .list-coupon .item-bottom {
+            height: 2.6rem;
+            overflow: hidden;
+            border-top: 1px dashed #f5f5f5;
+            line-height: 2.6rem;
+        }
+
+        .list-coupon .item-bottom > view {
+            height: 60px;
+            display: inline-block;
+            overflow: hidden;
+            line-height: 60px;
+        }
+
+        .list-coupon .item-bottom .item-left {
+            width: 200px;
+        }
+
+        .list-coupon .item-bottom .item-right {
+            flex: 1;
+            float: right;
+        }
+
+        .list-coupon .discount {
+            color: #f50;
+            font-weight: bold;
+            font-size: 2rem;
+        }
+
+        .list-coupon .discountunit {
+            color: #f50;
+            font-size: 1rem;
+            margin-left: 10px;
+        }
+
+        .list-coupon .discounttip, .validdate {
+            color: #555;
+            font-size: .8px;
+        }
+
+        .list-coupon .name {
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .list-coupon .description {
+            color: #999;
+            font-size: 1rem;
+        }
+
+        .list-coupon .btn {
+            height: 2rem;
+            width: 6rem;
+            background: #f50;
+            color: #fff;
+            line-height: 2rem;
+            border-radius: 50px;
+            text-align: center;
+            display: inline-block;
+            font-size: 1rem;
+        }
+    </style>
+}
+
+@section headerleft{
+    <span class="title">资金流水</span>
+}
+
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //$("#list_trans").loadDataUl({
+            //    url: "/Fund/GetMyTrans",
+            //    pageIndex: 0,
+            //    searchParams: $("#form1").serializeArray(),
+            //    searchButtonId: "btn_Search",
+            //    loadmoreButtonId: "btn_More",
+            //    containerId: "form1",
+            //    rowDataCombie: function (p_index, p_row) {
+
+            //        var l_StrRows = "";
+
+            //        l_StrRows += '<li class="list-nav1-item">';
+            //        l_StrRows += '<div class="item-left fl">';
+            //        l_StrRows += '<div class="item-txt-h1"><span>' + p_row.changeType + '</span></div>';
+            //        l_StrRows += '<div class="item-txt-h2"><span>' + p_row.transTime + '</span></div>';
+            //        l_StrRows += '</div>';
+            //        l_StrRows += '<div class="item-right fl">';
+            //        l_StrRows += '<div class="item-txt fr"><span class="amountfeature-' + p_row.changeFeature + '">' + p_row.changeAmount + '</span></div>';
+            //        l_StrRows += '</div>';
+            //        l_StrRows += '</li>';
+
+
+            //        return l_StrRows;
+            //    },
+            //    success: function (res) {
+
+            //    }
+            //});
+        });
+    </script>
+}
+
+
+<ul id="list_trans" class="list-coupon bdt0 pdlr14">
+
+    <li class="item">
+        <div class="item-top">
+            <div class="item-left">
+                <div class="amount">
+                    <span class="discount">800</span>
+                    <span class="discountunit">元</span>
+                </div>
+                <div class="discounttip">课程包可用</div>
+            </div>
+            <div class="item-middle">
+                <span class="name">代金券</span>
+                <span class="validdate">有效期 2013-09-09~2013-10-10</span>
+            </div>
+            <div class="item-right" bindtap="goSelect">
+                <span class="btn">立即使用</span>
+            </div>
+        </div>
+        <div class="item-bottom">
+            <div class="item-left">
+                <div class="description">立即使用</div>
+            </div>
+            <div class="item-right">
+            </div>
+        </div>
+    </li>
+    <li class="item">
+        <div class="item-top">
+            <div class="item-left">
+                <div class="amount">
+                    <span class="discount">800</span>
+                    <span class="discountunit">00</span>
+                </div>
+                <div class="discounttip">课程包可用</div>
+            </div>
+            <div class="item-middle">
+                <span class="name">课程包可用</span>
+                <span class="validdate">课程包可用</span>
+            </div>
+            <div class="item-right" bindtap="goSelect">
+                <span class="btn">立即使用</span>
+            </div>
+        </div>
+        <div class="item-bottom">
+            <div class="item-left">
+                <div class="description">立即使用</div>
+            </div>
+            <div class="item-right">
+            </div>
+        </div>
+    </li>
+    <li class="item">
+        <div class="item-top">
+            <div class="item-left">
+                <div class="amount">
+                    <span class="discount">800</span>
+                    <span class="discountunit">00</span>
+                </div>
+                <div class="discounttip">课程包可用</div>
+            </div>
+            <div class="item-middle">
+                <span class="name">课程包可用</span>
+                <span class="validdate">课程包可用</span>
+            </div>
+            <div class="item-right" bindtap="goSelect">
+                <span class="btn">立即使用</span>
+            </div>
+        </div>
+        <div class="item-bottom">
+            <div class="item-left">
+                <div class="description">立即使用</div>
+            </div>
+            <div class="item-right">
+            </div>
+        </div>
+    </li>
+
+</ul>
+
+<div class="list-result">
+    <div class="tips">
+        <span></span>
+    </div>
+</div>

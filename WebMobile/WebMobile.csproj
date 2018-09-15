@@ -341,6 +341,7 @@
     <Content Include="Views\Personal\Index.cshtml" />
     <Content Include="Views\Fund\MyTrans.cshtml" />
     <Content Include="Views\Shared\_LayoutNavigationBar.cshtml" />
+    <Content Include="Views\Coupon\My.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>

@@ -8,8 +8,8 @@ namespace WebMobile.Controllers
 {
     public class CouponController : Controller
     {
-        // GET: MyCoupon
-        public ActionResult Index()
+ 
+        public ActionResult My()
         {
             return View();
         }
