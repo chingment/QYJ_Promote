@@ -48,8 +48,6 @@ namespace WebMobile.Controllers
                 myCoupon.Discounttip = "报读课程使用";
                 myCoupon.Description = "·具体详情到校区咨询";
 
-                //string promoteId, string orderSn, bool isSuccessed = false
-
                 //1待领取，2打开（待核销），3 已核销
                 if (!item.IsGet)
                 {
