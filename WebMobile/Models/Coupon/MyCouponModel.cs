@@ -24,5 +24,9 @@ namespace WebMobile.Models.Coupon
         public string WxCouponId { get; set; }
 
         public string WxCouponDecryptCode { get; set; }
+
+        public string GetMethod { get; set; }
+
+        public string GetUrl { get; set; }
     }
 }
