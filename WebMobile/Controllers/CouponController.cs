@@ -41,7 +41,7 @@ namespace WebMobile.Controllers
                 var myCoupon = new MyCouponModel();
                 myCoupon.Name = "代金券";
                 myCoupon.Discounttip = "";
-                myCoupon.Validdate = "2018-09-08~2019-09-30";
+                myCoupon.Validdate = "2018.09.07-2018.09.30";
                 myCoupon.WxCouponId = item.WxCouponId;
                 myCoupon.WxCouponDecryptCode = item.WxCouponDecryptCode;
                 myCoupon.Amount = "7200";
