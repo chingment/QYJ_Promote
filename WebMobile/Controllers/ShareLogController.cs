@@ -6,10 +6,9 @@ using System.Web.Mvc;
 
 namespace WebMobile.Controllers
 {
-    public class ShareLogController : Controller
+    public class ShareLogController : OwnBaseController
     {
-        // GET: ShareLog
-        public ActionResult Index()
+        public ActionResult My()
         {
             return View();
         }

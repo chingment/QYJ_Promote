@@ -344,6 +344,7 @@
     <Content Include="Views\Fund\MyTrans.cshtml" />
     <Content Include="Views\Shared\_LayoutNavigationBar.cshtml" />
     <Content Include="Views\Coupon\My.cshtml" />
+    <Content Include="Views\ShareLog\My.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>
@@ -361,7 +362,6 @@
     <Folder Include="Areas\Wb\Scripts\Jquery.tree\" />
     <Folder Include="Areas\Wb\Scripts\kindeditor\" />
     <Folder Include="Areas\Wb\Scripts\themes\" />
-    <Folder Include="Views\ShareLog\" />
     <Folder Include="Views\Withdraw\" />
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,199 @@
+﻿@{
+    ViewBag.Title = "分享记录";
+    Layout = "~/Views/Shared/_LayoutNavigationBar.cshtml";
+}
+
+@section styles{
+
+    <style type="text/css">
+        .list-nav2 {
+            border-top: 0px solid #f6f6f6;
+        }
+
+        .list-nav2 > .nav2-item {
+            display: flex;
+            height: 3.6rem;
+            line-height: 3.6rem;
+        }
+
+        .list-nav2 > .nav2-item > div {
+        }
+
+        .list-nav2 > .nav2-item > .item-left {
+            border-bottom: 0px solid #f6f6f6;
+            width: 3rem;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            display: -webkit-flex;
+        }
+
+        .list-nav2 > .nav2-item > .item-left > img {
+            width: 30px;
+            height: 30px;
+        	border-radius: 30px;
+        }
+
+        .list-nav2 > .nav2-item > .item-middle, .list-nav2 > .nav2-item > .item-right {
+            border-bottom: 1px solid #f6f6f6;
+            flex: 1;
+        }
+
+        .list-nav2 > .nav2-item:last-child > .item-middle, .list-nav2 > .nav2-item:last-child > .item-right {
+            border-bottom: 0px solid #f6f6f6;
+        }
+
+        .list-nav2 > .nav2-item > .item-middle .txt-h1 {
+            height: 60%;
+            text-align: left;
+            /*justify-content: center;*/
+            align-items: center;
+            display: -webkit-flex;
+        }
+
+        .list-nav2 > .nav2-item > .item-middle .txt-h2 {
+            height: 40%;
+            text-align: left;
+            /*justify-content: center;*/
+            align-items: center;
+            display: -webkit-flex;
+            font-size: 12px;
+            color: #999;
+        }
+
+        /*
+
+
+        .list-nav2-item .item-left .item-txt-h1 {
+            height: 35px;
+            line-height: 35px;
+        }
+
+        .list-nav2-item .item-left .item-txt-h2 {
+            height: 15px;
+            line-height: 15px;
+            font-size: 12px;
+            color: #999;
+        }
+
+        .list-nav2-item .item-left img {
+            height: 16px;
+            width: 16px;
+            padding: 15px 10px 16px 0px;
+        }
+
+        .list-nav2-item .item-right {
+            width: 20%;
+        }
+
+        .list-nav2-item .item-right img {
+            height: 18px;
+            width: 18px;
+            padding: 14px 0px;
+        }
+
+        .amountfeature-1 {
+            color: #e8541e;
+        }
+
+        .amountfeature-2 {
+            color: #000;
+        }
+
+        .amountfeature-3 {
+            color: #000;
+        }*/
+    </style>
+}
+
+@section headerleft{
+    <span class="title">分享记录</span>
+}
+
+
+@section scripts{
+    <script type="text/javascript">
+        //$(document).ready(function () {
+        //    $("#list_trans").loadDataUl({
+        //        url: "/Fund/GetMyTrans",
+        //        pageIndex: 0,
+        //        searchParams: $("#form1").serializeArray(),
+        //        searchButtonId: "btn_Search",
+        //        loadmoreButtonId: "btn_More",
+        //        containerId: "form1",
+        //        rowDataCombie: function (p_index, p_row) {
+
+        //            var l_StrRows = "";
+
+        //            l_StrRows += '<li class="list-nav1-item">';
+        //            l_StrRows += '<div class="item-left fl">';
+        //            l_StrRows += '<div class="item-txt-h1"><span>' + p_row.changeType + '</span></div>';
+        //            l_StrRows += '<div class="item-txt-h2"><span>' + p_row.transTime + '</span></div>';
+        //            l_StrRows += '</div>';
+        //            l_StrRows += '<div class="item-right fl">';
+        //            l_StrRows += '<div class="item-txt fr"><span class="amountfeature-' + p_row.changeFeature + '">' + p_row.changeAmount + '</span></div>';
+        //            l_StrRows += '</div>';
+        //            l_StrRows += '</li>';
+
+
+        //            return l_StrRows;
+        //        },
+        //        success: function (res) {
+
+        //        }
+        //    });
+        //});
+    </script>
+}
+
+
+<ul id="list_trans" class="list-nav2 bdt0 pdlr14">
+    <li class="nav2-item">
+        <div class="item-left fl">
+            <img src="/Content/images/personal_info_headerimg.jpg" alt="" style="width:30px;height:30px;" />
+        </div>
+        <div class="item-middle fl">
+            <div class="txt-h1"><span>提现</span></div>
+            <div class="txt-h2"><span>2018-09-14 11:48:43</span></div>
+        </div>
+        <div class="item-right fl">
+            <div class="item-txt fr">
+                <span class="amountfeature-2">+500.00</span>
+            </div>
+        </div>
+    </li>
+    <li class="nav2-item">
+        <div class="item-left fl">
+            <img src="/Content/images/personal_info_headerimg.jpg" alt="" style="width:30px;height:30px;" />
+        </div>
+        <div class="item-middle fl">
+            <div class="txt-h1"><span>提现</span></div>
+            <div class="txt-h2"><span>2018-09-14 11:48:43</span></div>
+        </div>
+        <div class="item-right fl">
+            <div class="item-txt fr">
+                <span class="amountfeature-2">+500.00</span>
+            </div>
+        </div>
+    </li>
+    <li class="nav2-item">
+        <div class="item-left fl">
+            <img src="/Content/images/personal_info_headerimg.jpg" alt="" style="width:30px;height:30px;" />
+        </div>
+        <div class="item-middle fl">
+            <div class="txt-h1"><span>提现</span></div>
+            <div class="txt-h2"><span>2018-09-14 11:48:43</span></div>
+        </div>
+        <div class="item-right fl">
+            <div class="item-txt fr">
+                <span class="amountfeature-2">+500.00</span>
+            </div>
+        </div>
+    </li>
+</ul>
+
+<div class="list-result">
+    <div class="tips">
+        <span></span>
+    </div>
+</div>
