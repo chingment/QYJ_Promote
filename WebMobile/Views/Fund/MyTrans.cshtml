@@ -79,21 +79,17 @@
 
                     var l_StrRows = "";
 
-                    l_StrRows += '<li class="list-nav1-item">';
-                    l_StrRows += '<div class="item-left fl">';
-                    l_StrRows += '<div class="item-txt-h1"><span>' + p_row.changeType + '</span></div>';
-                    l_StrRows += '<div class="item-txt-h2"><span>' + p_row.transTime + '</span></div>';
+                    l_StrRows += '<li class="nav2-item">';
+                    l_StrRows += '<div class="item-middle fl">';
+                    l_StrRows += '<div class="txt-h1"><span>' + p_row.changeType + '</span></div>';
+                    l_StrRows += '<div class="txt-h2"><span>' + p_row.transTime + '</span></div>';
                     l_StrRows += '</div>';
                     l_StrRows += '<div class="item-right fl">';
-                    l_StrRows += '<div class="item-txt fr"><span style="color:' + p_row.changeAmountFontColor + '">' + p_row.changeAmount + '</span></div>';
-                    l_StrRows += '</div>';
+                    l_StrRows += '<div class="txt tr"><span style="color:' + p_row.changeAmountFontColor + '">' + p_row.changeAmount + '</span></div>';
+                    l_StrRows += ' </div>';
                     l_StrRows += '</li>';
 
-
                     return l_StrRows;
-                },
-                success: function (res) {
-
                 }
             });
         });
@@ -101,7 +97,7 @@
 }
 
 
-<ul id="list_trans" class="list-nav1 bdt0 pdlr14"></ul>
+<ul id="list_trans" class="list-nav2 bdt0 pdlr14"></ul>
 
 <div class="list-result">
     <div class="img">
