@@ -1,0 +1,116 @@
+﻿@{
+    ViewBag.Title = "提现";
+    Layout = "~/Views/Shared/_LayoutNavigationBar.cshtml";
+}
+
+@section styles{
+
+    <style type="text/css">
+        .btn {
+            height: 2rem;
+            width: 6rem;
+            background: #f50;
+            color: #fff;
+            line-height: 2rem;
+            border-radius: 50px;
+            text-align: center;
+            display: inline-block;
+            font-size: 1rem;
+        }
+    </style>
+}
+
+@section headerleft{
+    <span class="title">提现</span>
+}
+
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+            $('#btn_Sure').on("click", function () {
+
+                var acName = $('#txt_acName').val();
+                var acIdNumber = $('#txt_acIdNumber').val();
+                var amount = $('#txt_amount').val();
+
+
+                if ($.lumos.trim(acName) == "") {
+                    $.lumos.tips("请输入微信认证姓名");
+                    return false;
+                }
+
+                if ($.lumos.trim(acIdNumber) == "") {
+                    $.lumos.tips("请输入与微信认证姓名同一个人身份证");
+                    return false;
+                }
+
+                if (!$.lumos.isFloat(amount)) {
+                    $.lumos.tips("请输入金额数字格式");
+                    return false;
+                }
+
+                $.lumos.postJson({
+                    url: "/Withdraw/Apply",
+                    isShowLoading: true,
+                    data: { amount: amount, acName: acName, acIdNumber: acIdNumber },
+                    success: function (d) {
+                        if (d.result == $.lumos.resultType.success) {
+                            $.lumos.tips("提现成功");
+                        }
+                        else {
+                            $.lumos.tips(d.message);
+                        }
+                    }
+                });
+            });
+
+
+        });
+    </script>
+}
+
+
+
+<div style="padding:0px 15px;">
+    <ul class="list-input" style="overflow:hidden">
+        <li class="list-input-item">
+            <div class="item-left fl">
+                <div class="fl tl item-name"><span>姓名</span></div>
+                <div class="item-value fr">
+
+                    <input id="txt_acName" placeholder="输入微信认证姓名" type="text" class="tr" style="width:100%;" />
+
+                </div>
+            </div>
+        </li>
+        <li class="list-input-item">
+            <div class="item-left fl">
+                <div class="item-name tl fl"><span>身份证号码</span></div>
+                <div class="item-value fr">
+
+                    <input id="txt_acIdNumber" placeholder="与微信认证姓名同一个人身份证" type="text" class="tr" style="width:100%;" />
+
+                </div>
+            </div>
+        </li>
+        <li class="list-input-item">
+            <div class="item-left fl">
+                <div class="item-name tl fl"><span>提现金额</span></div>
+                <div class="item-value fr">
+
+                    <input id="txt_amount" placeholder="金额" type="text" class="tr" style="width:100%;" />
+
+                </div>
+            </div>
+        </li>
+    </ul>
+
+</div>
+<div style="text-align:center;padding:40px;">
+
+    <span id="btn_Sure" class="btn" operate="get">立即提现</span>
+
+</div>

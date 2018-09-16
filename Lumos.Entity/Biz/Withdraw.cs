@@ -23,7 +23,7 @@ namespace Lumos.Entity
         public string ApplyMethod { get; set; }
         public DateTime ApplyTime { get; set; }
         public string SettlementMethod { get; set; }
-        public DateTime SettlementTime { get; set; }
+        public DateTime? SettlementTime { get; set; }
         public string FailureReason { get; set; }
         public string Creator { get; set; }
         public DateTime CreateTime { get; set; }

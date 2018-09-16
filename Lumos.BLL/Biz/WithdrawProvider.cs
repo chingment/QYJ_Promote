@@ -56,7 +56,7 @@ namespace Lumos.BLL
                     fundTrans.Sn = SnUtil.Build(Enumeration.BizSnType.FundTrans, pWithdrawApplyPms.UserId);
                     fundTrans.UserId = pWithdrawApplyPms.UserId;
                     fundTrans.ChangeType = Enumeration.FundTransChangeType.WtihdrawApply;
-                    fundTrans.ChangeAmount = pWithdrawApplyPms.Amount;
+                    fundTrans.ChangeAmount = -pWithdrawApplyPms.Amount;
                     fundTrans.CurrentBalance = fund.CurrentBalance;
                     fundTrans.AvailableBalance = fund.AvailableBalance;
                     fundTrans.LockBalance = fund.LockBalance;

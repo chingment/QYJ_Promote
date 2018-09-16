@@ -352,6 +352,7 @@
     <Content Include="Views\Coupon\My.cshtml" />
     <Content Include="Views\ShareLog\My.cshtml" />
     <Content Include="Views\Withdraw\My.cshtml" />
+    <Content Include="Views\Withdraw\Apply.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>

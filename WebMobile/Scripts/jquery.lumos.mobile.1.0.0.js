@@ -31,7 +31,14 @@
                 return false;
             }
         },
+        trim: function (str) {
 
+            if (str == null) {
+                return "";
+            }
+
+            return str.replace(/(^\s*)|(\s*$)/g, "");
+        },
         htmlEncode: function (str) {
             var s = "";
             if (str.length == 0) return "";

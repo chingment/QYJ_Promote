@@ -28,7 +28,7 @@
 
         <div class="item-top">
 
-            <div class="item-left fl talign-c">
+            <div class="item-left fl tc">
                 <div class="content">
                     <div class="item-headimg fl">
                         <img src="@(Model.HeadImgUrl==null?"/Content/images/personal_info_headerimg.jpg":Model.HeadImgUrl)" alt="" />
@@ -38,7 +38,7 @@
                     </div>
                 </div>
             </div>
-            <div class="item-right fl talign-c">
+            <div class="item-right fl tc">
                 <div class="content">
                     <div class="item-ac-title"><span> 账户余额（元）</span></div>
                     <div class="item-ac-number">@Model.AvailableBalance</div>
@@ -48,9 +48,11 @@
 
         <div class="item-bottom">
             <div class="item-left fl">
-                <span class="btn-s1 noopen">
-                    <span class="text">资金提现</span>
-                </span>
+                <a href="/Withdraw/Apply">
+                    <span class="btn-s1">
+                        <span class="text">资金提现</span>
+                    </span>
+                </a>
             </div>
             <div class="item-right fl">
                 <a href="/Fund/MyTrans">

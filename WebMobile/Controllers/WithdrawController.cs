@@ -17,10 +17,16 @@ namespace WebMobile.Controllers
             return View();
         }
 
+        public ActionResult Apply()
+        {
+            return View();
+        }
+
         [HttpPost]
         public CustomJsonResult Apply(WithdrawApplyPms model)
         {
             model.UserId = this.CurrentUserId;
+            model.ApplyMethod = "wechat";
             return BizFactory.Withdraw.Apply(this.CurrentUserId, model);
         }
 
