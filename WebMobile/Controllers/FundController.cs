@@ -63,7 +63,7 @@ namespace WebMobile.Controllers
                         break;
                 }
 
-                myTran.TransTime = item.CreateTime.ToUnifiedFormatDateTime();
+                myTran.TransTime = item.CreateTime.ToString("yyyy.MM.dd HH:mm:ss");
                 myTran.Description = item.Description;
 
                 oList.Add(myTran);
