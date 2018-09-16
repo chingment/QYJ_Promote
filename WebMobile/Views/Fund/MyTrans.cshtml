@@ -57,18 +57,6 @@
             width: 18px;
             padding: 14px 0px;
         }
-
-        .amountfeature-1 {
-            color: #e8541e;
-        }
-
-        .amountfeature-2 {
-            color: #000;
-        }
-
-        .amountfeature-3 {
-            color: #000;
-        }
     </style>
 }
 
@@ -97,7 +85,7 @@
                     l_StrRows += '<div class="item-txt-h2"><span>' + p_row.transTime + '</span></div>';
                     l_StrRows += '</div>';
                     l_StrRows += '<div class="item-right fl">';
-                    l_StrRows += '<div class="item-txt fr"><span class="amountfeature-' + p_row.changeFeature + '">' + p_row.changeAmount + '</span></div>';
+                    l_StrRows += '<div class="item-txt fr"><span style="color:' + p_row.changeAmountFontColor + '">' + p_row.changeAmount + '</span></div>';
                     l_StrRows += '</div>';
                     l_StrRows += '</li>';
 

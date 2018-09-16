@@ -213,6 +213,8 @@
     <Compile Include="Models\Promote\EditPromoteUserInfoViewModel.cs" />
     <Compile Include="Models\Promote\PayResultViewModel.cs" />
     <Compile Include="Models\Promote\ShareLogModel.cs" />
+    <Compile Include="Models\ShareLog\MyShareLogModel.cs" />
+    <Compile Include="Models\ShareLog\SearchCondition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -299,6 +301,7 @@
     <Content Include="Content\images\list_nav_item_icon_withdraw.png" />
     <Content Include="Content\images\personal_info_s1_bg.png" />
     <Content Include="Content\images\list_nav_item_icon_telphone.png" />
+    <Content Include="Content\images\list_icon_empty.png" />
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

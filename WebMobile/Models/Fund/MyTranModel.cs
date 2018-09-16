@@ -10,10 +10,9 @@ namespace WebMobile.Models.Fund
         public string Sn { get; set; }
 
         public string ChangeAmount { get; set; }
+        public string ChangeAmountFontColor { get; set; }
 
         public string ChangeType { get; set; }
-
-        public string ChangeFeature { get; set; }
 
         public string TransTime { get; set; }
 

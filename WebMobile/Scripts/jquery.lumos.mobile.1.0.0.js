@@ -536,7 +536,7 @@
             }).done(function (d) {
 
                 if (_isShowLoading) {
-                    setTimeout(function () { $.lumos.loading.hide() }, 1000);
+                    setTimeout(function () { $.lumos.loading.hide() }, 100);
                 }
 
                 if (d.result == $.lumos.resultType.exception) {
@@ -668,7 +668,8 @@
 
                         $(_thisTable).hide();
                         $(".list-result").show();
-                        $('.list-result .tips').text('~数据为空哦');
+                        $('.list-result .img').show();
+                        $('.list-result .tips').text('~数据为空哦~');
                     }
                     else {
                         $(".list-result").hide();
@@ -727,11 +728,13 @@
             },
             'touchend': function (e) {
                 //alert("2")
-                $('.list-result .tips').text("正在加载数据");
+
                 touchEnd = e.originalEvent.changedTouches[0].clientY;
                 var diff = touchStart - touchEnd;
                 if (diff >= touchDiff) { // direction down
+
                     if ($(window).scrollTop() + $(window).height() >= $(document).height()) { // scroll bottom
+                        $('.list-result .tips').text("正在加载数据...");
                         var l_pageCount = $(_thisTable).data('pageCount');
                         var l_currentPageIndex = $(_thisTable).data('currentPageIndex')
 
@@ -743,6 +746,7 @@
                             getList(l_currentPageIndex, _searchParams, true);
                         }
                         else {
+                            $('.list-result .img').hide();
                             $('.list-result .tips').text('~到底了哦~');
                             $('.list-result').show();
 

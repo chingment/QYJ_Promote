@@ -341,6 +341,17 @@ a, a:active, a:visited, a:hover, a:focus {
 	display: none;
 }
 
+.list-result .img {
+	margin-top: 40px;
+	text-align: center;
+}
+
+.list-result .img img {
+	display: inline-block;
+	width: 100px;
+}
+
+
 .list-result .tips {
 	text-align: center;
 	font-size: 14px;

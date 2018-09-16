@@ -43,24 +43,23 @@ namespace WebMobile.Controllers
                 if (item.ChangeAmount > 0)
                 {
                     myTran.ChangeAmount = "+" + item.ChangeAmount.ToF2Price();
+                    myTran.ChangeAmountFontColor = "#e8541e";
                 }
                 else {
                     myTran.ChangeAmount = item.ChangeAmount.ToF2Price();
+                    myTran.ChangeAmountFontColor = "#000000";
                 }
 
                 switch (item.ChangeType)
                 {
                     case Enumeration.FundTransChangeType.ConsumeCoupon:
                         myTran.ChangeType = "分享用户核销优惠券";
-                        myTran.ChangeFeature = "1";
                         break;
                     case Enumeration.FundTransChangeType.WtihdrawApply:
                         myTran.ChangeType = "提现";
-                        myTran.ChangeFeature = "2";
                         break;
                     default:
                         myTran.ChangeType = "交易";
-                        myTran.ChangeFeature = "3";
                         break;
                 }
 
