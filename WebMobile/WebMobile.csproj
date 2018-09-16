@@ -176,10 +176,12 @@
     <Compile Include="Areas\Wb\App_Start\Own\OwnExceptionAttribute.cs" />
     <Compile Include="Areas\Wb\App_Start\Own\OwnWebSettingUtils.cs" />
     <Compile Include="Areas\Wb\Controllers\Biz\ReportController.cs" />
+    <Compile Include="Areas\Wb\Controllers\Biz\WithdrawController.cs" />
     <Compile Include="Areas\Wb\Controllers\CommonController.cs" />
     <Compile Include="Areas\Wb\Controllers\HomeController.cs" />
     <Compile Include="Areas\Wb\Models\Biz\Report\PromoteCouponBuyRecordViewModel.cs" />
     <Compile Include="Areas\Wb\Models\Biz\Report\ReportModel.cs" />
+    <Compile Include="Areas\Wb\Models\Biz\Withdraw\SearchCondition.cs" />
     <Compile Include="Areas\Wb\Models\Home\ChangePasswordViewModel.cs" />
     <Compile Include="Areas\Wb\Models\Home\LoginViewModel.cs" />
     <Compile Include="Areas\Wb\WbAreaRegistration.cs" />
@@ -326,6 +328,8 @@
     <Content Include="Areas\Wb\Views\Biz\Report\PromoteCouponBuyRecord.cshtml" />
     <Content Include="Areas\Wb\Views\Biz\Report\PromoteShareRecord.cshtml" />
     <Content Include="Areas\Wb\Views\Home\ChangePassword.cshtml" />
+    <Content Include="Areas\Wb\Views\Biz\Withdraw\ListByAudit.cshtml" />
+    <Content Include="Areas\Wb\Views\Biz\Withdraw\ListByDoTransfer.cshtml" />
     <None Include="log4net.config">
       <SubType>Designer</SubType>
     </None>
