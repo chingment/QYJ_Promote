@@ -27,6 +27,11 @@ namespace Lumos.BLL
                         return new CustomJsonResult(ResultType.Failure, "系统繁忙");
                     }
 
+                    if (pWithdrawApplyPms.Amount <= 0)
+                    {
+                        return new CustomJsonResult(ResultType.Failure, "提现金额必须大于0");
+                    }
+
                     if (fund.AvailableBalance < pWithdrawApplyPms.Amount)
                     {
                         return new CustomJsonResult(ResultType.Failure, "可提现余额不够");
