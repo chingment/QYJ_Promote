@@ -216,6 +216,7 @@
     <Compile Include="Models\Promote\ShareLogModel.cs" />
     <Compile Include="Models\ShareLog\MyShareLogModel.cs" />
     <Compile Include="Models\ShareLog\SearchCondition.cs" />
+    <Compile Include="Models\Withdraw\ApplyViewModel.cs" />
     <Compile Include="Models\Withdraw\MyWithdrawModel.cs" />
     <Compile Include="Models\Withdraw\SearchCondition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

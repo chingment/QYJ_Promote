@@ -19,7 +19,10 @@ namespace WebMobile.Controllers
 
         public ActionResult Apply()
         {
-            return View();
+            var model = new ApplyViewModel();
+
+            model.LoadData(this.CurrentUserId);
+            return View(model);
         }
 
         [HttpPost]
