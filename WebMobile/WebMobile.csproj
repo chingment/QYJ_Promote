@@ -215,6 +215,8 @@
     <Compile Include="Models\Promote\ShareLogModel.cs" />
     <Compile Include="Models\ShareLog\MyShareLogModel.cs" />
     <Compile Include="Models\ShareLog\SearchCondition.cs" />
+    <Compile Include="Models\Withdraw\MyWithdrawModel.cs" />
+    <Compile Include="Models\Withdraw\SearchCondition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -275,6 +277,7 @@
     <Content Include="Areas\Wb\Scripts\owl.carousel.js" />
     <Content Include="Areas\Wb\Scripts\respond.js" />
     <Content Include="Areas\Wb\Scripts\respond.min.js" />
+    <Content Include="Content\images\list_icon_withdraw.png" />
     <Content Include="Content\images\list_nav_item_icon_sharelog.png" />
     <Content Include="Content\images\personal_info_headerimg.jpg" />
     <Content Include="Content\images\loading.gif" />
@@ -348,6 +351,7 @@
     <Content Include="Views\Shared\_LayoutNavigationBar.cshtml" />
     <Content Include="Views\Coupon\My.cshtml" />
     <Content Include="Views\ShareLog\My.cshtml" />
+    <Content Include="Views\Withdraw\My.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>
@@ -365,7 +369,6 @@
     <Folder Include="Areas\Wb\Scripts\Jquery.tree\" />
     <Folder Include="Areas\Wb\Scripts\kindeditor\" />
     <Folder Include="Areas\Wb\Scripts\themes\" />
-    <Folder Include="Views\Withdraw\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

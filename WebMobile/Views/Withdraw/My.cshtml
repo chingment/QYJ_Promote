@@ -1,0 +1,145 @@
+﻿@{
+    ViewBag.Title = "提现记录";
+    Layout = "~/Views/Shared/_LayoutNavigationBar.cshtml";
+}
+
+@section styles{
+
+    <style type="text/css">
+        .list-nav2 {
+            border-top: 0px solid #f6f6f6;
+        }
+
+        .list-nav2 > .nav2-item {
+            display: flex;
+            height: 3.6rem;
+            line-height: 3.6rem;
+        }
+
+        .list-nav2 > .nav2-item > div {
+        }
+
+        .list-nav2 > .nav2-item > .item-left {
+            border-bottom: 0px solid #f6f6f6;
+            width: 3rem;
+            text-align: left;
+            align-items: center;
+            display: flex;
+        }
+
+        .list-nav2 > .nav2-item > .item-left > img {
+            width: 30px;
+            height: 30px;
+            border-radius: 30px;
+        }
+
+        .list-nav2 > .nav2-item > .item-middle, .list-nav2 > .nav2-item > .item-right {
+            border-bottom: 1px solid #f6f6f6;
+            flex: 1;
+        }
+
+        .list-nav2 > .nav2-item:last-child > .item-middle, .list-nav2 > .nav2-item:last-child > .item-right {
+            border-bottom: 0px solid #f6f6f6;
+        }
+
+        .list-nav2 > .nav2-item > .item-middle .txt-h1 {
+            height: 2rem;
+            line-height: 2rem;
+            text-align: left;
+            display: block;
+        }
+
+        .list-nav2 > .nav2-item > .item-middle .txt-h2 {
+            height: 1.6rem;
+            line-height: 1.6rem;
+            display: block;
+            text-align: left;
+            font-size: 12px;
+            color: #999;
+        }
+
+
+        .list-nav2 > .nav2-item > .item-right .txt-h1 {
+            height: 2rem;
+            line-height: 2rem;
+            text-align: right;
+            display: block;
+            font-weight: bold;
+        }
+
+        .list-nav2 > .nav2-item > .item-right .txt-h2 {
+            height: 1.6rem;
+            line-height: 1.6rem;
+            display: block;
+            text-align: right;
+            font-size: 12px;
+            color: #999;
+        }
+    </style>
+}
+
+@section headerleft{
+    <span class="title">提现记录</span>
+}
+
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#list_withdraw").loadDataUl({
+                url: "/Withdraw/GetMy",
+                pageIndex: 0,
+                searchParams: $("#form1").serializeArray(),
+                searchButtonId: "btn_Search",
+                loadmoreButtonId: "btn_More",
+                containerId: "form1",
+                rowDataCombie: function (p_index, p_row) {
+
+                    var l_StrRows = "";
+
+                    l_StrRows += '<li class="nav2-item">';
+                    l_StrRows += '<div class="item-left fl">';
+                    l_StrRows += '<img src="/Content/images/list_icon_withdraw.png" alt="" style="width:35px;height:35px;" />';
+                    l_StrRows += ' </div>';
+                    l_StrRows += '<div class="item-middle fl">';
+                    l_StrRows += '<div class="txt-h1"><span>' + p_row.title + '</span></div>';
+                    l_StrRows += '<div class="txt-h2"><span>' + p_row.applyTime + '</span></div>';
+                    l_StrRows += '</div>';
+                    l_StrRows += '<div class="item-right fl">';
+                    l_StrRows += '<div class="txt-h1"><span>' + p_row.amount + '</span></div>';
+                    l_StrRows += '<div class="txt-h2"><span style="color:' + p_row.remarksFontColor + '">' + p_row.remarks + '</span></div>';
+                    l_StrRows += ' </div>';
+                    l_StrRows += '</li>';
+
+
+                    return l_StrRows;
+                }
+            });
+        });
+    </script>
+}
+
+<ul id="list_withdraw" class="list-nav2 bdt0 pdlr14">
+    @*<li class="nav2-item">
+            <div class="item-left fl">
+                <img src="/Content/images/personal_info_headerimg.jpg" alt="" style="width:30px;height:30px;" />
+            </div>
+            <div class="item-middle fl">
+                <div class="txt-h1"><span>提现</span></div>
+                <div class="txt-h2"><span>2018-09-14 11:48:43</span></div>
+            </div>
+            <div class="item-right fl">
+                <div class="txt-h1"><span>提现</span></div>
+                <div class="txt-h2"><span>2018-09-14 11:48:43</span></div>
+            </div>
+        </li>*@
+</ul>
+
+<div class="list-result">
+    <div class="img">
+        <img src="~/Content/images/list_icon_empty.png" />
+    </div>
+    <div class="tips">
+        <span></span>
+    </div>
+</div>
