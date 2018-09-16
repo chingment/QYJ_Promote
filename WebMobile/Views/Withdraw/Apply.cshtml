@@ -59,6 +59,9 @@
                     success: function (d) {
                         if (d.result == $.lumos.resultType.success) {
                             $.lumos.tips("提现成功");
+
+                            operateResult("", "", "");
+        
                         }
                         else {
                             $.lumos.tips(d.message);
@@ -66,14 +69,27 @@
                     }
                 });
             });
-
-
         });
+
+
+        function operateResult(result, message, remarks)
+        {
+            sessionStorage.setItem("result", "1");
+            sessionStorage.setItem("message", "提交成功");
+            sessionStorage.setItem("remarks", "因提现订单较多，我司统一在每月10号/20号/30号，统一进行打款到您的账户，请注意在这三天查收到账情况，有任务问题，欢迎咨询：020-8231086");
+            window.location.href = "/Operate/Result";
+        }
+
     </script>
 }
 
+<div style="padding:15px;">
+    <img src="~/Content/images/withdraw-top.png" />
 
+    <div>
 
+    </div>
+</div>
 <div style="padding:0px 15px;">
     <ul class="list-input" style="overflow:hidden">
         <li class="list-input-item">
