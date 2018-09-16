@@ -7,7 +7,7 @@
 
     <style type="text/css">
         .operate-result {
-           padding:0 1rem;
+            padding: 0 1rem;
         }
 
         .operate-result .imgbox {
@@ -28,7 +28,7 @@
         .operate-result .item-message span {
             font-size: 1.2rem;
             line-height: 3rem;
-            color:#ff6c8d;
+            color: #ff6c8d;
         }
 
         .operate-result .item-remarks {
@@ -64,16 +64,37 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            var value = sessionStorage.getItem("result");
-            var message = sessionStorage.getItem("message");
-            var remarks = sessionStorage.getItem("remarks");
+            var rt = JSON.parse(sessionStorage.getItem("operateResult"));
 
+            //alert(JSON.stringify(operateResult))
 
             var obj_message = $('.operate-result .item-message span');
+
+            $(obj_message).text(rt.message);
+
             var obj_remarks = $('.operate-result .item-remarks p');
 
-            $(obj_message).text(message);
-            $(obj_remarks).text(remarks);
+            $(obj_remarks).text(rt.remarks);
+
+            var obj_btn = $('.operate-result .item-btn');
+
+            if (typeof rt.button != 'undefined') {
+                if (rt.button != null) {
+                    if (rt.button.length > 0) {
+
+                        $.each(rt.button, function (n, item) {
+
+                            var trs = "";
+                            trs += '<div class="btnbox">';
+                            trs += '<a href="' + item.url + '" class="btn" style="color:' + item.color + '; border: 1px solid ' + item.color + ';" >' + item.name + '</a>';
+                            trs += '</div>';
+
+                            $(obj_btn).append(trs)
+                        });
+                    }
+                }
+            }
+
         });
 
 
@@ -91,12 +112,7 @@
     </div>
 
     <div class="item-btn">
-        <div class="btnbox">
-            <a href="/Withdraw/Apply" class="btn">继续提现</a>
-        </div>
-        <div class="btnbox">
-            <a href="/Personal/Index" class="btn">回到首页</a>
-        </div>
+
     </div>
 
     <div class="item-remarks">

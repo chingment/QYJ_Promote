@@ -9,7 +9,6 @@
             expDate = expDate.toGMTString();
             document.cookie = name + '=' + escape(value) + '; path=/; expires=' + expDate;
         },
-
         readCookie: function (name) {
             var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
             if (arr = document.cookie.match(reg)) {
@@ -18,7 +17,6 @@
                 return null;
             }
         },
-
         isNullOrEmpty: function (obj) {
             if (obj == null) {
                 return true;
@@ -51,7 +49,6 @@
             s = s.replace(/\n/g, "<br>");
             return s;
         },
-
         htmlDecode: function html_decode(str) {
             var s = "";
             if (str.length == 0) return "";
@@ -64,7 +61,6 @@
             s = s.replace(/<br>/g, "\n");
             return s;
         },
-
         newGuid: function () {
             var guid = "";
             for (var i = 1; i <= 32; i++) {
@@ -75,7 +71,6 @@
             }
             return guid;
         },
-
         isFloat: function (strVal) {
             if (strVal.toString() == "") return false;
             var chk = parseFloat(strVal);
@@ -84,7 +79,6 @@
             }
             return true;
         },
-
         isInt: function (strVal) {
 
             if (strVal.toString() == "") return false;
@@ -94,7 +88,6 @@
             }
             return true;
         },
-
         isDateTime: function (str, frmt) {
 
             var r;
@@ -131,7 +124,6 @@
                 return (d.getFullYear() == r[1] && (d.getMonth() + 1) == r[3] && d.getDate() == r[4] && d.getHours() == r[5] && d.getMinutes() == r[6] && d.getSeconds() == r[7]);
             }
         },
-
         setDigitalFormat: function (o, num) {
             if (o == null)
                 return "";
@@ -144,7 +136,6 @@
             return o.toFixed(num);
 
         },
-
         boolConvert: function (o) {
             if (o == null)
                 return "否";
@@ -156,7 +147,6 @@
                 return "否";
             }
         },
-
         // To set it up as a global function:
         convertMoney: function (number, places, symbol, thousand, decimal) {
 
@@ -557,8 +547,20 @@
                     _success(d);
                 }
             });
-        }
+        },
 
+        operateResult: function (opts) {
+
+            opts = $.extend({
+                result: "1",  
+                message: "提示",  
+                remarks: "", 
+                button: null  
+            }, opts);
+
+            sessionStorage.setItem("operateResult", JSON.stringify(opts));
+            window.location.href = "/Operate/Result";
+        }
     }
 
 

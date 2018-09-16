@@ -31,11 +31,10 @@
 
 
             $('#btn_Sure').on("click", function () {
-
+                var _this = this;
                 var acName = $('#txt_acName').val();
                 var acIdNumber = $('#txt_acIdNumber').val();
                 var amount = $('#txt_amount').val();
-
 
                 if ($.lumos.trim(acName) == "") {
                     $.lumos.tips("请输入微信认证姓名");
@@ -52,16 +51,27 @@
                     return false;
                 }
 
+                $(_this).attr
                 $.lumos.postJson({
                     url: "/Withdraw/Apply",
                     isShowLoading: true,
                     data: { amount: amount, acName: acName, acIdNumber: acIdNumber },
                     success: function (d) {
                         if (d.result == $.lumos.resultType.success) {
-                            $.lumos.tips("提现成功");
-
-                            operateResult("", "", "");
-        
+                            $.lumos.operateResult({
+                                result: "1",
+                                message: "提交成功",
+                                remarks: "因提现订单较多，我司统一在每月10号/20号/30号，统一进行打款到您的账户，请注意在这三天查收到账情况，有任务问题，欢迎咨询：020-8231086",
+                                button: [{
+                                    name: "继续提现",
+                                    color: "red",
+                                    url: "/Withdraw/Apply"
+                                }, {
+                                    name: "回到首页",
+                                    color: "green",
+                                    url: "/Personal/Index"
+                                }]
+                            });
                         }
                         else {
                             $.lumos.tips(d.message);
@@ -70,15 +80,6 @@
                 });
             });
         });
-
-
-        function operateResult(result, message, remarks)
-        {
-            sessionStorage.setItem("result", "1");
-            sessionStorage.setItem("message", "提交成功");
-            sessionStorage.setItem("remarks", "因提现订单较多，我司统一在每月10号/20号/30号，统一进行打款到您的账户，请注意在这三天查收到账情况，有任务问题，欢迎咨询：020-8231086");
-            window.location.href = "/Operate/Result";
-        }
 
     </script>
 }
@@ -127,6 +128,6 @@
 </div>
 <div style="text-align:center;padding:40px;">
 
-    <span id="btn_Sure" class="btn" operate="get">立即提现</span>
+    <span id="btn_Sure" class="btn" operate="get" isone="true">立即提现</span>
 
 </div>
