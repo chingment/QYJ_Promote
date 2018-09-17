@@ -62,6 +62,7 @@
     <Compile Include="Biz\Pms\OrderPmsByBuyPromoteCoupon.cs" />
     <Compile Include="Biz\Pms\UnifiedOrderPms.cs" />
     <Compile Include="Biz\Pms\WithdrawApplyPms.cs" />
+    <Compile Include="Biz\Pms\WithdrawAuditPms.cs" />
     <Compile Include="Biz\ProductSku.cs" />
     <Compile Include="Biz\Promote.cs" />
     <Compile Include="Biz\PromoteAccessLog.cs" />

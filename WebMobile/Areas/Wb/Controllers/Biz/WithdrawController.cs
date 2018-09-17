@@ -1,4 +1,5 @@
 ﻿using Lumos;
+using Lumos.BLL;
 using Lumos.Entity;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,19 @@ namespace WebMobile.Areas.Wb.Controllers
             return View();
         }
 
+        public ActionResult Audit(string id)
+        {
+            var model = new AuditViewModel();
+            model.LoadData(id);
+            return View(model);
+        }
+
         public ActionResult ListByDoTransfer()
+        {
+            return View();
+        }
+
+        public ActionResult DoTransfer(string id)
         {
             return View();
         }
@@ -62,6 +75,12 @@ namespace WebMobile.Areas.Wb.Controllers
             PageEntity pageEntity = new PageEntity { PageSize = pageSize, TotalRecord = total, Rows = olist };
 
             return Json(ResultType.Success, pageEntity, "");
+        }
+
+        [HttpPost]
+        public CustomJsonResult Audit(WithdrawAuditPms model)
+        {
+            return BizFactory.Withdraw.Audit(this.CurrentUserId, model);
         }
     }
 }

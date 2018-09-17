@@ -24,6 +24,12 @@ namespace Lumos.Entity
         public DateTime ApplyTime { get; set; }
         public string SettlementMethod { get; set; }
         public DateTime? SettlementTime { get; set; }
+
+        public string Auditor { get; set; }
+        public string AuditComments { get; set; }
+        public DateTime? AuditTime { get; set; }
+        public int? AuditResult { get; set; }
+
         public string FailureReason { get; set; }
         public string Creator { get; set; }
         public DateTime CreateTime { get; set; }
