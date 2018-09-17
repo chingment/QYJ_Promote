@@ -38,10 +38,24 @@
                     var url = '/Biz/Machine/Edit?id=' + obj.id;
                     var title = '审核';
                     art.dialog.open(url, {
-                        id: "openDialog", title: title, width: '650px', height: '500px', lock: true, drag: false, cancelVal: '关闭', cancel: true, okVal: '保存', ok: function () {
-                            this.iframe.contentWindow.$('#form1').submit();
-                            return false;
-                        }
+                        id: "openDialog", title: title, width: '650px', height: '500px', lock: true, drag: false, cancelVal: '关闭', cancel: true,
+                        button: [{
+                            name: '通过',
+                            className: 'aui_refuse_button',
+                            callback: function () {
+
+                                return false;
+                            },
+                            focus: true
+                        }, {
+                            name: '不通过',
+                            className: 'aui_refuse_button',
+                            callback: function () {
+
+                                return false;
+                            },
+                            focus: true
+                        }]
                     });
                 }
             }
@@ -75,7 +89,7 @@
                     <th style="width:5%" class="no">
                         序号
                     </th>
-                    <th style="width:20%">
+                    <th style="width:10%">
                         流水号
                     </th>
                     <th style="width:20%">
@@ -84,16 +98,16 @@
                     <th style="width:20%">
                         姓名
                     </th>
-                    <th style="width:10%">
+                    <th style="width:20%">
                         身份证号码
                     </th>
-                    <th style="width:15%">
+                    <th style="width:10%">
                         提现金额
                     </th>
-                    <th style="width:15%">
+                    <th style="width:10%">
                         提交时间
                     </th>
-                    <th style="width:10%" class="operation">
+                    <th style="width:5%" class="operation">
                         操作
                     </th>
                 </tr>

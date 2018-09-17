@@ -1238,16 +1238,7 @@
 
                 if (val.className) button.className = val.className;
 
-                if (name == '暂存') {
-                    button.className = 'aui_save_button';
-                }
-                else if (name == '撤销') {
-                    button.className = 'aui_cancle_button';
-                }
-                else if (name == '转给客户跟进' || name == '跟进') {
-                    button.className = 'aui_follow_button';
-                }
-
+           
                 if (val.focus) {
                     that._focus && that._focus.removeClass(strongButton);
                     that._focus = $(button).addClass(strongButton);
