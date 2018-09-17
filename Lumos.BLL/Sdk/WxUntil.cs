@@ -122,7 +122,7 @@ namespace Lumos.BLL
         }
 
 
-        public string GetCardApiTicket(string appId,string access_token)
+        public string GetCardApiTicket(string appId, string access_token)
         {
 
             string key = string.Format("Wx_AppId_{0}_CardApiTicket", appId);
@@ -160,7 +160,7 @@ namespace Lumos.BLL
         }
 
 
-        public  string UploadMultimediaImage(string access_token, string imageUrl)
+        public string UploadMultimediaImage(string access_token, string imageUrl)
         {
             string mediaId = "";
             string wxurl = "http://file.api.weixin.qq.com/cgi-bin/media/upload?access_token=" + access_token + "&type=image";
@@ -201,6 +201,24 @@ namespace Lumos.BLL
             WxApiUserInfo snsUserInfo = new WxApiUserInfo(accessToken, openId);
             var userInfo_Result = api.DoGet(snsUserInfo);
             return userInfo_Result;
+        }
+
+        public List<WxUserCard> GetUserCartList(string accessToken, string openId, string cardId)
+        {
+            WxApi api = new WxApi();
+            string str_json = "{\"openid\":\"" + openId + "\",\"card_id\":\"" + cardId + "\"}";
+            WxApiCardUserGetCartList snsUserInfo = new WxApiCardUserGetCartList(accessToken, WxPostDataType.Text, str_json);
+            var userInfo_Result = api.DoPost(snsUserInfo);
+
+            if (userInfo_Result != null)
+            {
+
+                return userInfo_Result.card_list;
+            }
+            else
+            {
+                return null;
+            }
         }
 
     }

@@ -66,8 +66,33 @@ namespace Lumos.BLL.Task
             #endregion
 
 
-            #region 检查优惠卷核销状态
+            #region 检查优惠券领取状态
 
+            //var promoteUserCoupons = CurrentDb.PromoteUserCoupon.Where(m => m.IsGet == false).ToList();
+
+            //foreach (var item in promoteUserCoupons)
+            //{
+            //    var wxUserInfo = CurrentDb.WxUserInfo.Where(m => m.UserId == item.UserId).FirstOrDefault();
+            //    if (wxUserInfo != null)
+            //    {
+            //        var cards = SdkFactory.Wx.Instance().GetUserCards(wxUserInfo.OpenId, item.WxCouponId);
+
+            //        if (cards != null)
+            //        {
+            //            var card = cards.FirstOrDefault();
+
+            //            if (card != null)
+            //            {
+            //                item.WxCouponDecryptCode = card.code;
+            //                item.Mender = GuidUtil.Empty();
+            //                item.MendTime = this.DateTime;
+            //            }
+
+            //        }
+            //    }
+            //}
+
+            //CurrentDb.SaveChanges();
 
             #endregion
 

@@ -145,6 +145,10 @@ namespace Lumos.BLL
             return WxUntil.GetInstance().UploadMultimediaImage(this.GetApiAccessToken(), imageUrl);
         }
 
+        public List<WxUserCard> GetUserCards(string opendid,string cardid)
+        {
+            return WxUntil.GetInstance().GetUserCartList(this.GetApiAccessToken(), opendid, cardid);
+        }
 
 
         public string OrderQuery(string orderSn)

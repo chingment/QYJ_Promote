@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lumos.WeiXinSdk
 {
-    public class WxApiCardUserGetCartList
+    public class WxApiCardUserGetCartList : IWxApiPostRequest<WxApiCardUserGetCartListResult>
     {
         private string access_token { get; set; }
 
