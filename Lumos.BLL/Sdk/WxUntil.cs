@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Lumos.WeiXinSdk;
+using System.Net;
 
 namespace Lumos.BLL
 {
@@ -163,5 +164,42 @@ namespace Lumos.BLL
 
         }
 
+
+        public  string UploadMultimediaImage(string appId, string appSecret,string imageUrl)
+        {
+            string access_token = GetAccessToken(appId, appSecret);
+            string mediaId = "";
+            string wxurl = "http://file.api.weixin.qq.com/cgi-bin/media/upload?access_token=" + access_token + "&type=image";
+            WebClient myWebClient = new WebClient();
+            myWebClient.Credentials = CredentialCache.DefaultCredentials;
+            try
+            {
+                byte[] responseArray = myWebClient.UploadFile(wxurl, "POST", imageUrl);
+                string str_result = System.Text.Encoding.Default.GetString(responseArray, 0, responseArray.Length);
+
+                var result = Newtonsoft.Json.JsonConvert.DeserializeObject<UploadMultimediaResult>(str_result);
+
+                if (result != null)
+                {
+                    mediaId = result.media_id;
+                }
+            }
+            catch (Exception ex)
+            {
+                mediaId = "Error:" + ex.Message;
+            }
+            return mediaId;
+
+        }
+
+
+        public string CardCodeDecrypt(string appId, string appSecret, string encrypt_code)
+        {
+            var api = new WxApi();
+            string access_token = GetAccessToken(appId, appSecret);
+            var wxApiCardCodeDecrpt = new WxApiCardCodeDecrpt(access_token, WxPostDataType.Text, "{\"encrypt_code\":\"" + encrypt_code + "\"}");
+            var wxApiCardCodeDecrpt_Result = api.DoPost(wxApiCardCodeDecrpt);
+            return wxApiCardCodeDecrpt_Result.code;
+        }
     }
 }

@@ -103,7 +103,7 @@ namespace Lumos.BLL
 
         public string CardCodeDecrypt(string encrypt_code)
         {
-            return OAuthApi.CardCodeDecrypt(this.GetApiAccessToken(), encrypt_code);
+            return WxUntil.GetInstance().CardCodeDecrypt(wxConfig.AppId, wxConfig.AppSecret, encrypt_code);
         }
 
         public WxApiUserInfoResult GetUserInfoByApiToken(string openId)
@@ -142,7 +142,7 @@ namespace Lumos.BLL
 
         public string UploadMultimediaImage(string imageUrl)
         {
-            return OAuthApi.UploadMultimediaImage(this.GetApiAccessToken(), imageUrl);
+            return WxUntil.GetInstance().UploadMultimediaImage(wxConfig.AppId, wxConfig.AppSecret, imageUrl);
         }
 
 
