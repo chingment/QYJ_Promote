@@ -36,14 +36,5 @@ namespace Lumos.WeiXinSdk
             return snsUserInfo_Result;
         }
 
-        public static WxApiUserInfoResult GetUserInfoByApiToken(string accessToken, string openId)
-        {
-            WxApi api = new WxApi();
-            WxApiUserInfo snsUserInfo = new WxApiUserInfo(accessToken, openId);
-            var userInfo_Result = api.DoGet(snsUserInfo);
-            return userInfo_Result;
-        }
-
-
     }
 }

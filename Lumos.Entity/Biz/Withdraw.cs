@@ -19,17 +19,17 @@ namespace Lumos.Entity
         public decimal Amount { get; set; }
         public string AcName { get; set; }
         public string AcIdNumber { get; set; }
+        public string AcBank { get; set; }
+        public string AcBankCardNumber { get; set; }
         public Enumeration.WithdrawStatus Status { get; set; }
         public string ApplyMethod { get; set; }
         public DateTime ApplyTime { get; set; }
         public string SettlementMethod { get; set; }
         public DateTime? SettlementTime { get; set; }
-
         public string Auditor { get; set; }
         public string AuditComments { get; set; }
         public DateTime? AuditTime { get; set; }
         public int? AuditResult { get; set; }
-
         public string FailureReason { get; set; }
         public string Creator { get; set; }
         public DateTime CreateTime { get; set; }

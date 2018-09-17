@@ -96,24 +96,24 @@ namespace Lumos.BLL
             return WxUntil.GetInstance().GetAccessToken(wxConfig.AppId, wxConfig.AppSecret);
         }
 
-        public WxApiSnsUserInfoResult GetUserInfo(string accessToken, string openId)
+        public WxApiSnsUserInfoResult GetUserInfoByOAuth2Token(string accessToken, string openId)
         {
             return OAuthApi.GetUserInfo(accessToken, openId);
         }
 
         public string CardCodeDecrypt(string encrypt_code)
         {
-            return WxUntil.GetInstance().CardCodeDecrypt(wxConfig.AppId, wxConfig.AppSecret, encrypt_code);
+            return WxUntil.GetInstance().CardCodeDecrypt(this.GetApiAccessToken(), encrypt_code);
         }
 
         public WxApiUserInfoResult GetUserInfoByApiToken(string openId)
         {
-            return OAuthApi.GetUserInfoByApiToken(this.GetApiAccessToken(), openId);
+            return WxUntil.GetInstance().GetUserInfoByApiToken(this.GetApiAccessToken(), openId);
         }
 
         public CustomJsonResult<JsApiConfigParams> GetJsApiConfigParams(string url)
         {
-            string jsApiTicket = WxUntil.GetInstance().GetJsApiTicket(wxConfig.AppId, wxConfig.AppSecret);
+            string jsApiTicket = WxUntil.GetInstance().GetJsApiTicket(wxConfig.AppId, this.GetApiAccessToken());
 
             JsApiConfigParams parms = new JsApiConfigParams(wxConfig.AppId, url, jsApiTicket);
 
@@ -135,14 +135,14 @@ namespace Lumos.BLL
 
         public string GetCardApiTicket()
         {
-            string cardApiTicket = WxUntil.GetInstance().GetCardApiTicket(wxConfig.AppId, wxConfig.AppSecret);
+            string cardApiTicket = WxUntil.GetInstance().GetCardApiTicket(wxConfig.AppId, this.GetApiAccessToken());
             return cardApiTicket;
         }
 
 
         public string UploadMultimediaImage(string imageUrl)
         {
-            return WxUntil.GetInstance().UploadMultimediaImage(wxConfig.AppId, wxConfig.AppSecret, imageUrl);
+            return WxUntil.GetInstance().UploadMultimediaImage(this.GetApiAccessToken(), imageUrl);
         }
 
 

@@ -62,7 +62,7 @@ namespace WebMobile.Controllers
                         LogUtil.Info("用户OpenId:" + oauth2_Result.openid);
                         LogUtil.Info("用户AccessToken:" + oauth2_Result.access_token);
 
-                        var snsUserInfo_Result = SdkFactory.Wx.Instance().GetUserInfo(oauth2_Result.access_token, oauth2_Result.openid);
+                        var snsUserInfo_Result = SdkFactory.Wx.Instance().GetUserInfoByOAuth2Token(oauth2_Result.access_token, oauth2_Result.openid);
                         WxUserInfo wxUserInfo = new WxUserInfo();
                         wxUserInfo.AccessToken = oauth2_Result.access_token;
                         wxUserInfo.OpenId = oauth2_Result.openid;

@@ -14,7 +14,6 @@ namespace Lumos.BLL
 {
     public sealed class WxUntil
     {
-        private static ILog log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private static WxUntil instance = null;
         private static readonly object padlock = new object();
 
@@ -54,7 +53,7 @@ namespace Lumos.BLL
 
             if (accessToken == null)
             {
-                log.InfoFormat("获取微信AccessToken，key：{0}，已过期，重新获取", key);
+                LogUtil.Info(string.Format("获取微信AccessToken，key：{0}，已过期，重新获取", key));
 
                 WxApi c = new WxApi();
 
@@ -64,11 +63,11 @@ namespace Lumos.BLL
 
                 if (string.IsNullOrEmpty(apiAccessTokenResult.access_token))
                 {
-                    log.InfoFormat("获取微信AccessToken，key：{0}，已过期，Api重新获取失败", key);
+                    LogUtil.Info(string.Format("获取微信AccessToken，key：{0}，已过期，Api重新获取失败", key));
                 }
                 else
                 {
-                    log.InfoFormat("获取微信AccessToken，key：{0}，value：{1}，已过期，重新获取成功", key, apiAccessTokenResult.access_token);
+                    LogUtil.Info(string.Format("获取微信AccessToken，key：{0}，value：{1}，已过期，重新获取成功", key, apiAccessTokenResult.access_token));
 
                     accessToken = apiAccessTokenResult.access_token;
 
@@ -78,14 +77,14 @@ namespace Lumos.BLL
             }
             else
             {
-                log.InfoFormat("获取微信AccessToken，key：{0}，value：{1}", key, accessToken);
+                LogUtil.Info(string.Format("获取微信AccessToken，key：{0}，value：{1}", key, accessToken));
             }
 
             return accessToken;
         }
 
 
-        public string GetJsApiTicket(string appId, string appSecret)
+        public string GetJsApiTicket(string appId, string access_token)
         {
 
             string key = string.Format("Wx_AppId_{0}_JsApiTicket", appId);
@@ -97,18 +96,16 @@ namespace Lumos.BLL
             {
                 WxApi c = new WxApi();
 
-                string access_token = GetAccessToken(appId, appSecret);
-
                 var wxApiJsApiTicket = new WxApiJsApiTicket(access_token);
 
                 var wxApiJsApiTicketResult = c.DoGet(wxApiJsApiTicket);
                 if (string.IsNullOrEmpty(wxApiJsApiTicketResult.ticket))
                 {
-                    log.InfoFormat("获取微信JsApiTicket，key：{0}，已过期，Api重新获取失败", key);
+                    LogUtil.Info(string.Format("获取微信JsApiTicket，key：{0}，已过期，Api重新获取失败", key));
                 }
                 else
                 {
-                    log.InfoFormat("获取微信JsApiTicket，key：{0}，value：{1}，已过期，重新获取成功", key, wxApiJsApiTicketResult.ticket);
+                    LogUtil.Info(string.Format("获取微信JsApiTicket，key：{0}，value：{1}，已过期，重新获取成功", key, wxApiJsApiTicketResult.ticket));
 
                     jsApiTicket = wxApiJsApiTicketResult.ticket;
 
@@ -117,7 +114,7 @@ namespace Lumos.BLL
             }
             else
             {
-                log.InfoFormat("获取微信JsApiTicket，key：{0}，value：{1}", key, jsApiTicket);
+                LogUtil.Info(string.Format("获取微信JsApiTicket，key：{0}，value：{1}", key, jsApiTicket));
             }
 
             return jsApiTicket;
@@ -125,7 +122,7 @@ namespace Lumos.BLL
         }
 
 
-        public string GetCardApiTicket(string appId, string appSecret)
+        public string GetCardApiTicket(string appId,string access_token)
         {
 
             string key = string.Format("Wx_AppId_{0}_CardApiTicket", appId);
@@ -137,18 +134,16 @@ namespace Lumos.BLL
             {
                 WxApi c = new WxApi();
 
-                string access_token = GetAccessToken(appId, appSecret);
-
                 var wxApiGetCardApiTicket = new WxApiGetCardApiTicket(access_token);
 
                 var wxApiGetCardApiTicketResult = c.DoGet(wxApiGetCardApiTicket);
                 if (string.IsNullOrEmpty(wxApiGetCardApiTicketResult.ticket))
                 {
-                    log.InfoFormat("获取微信JsApiTicket，key：{0}，已过期，Api重新获取失败", key);
+                    LogUtil.Info(string.Format("获取微信CardApiTicket，key：{0}，已过期，Api重新获取失败", key));
                 }
                 else
                 {
-                    log.InfoFormat("获取微信JsApiTicket，key：{0}，value：{1}，已过期，重新获取成功", key, wxApiGetCardApiTicketResult.ticket);
+                    LogUtil.Info(string.Format("获取微信CardApiTicket，key：{0}，value：{1}，已过期，重新获取成功", key, wxApiGetCardApiTicketResult.ticket));
 
                     jsApiTicket = wxApiGetCardApiTicketResult.ticket;
 
@@ -157,7 +152,7 @@ namespace Lumos.BLL
             }
             else
             {
-                log.InfoFormat("获取微信JsApiTicket，key：{0}，value：{1}", key, jsApiTicket);
+                LogUtil.Info(string.Format("获取微信CardApiTicket，key：{0}，value：{1}", key, jsApiTicket));
             }
 
             return jsApiTicket;
@@ -165,9 +160,8 @@ namespace Lumos.BLL
         }
 
 
-        public  string UploadMultimediaImage(string appId, string appSecret,string imageUrl)
+        public  string UploadMultimediaImage(string access_token, string imageUrl)
         {
-            string access_token = GetAccessToken(appId, appSecret);
             string mediaId = "";
             string wxurl = "http://file.api.weixin.qq.com/cgi-bin/media/upload?access_token=" + access_token + "&type=image";
             WebClient myWebClient = new WebClient();
@@ -193,13 +187,21 @@ namespace Lumos.BLL
         }
 
 
-        public string CardCodeDecrypt(string appId, string appSecret, string encrypt_code)
+        public string CardCodeDecrypt(string access_token, string encrypt_code)
         {
             var api = new WxApi();
-            string access_token = GetAccessToken(appId, appSecret);
             var wxApiCardCodeDecrpt = new WxApiCardCodeDecrpt(access_token, WxPostDataType.Text, "{\"encrypt_code\":\"" + encrypt_code + "\"}");
             var wxApiCardCodeDecrpt_Result = api.DoPost(wxApiCardCodeDecrpt);
             return wxApiCardCodeDecrpt_Result.code;
         }
+
+        public WxApiUserInfoResult GetUserInfoByApiToken(string accessToken, string openId)
+        {
+            WxApi api = new WxApi();
+            WxApiUserInfo snsUserInfo = new WxApiUserInfo(accessToken, openId);
+            var userInfo_Result = api.DoGet(snsUserInfo);
+            return userInfo_Result;
+        }
+
     }
 }
