@@ -1,5 +1,6 @@
 ﻿using Lumos;
 using Lumos.BLL;
+using Lumos.Common;
 using Lumos.Entity;
 using System;
 using System.Collections.Generic;
@@ -39,7 +40,7 @@ namespace WebMobile.Controllers
             var query = (from o in CurrentDb.Withdraw
                          where
                           o.UserId == this.CurrentUserId
-                         select new { o.Sn, o.ApplyTime, o.Amount, o.Status, o.AcName, o.ApplyMethod, o.AcIdNumber, o.FailureReason });
+                         select new { o.Sn, o.ApplyTime, o.Amount, o.Status, o.AcName, o.AcBank, o.AcBankCardNumber, o.ApplyMethod, o.AcIdNumber, o.FailureReason });
 
             int total = query.Count();
 
@@ -55,7 +56,7 @@ namespace WebMobile.Controllers
             {
                 var myWithdraw = new MyWithdrawModel();
                 myWithdraw.Sn = item.Sn;
-                myWithdraw.Title = "提现到我的账户";
+                myWithdraw.Title = string.Format("资金提现-到{0}({1})", item.AcBank, CommonUtils.GetLastString(item.AcBankCardNumber, 4));
                 myWithdraw.ApplyTime = item.ApplyTime.ToString("yyyy.MM.dd HH:mm:ss");
                 myWithdraw.Amount = item.Amount.ToF2Price();
 
