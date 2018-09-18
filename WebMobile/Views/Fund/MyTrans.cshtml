@@ -3,6 +3,26 @@
     Layout = "~/Views/Shared/_LayoutNavigationBar.cshtml";
 }
 
+@section styles{
+
+    <style type="text/css">
+        .list-nav2 > .nav2-item > .item-middle .txt-h1 {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+        }
+
+        .list-nav2 > .nav2-item > .item-right {
+            border-bottom: 1px solid #f6f6f6;
+            width: 100px;
+            overflow: hidden;
+            flex: none;
+        }
+    </style>
+}
+
 @section headerleft{
     <span class="title">资金流水</span>
 }
@@ -22,6 +42,9 @@
                     var l_StrRows = "";
 
                     l_StrRows += '<li class="nav2-item">';
+                    l_StrRows += '<div class="item-left fl">';
+                    l_StrRows += '<img src="' + p_row.tipsIcon + '" alt="" style="width:35px;height:35px;" />';
+                    l_StrRows += ' </div>';
                     l_StrRows += '<div class="item-middle fl">';
                     l_StrRows += '<div class="txt-h1"><span>' + p_row.changeType + '</span></div>';
                     l_StrRows += '<div class="txt-h2"><span>' + p_row.transTime + '</span></div>';

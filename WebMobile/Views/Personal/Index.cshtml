@@ -31,7 +31,7 @@
             <div class="item-left fl tc">
                 <div class="content">
                     <div class="item-headimg fl">
-                        <img src="@(Model.HeadImgUrl==null?"/Content/images/personal_info_headerimg.jpg":Model.HeadImgUrl)" alt="" />
+                        <img src="@(Model.HeadImgUrl==null?"/Content/images/personal_info_headerimg.png":Model.HeadImgUrl)" alt="" />
                     </div>
                     <div class="item-nickname fl">
                         @Model.Nickname
@@ -48,11 +48,11 @@
 
         <div class="item-bottom">
             <div class="item-left fl">
-                
-                    <span class="btn-s1 noopen">
+                <a href="/Withdraw/Apply">
+                    <span class="btn-s1">
                         <span class="text">资金提现</span>
                     </span>
-                
+                </a>
             </div>
             <div class="item-right fl">
                 <a href="/Fund/MyTrans">

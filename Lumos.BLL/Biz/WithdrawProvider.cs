@@ -44,6 +44,8 @@ namespace Lumos.BLL
                     withdraw.Amount = pWithdrawApplyPms.Amount;
                     withdraw.AcIdNumber = pWithdrawApplyPms.AcIdNumber;
                     withdraw.AcName = pWithdrawApplyPms.AcName;
+                    withdraw.AcBank = pWithdrawApplyPms.AcBank;
+                    withdraw.AcBankCardNumber = pWithdrawApplyPms.AcBankCardNumber;
                     withdraw.ApplyTime = this.DateTime;
                     withdraw.ApplyMethod = "1";
                     withdraw.Status = Enumeration.WithdrawStatus.Apply;
@@ -67,6 +69,7 @@ namespace Lumos.BLL
                     fundTrans.LockBalance = fund.LockBalance;
                     fundTrans.Creator = pOperater;
                     fundTrans.CreateTime = this.DateTime;
+                    fundTrans.TipsIcon = IconUtil.WithdrawApply;
                     fundTrans.Description = string.Format("发起申请一笔提现，金额：{0}元", pWithdrawApplyPms.Amount);
                     CurrentDb.FundTrans.Add(fundTrans);
                     CurrentDb.SaveChanges();

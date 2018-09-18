@@ -1,4 +1,5 @@
 ﻿using Lumos;
+using Lumos.BLL;
 using Lumos.Entity;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace WebMobile.Controllers
             var query = (from o in CurrentDb.FundTrans
                          where
                          o.UserId == this.CurrentUserId
-                         select new { o.Id, o.Sn, o.ChangeAmount, o.ChangeType, o.CreateTime, o.Description });
+                         select new { o.Id, o.Sn, o.ChangeAmount, o.ChangeType, o.CreateTime, o.Description, o.TipsIcon });
 
             int total = query.Count();
 
@@ -53,7 +54,7 @@ namespace WebMobile.Controllers
                 switch (item.ChangeType)
                 {
                     case Enumeration.FundTransChangeType.ConsumeCoupon:
-                        myTran.ChangeType = "分享用户核销优惠券";
+                        myTran.ChangeType = item.Description;
                         break;
                     case Enumeration.FundTransChangeType.WtihdrawApply:
                         myTran.ChangeType = "提现";
@@ -65,7 +66,7 @@ namespace WebMobile.Controllers
 
                 myTran.TransTime = item.CreateTime.ToString("yyyy.MM.dd HH:mm:ss");
                 myTran.Description = item.Description;
-
+                myTran.TipsIcon = string.IsNullOrEmpty(item.TipsIcon) == false ? item.TipsIcon : IconUtil.Trans;
                 oList.Add(myTran);
             }
 

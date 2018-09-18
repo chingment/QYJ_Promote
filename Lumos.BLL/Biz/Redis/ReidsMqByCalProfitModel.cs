@@ -95,9 +95,15 @@ namespace Lumos.BLL
 
                                         var wxUserInfo = CurrentDb.WxUserInfo.Where(m => m.UserId == promoteUserCoupon.UserId).FirstOrDefault();
                                         string nickname = "";
+                                        string headImgUrl = IconUtil.ConsumeCoupon;
                                         if (wxUserInfo != null)
                                         {
                                             nickname = wxUserInfo.Nickname;
+
+                                            if(!string.IsNullOrEmpty(wxUserInfo.HeadImgUrl))
+                                            {
+                                                headImgUrl = wxUserInfo.HeadImgUrl;
+                                            }
                                         }
 
                                         decimal profit = 500m;
@@ -117,7 +123,8 @@ namespace Lumos.BLL
                                         fundTrans.LockBalance = fund.LockBalance;
                                         fundTrans.CreateTime = DateTime.Now;
                                         fundTrans.Creator = GuidUtil.Empty();
-                                        fundTrans.Description = string.Format("分享用户({0})核销优惠券", nickname);
+                                        fundTrans.Description = string.Format("分享给用户({0})核销优惠券", nickname);
+                                        fundTrans.TipsIcon = headImgUrl;
                                         CurrentDb.FundTrans.Add(fundTrans);
 
 

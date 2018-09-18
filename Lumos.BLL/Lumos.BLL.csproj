@@ -83,6 +83,7 @@
     <Compile Include="Biz\WithdrawProvider.cs" />
     <Compile Include="Biz\WxUserProvider.cs" />
     <Compile Include="Factory..cs" />
+    <Compile Include="IconUtil.cs" />
     <Compile Include="Sdk\SdkFactory.cs" />
     <Compile Include="Sdk\WxConfigByFanJu.cs" />
     <Compile Include="Sdk\WxConfigByQyj.cs" />

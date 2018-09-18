@@ -397,6 +397,7 @@
     <Content Include="Content\images\personal_info_headerimg.jpg" />
     <Content Include="Content\images\loading.gif" />
     <Content Include="Content\images\list_nav_item_icon_next.png" />
+    <Content Include="Content\images\personal_info_headerimg.png" />
     <Content Include="Content\images\promote20180910\bg.jpg" />
     <Content Include="Content\images\promote20180910\btn_personal.png" />
     <Content Include="Content\images\promote20180910\btn_buy.png" />

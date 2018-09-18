@@ -19,5 +19,7 @@ namespace WebMobile.Models.Fund
         public string Description { get; set; }
 
         public string Sign { get; set; }
+
+        public string TipsIcon { get; set; }
     }
 }
