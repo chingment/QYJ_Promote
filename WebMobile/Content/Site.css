@@ -257,10 +257,18 @@ a, a:active, a:visited, a:hover, a:focus {
 	border-radius: 30px;
 }
 
-.list-nav2 > .nav2-item > .item-middle, .list-nav2 > .nav2-item > .item-right {
+.list-nav2 > .nav2-item > .item-middle {
 	border-bottom: 1px solid #f6f6f6;
 	flex: 1;
 }
+
+.list-nav2 > .nav2-item > .item-right {
+	border-bottom: 1px solid #f6f6f6;
+	width: 100px;
+	overflow: hidden;
+	flex: none;
+}
+
 
 .list-nav2 > .nav2-item:last-child > .item-middle, .list-nav2 > .nav2-item:last-child > .item-right {
 	border-bottom: 0px solid #f6f6f6;
@@ -272,6 +280,11 @@ a, a:active, a:visited, a:hover, a:focus {
 	text-align: left;
 	display: block;
 	color: #333;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
 }
 
 .list-nav2 > .nav2-item > .item-middle .txt-h2 {

@@ -10,6 +10,7 @@ namespace Lumos.BLL
     {
         public readonly static string Trans = "/Content/images/list_icon_withdraw.png";
         public readonly static string WithdrawApply = "/Content/images/list_icon_withdraw.png";
+        public readonly static string WithdrawFailure = "/Content/images/list_icon_withdraw.png";
         public readonly static string ConsumeCoupon = "/Content/images/personal_info_headerimg.png";
     }
 }

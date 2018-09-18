@@ -125,6 +125,7 @@ namespace Lumos.BLL
                                         fundTrans.Creator = GuidUtil.Empty();
                                         fundTrans.Description = string.Format("分享给用户({0})核销优惠券", nickname);
                                         fundTrans.TipsIcon = headImgUrl;
+                                        fundTrans.IsNoDisplay = false;
                                         CurrentDb.FundTrans.Add(fundTrans);
 
 

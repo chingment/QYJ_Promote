@@ -24,7 +24,8 @@ namespace Lumos.Entity
         public string Description { get; set; }
         public string Creator { get; set; }
         public DateTime CreateTime { get; set; }
-
         public string TipsIcon { get; set; }
+
+        public bool IsNoDisplay { get; set; }
     }
 }

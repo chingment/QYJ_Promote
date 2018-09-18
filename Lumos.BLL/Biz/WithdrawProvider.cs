@@ -149,7 +149,9 @@ namespace Lumos.BLL
                         fundTrans.LockBalance = fund.LockBalance;
                         fundTrans.Creator = pOperater;
                         fundTrans.CreateTime = this.DateTime;
-                        fundTrans.Description = string.Format("申请一笔提现，金额：{0}元，审核不通过，已退回账户", withdraw.Amount);
+                        fundTrans.Description = string.Format("资金提现失败，原因：{0}", withdraw.FailureReason);
+                        fundTrans.TipsIcon = IconUtil.WithdrawFailure;
+                        fundTrans.IsNoDisplay = false;
                         CurrentDb.FundTrans.Add(fundTrans);
 
                         result = new CustomJsonResult(ResultType.Success, ResultCode.Success, "审核不通过");
@@ -167,5 +169,108 @@ namespace Lumos.BLL
             return result;
 
         }
+
+
+        public CustomJsonResult DoTransfer(string pOperater, WithdrawDoTransferPms pWithdrawDoTransferPms)
+        {
+            CustomJsonResult result = new CustomJsonResult();
+
+
+            using (TransactionScope ts = new TransactionScope())
+            {
+                var withdraw = CurrentDb.Withdraw.Where(m => m.Id == pWithdrawDoTransferPms.WithdrawId).FirstOrDefault();
+
+                if (withdraw == null)
+                {
+                    return new CustomJsonResult(ResultType.Failure, "找不到提现记录");
+                }
+
+
+                if (withdraw.Status == Enumeration.WithdrawStatus.Success || withdraw.Status == Enumeration.WithdrawStatus.Failure)
+                {
+                    return new CustomJsonResult(ResultType.Failure, "该提现申请已经被处理");
+                }
+
+                var fund = CurrentDb.Fund.Where(m => m.UserId == withdraw.UserId).FirstOrDefault();
+                var fundTrans = new FundTrans();
+                switch (pWithdrawDoTransferPms.Operate)
+                {
+                    case WithdrawDoTransferOperate.Pass:
+                        withdraw.Status = Enumeration.WithdrawStatus.Success;
+                        withdraw.FailureReason = pWithdrawDoTransferPms.AuditComments;
+                        withdraw.Mender = pOperater;
+                        withdraw.MendTime = this.DateTime;
+                        withdraw.Auditor = pOperater;
+                        withdraw.AuditTime = this.DateTime;
+
+                        fund.CurrentBalance -= withdraw.Amount;
+                        fund.LockBalance -= withdraw.Amount;
+                        fund.Mender = pOperater;
+                        fund.MendTime = this.DateTime;
+
+
+                        fundTrans.Id = GuidUtil.New();
+                        fundTrans.Sn = SnUtil.Build(Enumeration.BizSnType.FundTrans, withdraw.UserId);
+                        fundTrans.UserId = withdraw.UserId;
+                        fundTrans.ChangeType = Enumeration.FundTransChangeType.WtihdrawApply;
+                        fundTrans.ChangeAmount = -withdraw.Amount;
+                        fundTrans.CurrentBalance = fund.CurrentBalance;
+                        fundTrans.AvailableBalance = fund.AvailableBalance;
+                        fundTrans.LockBalance = fund.LockBalance;
+                        fundTrans.Creator = pOperater;
+                        fundTrans.CreateTime = this.DateTime;
+                        fundTrans.TipsIcon = IconUtil.WithdrawFailure;
+                        fundTrans.IsNoDisplay = true;
+                        CurrentDb.FundTrans.Add(fundTrans);
+
+                        result = new CustomJsonResult(ResultType.Success, ResultCode.Success, "审核通过");
+
+                        break;
+                    case WithdrawDoTransferOperate.NoPass:
+
+                        withdraw.Status = Enumeration.WithdrawStatus.Failure;
+                        withdraw.FailureReason = pWithdrawDoTransferPms.AuditComments;
+                        withdraw.Mender = pOperater;
+                        withdraw.MendTime = this.DateTime;
+                        withdraw.Auditor = pOperater;
+                        withdraw.AuditTime = this.DateTime;
+
+
+                        fund.AvailableBalance += withdraw.Amount;
+                        fund.LockBalance -= withdraw.Amount;
+                        fund.Mender = pOperater;
+                        fund.MendTime = this.DateTime;
+
+                        fundTrans.Id = GuidUtil.New();
+                        fundTrans.Sn = SnUtil.Build(Enumeration.BizSnType.FundTrans, withdraw.UserId);
+                        fundTrans.UserId = withdraw.UserId;
+                        fundTrans.ChangeType = Enumeration.FundTransChangeType.WtihdrawApply;
+                        fundTrans.ChangeAmount = withdraw.Amount;
+                        fundTrans.CurrentBalance = fund.CurrentBalance;
+                        fundTrans.AvailableBalance = fund.AvailableBalance;
+                        fundTrans.LockBalance = fund.LockBalance;
+                        fundTrans.Creator = pOperater;
+                        fundTrans.CreateTime = this.DateTime;
+                        fundTrans.Description = string.Format("资金提现失败，原因：{0}", withdraw.FailureReason);
+                        fundTrans.TipsIcon = IconUtil.WithdrawFailure;
+                        fundTrans.IsNoDisplay = false;
+                        CurrentDb.FundTrans.Add(fundTrans);
+
+                        result = new CustomJsonResult(ResultType.Success, ResultCode.Success, "审核不通过");
+                        break;
+                    default:
+                        result = new CustomJsonResult(ResultType.Failure, "未知操作");
+                        break;
+                }
+
+                CurrentDb.SaveChanges();
+                ts.Complete();
+            }
+
+
+            return result;
+
+        }
+
     }
 }
