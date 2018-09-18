@@ -844,6 +844,18 @@ namespace Lumos.Common
             return info;
         }
         #endregion
+
+
+        public static string GetLastString(string str, int num)
+        {
+            int count = 0;
+            if (str.Length > num)
+            {
+                count = str.Length - num;
+                str = str.Substring(count, num);
+            }
+            return str;
+        }
     }
 
 

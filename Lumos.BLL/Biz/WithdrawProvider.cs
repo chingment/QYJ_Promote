@@ -1,4 +1,5 @@
-﻿using Lumos.Entity;
+﻿using Lumos.Common;
+using Lumos.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,7 +71,7 @@ namespace Lumos.BLL
                     fundTrans.Creator = pOperater;
                     fundTrans.CreateTime = this.DateTime;
                     fundTrans.TipsIcon = IconUtil.WithdrawApply;
-                    fundTrans.Description = string.Format("发起申请一笔提现，金额：{0}元", pWithdrawApplyPms.Amount);
+                    fundTrans.Description = string.Format("资金提现-到{0}({1})", withdraw.AcBank, CommonUtils.GetLastString(withdraw.AcBankCardNumber, 4));
                     CurrentDb.FundTrans.Add(fundTrans);
                     CurrentDb.SaveChanges();
                     ts.Complete();

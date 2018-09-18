@@ -57,7 +57,7 @@ namespace WebMobile.Controllers
                         myTran.ChangeType = item.Description;
                         break;
                     case Enumeration.FundTransChangeType.WtihdrawApply:
-                        myTran.ChangeType = "提现";
+                        myTran.ChangeType = item.Description;
                         break;
                     default:
                         myTran.ChangeType = "交易";
