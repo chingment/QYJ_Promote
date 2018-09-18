@@ -10,7 +10,6 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using WebMobile.Areas.Wb.Models.Biz.Report;
-using WebMobile.Areas.Wb.Models.Report;
 
 namespace WebMobile.Areas.Wb.Controllers
 {
@@ -339,21 +338,20 @@ namespace WebMobile.Areas.Wb.Controllers
                     var nickname = dtData.Rows[r]["Nickname"].ToString().Trim();
                     var num = dtData.Rows[r]["Num"].ToString().Trim();
 
-                    sbTableContent.Append("<tr rowspan=\"" + num + "\" >");
-                    sbTableContent.Append("<td>" + (r + 1) + "</td>");
-                    sbTableContent.Append("<td>" + nickname + "</td>");
-                    sbTableContent.Append("</tr>");
 
-                    string sql2 = " select b.Nickname,c.CtName,c.CtPhone,c.CtIsStudent, CtSchool,  a.IsBuy,a.BuyTime,a.IsGet,a.GetTime,a.IsConsume,a.ConsumeTime from PromoteUserCoupon a left join WxUserInfo  b on a.UserId=b.UserId left join PromoteUser c on a.userId=c.UserId  where a.RefereeId='" + userId + "' ";
+                    string sql2 = "  select b.Nickname,  a.IsBuy,a.BuyTime,a.IsGet,a.GetTime,a.IsConsume,a.ConsumeTime from PromoteUserCoupon a inner join WxUserInfo  b on a.UserId=b.UserId    where a.RefereeId='" + userId + "' ";
 
-                    DataTable dtData2 = DatabaseFactory.GetIDBOptionBySql().GetDataSet(sql.ToString()).Tables[0].ToStringDataTable();
+                    DataTable dtData2 = DatabaseFactory.GetIDBOptionBySql().GetDataSet(sql2).Tables[0].ToStringDataTable();
 
-
-                    for (int a = 0; a < dtData.Rows.Count; a++)
+                    if (num == "1")
                     {
-                        var nickname2 = dtData.Rows[a]["Nickname"].ToString().Trim();
-                        var isGet2 = dtData.Rows[a]["IsGet"].ToString().Trim();
-                        var isConsume3 = dtData.Rows[a]["IsConsume"].ToString().Trim();
+                        sbTableContent.Append("<tr >");
+                        sbTableContent.Append("<td>" + (r + 1) + "</td>");
+                        sbTableContent.Append("<td>" + nickname + "</td>");
+                        sbTableContent.Append("<td>" + dtData2.Rows[0]["Nickname"].ToString().Trim() + "</td>");
+
+                        var isGet2 = dtData2.Rows[0]["IsGet"].ToString().Trim();
+                        var isConsume3 = dtData2.Rows[0]["IsConsume"].ToString().Trim();
 
                         if (isGet2 == "True")
                         {
@@ -373,14 +371,60 @@ namespace WebMobile.Areas.Wb.Controllers
                             isConsume3 = "未核销";
                         }
 
-                        sbTableContent.Append("<tr >");
-                        sbTableContent.Append("<td>" + nickname2 + "</td>");
                         sbTableContent.Append("<td>" + isGet2 + "</td>");
                         sbTableContent.Append("<td>" + isConsume3 + "</td>");
+
                         sbTableContent.Append("</tr>");
+                    }
+                    else
+                    {
+                        sbTableContent.Append("<tr>");
+                        sbTableContent.Append("<td rowspan=\"" + num + "\">" + (r + 1) + "</td>");
+                        sbTableContent.Append("<td rowspan=\"" + num + "\">" + nickname + "</td>");
+
+                        for (int a = 0; a < dtData2.Rows.Count; a++)
+                        {
+                            var nickname2 = dtData2.Rows[a]["Nickname"].ToString().Trim();
+                            var isGet2 = dtData2.Rows[a]["IsGet"].ToString().Trim();
+                            var isConsume3 = dtData2.Rows[a]["IsConsume"].ToString().Trim();
+
+                            if (isGet2 == "True")
+                            {
+                                isGet2 = "已领取";
+                            }
+                            else
+                            {
+                                isGet2 = "未领取";
+                            }
+
+                            if (isConsume3 == "True")
+                            {
+                                isConsume3 = "已核销";
+                            }
+                            else
+                            {
+                                isConsume3 = "未核销";
+                            }
+
+                            if (a == 0)
+                            {
+                                sbTableContent.Append("<td>" + nickname2 + "</td>");
+                                sbTableContent.Append("<td>" + isGet2 + "</td>");
+                                sbTableContent.Append("<td>" + isConsume3 + "</td>");
+                                sbTableContent.Append("</tr>");
+                            }
+                            else
+                            {
+                                sbTableContent.Append("<tr>");
+                                sbTableContent.Append("<td>" + nickname2 + "</td>");
+                                sbTableContent.Append("<td>" + isGet2 + "</td>");
+                                sbTableContent.Append("<td>" + isConsume3 + "</td>");
+                                sbTableContent.Append("</tr>");
+                            }
+
+                        }
 
                     }
-
                 }
 
                 sbTable.Replace("{content}", sbTableContent.ToString());
