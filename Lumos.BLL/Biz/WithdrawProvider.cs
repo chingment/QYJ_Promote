@@ -142,7 +142,7 @@ namespace Lumos.BLL
                         fundTrans.Id = GuidUtil.New();
                         fundTrans.Sn = SnUtil.Build(Enumeration.BizSnType.FundTrans, withdraw.UserId);
                         fundTrans.UserId = withdraw.UserId;
-                        fundTrans.ChangeType = Enumeration.FundTransChangeType.WtihdrawApply;
+                        fundTrans.ChangeType = Enumeration.FundTransChangeType.WtihdrawFailure;
                         fundTrans.ChangeAmount = withdraw.Amount;
                         fundTrans.CurrentBalance = fund.CurrentBalance;
                         fundTrans.AvailableBalance = fund.AvailableBalance;
@@ -212,7 +212,7 @@ namespace Lumos.BLL
                         fundTrans.Id = GuidUtil.New();
                         fundTrans.Sn = SnUtil.Build(Enumeration.BizSnType.FundTrans, withdraw.UserId);
                         fundTrans.UserId = withdraw.UserId;
-                        fundTrans.ChangeType = Enumeration.FundTransChangeType.WtihdrawApply;
+                        fundTrans.ChangeType = Enumeration.FundTransChangeType.WtihdrawSuccess;
                         fundTrans.ChangeAmount = -withdraw.Amount;
                         fundTrans.CurrentBalance = fund.CurrentBalance;
                         fundTrans.AvailableBalance = fund.AvailableBalance;
