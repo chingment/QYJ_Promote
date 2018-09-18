@@ -93,6 +93,13 @@ namespace Lumos.BLL
                                             return;
                                         }
 
+                                        var wxUserInfo = CurrentDb.WxUserInfo.Where(m => m.UserId == promoteUserCoupon.UserId).FirstOrDefault();
+                                        string nickname = "";
+                                        if (wxUserInfo != null)
+                                        {
+                                            nickname = wxUserInfo.Nickname;
+                                        }
+
                                         decimal profit = 500m;
                                         fund.CurrentBalance += profit;
                                         fund.AvailableBalance += profit;
@@ -110,7 +117,7 @@ namespace Lumos.BLL
                                         fundTrans.LockBalance = fund.LockBalance;
                                         fundTrans.CreateTime = DateTime.Now;
                                         fundTrans.Creator = GuidUtil.Empty();
-                                        fundTrans.Description = string.Format("您推荐的用户核销优惠券，得到奖金:{0}元", profit.ToF2Price());
+                                        fundTrans.Description = string.Format("分享用户({0})核销优惠券", nickname);
                                         CurrentDb.FundTrans.Add(fundTrans);
 
 
