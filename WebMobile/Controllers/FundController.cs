@@ -24,6 +24,7 @@ namespace WebMobile.Controllers
             var query = (from o in CurrentDb.FundTrans
                          where
                          o.UserId == this.CurrentUserId
+                         && o.IsNoDisplay == false
                          select new { o.Id, o.Sn, o.ChangeAmount, o.ChangeType, o.CreateTime, o.Description, o.TipsIcon });
 
             int total = query.Count();
@@ -57,6 +58,8 @@ namespace WebMobile.Controllers
                         myTran.ChangeType = item.Description;
                         break;
                     case Enumeration.FundTransChangeType.WtihdrawApply:
+                    case Enumeration.FundTransChangeType.WtihdrawSuccess:
+                    case Enumeration.FundTransChangeType.WtihdrawFailure:
                         myTran.ChangeType = item.Description;
                         break;
                     default:
