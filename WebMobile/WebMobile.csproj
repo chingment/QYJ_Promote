@@ -182,6 +182,8 @@
     <Compile Include="Areas\Wb\Models\Biz\Report\PromoteCouponBuyRecordViewModel.cs" />
     <Compile Include="Areas\Wb\Models\Biz\Report\ReportModel.cs" />
     <Compile Include="Areas\Wb\Models\Biz\Withdraw\AuditViewModel.cs" />
+    <Compile Include="Areas\Wb\Models\Biz\Withdraw\DetailsViewModel.cs" />
+    <Compile Include="Areas\Wb\Models\Biz\Withdraw\DoTransferViewModel.cs" />
     <Compile Include="Areas\Wb\Models\Biz\Withdraw\SearchCondition.cs" />
     <Compile Include="Areas\Wb\Models\Home\ChangePasswordViewModel.cs" />
     <Compile Include="Areas\Wb\Models\Home\LoginViewModel.cs" />
@@ -441,6 +443,9 @@
     <Content Include="Areas\Wb\Views\Biz\Withdraw\ListByDoTransfer.cshtml" />
     <Content Include="Areas\Wb\Views\Biz\Withdraw\Audit.cshtml" />
     <Content Include="Areas\Wb\Views\Shared\_LayoutHomeDialog.cshtml" />
+    <Content Include="Areas\Wb\Views\Biz\Withdraw\DoTransfer.cshtml" />
+    <Content Include="Areas\Wb\Views\Biz\Withdraw\ListByDetails.cshtml" />
+    <Content Include="Areas\Wb\Views\Biz\Withdraw\Details.cshtml" />
     <None Include="log4net.config">
       <SubType>Designer</SubType>
     </None>

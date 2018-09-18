@@ -20,7 +20,7 @@ namespace WebMobile.Controllers
         public CustomJsonResult GetMy(SearchCondition model)
         {
             var query = (from o in CurrentDb.PromoteUserCoupon
-                         join m in CurrentDb.WxUserInfo on o.RefereeId equals m.UserId
+                         join m in CurrentDb.WxUserInfo on o.UserId equals m.UserId
 
                          where
                          o.RefereeId == this.CurrentUserId &&
