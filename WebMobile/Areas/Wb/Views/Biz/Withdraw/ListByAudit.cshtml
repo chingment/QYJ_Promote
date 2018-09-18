@@ -71,9 +71,21 @@
 <form id="form1" name="form1">
     <div class="search-bar">
         <div class="filter">
+            <span class="filter-label">流水号：</span>
+            <span class="filter-input">
+                <input type="text" class="input-control" name="Sn" style="width:120px;" />
+            </span>
+        </div>
+        <div class="filter">
             <span class="filter-label">姓名：</span>
             <span class="filter-input">
                 <input type="text" class="input-control" name="Name" style="width:120px;" />
+            </span>
+        </div>
+        <div class="filter">
+            <span class="filter-label">提交时间：</span>
+            <span class="filter-input">
+                <input type="text" class="input-control Wdate" id="Model_StartTime" name="StartTime" onclick="WdatePicker({ maxDate: '#F{$dp.$D(\'Model_EndTime\')||\'@DateTime.Now.ToString("yyyy-MM-dd")\'}' })" style="width:80px;" value="" />至<input type="text" class="input-control Wdate" id="Model_EndTime" name="EndTime" onclick="WdatePicker({ minDate: '#F{$dp.$D(\'Model_StartTime\')}' })" style="width:80px;" value="" />
             </span>
         </div>
         <div class="filter"><input type="button" class="btn btn-search" id="btn_Search" value="查询" /> </div>

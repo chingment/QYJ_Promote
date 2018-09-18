@@ -56,6 +56,10 @@ namespace WebMobile.Areas.Wb.Controllers
 
                          join w in CurrentDb.WxUserInfo on u.UserId equals w.UserId
                          where (condition.Name == null || u.AcName.Contains(condition.Name))
+                         &&
+                         (condition.Sn == null || u.Sn.Contains(condition.Sn)) &&
+                          (condition.StartTime == null || u.ApplyTime >= condition.StartTime) &&
+                        (condition.EndTime == null || u.ApplyTime <= condition.EndTime)
                          select new { u.Id, u.Sn, w.Nickname, u.AcName, u.AcIdNumber, u.Amount, u.ApplyTime, u.Status });
 
             int total = query.Count();
@@ -114,7 +118,10 @@ namespace WebMobile.Areas.Wb.Controllers
                          where (condition.Name == null || u.AcName.Contains(condition.Name))
                          &&
                          u.Status == Lumos.Entity.Enumeration.WithdrawStatus.Apply
-
+                            &&
+                         (condition.Sn == null || u.Sn.Contains(condition.Sn)) &&
+                                                  (condition.StartTime == null || u.ApplyTime >= condition.StartTime) &&
+                        (condition.EndTime == null || u.ApplyTime <= condition.EndTime)
                          select new { u.Id, u.Sn, w.Nickname, u.AcName, u.AcIdNumber, u.Amount, u.ApplyTime });
 
             int total = query.Count();
@@ -163,7 +170,10 @@ namespace WebMobile.Areas.Wb.Controllers
                          where (condition.Name == null || u.AcName.Contains(condition.Name))
                          &&
                          u.Status == Lumos.Entity.Enumeration.WithdrawStatus.Handing
-
+                            &&
+                         (condition.Sn == null || u.Sn.Contains(condition.Sn)) &&
+                         (condition.StartTime == null || u.ApplyTime >= condition.StartTime) &&
+                        (condition.EndTime == null || u.ApplyTime <= condition.EndTime)
                          select new { u.Id, u.Sn, w.Nickname, u.AcName, u.AcIdNumber, u.Amount, u.ApplyTime });
 
             int total = query.Count();
