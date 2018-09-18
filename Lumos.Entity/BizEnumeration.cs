@@ -97,7 +97,11 @@ namespace Lumos.Entity
             [Remark("核销优惠卷")]
             ConsumeCoupon = 2,
             [Remark("提现申请")]
-            WtihdrawApply = 3
+            WtihdrawApply = 3,
+            [Remark("提现成功")]
+            WtihdrawSuccess = 4,
+            [Remark("提现失败")]
+            WtihdrawFailure = 5
         }
 
         public enum PromoteProfitSetValueType

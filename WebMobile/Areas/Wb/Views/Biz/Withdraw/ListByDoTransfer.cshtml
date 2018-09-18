@@ -38,15 +38,22 @@
                     var url = '/Wb/Biz/Withdraw/DoTransfer?id=' + obj.id;
                     var title = '转账';
                     art.dialog.open(url, {
-                        id: "openDialog", title: title, width: '650px', height: '500px', lock: true, drag: false, cancelVal: '关闭', cancel: true,
+                        id: "openDialog", title: title, width: '800px', height: '600px', lock: true, drag: false, cancelVal: '关闭', cancel: true,
                         button: [{
-                            name: '确定转账',
+                            name: '确定转账成功',
                             className: 'aui_pass_button',
                             callback: function () {
                                 this.iframe.contentWindow.audit(1);
                                 return false;
                             },
                             focus: true
+                        }, {
+                            name: '确定转账失败',
+                            className: 'aui_refuse_button',
+                            callback: function () {
+                                this.iframe.contentWindow.audit(2);
+                                return false;
+                            }
                         }]
                     });
                 }

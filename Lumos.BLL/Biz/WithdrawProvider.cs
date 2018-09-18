@@ -70,7 +70,7 @@ namespace Lumos.BLL
                     fundTrans.LockBalance = fund.LockBalance;
                     fundTrans.Creator = pOperater;
                     fundTrans.CreateTime = this.DateTime;
-                    fundTrans.TipsIcon = IconUtil.WithdrawApply;
+                    fundTrans.TipsIcon = IconUtil.Withdraw;
                     fundTrans.Description = string.Format("资金提现-到{0}({1})", withdraw.AcBank, CommonUtils.GetLastString(withdraw.AcBankCardNumber, 4));
                     CurrentDb.FundTrans.Add(fundTrans);
                     CurrentDb.SaveChanges();
@@ -150,7 +150,7 @@ namespace Lumos.BLL
                         fundTrans.Creator = pOperater;
                         fundTrans.CreateTime = this.DateTime;
                         fundTrans.Description = string.Format("资金提现失败，原因：{0}", withdraw.FailureReason);
-                        fundTrans.TipsIcon = IconUtil.WithdrawFailure;
+                        fundTrans.TipsIcon = IconUtil.Withdraw;
                         fundTrans.IsNoDisplay = false;
                         CurrentDb.FundTrans.Add(fundTrans);
 
@@ -219,7 +219,7 @@ namespace Lumos.BLL
                         fundTrans.LockBalance = fund.LockBalance;
                         fundTrans.Creator = pOperater;
                         fundTrans.CreateTime = this.DateTime;
-                        fundTrans.TipsIcon = IconUtil.WithdrawFailure;
+                        fundTrans.TipsIcon = IconUtil.Withdraw;
                         fundTrans.IsNoDisplay = true;
                         CurrentDb.FundTrans.Add(fundTrans);
 
@@ -252,7 +252,7 @@ namespace Lumos.BLL
                         fundTrans.Creator = pOperater;
                         fundTrans.CreateTime = this.DateTime;
                         fundTrans.Description = string.Format("资金提现失败，原因：{0}", withdraw.FailureReason);
-                        fundTrans.TipsIcon = IconUtil.WithdrawFailure;
+                        fundTrans.TipsIcon = IconUtil.Withdraw;
                         fundTrans.IsNoDisplay = false;
                         CurrentDb.FundTrans.Add(fundTrans);
 

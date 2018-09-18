@@ -20,10 +20,10 @@
             var confirmMsg = "";
             switch (operate) {
                 case 1:
-                    confirmMsg = "确定审核通过,转入待转账？";
+                    confirmMsg = "确定转账成功，请慎重核对清楚？";
                     break;
                 case 2:
-                    confirmMsg = "确定审核不通过？";
+                    confirmMsg = "确定转账失败，请慎重核对清楚？";
                     break;
                 default:
                     return false;
@@ -39,7 +39,7 @@
                 function () {
                     $.lumos.postJson({
                         isUseHandling: true,
-                        url: "/Wb/Biz/Withdraw/Audit",
+                        url: "/Wb/Biz/Withdraw/DoTransfer",
                         data: { operate: operate, withdrawId: withdrawId, auditComments: auditComments },
                         success: function (d) {
                             $.lumos.parentDialog.listTable.loadData();

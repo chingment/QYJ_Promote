@@ -195,5 +195,11 @@ namespace WebMobile.Areas.Wb.Controllers
             return Json(ResultType.Success, pageEntity, "");
         }
 
+
+        [HttpPost]
+        public CustomJsonResult DoTransfer(WithdrawDoTransferPms model)
+        {
+            return BizFactory.Withdraw.DoTransfer(this.CurrentUserId, model);
+        }
     }
 }
