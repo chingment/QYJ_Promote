@@ -81,6 +81,14 @@ namespace WebMobile.Models.Withdraw
                 _availableBalance = fund.AvailableBalance.ToF2Price();
             }
 
+            var withdraw = CurrentDb.Withdraw.Where(m => m.UserId == userId).OrderByDescending(m => m.ApplyTime).FirstOrDefault();
+            if (withdraw != null)
+            {
+                _acName = withdraw.AcName;
+                _acIdNumber = withdraw.AcIdNumber;
+                _acBank = withdraw.AcBank;
+                _acBankCardNumber = withdraw.AcBankCardNumber;
+            }
         }
     }
 }
