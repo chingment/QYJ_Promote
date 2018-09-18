@@ -180,6 +180,8 @@
     <Compile Include="Areas\Wb\Controllers\CommonController.cs" />
     <Compile Include="Areas\Wb\Controllers\HomeController.cs" />
     <Compile Include="Areas\Wb\Models\Biz\Report\PromoteCouponBuyRecordViewModel.cs" />
+    <Compile Include="Areas\Wb\Models\Biz\Report\PromoteShareBuyRecordViewModel.cs" />
+    <Compile Include="Areas\Wb\Models\Biz\Report\PromoteShareRecordViewModel.cs" />
     <Compile Include="Areas\Wb\Models\Biz\Report\ReportModel.cs" />
     <Compile Include="Areas\Wb\Models\Biz\Withdraw\AuditViewModel.cs" />
     <Compile Include="Areas\Wb\Models\Biz\Withdraw\DetailsViewModel.cs" />
@@ -447,6 +449,7 @@
     <Content Include="Areas\Wb\Views\Biz\Withdraw\DoTransfer.cshtml" />
     <Content Include="Areas\Wb\Views\Biz\Withdraw\ListByDetails.cshtml" />
     <Content Include="Areas\Wb\Views\Biz\Withdraw\Details.cshtml" />
+    <Content Include="Areas\Wb\Views\Biz\Report\PromoteShareBuyRecord.cshtml" />
     <None Include="log4net.config">
       <SubType>Designer</SubType>
     </None>

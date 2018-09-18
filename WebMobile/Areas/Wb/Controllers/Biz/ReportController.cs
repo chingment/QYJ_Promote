@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using WebMobile.Areas.Wb.Models.Biz.Report;
 using WebMobile.Areas.Wb.Models.Report;
 
 namespace WebMobile.Areas.Wb.Controllers
@@ -186,7 +187,7 @@ namespace WebMobile.Areas.Wb.Controllers
             }
         }
 
-        public ActionResult PromoteShareRecord(PromoteCouponBuyRecordViewModel model)
+        public ActionResult PromoteShareRecord(PromoteShareRecordViewModel model)
         {
             StringBuilder sbTable = new StringBuilder();
             sbTable.Append("<table class='list-tb' cellspacing='0' cellpadding='0'>");
@@ -272,6 +273,114 @@ namespace WebMobile.Areas.Wb.Controllers
                     }
 
                     sbTableContent.Append("</tr>");
+                }
+
+                sbTable.Replace("{content}", sbTableContent.ToString());
+
+                ReportTable reportTable = new ReportTable(sbTable.ToString());
+
+                if (model.Operate == Enumeration.OperateType.Serach)
+                {
+                    return Json(ResultType.Success, reportTable, "");
+                }
+                else
+                {
+                    NPOIExcelHelper.HtmlTable2Excel(reportTable.Html, "活动分享记录报表");
+
+                    return Json(ResultType.Success, "");
+                }
+                #endregion
+            }
+        }
+
+        public ActionResult PromoteShareBuyRecord(PromoteShareBuyRecordViewModel model)
+        {
+            StringBuilder sbTable = new StringBuilder();
+            sbTable.Append("<table class='list-tb' cellspacing='0' cellpadding='0'>");
+            sbTable.Append("<thead>");
+            sbTable.Append("<tr>");
+            sbTable.Append("<th>序号</th>");
+            sbTable.Append("<th>分享者昵称</th>");
+            sbTable.Append("<th>被分享者昵称</th>");
+            sbTable.Append("<th>卡券领取情况</th>");
+            sbTable.Append("<th>卡券核销情况</th>");
+            sbTable.Append("</tr>");
+            sbTable.Append("</thead>");
+            sbTable.Append("<tbody>");
+            sbTable.Append("{content}");
+            sbTable.Append("</tbody>");
+            sbTable.Append("</table>");
+
+            if (Request.HttpMethod == "GET")
+            {
+                #region GET
+                sbTable.Replace("{content}", "<tr><td colspan=\"5\"></td></tr>");
+
+                model.TableHtml = sbTable.ToString();
+                return View(model);
+
+                #endregion
+            }
+            else
+            {
+                #region POST
+                StringBuilder sql = new StringBuilder(" select UserId, Nickname,b.Num from WxUserInfo a inner join (select  RefereeId, count(*) as Num from[dbo].[PromoteUserCoupon]  group by RefereeId) b on a.UserId = b.RefereeId ");
+
+                sql.Append(" where 1=1 ");
+
+                sql.Append(" order by Num desc  ");
+
+
+                DataTable dtData = DatabaseFactory.GetIDBOptionBySql().GetDataSet(sql.ToString()).Tables[0].ToStringDataTable();
+                StringBuilder sbTableContent = new StringBuilder();
+                for (int r = 0; r < dtData.Rows.Count; r++)
+                {
+                    var userId = dtData.Rows[r]["UserId"].ToString().Trim();
+                    var nickname = dtData.Rows[r]["Nickname"].ToString().Trim();
+                    var num = dtData.Rows[r]["Num"].ToString().Trim();
+
+                    sbTableContent.Append("<tr rowspan=\"" + num + "\" >");
+                    sbTableContent.Append("<td>" + (r + 1) + "</td>");
+                    sbTableContent.Append("<td>" + nickname + "</td>");
+                    sbTableContent.Append("</tr>");
+
+                    string sql2 = " select b.Nickname,c.CtName,c.CtPhone,c.CtIsStudent, CtSchool,  a.IsBuy,a.BuyTime,a.IsGet,a.GetTime,a.IsConsume,a.ConsumeTime from PromoteUserCoupon a left join WxUserInfo  b on a.UserId=b.UserId left join PromoteUser c on a.userId=c.UserId  where a.RefereeId='" + userId + "' ";
+
+                    DataTable dtData2 = DatabaseFactory.GetIDBOptionBySql().GetDataSet(sql.ToString()).Tables[0].ToStringDataTable();
+
+
+                    for (int a = 0; a < dtData.Rows.Count; a++)
+                    {
+                        var nickname2 = dtData.Rows[a]["Nickname"].ToString().Trim();
+                        var isGet2 = dtData.Rows[a]["IsGet"].ToString().Trim();
+                        var isConsume3 = dtData.Rows[a]["IsConsume"].ToString().Trim();
+
+                        if (isGet2 == "True")
+                        {
+                            isGet2 = "已领取";
+                        }
+                        else
+                        {
+                            isGet2 = "未领取";
+                        }
+
+                        if (isConsume3 == "True")
+                        {
+                            isConsume3 = "已核销";
+                        }
+                        else
+                        {
+                            isConsume3 = "未核销";
+                        }
+
+                        sbTableContent.Append("<tr >");
+                        sbTableContent.Append("<td>" + nickname2 + "</td>");
+                        sbTableContent.Append("<td>" + isGet2 + "</td>");
+                        sbTableContent.Append("<td>" + isConsume3 + "</td>");
+                        sbTableContent.Append("</tr>");
+
+                    }
+
                 }
 
                 sbTable.Replace("{content}", sbTableContent.ToString());
