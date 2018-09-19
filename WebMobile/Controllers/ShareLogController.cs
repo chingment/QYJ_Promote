@@ -24,6 +24,7 @@ namespace WebMobile.Controllers
 
                          where
                          o.RefereeId == this.CurrentUserId &&
+                         o.UserId != o.RefereeId &&
                          o.IsBuy == true
                          select new { o.IsBuy, o.BuyTime, o.IsConsume, o.IsGet, m.Nickname, m.HeadImgUrl });
 
