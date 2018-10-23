@@ -197,6 +197,7 @@
     <Compile Include="Controllers\CouponController.cs" />
     <Compile Include="Controllers\OperateController.cs" />
     <Compile Include="Controllers\PersonalController.cs" />
+    <Compile Include="Controllers\PromotebController.cs" />
     <Compile Include="Controllers\PromoteController.cs" />
     <Compile Include="Controllers\ShareLogController.cs" />
     <Compile Include="Controllers\WithdrawController.cs" />
@@ -482,6 +483,8 @@
     <Content Include="Views\Withdraw\My.cshtml" />
     <Content Include="Views\Withdraw\Apply.cshtml" />
     <Content Include="Views\Operate\Result.cshtml" />
+    <Content Include="Views\Promoteb\Coupon.cshtml" />
+    <Content Include="Views\Promoteb\PayResult.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>
@@ -498,6 +501,7 @@
     <Folder Include="Areas\Wb\Scripts\Jquery.tree\" />
     <Folder Include="Areas\Wb\Scripts\kindeditor\" />
     <Folder Include="Areas\Wb\Scripts\themes\" />
+    <Folder Include="Content\images\promote20181021\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

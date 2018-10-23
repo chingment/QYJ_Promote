@@ -232,7 +232,7 @@ namespace WebMobile.Controllers
 
                                         if (textMsg.Content == "代金券" || textMsg.Content == "代金卷" || textMsg.Content == "代金劵")
                                         {
-                                            string promoteId = "a999753c5fe14e26bbecad576b6a6909";
+                                            string promoteId = "akkk753c5fe14e26bbecad576b6a6kkk";
                                             string media_Id = GetWxPromoteImgMediaId(promoteId, wxUserInfo.UserId);
                                             echoStr = WxMsgFactory.CreateReplyImage(baseEventMsg.FromUserName, baseEventMsg.ToUserName, media_Id);
                                         }
@@ -395,7 +395,7 @@ namespace WebMobile.Controllers
 
             if (string.IsNullOrEmpty(promoteUser.WxPromoteImgMediaId))
             {
-                System.Drawing.Image oImg = System.Drawing.Image.FromFile(Server.MapPath("~/Static/Promote/promote_bg_1.jpg"));
+                System.Drawing.Image oImg = System.Drawing.Image.FromFile(Server.MapPath("~/Static/Promote/promote_bg_2.jpg"));
                 BarcodeWriter writer = new BarcodeWriter();
                 writer.Format = BarcodeFormat.QR_CODE;
                 QrCodeEncodingOptions options = new QrCodeEncodingOptions();
@@ -408,7 +408,7 @@ namespace WebMobile.Controllers
                 //设置二维码的边距,单位不是固定像素
                 options.Margin = 1;
                 writer.Options = options;
-                System.Drawing.Image oImg1 = writer.Write(string.Format("http://qyj.17fanju.com/Promote/Coupon?promoteId={0}&refereeId={1}", promoteId, userId));
+                System.Drawing.Image oImg1 = writer.Write(string.Format("http://qyj.17fanju.com/Promoteb/Coupon?promoteId={0}&refereeId={1}", promoteId, userId));
                 System.Drawing.Bitmap map = new Bitmap(oImg);
                 oImg.Dispose();
                 Graphics g = Graphics.FromImage(map);
