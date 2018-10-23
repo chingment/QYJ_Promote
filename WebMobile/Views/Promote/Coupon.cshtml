@@ -66,7 +66,7 @@
                     $(_this).attr("disabled", "disabled");
 
                     var _data = $('#form1').serializeArray();
-
+        
                     $.lumos.postJson({
                         url: "/Promote/UnifiedOrder",
                         isShowLoading: true,
@@ -94,7 +94,7 @@
                                 });
                             } else {
                                 $.lumos.tips(d.message);
-                                $(_btn).removeAttr("disabled");
+                                $(_this).removeAttr("disabled");
                             }
                         }
                     });
