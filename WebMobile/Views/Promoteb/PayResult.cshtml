@@ -220,37 +220,11 @@
     <script type="text/javascript">
 
         var promoteId = "@Model.PromoteId";
+        var refereeId = "@(Model.RefereeId==null?Request.QueryString["refereeId"]: Model.RefereeId)";
         var userId = "@(OwnRequest.GetUserInfo().UserId)";
         var isGetCoupon=@(Model.IsGetCoupon==true?"true":"false");
 
         $(function () {
-
-            $("#btn_OpenCoupon").on("click",
-          function () {
-              var _this = $(this);
-
-              $.lumos.postJson({
-                  url: "/Promote/GetCardList",
-                  data: { promoteId: promoteId },
-                  success: function (d) {
-                      var cards = d.data;
-                      var cardList = [];
-                      for (var p in cards) {
-                          cardList.push({ cardId: cards[p].cardId, code: cards[p].code });
-                      }
-
-                      wx.openCard({
-                          cardList: cardList,
-                          cancel: function (res) {
-
-                          }
-                      });
-                  }
-              });
-
-          });
-
-
 
             var shareTitle = '全优加周年庆福利，¥1248元优乐享卡';
             var shareDesc = '限量1028张，60校同抢\n免费送！送！送！';
@@ -295,168 +269,55 @@
 
             });
 
-            $("#modal_Invite").on("click",
-              function (e) {
-                  $("#modal_Invite").hide();
-              });
+            accessLog(promoteId, refereeId, window.document.location.href);
 
-
-            $('#btn_GoInvite').on("click",
-             function () {
-
-                 var scrollTop = document.body.scrollTop;//网页被卷去的高
-                 $("#modal_Invite").css({ top: scrollTop + "px" });
-                 $("#modal_Invite").show();
-                 $("#share_container").show();
-
-                 $('#modal_Invite').bind("touchmove",
-                     function (e) {
-                         e.preventDefault();
-                     });
-                 $("#modal_Invite").bind("mousewheel",
-                     function (e) {
-                         //阻止浏览器默认方法
-                         e.preventDefault();
-                     });
-             });
-
-
-
-            $('#btn_Pop_Sure').on("click",
-         function () {
-
-             var ctName=$('#txt_ctName').val();
-             var ctPhone=$('#txt_ctPhone').val();
-             var ctIsStudent=$('input[name=rd_ctIsStudent]:checked').val();
-             var ctSchool=$('#sel_ctSchool').find('option:selected').val();
-
-             if(trim(ctName)=="") {
-                 $.lumos.tips("请输入姓名");
-                 return false;
-             }
-
-             if(trim(ctPhone)=="") {
-                 $.lumos.tips("请输入电话号码");
-                 return false;
-             }
-
-             if(trim(ctSchool)=="") {
-                 $.lumos.tips("请选择校区");
-                 return false;
-             }
-
-             $.lumos.postJson({
-                 url: "/Promote/EditPromoteUserInfo",
-                 isShowLoading:true,
-                 data: { promoteId: promoteId,ctName:ctName,ctPhone:ctPhone,ctIsStudent:ctIsStudent,ctSchool:ctSchool },
-                 success: function (d) {
-                     if (d.result == $.lumos.resultType.success) {
-                         $('.popd').hide();
-                         getCard();
-                     }
-                 }
-             });
-         });
-
-
-            $(".popd-close").on("click",
-   function (e) {
-       $(".popd").hide();
-   });
-
-        });
-
-        function addCouponNotifyResult(cards) {
-
-            var l_Data=[];
-
-            l_Data.push({ name: "Model.PromoteId", value: promoteId });
-
-            $.each(cards, function (i, row) {
-                l_Data.push({ name: "Model.Coupons[" + i + "].WxCouponId", value: row.cardId });
-                l_Data.push({ name: "Model.Coupons[" + i + "].WxCouponEncryptCode", value: row.code });
-            });
-
-            $.lumos.postJson({
-                url: "/Promote/AddCouponNotifyResult",
-                data: l_Data,
-                success: function (d) {
-                    if (d.result == $.lumos.resultType.success) {
-
-
-                        $.lumos.tips('成功领取卡券');
-                        $('.btn-OpenCoupon').show();
-                        $('.btn-GetCoupon').hide();
-                    }
-                }
-            });
-        }
-
-
-        function getCard(){
-
-            $.lumos.postJson({
-                url: "/Promote/GetCardList",
-                data: { promoteId: promoteId },
-                isShowLoading:true,
-                success: function (d) {
-
-                    if (d.result == $.lumos.resultType.success) {
+            $("#btn_OpenCoupon").on("click",function () {
+                var _this = $(this);
+                $.lumos.postJson({
+                    url: "/Promote/GetCardList",
+                    data: { promoteId: promoteId },
+                    success: function (d) {
                         var cards = d.data;
                         var cardList = [];
                         for (var p in cards) {
-                            cardList.push({ cardId: cards[p].cardId, cardExt: cards[p].cardExt });
+                            cardList.push({ cardId: cards[p].cardId, code: cards[p].code });
                         }
-
-                        wx.addCard({
+                        wx.openCard({
                             cardList: cardList,
-                            success: function (res) {
-                                add_cardList=res.cardList;
-                                addCouponNotifyResult(add_cardList);
-                            },
                             cancel: function (res) {
 
                             }
                         });
                     }
-                    else{
-                        if(d.code=="4001") {
-                            $('.popd').show();
-                        }
-                        else {
-                            $.lumos.tips(d.messages);
-                        }
-                    }
-                }
-            });
-        }
-
-
-        function addCouponNotifyResult(cards) {
-
-            var l_Data=[];
-
-            l_Data.push({ name: "Model.PromoteId", value: promoteId });
-
-            $.each(cards, function (i, row) {
-                l_Data.push({ name: "Model.Coupons[" + i + "].WxCouponId", value: row.cardId });
-                l_Data.push({ name: "Model.Coupons[" + i + "].WxCouponEncryptCode", value: row.code });
+                });
             });
 
-            $.lumos.postJson({
-                url: "/Promote/AddCouponNotifyResult",
-                data: l_Data,
-                success: function (d) {
-                    if (d.result == $.lumos.resultType.success) {
-                        window.location.href = "/Promoteb/PayResult?promoteId=" + promoteId + "&orderSn=" + params.orderSn + "&isSuccessed=True";
-                        $.lumos.tips('成功领取卡券');
-                    }
-                }
+            $("#modal_Invite").on("click", function (e) {
+                $("#modal_Invite").hide();
             });
-        }
 
-        function trim(str){ //删除左右两端的空格
-            return str.replace(/(^\s*)|(\s*$)/g, "");
-        }
+            $('#btn_GoInvite').on("click",  function () {
+
+                var scrollTop = document.body.scrollTop;//网页被卷去的高
+                $("#modal_Invite").css({ top: scrollTop + "px" });
+                $("#modal_Invite").show();
+                $("#share_container").show();
+
+                $('#modal_Invite').bind("touchmove",
+                    function (e) {
+                        e.preventDefault();
+                    });
+                $("#modal_Invite").bind("mousewheel",
+                    function (e) {
+                        //阻止浏览器默认方法
+                        e.preventDefault();
+                    });
+            });
+
+        });
+
+
+
+
     </script>
 }

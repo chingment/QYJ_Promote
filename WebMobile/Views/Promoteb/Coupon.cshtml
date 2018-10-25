@@ -222,35 +222,6 @@
 
         $(function () {
 
-
-            accessLog(promoteId, refereeId, window.document.location.href);
-
-            $("#btn_GetCoupon").on("click", function () {
-                var _this = $(this);
-
-                $(_this).attr("disabled", "disabled");
-
-                var _data = $('#form1').serializeArray();
-
-                $.lumos.postJson({
-                    url: "/Promote/UnifiedOrder",
-                    isShowLoading: true,
-                    data: { type: "1", refereeId: refereeId, orderPms: { promoteId: promoteId, promoteCouponId: promoteCouponId } },
-                    success: function (d) {
-                        if (d.result == $.lumos.resultType.success) {
-                            getCard();
-                        } else {
-                            $.lumos.tips(d.message);
-                            $(_this).removeAttr("disabled");
-                        }
-                    }
-                });
-
-
-            });
-
-
-
             var shareTitle = '全优加周年庆福利，¥1248元优乐享卡';
             var shareDesc = '限量1028张，60校同抢\n免费送！送！送！';
             var shareLink = 'http://qyj.17fanju.com/Promoteb/Coupon?promoteId=' + promoteId + '&refereeId=' + userId;
@@ -294,6 +265,32 @@
 
             });
 
+            accessLog(promoteId, refereeId, window.document.location.href);
+
+            $("#btn_GetCoupon").on("click", function () {
+                var _this = $(this);
+
+                $(_this).attr("disabled", "disabled");
+
+                var _data = $('#form1').serializeArray();
+
+                $.lumos.postJson({
+                    url: "/Promote/UnifiedOrder",
+                    isShowLoading: true,
+                    data: { type: "1", refereeId: refereeId, orderPms: { promoteId: promoteId, promoteCouponId: promoteCouponId } },
+                    success: function (d) {
+                        if (d.result == $.lumos.resultType.success) {
+                            getCard();
+                        } else {
+                            $.lumos.tips(d.message);
+                            $(_this).removeAttr("disabled");
+                        }
+                    }
+                });
+
+
+            });
+
             $("#modal_Invite").on("click", function (e) {
                 $("#modal_Invite").hide();
             });
@@ -325,17 +322,17 @@
                 var ctIsStudent = $('input[name=rd_ctIsStudent]:checked').val();
                 var ctSchool = $('#sel_ctSchool').find('option:selected').val();
 
-                if (trim(ctName) == "") {
+                if ($.lumos.isNullOrEmpty(ctName)) {
                     $.lumos.tips("请输入姓名");
                     return false;
                 }
 
-                if (trim(ctPhone) == "") {
+                if ($.lumos.isNullOrEmpty(ctPhone)) {
                     $.lumos.tips("请输入电话号码");
                     return false;
                 }
 
-                if (trim(ctSchool) == "") {
+                if ($.lumos.isNullOrEmpty(ctSchool)) {
                     $.lumos.tips("请选择校区");
                     return false;
                 }
@@ -356,12 +353,7 @@
             $(".popd-close").on("click", function (e) {
                 $(".popd").hide();
             });
-
-
-
         });
-
-
 
         function payResultNotify(orderSn, res, url) {
 
@@ -376,17 +368,6 @@
                     }
                 }
             });
-        }
-
-        function cancleOrder(orderSn) {
-
-            //$.lumos.postJson({
-            //    url: "/Promote/CancleOrder",
-            //    data: { orderSn: orderSn, res: "用户取消支付" },
-            //    success: function (d) {
-
-            //    }
-            //})
         }
 
         function getCard() {
@@ -425,10 +406,6 @@
                     }
                 }
             });
-        }
-
-        function trim(str) { //删除左右两端的空格
-            return str.replace(/(^\s*)|(\s*$)/g, "");
         }
 
     </script>

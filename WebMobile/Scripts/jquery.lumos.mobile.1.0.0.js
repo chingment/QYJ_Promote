@@ -18,10 +18,15 @@
             }
         },
         isNullOrEmpty: function (obj) {
-            if (obj == null) {
+
+            if (typeof obj == "undefined")
                 return true;
-            }
-            else if (obj == "") {
+            if (obj == null)
+                return true;
+
+            var str = obj.replace(/(^\s*)|(\s*$)/g, "")
+
+            if (str == "") {
                 return true;
             }
             else {
@@ -552,10 +557,10 @@
         operateResult: function (opts) {
 
             opts = $.extend({
-                result: "1",  
-                message: "提示",  
-                remarks: "", 
-                button: null  
+                result: "1",
+                message: "提示",
+                remarks: "",
+                button: null
             }, opts);
 
             sessionStorage.setItem("operateResult", JSON.stringify(opts));

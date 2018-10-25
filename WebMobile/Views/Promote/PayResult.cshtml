@@ -344,17 +344,17 @@
              var ctIsStudent=$('input[name=rd_ctIsStudent]:checked').val();
              var ctSchool=$('#sel_ctSchool').find('option:selected').val();
 
-             if(trim(ctName)=="") {
+             if($.lumos.isNullOrEmpty(ctName)) {
                  $.lumos.tips("请输入姓名");
                  return false;
              }
 
-             if(trim(ctPhone)=="") {
+             if($.lumos.isNullOrEmpty(ctPhone)) {
                  $.lumos.tips("请输入电话号码");
                  return false;
              }
 
-             if(trim(ctSchool)=="") {
+             if($.lumos.isNullOrEmpty(ctSchool)) {
                  $.lumos.tips("请选择校区");
                  return false;
              }
@@ -445,8 +445,5 @@
             });
         }
 
-        function trim(str){ //删除左右两端的空格
-            return str.replace(/(^\s*)|(\s*$)/g, "");
-        }
     </script>
 }

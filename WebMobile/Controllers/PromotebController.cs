@@ -90,6 +90,7 @@ namespace WebMobile.Controllers
                 return Redirect("~/Promoteb/Coupon?promoteId=" + model.PromoteId + "&refereeId=" + refereeId);
             }
 
+            model.RefereeId = refereeId;
             return View(model);
         }
     }
