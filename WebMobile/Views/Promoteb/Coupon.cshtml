@@ -219,9 +219,8 @@
         var promoteCouponId = "@Model.PromoteCouponId";
         var refereeId = "@(Model.RefereeId==null?Request.QueryString["refereeId"]: Model.RefereeId)";
         var userId = "@(OwnRequest.GetUserInfo().UserId)";
-
         $(function () {
-
+            accessLog(promoteId, refereeId, window.document.location.href);
             var shareTitle = '全优加周年庆福利，¥1248元优乐享卡';
             var shareDesc = '限量1028张，60校同抢\n免费送！送！送！';
             var shareLink = 'http://qyj.17fanju.com/Promoteb/Coupon?promoteId=' + promoteId + '&refereeId=' + userId;
@@ -265,8 +264,6 @@
 
             });
 
-            accessLog(promoteId, refereeId, window.document.location.href);
-
             $("#btn_GetCoupon").on("click", function () {
                 var _this = $(this);
 
@@ -280,7 +277,8 @@
                     data: { type: "1", refereeId: refereeId, orderPms: { promoteId: promoteId, promoteCouponId: promoteCouponId } },
                     success: function (d) {
                         if (d.result == $.lumos.resultType.success) {
-                            getCard();
+                            var params = d.data;
+                            getCard(params.orderSn);
                         } else {
                             $.lumos.tips(d.message);
                             $(_this).removeAttr("disabled");
@@ -294,7 +292,6 @@
             $("#modal_Invite").on("click", function (e) {
                 $("#modal_Invite").hide();
             });
-
 
             $('#btn_GoInvite').on("click", function () {
 
@@ -313,7 +310,6 @@
                         e.preventDefault();
                     });
             });
-
 
             $('#btn_Pop_Sure').on("click", function () {
 
@@ -355,29 +351,14 @@
             });
         });
 
-        function payResultNotify(orderSn, res, url) {
-
-            $.lumos.postJson({
-                url: "/Promote/PayNotifyResult",
-                data: { orderSn: orderSn, res: res },
-                success: function (d) {
-                    if (d.result == $.lumos.resultType.success) {
-                        if (url != "") {
-                            window.location.href = url;
-                        }
-                    }
-                }
-            });
-        }
-
-        function getCard() {
+        function getCard(orderSn) {
 
             $.lumos.postJson({
                 url: "/Promote/GetCardList",
                 data: { promoteId: promoteId },
                 isShowLoading: true,
                 success: function (d) {
-                    alert(JSON.stringify(d))
+           
                     if (d.result == $.lumos.resultType.success) {
                         var cards = d.data;
                         var cardList = [];
@@ -388,8 +369,7 @@
                         wx.addCard({
                             cardList: cardList,
                             success: function (res) {
-                                add_cardList = res.cardList;
-                                addCouponNotifyResult(add_cardList);
+                                addCouponNotifyResult(orderSn, res.cardList);
                             },
                             cancel: function (res) {
 
@@ -408,5 +388,29 @@
             });
         }
 
+        function addCouponNotifyResult(orderSn,cards) {
+
+            var l_Data = [];
+
+            l_Data.push({ name: "Model.PromoteId", value: promoteId });
+
+            $.each(cards, function (i, row) {
+                l_Data.push({ name: "Model.Coupons[" + i + "].WxCouponId", value: row.cardId });
+                l_Data.push({ name: "Model.Coupons[" + i + "].WxCouponEncryptCode", value: row.code });
+            });
+
+            $.lumos.postJson({
+                url: "/Promote/AddCouponNotifyResult",
+                data: l_Data,
+                success: function (d) {
+                    if (d.result == $.lumos.resultType.success) {
+
+                        $.lumos.tips('成功领取卡券');
+                       
+                        window.location.href = "/Promote/PayResult?promoteId=" + promoteId + "&orderSn=" + orderSn + "&isSuccessed=True";
+                    }
+                }
+            });
+        }
     </script>
 }

@@ -225,7 +225,7 @@
         var isGetCoupon=@(Model.IsGetCoupon==true?"true":"false");
 
         $(function () {
-
+            accessLog(promoteId, refereeId, window.document.location.href);
             var shareTitle = '全优加周年庆福利，¥1248元优乐享卡';
             var shareDesc = '限量1028张，60校同抢\n免费送！送！送！';
             var shareLink = 'http://qyj.17fanju.com/Promoteb/Coupon?promoteId=' + promoteId + '&refereeId=' + userId;
@@ -268,8 +268,6 @@
                 });
 
             });
-
-            accessLog(promoteId, refereeId, window.document.location.href);
 
             $("#btn_OpenCoupon").on("click",function () {
                 var _this = $(this);
