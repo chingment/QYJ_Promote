@@ -77,10 +77,10 @@ namespace Lumos.BLL
                         return new CustomJsonResult<Order>(ResultType.Failure, ResultCode.Failure, "找不到用户微信信息", null);
                     }
 
-                    var orderByBuyedCount = CurrentDb.Order.Where(m => m.UserId == pUserId && m.PromoteId == pms.PromoteId && m.Status == Enumeration.OrderStatus.Payed).Count();
-                    if (orderByBuyedCount > 0)
+                    var orderByBuyed = CurrentDb.Order.Where(m => m.UserId == pUserId && m.PromoteId == pms.PromoteId && m.Status == Enumeration.OrderStatus.Payed).FirstOrDefault();
+                    if (orderByBuyed != null)
                     {
-                        return new CustomJsonResult<Order>(ResultType.Failure, ResultCode.Failure, "您已成功抢购", null);
+                        return new CustomJsonResult<Order>(ResultType.Success, ResultCode.Success, "您已成功抢购", orderByBuyed);
                     }
 
                     var order = new Order();
@@ -93,8 +93,6 @@ namespace Lumos.BLL
                     order.OriginalAmount = productSku.Price;
                     order.DiscountAmount = 0;
                     order.ChargeAmount = order.OriginalAmount - order.DiscountAmount;
-                    order.Status = Enumeration.OrderStatus.WaitPay; //待支付状态
-                    order.WxPrepayIdExpireTime = this.DateTime.AddMinutes(5);
                     order.SubmitTime = this.DateTime;
                     order.CreateTime = this.DateTime;
                     order.Creator = pOperater;
@@ -124,34 +122,63 @@ namespace Lumos.BLL
 
                     decimal chargeAmount = order.ChargeAmount;
 
-                    if (order.UserId == "62c587c13c124f96b436de9522fb31f0")
+                    if (chargeAmount > 0)
                     {
-                        chargeAmount = 0.01m;
-                    }
+                        order.Status = Enumeration.OrderStatus.WaitPay; //待支付状态
+                        order.WxPrepayIdExpireTime = this.DateTime.AddMinutes(5);
 
-                    string goods_tag = "";
-                    if (order.ChargeAmount > 0)
+                        if (order.UserId == "62c587c13c124f96b436de9522fb31f0")
+                        {
+                            chargeAmount = 0.01m;
+                        }
+
+                        string goods_tag = "";
+                        if (order.ChargeAmount > 0)
+                        {
+                            string prepayId = SdkFactory.Wx.Instance().GetPrepayId(pOperater, "JSAPI", wxUserInfo.OpenId, order.Sn, chargeAmount, goods_tag, Common.CommonUtils.GetIP(), productSku.Name, order.WxPrepayIdExpireTime);
+
+                            if (string.IsNullOrEmpty(prepayId))
+                            {
+                                LogUtil.Error("去结算，微信支付中生成预支付订单失败");
+
+                                return new CustomJsonResult<Lumos.Entity.Order>(ResultType.Failure, ResultCode.Failure, "微信支付中生成预支付订单失败", order);
+                            }
+                            else
+                            {
+                                order.WxPrepayId = prepayId;
+                            }
+                        }
+
+                        OrderCacheUtil.EnterQueue4CheckPayStatus(order.Sn, order);
+
+                        LogUtil.Info("步骤4");
+                    }
+                    else
                     {
-                        string prepayId = SdkFactory.Wx.Instance().GetPrepayId(pOperater, "JSAPI", wxUserInfo.OpenId, order.Sn, chargeAmount, goods_tag, Common.CommonUtils.GetIP(), productSku.Name, order.WxPrepayIdExpireTime);
+                        order.Status = Enumeration.OrderStatus.Payed; 
+                        order.PayTime = this.DateTime;
 
-                        if (string.IsNullOrEmpty(prepayId))
-                        {
-                            LogUtil.Error("去结算，微信支付中生成预支付订单失败");
-
-                            return new CustomJsonResult<Lumos.Entity.Order>(ResultType.Failure, ResultCode.Failure, "微信支付中生成预支付订单失败", order);
-                        }
-                        else
-                        {
-                            order.WxPrepayId = prepayId;
-                        }
+                        var promoteUserCoupon = new PromoteUserCoupon();
+                        promoteUserCoupon.Id = GuidUtil.New();
+                        promoteUserCoupon.UserId = order.UserId;
+                        promoteUserCoupon.PromoteId = promoteCoupon.PromoteId;
+                        promoteUserCoupon.PromoteCouponId = promoteCoupon.Id;
+                        promoteUserCoupon.WxCouponId = promoteCoupon.WxCouponId;
+                        promoteUserCoupon.IsBuy = true;
+                        promoteUserCoupon.BuyTime = this.DateTime;
+                        promoteUserCoupon.IsGet = false;
+                        promoteUserCoupon.IsConsume = false;
+                        promoteUserCoupon.Creator = pOperater;
+                        promoteUserCoupon.CreateTime = this.DateTime;
+                        promoteUserCoupon.RefereeId = order.RefereeId;
+                        promoteUserCoupon.OrderId = order.Id;
+                        promoteUserCoupon.OrderSn = order.Sn;
+                        CurrentDb.PromoteUserCoupon.Add(promoteUserCoupon);
                     }
-
-                    OrderCacheUtil.EnterQueue4CheckPayStatus(order.Sn, order);
-
-                    LogUtil.Info("步骤4");
 
                     CurrentDb.SaveChanges();
                     ts.Complete();
+
 
                     result = new CustomJsonResult<Lumos.Entity.Order>(ResultType.Success, ResultCode.Success, "操作成功", order);
                     LogUtil.Info("去结算结束");

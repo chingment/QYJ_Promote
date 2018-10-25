@@ -103,10 +103,10 @@
             else
             {
                 <div style="width:50%;float:left;text-align: right;">
-                    <img id="btn_OpenCoupon" src="~/Content/images/promote20181021/btn_opencoupon.png" class="btn-com" style="display: inline-block;" />
+                    <img id="btn_OpenCoupon" src="~/Content/images/promote20181021/btn_opencoupon.png" class="btn-com" style="margin-right:15px;display: inline-block;" />
                 </div>
                 <div style="width:50%;float:left;text-align:left;">
-                    <img id="btn_GoInvite" src="~/Content/images/promote20181021/btn_getcoupon.png" class="btn-com" style="display: inline-block;" />
+                    <img id="btn_GoInvite" src="~/Content/images/promote20181021/btn_invite.png" class="btn-com" style="margin-left:15px;display: inline-block;" />
                 </div>
             }
         </div>
@@ -225,23 +225,6 @@
 
         $(function () {
 
-            if(isGetCoupon) {
-                $('.btn-OpenCoupon').show();
-                $('.btn-GetCoupon').hide();
-            }
-            else  {
-                $('.btn-OpenCoupon').hide();
-                $('.btn-GetCoupon').show();
-            }
-
-            $("#btn_GetCoupon").on("click",
-                function () {
-                    var _this = $(this);
-
-                    getCard();
-
-                });
-
             $("#btn_OpenCoupon").on("click",
           function () {
               var _this = $(this);
@@ -269,9 +252,9 @@
 
 
 
-            var shareTitle = '全优加9月放大招啦！9.1元抢购代金券7200元';
-            var shareDesc = '限量910张，60校同抢\n先到先得！';
-            var shareLink = 'http://qyj.17fanju.com/Promote/Coupon?promoteId=' + promoteId + '&refereeId=' + userId;
+            var shareTitle = '全优加周年庆福利，¥1248元优乐享卡';
+            var shareDesc = '限量1028张，60校同抢\n免费送！送！送！';
+            var shareLink = 'http://qyj.17fanju.com/Promoteb/Coupon?promoteId=' + promoteId + '&refereeId=' + userId;
             var shareImgUrl = 'http://qyj.17fanju.com/Content/images/promote20180910/share_icon.png';
             wx.ready(function () {
 
@@ -443,6 +426,30 @@
                         else {
                             $.lumos.tips(d.messages);
                         }
+                    }
+                }
+            });
+        }
+
+
+        function addCouponNotifyResult(cards) {
+
+            var l_Data=[];
+
+            l_Data.push({ name: "Model.PromoteId", value: promoteId });
+
+            $.each(cards, function (i, row) {
+                l_Data.push({ name: "Model.Coupons[" + i + "].WxCouponId", value: row.cardId });
+                l_Data.push({ name: "Model.Coupons[" + i + "].WxCouponEncryptCode", value: row.code });
+            });
+
+            $.lumos.postJson({
+                url: "/Promote/AddCouponNotifyResult",
+                data: l_Data,
+                success: function (d) {
+                    if (d.result == $.lumos.resultType.success) {
+                        window.location.href = "/Promoteb/PayResult?promoteId=" + promoteId + "&orderSn=" + params.orderSn + "&isSuccessed=True";
+                        $.lumos.tips('成功领取卡券');
                     }
                 }
             });

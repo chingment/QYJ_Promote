@@ -18,7 +18,7 @@ namespace WebMobile.Controllers
             //refereeId =00000000000000000000000000000000
             var model = new CouponViewModel();
             model.PromoteId = "akkk753c5fe14e26bbecad576b6a6kkk";
-            model.PromoteCouponId = "00000000000000000000000000000001";
+            model.PromoteCouponId = "00000000000000000000000000000002";
             model.RefereeId = refereeId;
 
             var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.UserId == this.CurrentUserId && m.PromoteId == model.PromoteId && m.PromoteCouponId == model.PromoteCouponId).FirstOrDefault();
@@ -26,7 +26,10 @@ namespace WebMobile.Controllers
             {
                 if (promoteUserCoupon.IsBuy)
                 {
-                    return Redirect("~/Promoteb/PayResult?promoteId=" + model.PromoteId + "&orderSn=" + promoteUserCoupon.OrderSn + "&isSuccessed=True");
+                    if (promoteUserCoupon.IsGet)
+                    {
+                        return Redirect("~/Promoteb/PayResult?promoteId=" + model.PromoteId + "&orderSn=" + promoteUserCoupon.OrderSn + "&isSuccessed=True");
+                    }
                 }
             }
 
