@@ -283,7 +283,7 @@ namespace WebMobile.Controllers
                                                 var reidsMqByCalProfitByCouponConsumeModel = new ReidsMqByCalProfitByCouponConsumeModel();
                                                 reidsMqByCalProfitModel.Type = ReidsMqByCalProfitType.CouponConsume;
 
-                                                reidsMqByCalProfitByCouponConsumeModel.UserId = wxUserInfo.ClientId;
+                                                reidsMqByCalProfitByCouponConsumeModel.ClientId = wxUserInfo.ClientId;
                                                 reidsMqByCalProfitByCouponConsumeModel.WxCouponDecryptCode = userConsumeCardMsg.UserCardCode;
                                                 reidsMqByCalProfitByCouponConsumeModel.WxCouponId = userConsumeCardMsg.CardId;
 

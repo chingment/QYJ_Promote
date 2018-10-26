@@ -20,7 +20,7 @@ namespace Lumos.BLL
 
     public class ReidsMqByCalProfitByCouponConsumeModel
     {
-        public string UserId { get; set; }
+        public string ClientId { get; set; }
         public string WxCouponId { get; set; }
         public string WxCouponDecryptCode { get; set; }
 
@@ -56,29 +56,29 @@ namespace Lumos.BLL
                                         LogUtil.Info(msg);
                                         Console.WriteLine(msg);
 
-                                        var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.ClientId == model.UserId && m.WxCouponId == model.WxCouponId && m.WxCouponDecryptCode == model.WxCouponDecryptCode).FirstOrDefault();
+                                        var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.ClientId == model.ClientId && m.WxCouponId == model.WxCouponId && m.WxCouponDecryptCode == model.WxCouponDecryptCode).FirstOrDefault();
 
                                         if (promoteUserCoupon == null)
                                         {
-                                            LogUtil.Info("用户:" + model.UserId + ",找不到卡券");
+                                            LogUtil.Info("用户:" + model.ClientId + ",找不到卡券");
                                         }
 
                                         if (promoteUserCoupon.RefereeId == null)
                                         {
-                                            LogUtil.Info("用户:" + model.UserId + ",推荐人为空");
+                                            LogUtil.Info("用户:" + model.ClientId + ",推荐人为空");
 
                                             return;
                                         }
 
                                         if (promoteUserCoupon.ClientId == promoteUserCoupon.RefereeId)
                                         {
-                                            LogUtil.Info("用户和推荐人是同一个人:" + model.UserId);
+                                            LogUtil.Info("用户和推荐人是同一个人:" + model.ClientId );
                                             return;
                                         }
 
                                         if (promoteUserCoupon.IsConsume == true)
                                         {
-                                            LogUtil.Info("用户:" + model.UserId + ",已核销");
+                                            LogUtil.Info("用户:" + model.ClientId + ",已核销");
                                             return;
                                         }
 

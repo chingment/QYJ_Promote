@@ -36,11 +36,6 @@ namespace WebMobile
 
             userInfo = SSOUtil.GetUserInfo(token.Value);
 
-            //userInfo = new UserInfo();
-            //userInfo.Token = "1";
-            //userInfo.UserId = 1000;
-            //userInfo.UserName = "admin";
-
             return userInfo;
         }
 

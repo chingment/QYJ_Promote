@@ -323,7 +323,7 @@ namespace WebMobile.Areas.Wb.Controllers
             else
             {
                 #region POST
-                StringBuilder sql = new StringBuilder(" select ClientId, Nickname,b.Num from WxUserInfo a inner join (select  RefereeId, count(*) as Num from[dbo].[PromoteUserCoupon]  group by RefereeId) b on a.UserId = b.RefereeId ");
+                StringBuilder sql = new StringBuilder(" select ClientId, Nickname,b.Num from WxUserInfo a inner join (select  RefereeId, count(*) as Num from[dbo].[PromoteUserCoupon]  group by RefereeId) b on a.ClientId = b.RefereeId ");
 
                 sql.Append(" where 1=1 ");
 
