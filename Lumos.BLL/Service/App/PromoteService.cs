@@ -20,7 +20,7 @@ namespace Lumos.BLL.Service.App
             ret.RefereeId = rup.RefereeId;
             ret.ShareTitle = "全优加周年庆福利，¥1248元优乐享卡";
             ret.ShareDesc = "限量1028张，60校同抢\n免费送！送！送！";
-            ret.ShareImgUrl = "http://qyj.17fanju.com/Content/images/promote20180910/share_icon.png";
+            ret.ShareImgUrl = "http://qyj.17fanju.com/Content/images/promote20181021/share_icon.png";
 
             ret.IsEnd = false;
             ret.IsStart = true;

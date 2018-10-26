@@ -80,6 +80,9 @@
         }
     </style>
 }
+@*<img class="btn-com" id="btn_GoInvite" src="${bg4GoInvite}" style="margin-left:15px;display: inline-block" />*@
+
+
 
 <script id="config_tmpl" type="text/x-jquery-tmpl">
 
@@ -88,7 +91,7 @@
     </div>
     <div style="position: relative;">
         <img src="${bg02}" />
-        <div style="position: absolute;width: 100%;height: 100%;top: 0;align-items: center;justify-content: center; display: flex;">
+        <div style=" position: absolute;width: 100%;height: 100%;top: 0;align-items: center;justify-content: center; display: flex;">
 
             {{if isEnd}}
             <div style="width:100%;top:0px;text-align: center;font-size:24px;color:#f53300;">
@@ -99,15 +102,15 @@
             {{if isStart}}
             {{if isNeedBuy}}
             <div style="width:50%;float:left;text-align: right;">
-                <img class="btn-com" id="btn_GetCoupon" src="${bg4GoBuy}" style="margin-right:15px;display: inline-block" />
+                <img class="btn-com" id="btn_GetCoupon" src="${bg4GoBuy}" style="margin-right:15px;display: inline-block;cursor:pointer" />
             </div>
             {{else}}
             <div style="width:50%;float:left;text-align: right;">
-                <img class="btn-com" id="btn_GetCoupon" src="${bg4GetCoupon}" style="margin-right:15px;display: inline-block" />
+                <img class="btn-com" id="btn_GetCoupon" src="${bg4GetCoupon}" style="margin-right:15px;display: inline-block;cursor:pointer" />
             </div>
             {{/if}}
             <div style="width:50%;float:left;text-align:left;">
-                <img class="btn-com" id="btn_GoInvite" src="${bg4GoInvite}" style="margin-left:15px;display: inline-block" />
+                <img class="btn-com" id="btn_GoInvite" src="${bg4GoInvite}" style="margin-left:15px;display: inline-block;cursor:pointer" />
             </div>
             {{else}}
 
@@ -232,28 +235,21 @@
                 isShowLoading: false,
                 success: function (d) {
                     if (d.result == $.lumos.resultType.success) {
-                        var data = d.data;
-
-                        promoteConfig = data;
-
-                        alert(JSON.stringify(d))
-                        document.title = data.title;//更改网页标题
-
-                        $('#config').html($("#config_tmpl").tmpl(data));
-
-                        initShareInfo(data);
-
-                        initGetCoupon(data);
+                        pConfig = d.data;
+                        document.title = pConfig.title;//更改网页标题
+                        $('#config').html($("#config_tmpl").tmpl(pConfig));
+                        initShareInfo();
+                        initGetCoupon();
                     }
                 }
             });
 
 
-            $("#modal_Invite").on("click", function (e) {
+            $("#modal_Invite").live("click", function (e) {
                 $("#modal_Invite").hide();
             });
 
-            $('#btn_GoInvite').on("click", function () {
+            $('#btn_GoInvite').live("click", function () {
 
                 var scrollTop = document.body.scrollTop;//网页被卷去的高
                 $("#modal_Invite").css({ top: scrollTop + "px" });
@@ -271,7 +267,7 @@
                     });
             });
 
-            $('#btn_Pop_Sure').on("click", function () {
+            $('#btn_Pop_Sure').live("click", function () {
 
                 var ctName = $('#txt_ctName').val();
                 var ctPhone = $('#txt_ctPhone').val();
@@ -306,7 +302,7 @@
                 });
             });
 
-            $(".popd-close").on("click", function (e) {
+            $(".popd-close").live("click", function (e) {
                 $(".popd").hide();
             });
 
@@ -358,13 +354,10 @@
         }
 
         function initGetCoupon() {
-
-            $("#btn_GetCoupon").on("click", function () {
+            $("#btn_GetCoupon").live("click", function () {
                 var _this = $(this);
 
                 $(_this).attr("disabled", "disabled");
-
-                var _data = $('#form1').serializeArray();
 
                 $.lumos.postJson({
                     url: "/Promote/UnifiedOrder",
@@ -373,7 +366,7 @@
                     success: function (d) {
                         if (d.result == $.lumos.resultType.success) {
                             var params = d.data;
-                            getCard(res, params.orderSn);
+                            getCard(params.orderSn);
                         } else {
                             $.lumos.tips(d.message);
                             $(_this).removeAttr("disabled");
@@ -390,21 +383,21 @@
                 data: { promoteId: pConfig.promoteId },
                 isShowLoading: true,
                 success: function (d) {
-
+                    
                     if (d.result == $.lumos.resultType.success) {
                         var cards = d.data;
                         var cardList = [];
                         for (var p in cards) {
                             cardList.push({ cardId: cards[p].cardId, cardExt: cards[p].cardExt });
                         }
-
+                     
                         wx.addCard({
                             cardList: cardList,
                             success: function (res) {
                                 addCouponNotifyResult(orderSn, res.cardList);
                             },
                             cancel: function (res) {
-
+                               
                             }
                         });
                     }

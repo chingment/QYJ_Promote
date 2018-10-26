@@ -184,140 +184,140 @@ namespace WebMobile.Controllers
                 byte[] b = new byte[intLen];
                 Request.InputStream.Read(b, 0, intLen);
                 string xml = System.Text.Encoding.UTF8.GetString(b);
-
-                LogUtil.Info("接收事件推送内容:" + xml);
-
-                var baseEventMsg = WxMsgFactory.CreateMessage(xml);
                 string echoStr = "";
-                string eventKey = null;
-                LogUtil.Info("baseEventMsg内容:" + baseEventMsg);
-                if (baseEventMsg != null)
+                LogUtil.Info("接收事件推送内容:" + xml);
+                if (!string.IsNullOrEmpty(xml))
                 {
-                    var userInfo_Result = SdkFactory.Wx.Instance().GetUserInfoByApiToken(baseEventMsg.FromUserName);
-
-                    if (userInfo_Result.openid != null)
+                    var baseEventMsg = WxMsgFactory.CreateMessage(xml);
+                    string eventKey = null;
+                    LogUtil.Info("baseEventMsg内容:" + baseEventMsg);
+                    if (baseEventMsg != null)
                     {
-                        LogUtil.Info("userInfo_Result:" + JsonConvert.SerializeObject(userInfo_Result));
+                        var userInfo_Result = SdkFactory.Wx.Instance().GetUserInfoByApiToken(baseEventMsg.FromUserName);
 
-                        var wxUserInfo = new WxUserInfo();
-         
-                        wxUserInfo.OpenId = userInfo_Result.openid;
-                        wxUserInfo.Nickname = userInfo_Result.nickname;
-                        wxUserInfo.Sex = userInfo_Result.sex.ToString();
-                        wxUserInfo.Province = userInfo_Result.province;
-                        wxUserInfo.City = userInfo_Result.city;
-                        wxUserInfo.Country = userInfo_Result.country;
-                        wxUserInfo.HeadImgUrl = userInfo_Result.headimgurl;
-                        wxUserInfo.UnionId = userInfo_Result.unionid;
-
-                        wxUserInfo = BizFactory.WxUser.CheckedUser(GuidUtil.New(), wxUserInfo);
-
-                        if (wxUserInfo != null)
+                        if (userInfo_Result.openid != null)
                         {
-                            var wxAutoReply = new WxAutoReply();
-                            switch (baseEventMsg.MsgType)
+                            LogUtil.Info("userInfo_Result:" + JsonConvert.SerializeObject(userInfo_Result));
+
+                            var wxUserInfo = new WxUserInfo();
+
+                            wxUserInfo.OpenId = userInfo_Result.openid;
+                            wxUserInfo.Nickname = userInfo_Result.nickname;
+                            wxUserInfo.Sex = userInfo_Result.sex.ToString();
+                            wxUserInfo.Province = userInfo_Result.province;
+                            wxUserInfo.City = userInfo_Result.city;
+                            wxUserInfo.Country = userInfo_Result.country;
+                            wxUserInfo.HeadImgUrl = userInfo_Result.headimgurl;
+                            wxUserInfo.UnionId = userInfo_Result.unionid;
+
+                            wxUserInfo = BizFactory.WxUser.CheckedUser(GuidUtil.New(), wxUserInfo);
+
+                            if (wxUserInfo != null)
                             {
-                                case MsgType.TEXT:
-                                    #region TEXT
+                                var wxAutoReply = new WxAutoReply();
+                                switch (baseEventMsg.MsgType)
+                                {
+                                    case MsgType.TEXT:
+                                        #region TEXT
 
-                                    LogUtil.Info("文本消息");
+                                        LogUtil.Info("文本消息");
 
-                                    var textMsg = (TextMsg)baseEventMsg;
+                                        var textMsg = (TextMsg)baseEventMsg;
 
-                                    if (textMsg != null)
-                                    {
-
-                                        LogUtil.Info("文本消息:" + textMsg.Content);
-
-                                        if (textMsg.Content == "代金券" || textMsg.Content == "代金卷" || textMsg.Content == "代金劵")
+                                        if (textMsg != null)
                                         {
-                                            string promoteId = "akkk753c5fe14e26bbecad576b6a6kkk";
-                                            string media_Id = GetWxPromoteImgMediaId(promoteId, wxUserInfo.ClientId);
-                                            echoStr = WxMsgFactory.CreateReplyImage(baseEventMsg.FromUserName, baseEventMsg.ToUserName, media_Id);
+
+                                            LogUtil.Info("文本消息:" + textMsg.Content);
+
+                                            if (textMsg.Content == "代金券" || textMsg.Content == "代金卷" || textMsg.Content == "代金劵")
+                                            {
+                                                string promoteId = "akkk753c5fe14e26bbecad576b6a6kkk";
+                                                string media_Id = GetWxPromoteImgMediaId(promoteId, wxUserInfo.ClientId);
+                                                echoStr = WxMsgFactory.CreateReplyImage(baseEventMsg.FromUserName, baseEventMsg.ToUserName, media_Id);
+                                            }
+
                                         }
 
-                                    }
+
+                                        #endregion
+                                        break;
+                                    case MsgType.EVENT:
+                                        #region EVENT
+                                        switch (baseEventMsg.Event)
+                                        {
+                                            case EventType.SUBSCRIBE://订阅
+                                                break;
+                                            case EventType.UNSUBSCRIBE://取消订阅
+                                                break;
+                                            case EventType.SCAN://扫描二维码
+                                            case EventType.CLICK://单击按钮
+                                            case EventType.VIEW://链接按钮
+                                                break;
+                                            case EventType.USER_GET_CARD://领取卡卷
+                                                #region  USER_GET_CARD
+                                                var userGetCardMsg = (UserGetCardMsg)baseEventMsg;
+
+                                                var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.ClientId == wxUserInfo.ClientId && m.WxCouponId == userGetCardMsg.CardId).FirstOrDefault();
+
+                                                if (promoteUserCoupon != null)
+                                                {
+                                                    promoteUserCoupon.IsGet = true;
+                                                    promoteUserCoupon.GetTime = DateTime.Now;
+                                                    promoteUserCoupon.Mender = GuidUtil.Empty();
+                                                    promoteUserCoupon.MendTime = DateTime.Now;
+                                                    promoteUserCoupon.WxCouponDecryptCode = userGetCardMsg.UserCardCode;
+                                                    CurrentDb.SaveChanges();
+                                                }
+
+                                                #endregion
+                                                break;
+                                            case EventType.USER_CONSUME_CARD://核销卡卷
+                                                #region USER_CONSUME_CARD
+
+                                                var userConsumeCardMsg = (UserConsumeCardMsg)baseEventMsg;
+
+                                                if (userConsumeCardMsg != null)
+                                                {
+                                                    var reidsMqByCalProfitModel = new ReidsMqByCalProfitModel();
+                                                    var reidsMqByCalProfitByCouponConsumeModel = new ReidsMqByCalProfitByCouponConsumeModel();
+                                                    reidsMqByCalProfitModel.Type = ReidsMqByCalProfitType.CouponConsume;
+
+                                                    reidsMqByCalProfitByCouponConsumeModel.ClientId = wxUserInfo.ClientId;
+                                                    reidsMqByCalProfitByCouponConsumeModel.WxCouponDecryptCode = userConsumeCardMsg.UserCardCode;
+                                                    reidsMqByCalProfitByCouponConsumeModel.WxCouponId = userConsumeCardMsg.CardId;
+
+                                                    reidsMqByCalProfitModel.Pms = reidsMqByCalProfitByCouponConsumeModel;
+
+                                                    ReidsMqFactory.CalProfit.Push(reidsMqByCalProfitModel);
+                                                }
 
 
-                                    #endregion
-                                    break;
-                                case MsgType.EVENT:
-                                    #region EVENT
-                                    switch (baseEventMsg.Event)
-                                    {
-                                        case EventType.SUBSCRIBE://订阅
-                                            break;
-                                        case EventType.UNSUBSCRIBE://取消订阅
-                                            break;
-                                        case EventType.SCAN://扫描二维码
-                                        case EventType.CLICK://单击按钮
-                                        case EventType.VIEW://链接按钮
-                                            break;
-                                        case EventType.USER_GET_CARD://领取卡卷
-                                            #region  USER_GET_CARD
-                                            var userGetCardMsg = (UserGetCardMsg)baseEventMsg;
+                                                #endregion
+                                                break;
+                                        }
+                                        #endregion
+                                        break;
+                                }
 
-                                            var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.ClientId == wxUserInfo.ClientId && m.WxCouponId == userGetCardMsg.CardId).FirstOrDefault();
+                                var wxMsgPushLog = new WxMsgPushLog();
+                                wxMsgPushLog.Id = GuidUtil.New();
+                                wxMsgPushLog.ClientId = wxUserInfo.ClientId;
+                                wxMsgPushLog.ToUserName = baseEventMsg.ToUserName;
+                                wxMsgPushLog.FromUserName = baseEventMsg.FromUserName;
+                                wxMsgPushLog.CreateTime = DateTime.Now;
+                                wxMsgPushLog.ContentXml = xml;
+                                wxMsgPushLog.MsgId = baseEventMsg.MsgId;
+                                wxMsgPushLog.MsgType = baseEventMsg.MsgType.ToString();
+                                wxMsgPushLog.Event = baseEventMsg.Event.ToString();
+                                wxMsgPushLog.EventKey = eventKey;
 
-                                            if (promoteUserCoupon != null)
-                                            {
-                                                promoteUserCoupon.IsGet = true;
-                                                promoteUserCoupon.GetTime = DateTime.Now;
-                                                promoteUserCoupon.Mender = GuidUtil.Empty();
-                                                promoteUserCoupon.MendTime = DateTime.Now;
-                                                promoteUserCoupon.WxCouponDecryptCode = userGetCardMsg.UserCardCode;
-                                                CurrentDb.SaveChanges();
-                                            }
-
-                                            #endregion
-                                            break;
-                                        case EventType.USER_CONSUME_CARD://核销卡卷
-                                            #region USER_CONSUME_CARD
-
-                                            var userConsumeCardMsg = (UserConsumeCardMsg)baseEventMsg;
-
-                                            if (userConsumeCardMsg != null)
-                                            {
-                                                var reidsMqByCalProfitModel = new ReidsMqByCalProfitModel();
-                                                var reidsMqByCalProfitByCouponConsumeModel = new ReidsMqByCalProfitByCouponConsumeModel();
-                                                reidsMqByCalProfitModel.Type = ReidsMqByCalProfitType.CouponConsume;
-
-                                                reidsMqByCalProfitByCouponConsumeModel.ClientId = wxUserInfo.ClientId;
-                                                reidsMqByCalProfitByCouponConsumeModel.WxCouponDecryptCode = userConsumeCardMsg.UserCardCode;
-                                                reidsMqByCalProfitByCouponConsumeModel.WxCouponId = userConsumeCardMsg.CardId;
-
-                                                reidsMqByCalProfitModel.Pms = reidsMqByCalProfitByCouponConsumeModel;
-
-                                                ReidsMqFactory.CalProfit.Push(reidsMqByCalProfitModel);
-                                            }
-
-
-                                            #endregion
-                                            break;
-                                    }
-                                    #endregion
-                                    break;
+                                WxMsgPushLog(wxMsgPushLog);
                             }
-
-                            var wxMsgPushLog = new WxMsgPushLog();
-                            wxMsgPushLog.Id = GuidUtil.New();
-                            wxMsgPushLog.ClientId = wxUserInfo.ClientId;
-                            wxMsgPushLog.ToUserName = baseEventMsg.ToUserName;
-                            wxMsgPushLog.FromUserName = baseEventMsg.FromUserName;
-                            wxMsgPushLog.CreateTime = DateTime.Now;
-                            wxMsgPushLog.ContentXml = xml;
-                            wxMsgPushLog.MsgId = baseEventMsg.MsgId;
-                            wxMsgPushLog.MsgType = baseEventMsg.MsgType.ToString();
-                            wxMsgPushLog.Event = baseEventMsg.Event.ToString();
-                            wxMsgPushLog.EventKey = eventKey;
-
-                            WxMsgPushLog(wxMsgPushLog);
                         }
                     }
                 }
 
                 LogUtil.Info(string.Format("接收事件推送之后回复内容:{0}", echoStr));
-
                 Response.Write(echoStr);
             }
             else if (Request.HttpMethod == "GET") //微信服务器在首次验证时，需要进行一些验证，但。。。。  

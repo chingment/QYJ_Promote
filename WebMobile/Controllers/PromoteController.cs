@@ -216,6 +216,8 @@ namespace WebMobile.Controllers
 
             }
 
+            cardList = cardList.Where(m => m.cardId != null).ToList();
+
             return new CustomJsonResult(ResultType.Success, ResultCode.Success, "", cardList);
         }
 
