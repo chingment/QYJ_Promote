@@ -18,11 +18,17 @@ using ZXing;
 using ZXing.QrCode;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Collections.Generic;
+using Lumos.Common;
+using System.IO;
 
 namespace WebMobile.Controllers
 {
     public class HomeController : OwnBaseController
     {
+
+
+
         public ActionResult Index()
         {
             return View();
@@ -180,10 +186,14 @@ namespace WebMobile.Controllers
 
             if (Request.HttpMethod == "POST")
             {
-                Int32 intLen = Convert.ToInt32(Request.InputStream.Length);
-                byte[] b = new byte[intLen];
-                Request.InputStream.Read(b, 0, intLen);
-                string xml = System.Text.Encoding.UTF8.GetString(b);
+                Stream stream = Request.InputStream;
+                stream.Seek(0, SeekOrigin.Begin);
+                string xml = new StreamReader(stream).ReadToEnd();
+
+                //Int32 intLen = Convert.ToInt32(Request.InputStream.Length);
+                //byte[] b = new byte[intLen];
+                //Request.InputStream.Read(b, 0, intLen);
+                //string xml = System.Text.Encoding.UTF8.GetString(b);
                 string echoStr = "";
                 LogUtil.Info("接收事件推送内容:" + xml);
                 if (!string.IsNullOrEmpty(xml))
@@ -335,7 +345,7 @@ namespace WebMobile.Controllers
                 Response.Write("wrong");
             }
 
-            Response.End();
+            //Response.End();
 
             return View();
         }

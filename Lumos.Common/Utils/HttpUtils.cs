@@ -105,7 +105,7 @@ namespace Lumos.Common
             //写数据
             request.Method = "POST";
             request.ContentLength = bytes.Length;
-            request.ContentType = "application/json";
+            request.ContentType = "application/json;charset=UTF-8";
             Stream reqstream = request.GetRequestStream();
             reqstream.Write(bytes, 0, bytes.Length);
 

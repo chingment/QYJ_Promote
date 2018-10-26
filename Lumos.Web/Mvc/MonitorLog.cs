@@ -13,6 +13,35 @@ namespace Lumos.Web.Mvc
     /// </summary>
     public static class MonitorLog
     {
+        //private static string GetPostData(Stream inputStream)
+        //{
+        //    string s = "";
+
+        //    if (inputStream == null)
+        //        return s;
+        //    try
+        //    {
+        //        byte[] byts = new byte[inputStream.Length];
+        //        inputStream.Read(byts, 0, byts.Length);
+        //        string req = System.Text.Encoding.UTF8.GetString(byts); 
+        //        s = req;
+        //    }
+        //    catch
+        //    {
+        //        s = "";
+
+        //        if (inputStream != null)
+        //        {
+        //            inputStream.Close();
+        //            inputStream.Dispose();
+        //        }
+        //    }
+
+        //    return s;
+        //}
+
+
+
         private static string GetPostData(Stream inputStream)
         {
             string s = "";
@@ -60,6 +89,7 @@ namespace Lumos.Web.Mvc
 
             if (request.HttpMethod == "POST")
             {
+              
                 sb.Append("PostData: " + GetPostData(request.InputStream) + Environment.NewLine);
             }
 
@@ -75,9 +105,9 @@ namespace Lumos.Web.Mvc
         //{
 
         //}
-        //public static void OnResultExecuted(string userId, ResultExecutedContext filterContext)
+        //public static void OnResultExecuted(ResultExecutedContext filterContext)
         //{
-
+         
         //}
     }
 

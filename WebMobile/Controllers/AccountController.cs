@@ -14,15 +14,36 @@ using Lumos;
 using WebMobile.Models.Account;
 using Lumos.Session;
 using Lumos.Web;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace WebMobile.Controllers
 {
     public class AccountController : OwnBaseController
     {
+        public string OrderConfirm()
+        {
+            Models.Home.SearchCondition model = new Models.Home.SearchCondition();
+
+            model.Name = "dasda";
+
+            string a1 = JsonConvert.SerializeObject(model);
+
+
+
+            Dictionary<string, string> headers = new Dictionary<string, string>();
+            headers.Add("version", "1.3.0.7");
+            HttpUtil http = new HttpUtil();
+            string result = http.HttpPostJson("http://localhost:18068/Home/NotifyEvent", a1, headers);
+
+            return result;
+
+        }
+
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-
+            //OrderConfirm();
             //string a = "/Promote/Coupon?promoteId=a999753c5fe14e26bbecad576b6a6909&amp;refereeId=00000000000000000000000000000000";
 
             //string c = HttpUtility.HtmlDecode(a);
