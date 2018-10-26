@@ -99,7 +99,7 @@ namespace WebMobile.Controllers
             LogUtil.Info("进入UnifiedOrder");
             LogUtil.Info("用户.CurrentUserId:" + this.CurrentUserId);
 
-            model.UserId = this.CurrentUserId;
+            model.ClientId = this.CurrentUserId;
             var result = BizFactory.Order.UnifiedOrder(this.CurrentUserId, model);
 
             if (result.Result == ResultType.Success)

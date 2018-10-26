@@ -22,7 +22,7 @@ namespace Lumos.BLL
                 {
                     case UnifiedOrderType.BuyPromoteCoupon:
                         var orderPmsByBuyPromoteCoupon = Newtonsoft.Json.JsonConvert.DeserializeObject<OrderPmsByBuyPromoteCoupon>(strOrderPms);
-                        result = UnifiedOrderByBuyPromoteCoupon(pOperater, pPayPms.UserId, pPayPms.RefereeId, orderPmsByBuyPromoteCoupon);
+                        result = UnifiedOrderByBuyPromoteCoupon(pOperater, pPayPms.ClientId, pPayPms.RefereeId, orderPmsByBuyPromoteCoupon);
                         break;
                 }
             }
