@@ -48,15 +48,15 @@ namespace WebMobile.Models.Personal
 
 
 
-        public void LoadData(string userId)
+        public void LoadData(string clientId)
         {
-            var wxUserInfo = CurrentDb.WxUserInfo.Where(m => m.UserId == userId).FirstOrDefault();
+            var wxUserInfo = CurrentDb.WxUserInfo.Where(m => m.ClientId == clientId).FirstOrDefault();
             if (wxUserInfo != null)
             {
                 _nickname = wxUserInfo.Nickname;
                 _headImgUrl = wxUserInfo.HeadImgUrl;
 
-                var fund = CurrentDb.Fund.Where(m => m.UserId == userId).FirstOrDefault();
+                var fund = CurrentDb.Fund.Where(m => m.ClientId == clientId).FirstOrDefault();
 
                 if (fund != null)
                 {

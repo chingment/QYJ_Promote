@@ -29,7 +29,7 @@ namespace WebMobile.Controllers
         [HttpPost]
         public CustomJsonResult Apply(WithdrawApplyPms model)
         {
-            model.UserId = this.CurrentUserId;
+            model.ClientId = this.CurrentUserId;
             model.ApplyMethod = "wechat";
             return BizFactory.Withdraw.Apply(this.CurrentUserId, model);
         }
@@ -39,7 +39,7 @@ namespace WebMobile.Controllers
         {
             var query = (from o in CurrentDb.Withdraw
                          where
-                          o.UserId == this.CurrentUserId
+                          o.ClientId == this.CurrentUserId
                          select new { o.Sn, o.ApplyTime, o.Amount, o.Status, o.AcName, o.AcBank, o.AcBankCardNumber, o.ApplyMethod, o.AcIdNumber, o.FailureReason });
 
             int total = query.Count();

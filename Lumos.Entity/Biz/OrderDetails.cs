@@ -15,7 +15,7 @@ namespace Lumos.Entity
     {
         [Key]
         public string Id { get; set; }
-        public string UserId { get; set; }
+        public string ClientId { get; set; }
         public string OrderId { get; set; }
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }

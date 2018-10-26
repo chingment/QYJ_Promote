@@ -19,7 +19,7 @@ namespace Lumos.Entity
         public string WxCouponId { get; set; }
         public string WxCouponEncryptCode { get; set; }
         public string WxCouponDecryptCode { get; set; }
-        public string UserId { get; set; }
+        public string ClientId { get; set; }
         public string OrderId { get; set; }
         public string OrderSn { get; set; }
         public bool IsBuy { get; set; }

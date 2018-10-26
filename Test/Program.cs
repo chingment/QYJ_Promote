@@ -288,21 +288,21 @@ namespace Test
 
         public static IEnumerable<PromoteUser> GetFatherList(IList<PromoteUser> list, string userId)
         {
-            var query = list.Where(p => p.UserId == userId).ToList();
-            return query.ToList().Concat(query.ToList().SelectMany(t => GetFatherList(list, t.PUserId)));
+            var query = list.Where(p => p.ClientId == userId).ToList();
+            return query.ToList().Concat(query.ToList().SelectMany(t => GetFatherList(list, t.PClientId)));
         }
 
         public static IEnumerable<PromoteUser> GetSons(IList<PromoteUser> list, string Fid)
         {
-            var query = list.Where(p => p.UserId == Fid).ToList();
+            var query = list.Where(p => p.ClientId == Fid).ToList();
             var list2 = query.Concat(GetSonList(list, Fid));
             return list2;
         }
 
         public static IEnumerable<PromoteUser> GetSonList(IList<PromoteUser> list, string Fid)
         {
-            var query = list.Where(p => p.PUserId == Fid).ToList();
-            return query.ToList().Concat(query.ToList().SelectMany(t => GetSonList(list, t.UserId)));
+            var query = list.Where(p => p.PClientId == Fid).ToList();
+            return query.ToList().Concat(query.ToList().SelectMany(t => GetSonList(list, t.ClientId)));
         }
     }
 }

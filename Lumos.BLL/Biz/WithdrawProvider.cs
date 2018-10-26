@@ -20,11 +20,11 @@ namespace Lumos.BLL
             {
                 using (TransactionScope ts = new TransactionScope())
                 {
-                    var fund = CurrentDb.Fund.Where(m => m.UserId == pWithdrawApplyPms.UserId).FirstOrDefault();
+                    var fund = CurrentDb.Fund.Where(m => m.ClientId == pWithdrawApplyPms.ClientId).FirstOrDefault();
 
                     if (fund == null)
                     {
-                        LogUtil.Error("用户Id:" + pWithdrawApplyPms.UserId + ",在Fund表没有记录");
+                        LogUtil.Error("用户Id:" + pWithdrawApplyPms.ClientId + ",在Fund表没有记录");
                         return new CustomJsonResult(ResultType.Failure, "系统繁忙");
                     }
 
@@ -40,8 +40,8 @@ namespace Lumos.BLL
 
                     var withdraw = new Withdraw();
                     withdraw.Id = GuidUtil.New();
-                    withdraw.Sn = SnUtil.Build(Enumeration.BizSnType.Withraw, pWithdrawApplyPms.UserId);
-                    withdraw.UserId = pWithdrawApplyPms.UserId;
+                    withdraw.Sn = SnUtil.Build(Enumeration.BizSnType.Withraw, pWithdrawApplyPms.ClientId);
+                    withdraw.ClientId = pWithdrawApplyPms.ClientId;
                     withdraw.Amount = pWithdrawApplyPms.Amount;
                     withdraw.AcIdNumber = pWithdrawApplyPms.AcIdNumber;
                     withdraw.AcName = pWithdrawApplyPms.AcName;
@@ -61,8 +61,8 @@ namespace Lumos.BLL
 
                     var fundTrans = new FundTrans();
                     fundTrans.Id = GuidUtil.New();
-                    fundTrans.Sn = SnUtil.Build(Enumeration.BizSnType.FundTrans, pWithdrawApplyPms.UserId);
-                    fundTrans.UserId = pWithdrawApplyPms.UserId;
+                    fundTrans.Sn = SnUtil.Build(Enumeration.BizSnType.FundTrans, pWithdrawApplyPms.ClientId);
+                    fundTrans.ClientId = pWithdrawApplyPms.ClientId;
                     fundTrans.ChangeType = Enumeration.FundTransChangeType.WtihdrawApply;
                     fundTrans.ChangeAmount = -pWithdrawApplyPms.Amount;
                     fundTrans.CurrentBalance = fund.CurrentBalance;
@@ -131,7 +131,7 @@ namespace Lumos.BLL
                         withdraw.Auditor = pOperater;
                         withdraw.AuditTime = this.DateTime;
 
-                        var fund = CurrentDb.Fund.Where(m => m.UserId == withdraw.UserId).FirstOrDefault();
+                        var fund = CurrentDb.Fund.Where(m => m.ClientId == withdraw.ClientId).FirstOrDefault();
 
                         fund.AvailableBalance += withdraw.Amount;
                         fund.LockBalance -= withdraw.Amount;
@@ -140,8 +140,8 @@ namespace Lumos.BLL
 
                         var fundTrans = new FundTrans();
                         fundTrans.Id = GuidUtil.New();
-                        fundTrans.Sn = SnUtil.Build(Enumeration.BizSnType.FundTrans, withdraw.UserId);
-                        fundTrans.UserId = withdraw.UserId;
+                        fundTrans.Sn = SnUtil.Build(Enumeration.BizSnType.FundTrans, withdraw.ClientId);
+                        fundTrans.ClientId = withdraw.ClientId;
                         fundTrans.ChangeType = Enumeration.FundTransChangeType.WtihdrawFailure;
                         fundTrans.ChangeAmount = withdraw.Amount;
                         fundTrans.CurrentBalance = fund.CurrentBalance;
@@ -191,7 +191,7 @@ namespace Lumos.BLL
                     return new CustomJsonResult(ResultType.Failure, "该提现申请已经被处理");
                 }
 
-                var fund = CurrentDb.Fund.Where(m => m.UserId == withdraw.UserId).FirstOrDefault();
+                var fund = CurrentDb.Fund.Where(m => m.ClientId == withdraw.ClientId).FirstOrDefault();
                 var fundTrans = new FundTrans();
                 switch (pWithdrawDoTransferPms.Operate)
                 {
@@ -210,8 +210,8 @@ namespace Lumos.BLL
 
 
                         fundTrans.Id = GuidUtil.New();
-                        fundTrans.Sn = SnUtil.Build(Enumeration.BizSnType.FundTrans, withdraw.UserId);
-                        fundTrans.UserId = withdraw.UserId;
+                        fundTrans.Sn = SnUtil.Build(Enumeration.BizSnType.FundTrans, withdraw.ClientId);
+                        fundTrans.ClientId = withdraw.ClientId;
                         fundTrans.ChangeType = Enumeration.FundTransChangeType.WtihdrawSuccess;
                         fundTrans.ChangeAmount = -withdraw.Amount;
                         fundTrans.CurrentBalance = fund.CurrentBalance;
@@ -242,8 +242,8 @@ namespace Lumos.BLL
                         fund.MendTime = this.DateTime;
 
                         fundTrans.Id = GuidUtil.New();
-                        fundTrans.Sn = SnUtil.Build(Enumeration.BizSnType.FundTrans, withdraw.UserId);
-                        fundTrans.UserId = withdraw.UserId;
+                        fundTrans.Sn = SnUtil.Build(Enumeration.BizSnType.FundTrans, withdraw.ClientId);
+                        fundTrans.ClientId = withdraw.ClientId;
                         fundTrans.ChangeType = Enumeration.FundTransChangeType.WtihdrawApply;
                         fundTrans.ChangeAmount = withdraw.Amount;
                         fundTrans.CurrentBalance = fund.CurrentBalance;

@@ -8,7 +8,7 @@ namespace Lumos.Entity
 {
     public class WithdrawApplyPms
     {
-        public string UserId { get; set; }
+        public string ClientId { get; set; }
         public decimal Amount { get; set; }
         public string AcName { get; set; }
         public string AcIdNumber { get; set; }

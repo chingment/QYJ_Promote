@@ -72,16 +72,16 @@ namespace WebMobile.Models.Withdraw
             }
         }
 
-        public void LoadData(string userId)
+        public void LoadData(string clientId)
         {
-            var fund = CurrentDb.Fund.Where(m => m.UserId == userId).FirstOrDefault();
+            var fund = CurrentDb.Fund.Where(m => m.ClientId == clientId).FirstOrDefault();
 
             if (fund != null)
             {
                 _availableBalance = fund.AvailableBalance.ToF2Price();
             }
 
-            var withdraw = CurrentDb.Withdraw.Where(m => m.UserId == userId).OrderByDescending(m => m.ApplyTime).FirstOrDefault();
+            var withdraw = CurrentDb.Withdraw.Where(m => m.ClientId == clientId).OrderByDescending(m => m.ApplyTime).FirstOrDefault();
             if (withdraw != null)
             {
                 _acName = withdraw.AcName;

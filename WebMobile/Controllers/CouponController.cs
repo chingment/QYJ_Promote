@@ -22,7 +22,7 @@ namespace WebMobile.Controllers
         {
             var query = (from o in CurrentDb.PromoteUserCoupon
                          where
-                         o.UserId == this.CurrentUserId &&
+                         o.ClientId == this.CurrentUserId &&
                          o.IsBuy == true
                          select new { o.Id, o.PromoteId, o.OrderSn, o.WxCouponId, o.WxCouponDecryptCode, o.IsGet, o.IsConsume, o.CreateTime });
 

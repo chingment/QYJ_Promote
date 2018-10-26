@@ -56,7 +56,7 @@ namespace Lumos.BLL
                                         LogUtil.Info(msg);
                                         Console.WriteLine(msg);
 
-                                        var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.UserId == model.UserId && m.WxCouponId == model.WxCouponId && m.WxCouponDecryptCode == model.WxCouponDecryptCode).FirstOrDefault();
+                                        var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.ClientId == model.UserId && m.WxCouponId == model.WxCouponId && m.WxCouponDecryptCode == model.WxCouponDecryptCode).FirstOrDefault();
 
                                         if (promoteUserCoupon == null)
                                         {
@@ -70,7 +70,7 @@ namespace Lumos.BLL
                                             return;
                                         }
 
-                                        if (promoteUserCoupon.UserId == promoteUserCoupon.RefereeId)
+                                        if (promoteUserCoupon.ClientId == promoteUserCoupon.RefereeId)
                                         {
                                             LogUtil.Info("用户和推荐人是同一个人:" + model.UserId);
                                             return;
@@ -87,13 +87,13 @@ namespace Lumos.BLL
                                         promoteUserCoupon.Mender = GuidUtil.Empty();
                                         promoteUserCoupon.MendTime = DateTime.Now;
 
-                                        var fund = CurrentDb.Fund.Where(m => m.UserId == promoteUserCoupon.RefereeId).FirstOrDefault();
+                                        var fund = CurrentDb.Fund.Where(m => m.ClientId == promoteUserCoupon.RefereeId).FirstOrDefault();
                                         if (fund == null)
                                         {
                                             return;
                                         }
 
-                                        var wxUserInfo = CurrentDb.WxUserInfo.Where(m => m.UserId == promoteUserCoupon.UserId).FirstOrDefault();
+                                        var wxUserInfo = CurrentDb.WxUserInfo.Where(m => m.ClientId == promoteUserCoupon.ClientId).FirstOrDefault();
                                         string nickname = "";
                                         string headImgUrl = IconUtil.ConsumeCoupon;
                                         if (wxUserInfo != null)
@@ -114,8 +114,8 @@ namespace Lumos.BLL
 
                                         var fundTrans = new FundTrans();
                                         fundTrans.Id = GuidUtil.New();
-                                        fundTrans.Sn = SnUtil.Build(Enumeration.BizSnType.FundTrans, fund.UserId);
-                                        fundTrans.UserId = fund.UserId;
+                                        fundTrans.Sn = SnUtil.Build(Enumeration.BizSnType.FundTrans, fund.ClientId);
+                                        fundTrans.ClientId = fund.ClientId;
                                         fundTrans.ChangeType = Enumeration.FundTransChangeType.ConsumeCoupon;
                                         fundTrans.ChangeAmount = profit;
                                         fundTrans.CurrentBalance = fund.CurrentBalance;

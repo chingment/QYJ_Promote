@@ -14,7 +14,7 @@ namespace Lumos.Entity
     {
         [Key]
         public string Id { get; set; }
-        public string UserId { get; set; }
+        public string ClientId { get; set; }
         public string Sn { get; set; }
         public DateTime? SubmitTime { get; set; }
         public DateTime? PayTime { get; set; }

@@ -24,7 +24,7 @@ namespace WebMobile.Controllers
             model.PromoteCouponId = "00000000000000000000000000000001";
             model.RefereeId = refereeId;
 
-            var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.UserId == this.CurrentUserId && m.PromoteId == model.PromoteId && m.PromoteCouponId == model.PromoteCouponId).FirstOrDefault();
+            var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.ClientId == this.CurrentUserId && m.PromoteId == model.PromoteId && m.PromoteCouponId == model.PromoteCouponId).FirstOrDefault();
             if (promoteUserCoupon != null)
             {
                 if (promoteUserCoupon.IsBuy)
@@ -66,7 +66,7 @@ namespace WebMobile.Controllers
 
             bool isGoBuy = false;
 
-            var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.PromoteId == model.PromoteId && m.UserId == this.CurrentUserId).FirstOrDefault();
+            var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.PromoteId == model.PromoteId && m.ClientId == this.CurrentUserId).FirstOrDefault();
 
             string refereeId = GuidUtil.Empty();
             if (promoteUserCoupon == null)
@@ -140,7 +140,7 @@ namespace WebMobile.Controllers
             List<WxCard> cardList = new List<WxCard>();
 
             string userId = this.CurrentUserId;
-            var promoteUserCoupons = CurrentDb.PromoteUserCoupon.Where(m => m.PromoteId == promoteId && m.UserId == this.CurrentUserId).ToList();
+            var promoteUserCoupons = CurrentDb.PromoteUserCoupon.Where(m => m.PromoteId == promoteId && m.ClientId == this.CurrentUserId).ToList();
 
             var promoteUserCouponsByBuyCount = promoteUserCoupons.Where(m => m.IsBuy == true).Count();
 
@@ -150,7 +150,7 @@ namespace WebMobile.Controllers
             }
 
 
-            var promoteUser = CurrentDb.PromoteUser.Where(m => m.PromoteId == promoteId && m.UserId == this.CurrentUserId).FirstOrDefault();
+            var promoteUser = CurrentDb.PromoteUser.Where(m => m.PromoteId == promoteId && m.ClientId == this.CurrentUserId).FirstOrDefault();
 
             if (promoteUser == null)
             {
@@ -224,14 +224,14 @@ namespace WebMobile.Controllers
         {
             LogUtil.Info("用户:" + this.CurrentUserId + ",提交卡券信息");
 
-            var promoteUser = CurrentDb.PromoteUser.Where(m => m.UserId == this.CurrentUserId && m.PromoteId == model.PromoteId).FirstOrDefault();
+            var promoteUser = CurrentDb.PromoteUser.Where(m => m.ClientId == this.CurrentUserId && m.PromoteId == model.PromoteId).FirstOrDefault();
 
             if (promoteUser == null)
             {
                 promoteUser = new PromoteUser();
                 promoteUser.Id = GuidUtil.New();
                 promoteUser.PromoteId = model.PromoteId;
-                promoteUser.UserId = this.CurrentUserId;
+                promoteUser.ClientId = this.CurrentUserId;
                 promoteUser.IsAgent = true;
                 promoteUser.CtName = model.CtName;
                 promoteUser.CtPhone = model.CtPhone;
@@ -258,7 +258,7 @@ namespace WebMobile.Controllers
         public CustomJsonResult AddCouponNotifyResult(AddCouponNotifyResultModel model)
         {
 
-            var promoteUserCoupons = CurrentDb.PromoteUserCoupon.Where(m => m.PromoteId == model.PromoteId && m.UserId == this.CurrentUserId).ToList();
+            var promoteUserCoupons = CurrentDb.PromoteUserCoupon.Where(m => m.PromoteId == model.PromoteId && m.ClientId == this.CurrentUserId).ToList();
 
             foreach (var item in promoteUserCoupons)
             {
@@ -292,7 +292,7 @@ namespace WebMobile.Controllers
 
             var promoteShareLog = new PromoteShareLog();
             promoteShareLog.Id = GuidUtil.New();
-            promoteShareLog.UserId = this.CurrentUserId;
+            promoteShareLog.ClientId = this.CurrentUserId;
             promoteShareLog.ShareLink = model.ShareLink;
             promoteShareLog.RefereeId = model.RefereeId;
             promoteShareLog.PromoteId = model.PromoteId;

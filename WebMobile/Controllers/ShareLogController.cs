@@ -20,11 +20,11 @@ namespace WebMobile.Controllers
         public CustomJsonResult GetMy(SearchCondition model)
         {
             var query = (from o in CurrentDb.PromoteUserCoupon
-                         join m in CurrentDb.WxUserInfo on o.UserId equals m.UserId
+                         join m in CurrentDb.WxUserInfo on o.ClientId equals m.ClientId
 
                          where
                          o.RefereeId == this.CurrentUserId &&
-                         o.UserId != o.RefereeId &&
+                         o.ClientId != o.RefereeId &&
                          o.IsBuy == true
                          select new { o.IsBuy, o.BuyTime, o.IsConsume, o.IsGet, m.Nickname, m.HeadImgUrl });
 

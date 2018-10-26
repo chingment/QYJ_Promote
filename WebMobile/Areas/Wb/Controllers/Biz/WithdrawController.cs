@@ -54,7 +54,7 @@ namespace WebMobile.Areas.Wb.Controllers
         {
             var query = (from u in CurrentDb.Withdraw
 
-                         join w in CurrentDb.WxUserInfo on u.UserId equals w.UserId
+                         join w in CurrentDb.WxUserInfo on u.ClientId equals w.ClientId
                          where (condition.Name == null || u.AcName.Contains(condition.Name))
                          &&
                          (condition.Sn == null || u.Sn.Contains(condition.Sn)) &&
@@ -113,7 +113,7 @@ namespace WebMobile.Areas.Wb.Controllers
         {
             var query = (from u in CurrentDb.Withdraw
 
-                         join w in CurrentDb.WxUserInfo on u.UserId equals w.UserId
+                         join w in CurrentDb.WxUserInfo on u.ClientId equals w.ClientId
 
                          where (condition.Name == null || u.AcName.Contains(condition.Name))
                          &&
@@ -165,7 +165,7 @@ namespace WebMobile.Areas.Wb.Controllers
         {
             var query = (from u in CurrentDb.Withdraw
 
-                         join w in CurrentDb.WxUserInfo on u.UserId equals w.UserId
+                         join w in CurrentDb.WxUserInfo on u.ClientId equals w.ClientId
 
                          where (condition.Name == null || u.AcName.Contains(condition.Name))
                          &&

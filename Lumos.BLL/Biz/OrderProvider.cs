@@ -29,7 +29,7 @@ namespace Lumos.BLL
             return result;
         }
 
-        private CustomJsonResult<Order> UnifiedOrderByBuyPromoteCoupon(string pOperater, string pUserId, string pRefereeId, OrderPmsByBuyPromoteCoupon pms)
+        private CustomJsonResult<Order> UnifiedOrderByBuyPromoteCoupon(string pOperater, string pClientId, string pRefereeId, OrderPmsByBuyPromoteCoupon pms)
         {
             var result = new CustomJsonResult<Order>();
 
@@ -70,14 +70,14 @@ namespace Lumos.BLL
                     }
 
 
-                    var wxUserInfo = CurrentDb.WxUserInfo.Where(m => m.UserId == pUserId).FirstOrDefault();
+                    var wxUserInfo = CurrentDb.WxUserInfo.Where(m => m.ClientId == pClientId).FirstOrDefault();
 
                     if (wxUserInfo == null)
                     {
                         return new CustomJsonResult<Order>(ResultType.Failure, ResultCode.Failure, "找不到用户微信信息", null);
                     }
 
-                    var orderByBuyed = CurrentDb.Order.Where(m => m.UserId == pUserId && m.PromoteId == pms.PromoteId && m.Status == Enumeration.OrderStatus.Payed).FirstOrDefault();
+                    var orderByBuyed = CurrentDb.Order.Where(m => m.ClientId == pClientId && m.PromoteId == pms.PromoteId && m.Status == Enumeration.OrderStatus.Payed).FirstOrDefault();
                     if (orderByBuyed != null)
                     {
                         return new CustomJsonResult<Order>(ResultType.Success, ResultCode.Success, "您已成功抢购", orderByBuyed);
@@ -85,8 +85,8 @@ namespace Lumos.BLL
 
                     var order = new Order();
                     order.Id = GuidUtil.New();
-                    order.UserId = pUserId;
-                    order.Sn = SnUtil.Build(Enumeration.BizSnType.Order, order.UserId);
+                    order.ClientId = pClientId;
+                    order.Sn = SnUtil.Build(Enumeration.BizSnType.Order, order.ClientId);
                     order.IsPromoteProfit = true;
                     order.PromoteId = promote.Id;
                     order.RefereeId = pRefereeId;
@@ -103,7 +103,7 @@ namespace Lumos.BLL
 
                     var orderDetails = new OrderDetails();
                     orderDetails.Id = GuidUtil.New();
-                    orderDetails.UserId = pUserId;
+                    orderDetails.ClientId = pClientId;
                     orderDetails.OrderId = order.Id;
                     orderDetails.Quantity = 1;
                     orderDetails.UnitPrice = productSku.Price;
@@ -127,7 +127,7 @@ namespace Lumos.BLL
                         order.Status = Enumeration.OrderStatus.WaitPay; //待支付状态
                         order.WxPrepayIdExpireTime = this.DateTime.AddMinutes(5);
 
-                        if (order.UserId == "62c587c13c124f96b436de9522fb31f0")
+                        if (order.ClientId == "62c587c13c124f96b436de9522fb31f0")
                         {
                             chargeAmount = 0.01m;
                         }
@@ -160,7 +160,7 @@ namespace Lumos.BLL
 
                         var promoteUserCoupon = new PromoteUserCoupon();
                         promoteUserCoupon.Id = GuidUtil.New();
-                        promoteUserCoupon.UserId = order.UserId;
+                        promoteUserCoupon.ClientId = order.ClientId;
                         promoteUserCoupon.PromoteId = promoteCoupon.PromoteId;
                         promoteUserCoupon.PromoteCouponId = promoteCoupon.Id;
                         promoteUserCoupon.WxCouponId = promoteCoupon.WxCouponId;
@@ -242,7 +242,7 @@ namespace Lumos.BLL
                 var order = CurrentDb.Order.Where(m => m.Sn == orderSn).FirstOrDefault();
                 if (order != null)
                 {
-                    mod_OrderNotifyLog.UserId = order.UserId;
+                    mod_OrderNotifyLog.ClientId = order.ClientId;
                     mod_OrderNotifyLog.OrderId = order.Id;
                     mod_OrderNotifyLog.OrderSn = order.Sn;
                 }
@@ -298,7 +298,7 @@ namespace Lumos.BLL
 
                     var promoteUserCoupon = new PromoteUserCoupon();
                     promoteUserCoupon.Id = GuidUtil.New();
-                    promoteUserCoupon.UserId = order.UserId;
+                    promoteUserCoupon.ClientId = order.ClientId;
                     promoteUserCoupon.PromoteId = promoteCoupon.PromoteId;
                     promoteUserCoupon.PromoteCouponId = promoteCoupon.Id;
                     promoteUserCoupon.WxCouponId = promoteCoupon.WxCouponId;

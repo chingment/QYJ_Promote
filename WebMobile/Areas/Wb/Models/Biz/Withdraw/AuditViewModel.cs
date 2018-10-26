@@ -46,7 +46,7 @@ namespace WebMobile.Areas.Wb.Models.Biz.Withdraw
             {
                 _withdraw = withdraw;
 
-                var userInfo = CurrentDb.WxUserInfo.Where(m => m.UserId == withdraw.UserId).FirstOrDefault();
+                var userInfo = CurrentDb.WxUserInfo.Where(m => m.ClientId == withdraw.ClientId).FirstOrDefault();
 
                 if (userInfo != null)
                 {

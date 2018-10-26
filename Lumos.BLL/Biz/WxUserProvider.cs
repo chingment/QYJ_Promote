@@ -43,7 +43,7 @@ namespace Lumos.BLL
 
                             mod_UserInfo = new WxUserInfo();
                             mod_UserInfo.Id = GuidUtil.New();
-                            mod_UserInfo.UserId = sysClientUser.Id;
+                            mod_UserInfo.ClientId = sysClientUser.Id;
                             mod_UserInfo.OpenId = pWxUserInfo.OpenId;
                             mod_UserInfo.AccessToken = pWxUserInfo.AccessToken;
                             mod_UserInfo.ExpiresIn = pWxUserInfo.ExpiresIn;
@@ -87,7 +87,7 @@ namespace Lumos.BLL
 
                             var fund = new Fund();
                             fund.Id = GuidUtil.New();
-                            fund.UserId = sysClientUser.Id;
+                            fund.ClientId = sysClientUser.Id;
                             fund.CurrentBalance = 0;
                             fund.AvailableBalance = 0;
                             fund.LockBalance = 0;

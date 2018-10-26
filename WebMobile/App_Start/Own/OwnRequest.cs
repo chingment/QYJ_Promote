@@ -82,16 +82,6 @@ namespace WebMobile
             return userName;
         }
 
-        public static bool IsInMenu(string url)
-        {
-
-            return true;
-        }
-
-        public static List<SysMenu> GetMenus()
-        {
-            return SysFactory.AuthorizeRelay.GetUserMenus(GetCurrentUserId());
-        }
 
         public static bool IsInPermission(string[] permissions)
         {

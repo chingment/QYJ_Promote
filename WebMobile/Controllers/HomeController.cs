@@ -79,11 +79,11 @@ namespace WebMobile.Controllers
                         wxUserInfo = BizFactory.WxUser.CheckedUser(GuidUtil.New(), wxUserInfo);
                         if (wxUserInfo != null)
                         {
-                            LogUtil.Info("用户Id：" + wxUserInfo.UserId);
+                            LogUtil.Info("用户Id：" + wxUserInfo.ClientId);
 
                             UserInfo userInfo = new UserInfo();
                             userInfo.Token = GuidUtil.New();
-                            userInfo.UserId = wxUserInfo.UserId;
+                            userInfo.UserId = wxUserInfo.ClientId;
                             userInfo.WxOpenId = oauth2_Result.openid;
                             userInfo.WxAccessToken = oauth2_Result.access_token;
                             SSOUtil.SetUserInfo(userInfo);
@@ -233,7 +233,7 @@ namespace WebMobile.Controllers
                                         if (textMsg.Content == "代金券" || textMsg.Content == "代金卷" || textMsg.Content == "代金劵")
                                         {
                                             string promoteId = "akkk753c5fe14e26bbecad576b6a6kkk";
-                                            string media_Id = GetWxPromoteImgMediaId(promoteId, wxUserInfo.UserId);
+                                            string media_Id = GetWxPromoteImgMediaId(promoteId, wxUserInfo.ClientId);
                                             echoStr = WxMsgFactory.CreateReplyImage(baseEventMsg.FromUserName, baseEventMsg.ToUserName, media_Id);
                                         }
 
@@ -258,7 +258,7 @@ namespace WebMobile.Controllers
                                             #region  USER_GET_CARD
                                             var userGetCardMsg = (UserGetCardMsg)baseEventMsg;
 
-                                            var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.UserId == wxUserInfo.UserId && m.WxCouponId == userGetCardMsg.CardId).FirstOrDefault();
+                                            var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.ClientId == wxUserInfo.ClientId && m.WxCouponId == userGetCardMsg.CardId).FirstOrDefault();
 
                                             if (promoteUserCoupon != null)
                                             {
@@ -283,7 +283,7 @@ namespace WebMobile.Controllers
                                                 var reidsMqByCalProfitByCouponConsumeModel = new ReidsMqByCalProfitByCouponConsumeModel();
                                                 reidsMqByCalProfitModel.Type = ReidsMqByCalProfitType.CouponConsume;
 
-                                                reidsMqByCalProfitByCouponConsumeModel.UserId = wxUserInfo.UserId;
+                                                reidsMqByCalProfitByCouponConsumeModel.UserId = wxUserInfo.ClientId;
                                                 reidsMqByCalProfitByCouponConsumeModel.WxCouponDecryptCode = userConsumeCardMsg.UserCardCode;
                                                 reidsMqByCalProfitByCouponConsumeModel.WxCouponId = userConsumeCardMsg.CardId;
 
@@ -302,7 +302,7 @@ namespace WebMobile.Controllers
 
                             var wxMsgPushLog = new WxMsgPushLog();
                             wxMsgPushLog.Id = GuidUtil.New();
-                            wxMsgPushLog.UserId = wxUserInfo.UserId;
+                            wxMsgPushLog.UserId = wxUserInfo.ClientId;
                             wxMsgPushLog.ToUserName = baseEventMsg.ToUserName;
                             wxMsgPushLog.FromUserName = baseEventMsg.FromUserName;
                             wxMsgPushLog.CreateTime = DateTime.Now;
@@ -375,20 +375,20 @@ namespace WebMobile.Controllers
             }
         }
 
-        public string GetWxPromoteImgMediaId(string promoteId, string userId)
+        public string GetWxPromoteImgMediaId(string promoteId, string clientId)
         {
-            var wxUserInfo = CurrentDb.WxUserInfo.Where(m => m.UserId == userId).FirstOrDefault();
-            var promoteUser = CurrentDb.PromoteUser.Where(m => m.PromoteId == promoteId && m.UserId == userId).FirstOrDefault();
+            var wxUserInfo = CurrentDb.WxUserInfo.Where(m => m.ClientId == clientId).FirstOrDefault();
+            var promoteUser = CurrentDb.PromoteUser.Where(m => m.PromoteId == promoteId && m.ClientId == clientId).FirstOrDefault();
             if (promoteUser == null)
             {
                 promoteUser = new PromoteUser();
                 promoteUser.Id = GuidUtil.New();
                 promoteUser.PromoteId = promoteId;
-                promoteUser.UserId = userId;
-                promoteUser.PUserId = null;
+                promoteUser.ClientId = clientId;
+                promoteUser.PClientId = null;
                 promoteUser.IsAgent = true;
                 promoteUser.CreateTime = DateTime.Now;
-                promoteUser.Creator = userId;
+                promoteUser.Creator = clientId;
                 CurrentDb.PromoteUser.Add(promoteUser);
                 CurrentDb.SaveChanges();
             }
@@ -408,7 +408,7 @@ namespace WebMobile.Controllers
                 //设置二维码的边距,单位不是固定像素
                 options.Margin = 1;
                 writer.Options = options;
-                System.Drawing.Image oImg1 = writer.Write(string.Format("http://qyj.17fanju.com/Promoteb/Coupon?promoteId={0}&refereeId={1}", promoteId, userId));
+                System.Drawing.Image oImg1 = writer.Write(string.Format("http://qyj.17fanju.com/Promoteb/Coupon?promoteId={0}&refereeId={1}", promoteId, clientId));
                 System.Drawing.Bitmap map = new Bitmap(oImg);
                 oImg.Dispose();
                 Graphics g = Graphics.FromImage(map);

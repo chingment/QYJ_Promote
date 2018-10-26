@@ -21,7 +21,7 @@ namespace WebMobile.Controllers
             model.PromoteCouponId = "00000000000000000000000000000002";
             model.RefereeId = refereeId;
 
-            var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.UserId == this.CurrentUserId && m.PromoteId == model.PromoteId && m.PromoteCouponId == model.PromoteCouponId).FirstOrDefault();
+            var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.ClientId == this.CurrentUserId && m.PromoteId == model.PromoteId && m.PromoteCouponId == model.PromoteCouponId).FirstOrDefault();
             if (promoteUserCoupon != null)
             {
                 if (promoteUserCoupon.IsBuy)
@@ -66,7 +66,7 @@ namespace WebMobile.Controllers
 
             bool isGoBuy = false;
 
-            var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.PromoteId == model.PromoteId && m.UserId == this.CurrentUserId).FirstOrDefault();
+            var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.PromoteId == model.PromoteId && m.ClientId == this.CurrentUserId).FirstOrDefault();
 
             string refereeId = GuidUtil.Empty();
             if (promoteUserCoupon == null)

@@ -23,7 +23,7 @@ namespace WebMobile.Controllers
         {
             var query = (from o in CurrentDb.FundTrans
                          where
-                         o.UserId == this.CurrentUserId
+                         o.ClientId == this.CurrentUserId
                          && o.IsNoDisplay == false
                          select new { o.Id, o.Sn, o.ChangeAmount, o.ChangeType, o.CreateTime, o.Description, o.TipsIcon });
 
