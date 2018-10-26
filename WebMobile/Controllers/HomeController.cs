@@ -302,7 +302,7 @@ namespace WebMobile.Controllers
 
                             var wxMsgPushLog = new WxMsgPushLog();
                             wxMsgPushLog.Id = GuidUtil.New();
-                            wxMsgPushLog.UserId = wxUserInfo.ClientId;
+                            wxMsgPushLog.ClientId = wxUserInfo.ClientId;
                             wxMsgPushLog.ToUserName = baseEventMsg.ToUserName;
                             wxMsgPushLog.FromUserName = baseEventMsg.FromUserName;
                             wxMsgPushLog.CreateTime = DateTime.Now;
