@@ -394,10 +394,12 @@
                         wx.addCard({
                             cardList: cardList,
                             success: function (res) {
-                                addCouponNotifyResult(orderSn, res.cardList);
+                                $.lumos.tips(JSON.stringify(res))
+                                window.location.href = "/Promotec/PayResult?promoteId=" + pConfig.promoteId + "&orderSn=" + orderSn + "&isSuccessed=True&isGet=True";
+                                //addCouponNotifyResult(orderSn, res.cardList);
                             },
                             cancel: function (res) {
-                               
+                                $.lumos.tips(JSON.stringify(res))
                             }
                         });
                     }
