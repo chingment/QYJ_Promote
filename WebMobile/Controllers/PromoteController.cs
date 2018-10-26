@@ -289,6 +289,7 @@ namespace WebMobile.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public CustomJsonResult ShareLog(ShareLogModel model)
         {
 
@@ -310,6 +311,7 @@ namespace WebMobile.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public CustomJsonResult AccessLog()
         {
             var uri = new Uri(Request.UrlReferrer.AbsoluteUri);

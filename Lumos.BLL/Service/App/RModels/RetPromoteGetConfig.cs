@@ -8,7 +8,12 @@ namespace Lumos.BLL.Service.App
 {
     public class RetPromoteGetConfig
     {
-        public string Title { get; set; }
+        public RetPromoteGetConfig()
+        {
+            this.CouponPage = new CouponPageModel();
+            this.PayResultPage = new PayResultPageModel();
+        }
+
         public string PromoteId { get; set; }
         public string PromoteCouponId { get; set; }
         public string RefereeId { get; set; }
@@ -19,22 +24,43 @@ namespace Lumos.BLL.Service.App
         public bool IsNeedBuy { get; set; }
         public bool IsBuy { get; set; }
         public bool IsGet { get; set; }
-        public bool IsStart { get; set; }
-        public bool IsEnd { get; set; }
+        public int Status { get; set; }
         public string StartTime { get; set; }
         public string NoStartDesc { get; set; }
         public string EndTime { get; set; }
         public string EndDesc { get; set; }
-        public string Bg4GoPersonal { get; set; }
-        public string Bg4GetCoupon { get; set; }
-        public string Bg4OpenCoupon { get; set; }
-        public string Bg4GoInvite { get; set; }
-        public string Bg4GoBuy { get; set; }
         public bool IsNeedFillInInfo { get; set; }
 
-        public string Bg01 { get; set; }
-        public string Bg02 { get; set; }
-        public string Bg03 { get; set; }
-        public string Bg04 { get; set; }
+        public CouponPageModel CouponPage { get; set; }
+
+        public PayResultPageModel PayResultPage { get; set; }
+
+        public class CouponPageModel
+        {
+            public string Title { get; set; }
+            public string Bg01 { get; set; }
+            public string Bg02 { get; set; }
+            public string Bg03 { get; set; }
+            public string Bg04 { get; set; }
+            public string Bg4GoPersonal { get; set; }
+            public string Bg4GetCoupon { get; set; }
+            public string Bg4OpenCoupon { get; set; }
+            public string Bg4GoInvite { get; set; }
+            public string Bg4GoBuy { get; set; }
+        }
+
+        public class PayResultPageModel
+        {
+            public string Title { get; set; }
+            public string Bg01 { get; set; }
+            public string Bg02 { get; set; }
+            public string Bg03 { get; set; }
+            public string Bg04 { get; set; }
+            public string Bg4GoPersonal { get; set; }
+            public string Bg4GetCoupon { get; set; }
+            public string Bg4OpenCoupon { get; set; }
+            public string Bg4GoInvite { get; set; }
+            public string Bg4GoBuy { get; set; }
+        }
     }
 }

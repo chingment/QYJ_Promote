@@ -17,7 +17,6 @@ namespace Lumos.BLL.Service.App
             ret.PromoteCouponId = "00000000000000000000000000000002";
 
 
-            ret.Title = "全优加周年庆福利，¥1248元优乐享卡，免费送！送！送！";
             ret.ClientId = pClientId;
             ret.RefereeId = rup.RefereeId;
             ret.ShareTitle = "全优加周年庆福利，¥1248元优乐享卡";
@@ -25,66 +24,48 @@ namespace Lumos.BLL.Service.App
             ret.ShareImgUrl = "http://qyj.17fanju.com/Content/images/promote20181021/share_icon.png";
             ret.EndDesc = "活动已经结束";
             ret.NoStartDesc = "活动未开始";
-            ret.Bg01 = "/Content/images/promote20181021/bg_01.jpg";
-            ret.Bg02 = "/Content/images/promote20181021/bg_02.jpg";
-            ret.Bg03 = "/Content/images/promote20181021/bg_03.jpg";
-            ret.Bg04 = "/Content/images/promote20181021/bg_04.jpg";
-            ret.Bg4GoBuy = "/Content/images/promote20180910/btn_buy.png";
-            ret.Bg4OpenCoupon = "/Content/images/promote20181021/btn_opencoupon.png";
-            ret.Bg4GetCoupon = "/Content/images/promote20181021/btn_getcoupon.png";
-            ret.Bg4GoPersonal = "/Content/images/promote20181021/btn_personal.png";
-            ret.Bg4GoInvite = "/Content/images/promote20181021/btn_invite.png";
 
+            ret.CouponPage.Title = "全优加周年庆福利，¥1248元优乐享卡，免费送！送！送！";
+            ret.CouponPage.Bg01 = "/Content/images/promote20181021/bg_01.jpg";
+            ret.CouponPage.Bg02 = "/Content/images/promote20181021/bg_02.jpg";
+            ret.CouponPage.Bg03 = "/Content/images/promote20181021/bg_03.jpg";
+            ret.CouponPage.Bg04 = "/Content/images/promote20181021/bg_04.jpg";
+            ret.CouponPage.Bg4GoBuy = "/Content/images/promote20180910/btn_buy.png";
+            ret.CouponPage.Bg4OpenCoupon = "/Content/images/promote20181021/btn_opencoupon.png";
+            ret.CouponPage.Bg4GetCoupon = "/Content/images/promote20181021/btn_getcoupon.png";
+            ret.CouponPage.Bg4GoPersonal = "/Content/images/promote20181021/btn_personal.png";
+            ret.CouponPage.Bg4GoInvite = "/Content/images/promote20181021/btn_invite.png";
 
-            //var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.ClientId == this.CurrentUserId && m.PromoteId == model.PromoteId && m.PromoteCouponId == model.PromoteCouponId).FirstOrDefault();
-            //if (promoteUserCoupon != null)
-            //{
-            //    if (promoteUserCoupon.IsBuy)
-            //    {
-            //        if (promoteUserCoupon.IsGet)
-            //        {
-            //            return Redirect("~/Promoteb/PayResult?promoteId=" + model.PromoteId + "&orderSn=" + promoteUserCoupon.OrderSn + "&isSuccessed=True");
-            //        }
-            //    }
-            //}
-
-            //var promote = CurrentDb.Promote.Where(m => m.Id == model.PromoteId).FirstOrDefault();
-            //if (promote != null)
-            //{
-            //    if (promote.EndTime < DateTime.Now)
-            //    {
-            //        model.PromoteIsEnd = true;
-            //    }
-            //}
+            ret.PayResultPage.Title = "恭喜您，抢购成功！";
+            ret.PayResultPage.Bg01 = "/Content/images/promote20181021/bg_suc_01.jpg";
+            ret.PayResultPage.Bg02 = "/Content/images/promote20181021/bg_suc_02.jpg";
+            ret.PayResultPage.Bg03 = "/Content/images/promote20181021/bg_suc_03.jpg";
+            ret.PayResultPage.Bg04 = "/Content/images/promote20181021/bg_suc_04.jpg";
+            ret.PayResultPage.Bg4GoBuy = "/Content/images/promote20180910/btn_buy.png";
+            ret.PayResultPage.Bg4OpenCoupon = "/Content/images/promote20181021/btn_opencoupon.png";
+            ret.PayResultPage.Bg4GetCoupon = "/Content/images/promote20181021/btn_getcoupon.png";
+            ret.PayResultPage.Bg4GoPersonal = "/Content/images/promote20181021/btn_personal.png";
+            ret.PayResultPage.Bg4GoInvite = "/Content/images/promote20181021/btn_invite.png";
 
             var promote = CurrentDb.Promote.Where(m => m.Id == rup.PromoteId).FirstOrDefault();
             if (promote == null)
             {
-                ret.IsStart = false;
-                ret.IsEnd = false;
+                ret.Status = 1;//活动未开始
             }
             else
             {
-                if (promote.StartTime < this.DateTime)
+                if (promote.StartTime > this.DateTime)
                 {
-                    ret.IsStart = true;
-
-                    if (promote.EndTime > this.DateTime)
-                    {
-                        ret.IsEnd = false;
-                    }
-                    else
-                    {
-                        ret.IsEnd = true;
-                    }
+                    ret.Status = 1;//活动未开始
+                }
+                else if (promote.StartTime <= this.DateTime && promote.EndTime >= this.DateTime)
+                {
+                    ret.Status = 2;//活动中
                 }
                 else
                 {
-                    ret.IsStart = false;
-                    ret.IsEnd = false;
+                    ret.Status = 3;//活动结束
                 }
-
-
 
                 var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.ClientId == pClientId && m.PromoteId == rup.PromoteId && m.PromoteCouponId == ret.PromoteCouponId).FirstOrDefault();
                 if (promoteUserCoupon == null)

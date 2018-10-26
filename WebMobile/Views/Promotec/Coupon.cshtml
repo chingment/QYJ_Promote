@@ -82,45 +82,44 @@
 }
 <script id="config_tmpl" type="text/x-jquery-tmpl">
     <div>
-        <img src="${bg01}" />
+        <img src="${couponPage.bg01}" />
     </div>
     <div style="position: relative;">
-        <img src="${bg02}" />
+        <img src="${couponPage.bg02}" />
         <div style="position: absolute;width: 100%;height: 100%;top: 0;align-items: center;justify-content: center; display: flex;">
 
-            {{if isEnd}}
+
+            {{if status==1 }}
+            <div style="width:100%;top:0px;text-align: center;font-size:24px;color:#f53300;">
+                <p>${noStartDesc}</p>
+            </div>
+            {{else status==2}}
+
+            {{if isNeedBuy}}
+            <div style="width:50%;float:left;text-align: right;">
+                <img class="btn-com operate" id="btn_GetCoupon" src="${couponPage.bg4GoBuy}" style="margin-right:15px;display: none;cursor:pointer" />
+                <img class="btn-com operate" id="btn_OpenCoupon" src="${couponPage.bg4OpenCoupon}" style="margin-right:15px;display: none;cursor:pointer" />
+            </div>
+            {{else}}
+            <div style="width:50%;float:left;text-align: right;">
+                <img class="btn-com operate" id="btn_GetCoupon" src="${couponPage.bg4GetCoupon}" style="margin-right:15px;display: none;cursor:pointer" />
+                <img class="btn-com operate" id="btn_OpenCoupon" src="${couponPage.bg4OpenCoupon}" style="margin-right:15px;display: none;cursor:pointer" />
+            </div>
+            {{/if}}
+            <div style="width:50%;float:left;text-align:left;">
+                <img class="btn-com operate" id="btn_GoInvite" src="${couponPage.bg4GoInvite}" style="margin-left:15px;display: inline-block;cursor:pointer" />
+            </div>
+            {{else status==3}}
             <div style="width:100%;top:0px;text-align: center;font-size:24px;color:#f53300;">
                 <p>${endDesc}</p>
             </div>
             {{/if}}
-
-            {{if isStart}}
-            {{if isNeedBuy}}
-            <div style="width:50%;float:left;text-align: right;">
-                <img class="btn-com operate" id="btn_GetCoupon" src="${bg4GoBuy}" style="margin-right:15px;display: inline-block;cursor:pointer" />
-            </div>
-            {{else}}
-            <div style="width:50%;float:left;text-align: right;">
-                <img class="btn-com operate" id="btn_GetCoupon" src="${bg4GetCoupon}" style="margin-right:15px;display: inline-block;cursor:pointer" />
-            </div>
-            {{/if}}
-            <div style="width:50%;float:left;text-align:left;">
-                <img class="btn-com operate" id="btn_GoInvite" src="${bg4GoInvite}" style="margin-left:15px;display: inline-block;cursor:pointer" />
-            </div>
-            {{else}}
-
-            <div style="width:100%;top:0px;text-align: center;font-size:24px;color:#f53300;">
-                <p>${noStartDesc}</p>
-            </div>
-
-            {{/if}}
-
         </div>
     </div>
     <div style="position: relative;">
-        <img src="${bg03}" />
+        <img src="${couponPage.bg03}" />
         <a href="/Personal/Index">
-            <img class="btn-com operate" id="btn_GoPersonal" src="${bg4GoPersonal}" style="margin-right:15px;display: inline-block; bottom: 12%;right: 5%;position: absolute;" />
+            <img class="btn-com operate" id="btn_GoPersonal" src="${couponPage.bg4GoPersonal}" style="margin-right:15px;display: inline-block; bottom: 12%;right: 5%;position: absolute;" />
         </a>
     </div>
 </script>
@@ -222,10 +221,19 @@
                 success: function (d) {
                     if (d.result == $.lumos.resultType.success) {
                         pConfig = d.data;
-                        document.title = pConfig.title;//更改网页标题
+                        document.title = pConfig.couponPage.title;//更改网页标题
                         $('#config').html($("#config_tmpl").tmpl(pConfig));
+                        if (pConfig.isGet) {
+                            $('#btn_GetCoupon').css("display", "none");
+                            $('#btn_OpenCoupon').css("display", "inline-block");
+                        }
+                        else {
+                            $('#btn_GetCoupon').css("display", "inline-block");
+                            $('#btn_OpenCoupon').css("display", "none");
+                        }
                         initShareInfo();
                         initGetCoupon();
+                        initOpenCoupon();
                     }
                 }
             });
@@ -357,6 +365,30 @@
                             $.lumos.tips(d.message);
                             $(_this).removeAttr("disabled");
                         }
+                    }
+                });
+            });
+        }
+
+        function initOpenCoupon() {
+            $("#btn_OpenCoupon").live("click", function () {
+
+                var _this = $(this);
+                $.lumos.postJson({
+                    url: "/Promote/GetCardList",
+                    data: { promoteId: pConfig.promoteId },
+                    success: function (d) {
+                        var cards = d.data;
+                        var cardList = [];
+                        for (var p in cards) {
+                            cardList.push({ cardId: cards[p].cardId, code: cards[p].code });
+                        }
+                        wx.openCard({
+                            cardList: cardList,
+                            cancel: function (res) {
+
+                            }
+                        });
                     }
                 });
             });

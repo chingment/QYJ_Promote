@@ -1,6 +1,5 @@
-﻿@model WebMobile.Models.Promote.PayResultViewModel
-@{
-    ViewBag.Title = "恭喜您，抢购成功";
+﻿@{
+    ViewBag.Title = "";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -82,51 +81,52 @@
     </style>
 
 }
-
-<div class="gbr gbr-main">
+<script id="config_tmpl" type="text/x-jquery-tmpl">
     <div>
-        <img src="~/Content/images/promote20181021/bg_suc_01.jpg" />
+        <img src="${payResultPage.bg01}" />
     </div>
     <div style="position: relative;">
-        <img src="~/Content/images/promote20181021/bg_suc_02.jpg" />
-
-
-
-
+        <img src="${payResultPage.bg02}" />
         <div style="position: absolute;width: 100%;height: 100%;top: 0;align-items: center;justify-content: center; display: flex;">
-            @if (Model.PromoteIsEnd)
-            {
-                <div style="width:100%;top:0px;text-align: center;font-size:24px;color:#f53300;">
-                    <p>该活动已经结束，谢谢关注！</p>
-                </div>
-            }
-            else
-            {
-                <div style="width:50%;float:left;text-align: right;">
-                    <img id="btn_OpenCoupon" src="~/Content/images/promote20181021/btn_opencoupon.png" class="btn-com" style="margin-right:15px;display: inline-block;" />
-                </div>
-                <div style="width:50%;float:left;text-align:left;">
-                    <img id="btn_GoInvite" src="~/Content/images/promote20181021/btn_invite.png" class="btn-com" style="margin-left:15px;display: inline-block;" />
-                </div>
-            }
+            {{if status==1 }}
+            <div style="width:100%;top:0px;text-align: center;font-size:24px;color:#f53300;">
+                <p>${noStartDesc}</p>
+            </div>
+            {{else status==2}}
+            <div style="width:50%;float:left;text-align: right;">
+                <img class="btn-com operate" id="btn_OpenCoupon" src="${payResultPage.bg4OpenCoupon}" style="margin-right:15px;display: inline-block;cursor:pointer" />
+            </div>
+            <div style="width:50%;float:left;text-align:left;">
+                <img class="btn-com operate" id="btn_GoInvite" src="${payResultPage.bg4GoInvite}" style="margin-left:15px;display: inline-block;cursor:pointer" />
+            </div>
+            {{else status==3}}
+            <div style="width:100%;top:0px;text-align: center;font-size:24px;color:#f53300;">
+                <p>${endDesc}</p>
+            </div>
+            {{/if}}
         </div>
-
-
-
     </div>
     <div>
-        <img src="~/Content/images/promote20181021/bg_suc_03.jpg" />
+        <img src="${payResultPage.bg03}" />
     </div>
     <div style="position: relative;">
-        <img src="~/Content/images/promote20181021/bg_suc_04.jpg" />
+        <img src="${payResultPage.bg04}" />
         <div style="position: absolute;width: 100%;height: 100%;top: 0;align-items: center;justify-content: flex-end ;right: 5%;  display: flex;">
 
             <a href="/Personal/Index">
-                <img class="btn-com" id="btn_GoPersonal" src="~/Content/images/promote20181021/btn_personal.png" />
+                <img class="btn-com operate" id="btn_GoPersonal" src="${payResultPage.bg4GoPersonal}" style="cursor:pointer" />
             </a>
 
         </div>
     </div>
+</script>
+
+<div class="gbr gbr-main">
+
+    <div id="config">
+
+    </div>
+
 </div>
 
 <div class="popd" style="display:none">
@@ -219,82 +219,39 @@
 @section scripts{
     <script type="text/javascript">
 
-        var promoteId = "@Model.PromoteId";
-        var refereeId = "@(Model.RefereeId==null?Request.QueryString["refereeId"]: Model.RefereeId)";
-        var userId = "@(OwnRequest.GetUserInfo().UserId)";
-        var isGetCoupon=@(Model.IsGetCoupon==true?"true":"false");
+        var pConfig;
 
-        $(function () {
-       
-            var shareTitle = '全优加周年庆福利，¥1248元优乐享卡';
-            var shareDesc = '限量1028张，60校同抢\n免费送！送！送！';
-            var shareLink = 'http://qyj.17fanju.com/Promoteb/Coupon?promoteId=' + promoteId + '&refereeId=' + userId;
-            var shareImgUrl = 'http://qyj.17fanju.com/Content/images/promote20180910/share_icon.png';
-            wx.ready(function () {
+        $(document).ready(function () {
 
-                wx.onMenuShareAppMessage({
-                    title: shareTitle,
-                    desc: shareDesc,
-                    link: shareLink,
-                    imgUrl: shareImgUrl,
-                    trigger: function (res) {
-                    },
-                    success: function (res) {
-                        shareLog(promoteId, "", shareLink, 1);
-                    },
-                    cancel: function (res) {
 
-                    },
-                    fail: function (res) {
-                    }
-                });
-
-                wx.onMenuShareTimeline({
-                    title: shareTitle,
-                    link: shareLink,
-                    imgUrl: shareImgUrl,
-                    trigger: function (res) {
-                        shareLog(promoteId, "", shareLink, 2);
-                    },
-                    success: function (res) {
-
-                    },
-                    cancel: function (res) {
-
-                    },
-                    fail: function (res) {
-
-                    }
-                });
-
-            });
-
-            $("#btn_OpenCoupon").on("click",function () {
-                var _this = $(this);
-                $.lumos.postJson({
-                    url: "/Promote/GetCardList",
-                    data: { promoteId: promoteId },
-                    success: function (d) {
-                        var cards = d.data;
-                        var cardList = [];
-                        for (var p in cards) {
-                            cardList.push({ cardId: cards[p].cardId, code: cards[p].code });
+            $.lumos.getJson({
+                url: "/Promotec/GetConfig",
+                isShowLoading: false,
+                success: function (d) {
+                    if (d.result == $.lumos.resultType.success) {
+                        pConfig = d.data;
+                        document.title = pConfig.payResultPage.title;//更改网页标题
+                        $('#config').html($("#config_tmpl").tmpl(pConfig));
+                        if (pConfig.isGet) {
+                            $('#btn_GetCoupon').css("display", "none");
+                            $('#btn_OpenCoupon').css("display", "inline-block");
                         }
-                        wx.openCard({
-                            cardList: cardList,
-                            cancel: function (res) {
-
-                            }
-                        });
+                        else {
+                            $('#btn_GetCoupon').css("display", "inline-block");
+                            $('#btn_OpenCoupon').css("display", "none");
+                        }
+                        initShareInfo();
+                        initOpenCoupon();
+                        initGetCoupon();
                     }
-                });
+                }
             });
 
-            $("#modal_Invite").on("click", function (e) {
+            $("#modal_Invite").live("click", function (e) {
                 $("#modal_Invite").hide();
             });
 
-            $('#btn_GoInvite').on("click",  function () {
+            $('#btn_GoInvite').live("click", function () {
 
                 var scrollTop = document.body.scrollTop;//网页被卷去的高
                 $("#modal_Invite").css({ top: scrollTop + "px" });
@@ -312,7 +269,178 @@
                     });
             });
 
+            $('#btn_Pop_Sure').live("click", function () {
+
+                var ctName = $('#txt_ctName').val();
+                var ctPhone = $('#txt_ctPhone').val();
+                var ctIsStudent = $('input[name=rd_ctIsStudent]:checked').val();
+                var ctSchool = $('#sel_ctSchool').find('option:selected').val();
+
+                if ($.lumos.isNullOrEmpty(ctName)) {
+                    $.lumos.tips("请输入姓名");
+                    return false;
+                }
+
+                if ($.lumos.isNullOrEmpty(ctPhone)) {
+                    $.lumos.tips("请输入电话号码");
+                    return false;
+                }
+
+                if ($.lumos.isNullOrEmpty(ctSchool)) {
+                    $.lumos.tips("请选择校区");
+                    return false;
+                }
+
+                $.lumos.postJson({
+                    url: "/Promote/EditPromoteUserInfo",
+                    isShowLoading: true,
+                    data: { promoteId: pConfig.promoteId, ctName: ctName, ctPhone: ctPhone, ctIsStudent: ctIsStudent, ctSchool: ctSchool },
+                    success: function (d) {
+                        if (d.result == $.lumos.resultType.success) {
+                            $('.popd').hide();
+                            getCard();
+                        }
+                    }
+                });
+            });
+
+            $(".popd-close").live("click", function (e) {
+                $(".popd").hide();
+            });
+
         });
+
+        function initShareInfo() {
+
+            var promoteId = pConfig.promoteId;
+            var refereeId = pConfig.refereeId;
+            var shareTitle = pConfig.shareTitle;
+            var shareDesc = pConfig.shareDesc;
+            var shareLink = 'http://qyj.17fanju.com/Promotec/Coupon?promoteId=' + promoteId + '&refereeId=' + refereeId;
+            var shareImgUrl = pConfig.shareImgUrl;
+            wx.ready(function () {
+
+                wx.onMenuShareAppMessage({
+                    title: shareTitle,
+                    desc: shareDesc,
+                    link: shareLink,
+                    imgUrl: shareImgUrl,
+                    trigger: function (res) {
+                    },
+                    success: function (res) {
+                        shareLog(promoteId, refereeId, shareLink, 1);
+                    },
+                    cancel: function (res) {
+                    },
+                    fail: function (res) {
+                    }
+                });
+
+                wx.onMenuShareTimeline({
+                    title: shareTitle,
+                    link: shareLink,
+                    imgUrl: shareImgUrl,
+                    trigger: function (res) {
+                    },
+                    success: function (res) {
+                        shareLog(promoteId, refereeId, shareLink, 2);
+                    },
+                    cancel: function (res) {
+                    },
+                    fail: function (res) {
+                    }
+                });
+
+            });
+
+        }
+
+        function initGetCoupon() {
+            $("#btn_GetCoupon").live("click", function () {
+                getCard();
+            });
+        }
+
+        function initOpenCoupon() {
+            $("#btn_OpenCoupon").live("click", function () {
+
+                var _this = $(this);
+                $.lumos.postJson({
+                    url: "/Promote/GetCardList",
+                    data: { promoteId: pConfig.promoteId },
+                    success: function (d) {
+                        var cards = d.data;
+                        var cardList = [];
+                        for (var p in cards) {
+                            cardList.push({ cardId: cards[p].cardId, code: cards[p].code });
+                        }
+                        wx.openCard({
+                            cardList: cardList,
+                            cancel: function (res) {
+
+                            }
+                        });
+                    }
+                });
+            });
+        }
+
+        function getCard() {
+            $.lumos.postJson({
+                url: "/Promote/GetCardList",
+                data: { promoteId: pConfig.promoteId },
+                isShowLoading: true,
+                success: function (d) {
+
+                    if (d.result == $.lumos.resultType.success) {
+                        var cards = d.data;
+                        var cardList = [];
+                        for (var p in cards) {
+                            cardList.push({ cardId: cards[p].cardId, cardExt: cards[p].cardExt });
+                        }
+                        wx.addCard({
+                            cardList: cardList,
+                            success: function (res) {
+                                $('#btn_GetCoupon').css("display", "none");
+                                $('#btn_OpenCoupon').css("display", "inline-block");
+                                addCouponNotifyResult(res.cardList);
+                            },
+                            cancel: function (res) {
+                                //$.lumos.tips(JSON.stringify(res))
+                            }
+                        });
+                    }
+                    else {
+                        if (d.code == "4001") {
+                            $('.popd').show();
+                        }
+                        else {
+                            $.lumos.tips(d.messages);
+                        }
+                    }
+                }
+            });
+        }
+
+        function addCouponNotifyResult(cards) {
+
+            var l_Data = [];
+            l_Data.push({ name: "Model.PromoteId", value: pConfig.promoteId });
+            $.each(cards, function (i, row) {
+                l_Data.push({ name: "Model.Coupons[" + i + "].WxCouponId", value: row.cardId });
+                l_Data.push({ name: "Model.Coupons[" + i + "].WxCouponEncryptCode", value: row.code });
+            });
+
+            $.lumos.postJson({
+                url: "/Promote/AddCouponNotifyResult",
+                data: l_Data,
+                success: function (d) {
+                    if (d.result == $.lumos.resultType.success) {
+                        $.lumos.tips('成功领取卡券');
+                    }
+                }
+            });
+        }
 
 
     </script>
