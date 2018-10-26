@@ -6,8 +6,8 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
-using Lumos.Mvc;
 using Lumos;
+using Lumos.Web;
 
 namespace WebMobile.Areas.Wb.Own
 {

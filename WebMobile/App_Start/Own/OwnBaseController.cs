@@ -1,15 +1,8 @@
 ﻿using log4net;
 using Lumos;
-using Lumos.Common;
-using Lumos.DAL;
-using Lumos.DAL.AuthorizeRelay;
-using Lumos.Entity;
-using Lumos.Mvc;
-using Newtonsoft.Json;
+using Lumos.Web;
+using Lumos.Web.Mvc;
 using System;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Web.Mvc;
 
 namespace WebMobile

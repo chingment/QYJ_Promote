@@ -1,6 +1,6 @@
 ﻿using Lumos.DAL;
 using Lumos.Entity;
-using Lumos.Mvc;
+using Lumos.Web.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -28,7 +28,7 @@ namespace WebMobile.Models
             _currentDb = new LumosDbContext();
         }
 
-        public override string Operater
+        public override string CurrentUserId
         {
             get
             {

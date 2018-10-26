@@ -10,9 +10,9 @@ using System.Reflection;
 using log4net;
 using Lumos.Common;
 using System.Globalization;
-using Lumos.Mvc;
 using Lumos.Session;
 using Lumos;
+using Lumos.Web;
 
 namespace WebMobile.Areas.Wb.Own
 {
