@@ -15,6 +15,8 @@ namespace Lumos.BLL.Service.App
             var ret = new RetPromoteGetConfig();
             ret.PromoteId = rup.PromoteId;
             ret.PromoteCouponId = "00000000000000000000000000000002";
+
+
             ret.Title = "全优加周年庆福利，¥1248元优乐享卡，免费送！送！送！";
             ret.ClientId = pClientId;
             ret.RefereeId = rup.RefereeId;
@@ -32,7 +34,6 @@ namespace Lumos.BLL.Service.App
             ret.Bg02 = "/Content/images/promote20181021/bg_02.jpg";
             ret.Bg03 = "/Content/images/promote20181021/bg_03.jpg";
             ret.Bg04 = "/Content/images/promote20181021/bg_04.jpg";
-
             ret.Bg4GoBuy = "/Content/images/promote20180910/btn_buy.png";
             ret.Bg4OpenCoupon = "/Content/images/promote20181021/btn_opencoupon.png";
             ret.Bg4GetCoupon = "/Content/images/promote20181021/btn_getcoupon.png";
