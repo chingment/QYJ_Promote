@@ -80,12 +80,7 @@
         }
     </style>
 }
-@*<img class="btn-com" id="btn_GoInvite" src="${bg4GoInvite}" style="margin-left:15px;display: inline-block" />*@
-
-
-
 <script id="config_tmpl" type="text/x-jquery-tmpl">
-
     <div>
         <img src="${bg01}" />
     </div>
@@ -102,15 +97,15 @@
             {{if isStart}}
             {{if isNeedBuy}}
             <div style="width:50%;float:left;text-align: right;">
-                <img class="btn-com" id="btn_GetCoupon" src="${bg4GoBuy}" style="margin-right:15px;display: inline-block;cursor:pointer" />
+                <img class="btn-com operate" id="btn_GetCoupon" src="${bg4GoBuy}" style="margin-right:15px;display: inline-block;cursor:pointer" />
             </div>
             {{else}}
             <div style="width:50%;float:left;text-align: right;">
-                <img class="btn-com" id="btn_GetCoupon" src="${bg4GetCoupon}" style="margin-right:15px;display: inline-block;cursor:pointer" />
+                <img class="btn-com operate" id="btn_GetCoupon" src="${bg4GetCoupon}" style="margin-right:15px;display: inline-block;cursor:pointer" />
             </div>
             {{/if}}
             <div style="width:50%;float:left;text-align:left;">
-                <img class="btn-com" id="btn_GoInvite" src="${bg4GoInvite}" style="margin-left:15px;display: inline-block;cursor:pointer" />
+                <img class="btn-com operate" id="btn_GoInvite" src="${bg4GoInvite}" style="margin-left:15px;display: inline-block;cursor:pointer" />
             </div>
             {{else}}
 
@@ -125,10 +120,9 @@
     <div style="position: relative;">
         <img src="${bg03}" />
         <a href="/Personal/Index">
-            <img class="btn-com" id="btn_GoPersonal" src="${bg4GoPersonal}" style="margin-right:15px;display: inline-block;    bottom: 12%;  right: 5%;    position: absolute;" />
+            <img class="btn-com operate" id="btn_GoPersonal" src="${bg4GoPersonal}" style="margin-right:15px;display: inline-block; bottom: 12%;right: 5%;position: absolute;" />
         </a>
     </div>
-
 </script>
 
 <div class="gbr gbr-main">
@@ -139,7 +133,6 @@
 
 <div class="popd" style="display:none">
     <div class="popd-outer">
-
         <div class="popd-inter">
             <div class="popd-close" style="position: absolute; right: -6px;top:-16px;"> <img src="~/Content/images/promote20180910/popd_close.png" style="width:32px;height:32px;" /></div>
             <div>
@@ -153,9 +146,7 @@
                             <div class="item-left fl">
                                 <div class="item-name  fl"><span>姓名</span></div>
                                 <div class="item-value fr">
-
                                     <input id="txt_ctName" placeholder="请输入姓名" type="text" style="width:100%;" />
-
                                 </div>
                             </div>
                         </li>
@@ -163,9 +154,7 @@
                             <div class="item-left fl">
                                 <div class="item-name fl"><span>手机号码</span></div>
                                 <div class="item-value fr">
-
                                     <input id="txt_ctPhone" placeholder="请输入手机号码" type="text" style="width:100%;" />
-
                                 </div>
                             </div>
                         </li>
@@ -173,7 +162,6 @@
                             <div class="item-left fl">
                                 <div class="item-name fl"><span>是否学员</span></div>
                                 <div class="item-value fr">
-
                                     <span> <input id="rd_ctIsStudent_1" name="rd_ctIsStudent" class="radio" type="radio" value="1" checked /><label for="rd_ctIsStudent_1">是</label> </span>
                                     <span> <input id="rd_ctIsStudent_0" name="rd_ctIsStudent" class="radio" type="radio" value="0" /><label for="rd_ctIsStudent_0">否</label> </span>
                                 </div>
@@ -183,7 +171,6 @@
                             <div class="item-left fl">
                                 <div class="item-name fl"><span>校区选择</span></div>
                                 <div class="item-value fr">
-
                                     <select id="sel_ctSchool">
                                         <option value="">请选择</option>
                                         <option value="越秀校">越秀校</option>
@@ -208,14 +195,13 @@
                                         <option value="深圳龙岗校">深圳龙岗校</option>
                                         <option value="深圳宝安校">深圳宝安校</option>
                                     </select>
-
                                 </div>
                             </div>
                         </li>
                     </ul>
                 </div>
                 <div style="text-align:center;">
-                    <img id="btn_Pop_Sure" src="~/Content/images/promote20180910/btn_submit.png" class="btn-com" style="display: inline-block;" />
+                    <img id="btn_Pop_Sure" src="~/Content/images/promote20180910/btn_submit.png" class="btn-com operate" style="display: inline-block;" />
                 </div>
             </div>
         </div>
@@ -383,23 +369,22 @@
                 data: { promoteId: pConfig.promoteId },
                 isShowLoading: true,
                 success: function (d) {
-                    
+
                     if (d.result == $.lumos.resultType.success) {
                         var cards = d.data;
                         var cardList = [];
                         for (var p in cards) {
                             cardList.push({ cardId: cards[p].cardId, cardExt: cards[p].cardExt });
                         }
-                     
                         wx.addCard({
                             cardList: cardList,
                             success: function (res) {
-                                $.lumos.tips(JSON.stringify(res))
-                                window.location.href = "/Promotec/PayResult?promoteId=" + pConfig.promoteId + "&orderSn=" + orderSn + "&isSuccessed=True&isGet=True";
+                                addCouponNotifyResult(orderSn, res.cardList);
+                                //window.location.href = "/Promotec/PayResult?promoteId=" + pConfig.promoteId + "&orderSn=" + orderSn + "&isSuccessed=True&isGet=True";
                                 //addCouponNotifyResult(orderSn, res.cardList);
                             },
                             cancel: function (res) {
-                                $.lumos.tips(JSON.stringify(res))
+                                //$.lumos.tips(JSON.stringify(res))
                             }
                         });
                     }
@@ -418,9 +403,7 @@
         function addCouponNotifyResult(orderSn, cards) {
 
             var l_Data = [];
-
             l_Data.push({ name: "Model.PromoteId", value: pConfig.promoteId });
-
             $.each(cards, function (i, row) {
                 l_Data.push({ name: "Model.Coupons[" + i + "].WxCouponId", value: row.cardId });
                 l_Data.push({ name: "Model.Coupons[" + i + "].WxCouponEncryptCode", value: row.code });
@@ -431,8 +414,8 @@
                 data: l_Data,
                 success: function (d) {
                     if (d.result == $.lumos.resultType.success) {
-                        $.lumos.tips('成功领取卡券');
                         window.location.href = "/Promotec/PayResult?promoteId=" + pConfig.promoteId + "&orderSn=" + orderSn + "&isSuccessed=True";
+                        $.lumos.tips('成功领取卡券');
                     }
                 }
             });
