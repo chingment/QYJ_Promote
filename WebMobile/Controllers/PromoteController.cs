@@ -308,15 +308,17 @@ namespace WebMobile.Controllers
         }
 
         [HttpPost]
-        public CustomJsonResult AccessLog(AccessLogModel model)
+        public CustomJsonResult AccessLog()
         {
-
+            var uri = new Uri(Request.UrlReferrer.AbsoluteUri);
+            string promoteId = HttpUtility.ParseQueryString(uri.Query).Get("promoteId");
+            string refereeId = HttpUtility.ParseQueryString(uri.Query).Get("refereeId");
             var promoteAccessLog = new PromoteAccessLog();
             promoteAccessLog.Id = GuidUtil.New();
             promoteAccessLog.ClientId = this.CurrentUserId;
-            promoteAccessLog.AccessUrl = model.AccessUrl;
-            promoteAccessLog.RefereeId = model.RefereeId;
-            promoteAccessLog.PromoteId = model.PromoteId;
+            promoteAccessLog.AccessUrl = Request.UrlReferrer.AbsoluteUri;
+            promoteAccessLog.RefereeId = refereeId;
+            promoteAccessLog.PromoteId = promoteId;
             promoteAccessLog.CreateTime = DateTime.Now;
             promoteAccessLog.Creator = this.CurrentUserId;
 

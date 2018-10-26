@@ -57,7 +57,6 @@
             var refereeId = "@(Model.RefereeId==null?Request.QueryString["refereeId"]: Model.RefereeId)";
             var userId = "@(OwnRequest.GetUserInfo().UserId)";
 
-            accessLog(promoteId, refereeId, window.document.location.href);
 
             $("#btn_GoPay").on("click",
                 function () {

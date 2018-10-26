@@ -90,6 +90,11 @@
     <Compile Include="Sdk\WxConfigByTest.cs" />
     <Compile Include="Sdk\WxSdkProvider.cs" />
     <Compile Include="Sdk\WxUntil.cs" />
+    <Compile Include="Service\App\AppServiceFactory.cs" />
+    <Compile Include="Service\App\Models\PromoteConfigModel.cs" />
+    <Compile Include="Service\App\PromoteService.cs" />
+    <Compile Include="Service\App\RModels\RetPromoteGetConfig.cs" />
+    <Compile Include="Service\App\RModels\RupPromoteGetConfig.cs" />
     <Compile Include="SnUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sys\AuthorizeRelayProvider.cs" />

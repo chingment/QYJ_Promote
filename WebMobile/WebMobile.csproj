@@ -198,6 +198,7 @@
     <Compile Include="Controllers\OperateController.cs" />
     <Compile Include="Controllers\PersonalController.cs" />
     <Compile Include="Controllers\PromotebController.cs" />
+    <Compile Include="Controllers\PromotecController.cs" />
     <Compile Include="Controllers\PromoteController.cs" />
     <Compile Include="Controllers\ShareLogController.cs" />
     <Compile Include="Controllers\WithdrawController.cs" />
@@ -457,6 +458,7 @@
     <Content Include="Scripts\jquery-1.8.3.js" />
     <Content Include="Scripts\jquery-1.8.3.min.js" />
     <Content Include="Scripts\jquery.lumos.mobile.1.0.0.js" />
+    <Content Include="Scripts\jquery.tmpl.min.js" />
     <Content Include="Static\Promote\promote_a999753c5fe14e26bbecad576b6a6909.jpg" />
     <Content Include="Static\Promote\promote_bg_1.jpg" />
     <Content Include="Static\Promote\user\50eccc439fda47138145defd71fb36c5.jpg" />
@@ -485,6 +487,8 @@
     <Content Include="Views\Operate\Result.cshtml" />
     <Content Include="Views\Promoteb\Coupon.cshtml" />
     <Content Include="Views\Promoteb\PayResult.cshtml" />
+    <Content Include="Views\Promotec\Coupon.cshtml" />
+    <Content Include="Views\Promotec\PayResult.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>

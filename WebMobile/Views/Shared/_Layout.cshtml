@@ -12,6 +12,7 @@
     <meta http-equiv="Pragma" CONTENT="no-cache">
     <title>@ViewBag.Title</title>
     <script src="~/Scripts/jquery-1.8.3.min.js"></script>
+    <script src="~/Scripts/jquery.tmpl.min.js"></script>
     <link href="~/Content/Site.css?@DateTime.Now.ToUnifiedFormatDateTime()" rel="stylesheet" />
     @RenderSection("styles", required: false)
     <style type="text/css">
@@ -108,11 +109,9 @@
         }
 
 
-        function accessLog(promoteId, refereeId, accessUrl) {
-
+        function accessLog() {
             $.lumos.postJson({
                 url: "/Promote/AccessLog",
-                data: { promoteId: promoteId, refereeId: refereeId, accessUrl: accessUrl },
                 success: function (d) {
                 }
             });
@@ -198,6 +197,7 @@
             //    });
             //}
 
+            accessLog();
 
         })
     </script>

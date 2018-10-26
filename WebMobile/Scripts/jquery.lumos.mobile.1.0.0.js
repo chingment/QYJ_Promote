@@ -553,7 +553,85 @@
                 }
             });
         },
+        getJson: function (opts) {
 
+            opts = $.extend({
+                isShowLoading: false,
+                url: '',
+                urlParams: null,
+                async: true,
+                timeout: 0,
+                beforeSend: function (XMLHttpRequest) {
+                },
+                complete: function (XMLHttpRequest, status) {
+                    if (status == 'timeout') {
+
+                    }
+                    else if (status == 'error') {
+
+                    }
+                },
+                success: function () { }
+            }, opts || {});
+
+            var _url = opts.url;
+
+            if (_url == '') {
+
+                return;
+            }
+            var _async = opts.async;
+            var _timeout = opts.timeout;
+            var _success = opts.success;
+            var _beforeSend = opts.beforeSend;
+            var _complete = opts.complete;
+            var _isShowLoading = opts.isShowLoading
+
+            //获取防伪标记
+            var token = $('[name=__RequestVerificationToken]').val();
+            var headers = {};
+            //防伪标记放入headers
+            //也可以将防伪标记放入data
+            headers["__RequestVerificationToken"] = token;
+
+            var handling;
+
+            $.ajax({
+                type: "Get",
+                dataType: "json",
+                async: _async,
+                headers: headers,
+                timeout: _timeout,
+                url: _url,
+                beforeSend: function (XMLHttpRequest) {
+                    if (_isShowLoading) {
+                        $.lumos.loading.show();
+                    }
+                    else {
+                        _beforeSend(XMLHttpRequest);
+                    }
+                },
+                complete: function (XMLHttpRequest, status) {
+                    _complete(XMLHttpRequest, status);
+                }
+            }).done(function (d) {
+
+                if (_isShowLoading) {
+                    $.lumos.loading.hide();
+                }
+
+                if (d.result == $.lumos.resultType.exception) {
+                    $.lumos.tips(d.message);
+                }
+                else if (d.result == $.lumos.resultType.nologin) {
+                    var data = d.data;
+                    window.location = data.loginPage;
+                }
+                else {
+                    _success(d);
+                }
+            });
+        },
         operateResult: function (opts) {
 
             opts = $.extend({

@@ -203,11 +203,6 @@
                     <img id="btn_Pop_Sure" src="~/Content/images/promote20180910/btn_submit.png" class="btn-com" style="display: inline-block;" />
                 </div>
             </div>
-
-
-
-
-
         </div>
     </div>
 </div>
@@ -221,8 +216,7 @@
         var userId = "@(OwnRequest.GetUserInfo().UserId)";
         $(function () {
 
-            accessLog(promoteId, refereeId, window.document.location.href);
-
+      
             var shareTitle = '全优加周年庆福利，¥1248元优乐享卡';
             var shareDesc = '限量1028张，60校同抢\n免费送！送！送！';
             var shareLink = 'http://qyj.17fanju.com/Promoteb/Coupon?promoteId=' + promoteId + '&refereeId=' + userId;
@@ -287,8 +281,6 @@
                         }
                     }
                 });
-
-
             });
 
             $("#modal_Invite").on("click", function (e) {
