@@ -313,7 +313,7 @@ namespace WebMobile.Controllers
 
             var promoteAccessLog = new PromoteAccessLog();
             promoteAccessLog.Id = GuidUtil.New();
-            promoteAccessLog.UserId = this.CurrentUserId;
+            promoteAccessLog.ClientId = this.CurrentUserId;
             promoteAccessLog.AccessUrl = model.AccessUrl;
             promoteAccessLog.RefereeId = model.RefereeId;
             promoteAccessLog.PromoteId = model.PromoteId;
