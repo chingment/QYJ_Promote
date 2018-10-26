@@ -19,14 +19,21 @@ namespace WebMobile.Areas.Wb.Models
         {
             get
             {
+                if (_currentDb == null)
+                {
+                    _currentDb = new LumosDbContext();
+                }
+
                 return _currentDb;
             }
         }
 
         public OwnBaseViewModel()
         {
-            _currentDb = new LumosDbContext();
+            
         }
+
+
 
         public override string CurrentUserId
         {
