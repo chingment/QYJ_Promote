@@ -49,24 +49,41 @@ namespace WebMobile.Controllers
                 myCoupon.Description = item.Description;
 
                 //1待领取，2打开（待核销），3 已核销
-                if (!item.IsGet)
-                {
-                    myCoupon.Status = 1;
-                    myCoupon.StatusName = "待领取";
-                    myCoupon.GetMethod = "url";
-                    myCoupon.GetUrl = string.Format("/Promote/PayResult?promoteId={0}&orderSn={1}&isSuccessed={2}", item.PromoteId, item.OrderSn, "True");
-                }
-                else
+
+                if (item.ValidEndTime.Value < DateTime.Now)
                 {
                     if (item.IsConsume)
                     {
                         myCoupon.Status = 3;
-                        myCoupon.StatusName = "已核销";
+                        myCoupon.StatusName = "已使用";
                     }
                     else
                     {
-                        myCoupon.Status = 2;
-                        myCoupon.StatusName = "待核销";
+                        myCoupon.Status = 4;
+                        myCoupon.StatusName = "已过期";
+                    }
+                }
+                else
+                {
+                    if (!item.IsGet)
+                    {
+                        myCoupon.Status = 1;
+                        myCoupon.StatusName = "待领取";
+                        myCoupon.GetMethod = "url";
+                        myCoupon.GetUrl = string.Format("/Promotec/CouponGet?promoteId={0}&orderSn={1}&isSuccessed={2}", item.PromoteId, item.OrderSn, "True");
+                    }
+                    else
+                    {
+                        if (item.IsConsume)
+                        {
+                            myCoupon.Status = 3;
+                            myCoupon.StatusName = "已使用";
+                        }
+                        else
+                        {
+                            myCoupon.Status = 2;
+                            myCoupon.StatusName = "待使用";
+                        }
                     }
                 }
 

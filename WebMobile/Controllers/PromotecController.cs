@@ -16,6 +16,11 @@ namespace WebMobile.Controllers
             return View();
         }
 
+        public ActionResult CouponGet()
+        {
+            return View();
+        }
+
         public ActionResult PayResult(string promoteId, string orderSn, bool isSuccessed = false)
         {
             var model = new PayResultViewModel();
@@ -76,7 +81,7 @@ namespace WebMobile.Controllers
             string promoteId = HttpUtility.ParseQueryString(uri.Query).Get("promoteId");
             string refereeId = HttpUtility.ParseQueryString(uri.Query).Get("refereeId");
 
-            rup.PromoteId= promoteId;
+            rup.PromoteId = promoteId;
             rup.RefereeId = refereeId;
             return AppServiceFactory.Promote.GetConfig(this.CurrentUserId, this.CurrentUserId, rup);
         }

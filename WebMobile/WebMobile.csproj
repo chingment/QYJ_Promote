@@ -501,6 +501,7 @@
     <Content Include="Views\Promoteb\PayResult.cshtml" />
     <Content Include="Views\Promotec\Coupon.cshtml" />
     <Content Include="Views\Promotec\PayResult.cshtml" />
+    <Content Include="Views\Promotec\CouponGet.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>

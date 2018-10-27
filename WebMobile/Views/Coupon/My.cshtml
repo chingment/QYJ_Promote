@@ -113,9 +113,11 @@
 
 @section scripts{
     <script type="text/javascript">
+
+        var list_coupon;
         $(document).ready(function () {
 
-            $("#list_coupon").loadDataUl({
+            list_coupon = $("#list_coupon").loadDataUl({
                 url: "/Coupon/GetMy",
                 pageIndex: 0,
                 searchParams: $("#list_coupon").serializeArray(),
@@ -180,12 +182,14 @@
                             case "url":
                                 window.location.href = obj.getUrl;
                                 break;
+                            case "fun":
+                                break;
                         }
                     }
                 }
             });
-
         });
+
     </script>
 }
 

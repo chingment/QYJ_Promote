@@ -71,10 +71,13 @@ namespace Lumos.BLL.Service.App
                 if (promoteUserCoupon == null)
                 {
                     ret.IsGet = false;
+                    ret.IsBuy = false;
                 }
                 else
                 {
                     ret.IsGet = promoteUserCoupon.IsGet;
+                    ret.IsBuy = promoteUserCoupon.IsBuy;
+                    ret.OrderSn = promoteUserCoupon.OrderSn;
                 }
             }
 
