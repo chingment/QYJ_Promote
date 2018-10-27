@@ -56,57 +56,65 @@ namespace Lumos.BLL
                                         LogUtil.Info(msg);
                                         Console.WriteLine(msg);
 
-                                        var promoteUserCoupon = CurrentDb.ClientCoupon.Where(m => m.ClientId == model.ClientId && m.WxCouponId == model.WxCouponId && m.WxCouponDecryptCode == model.WxCouponDecryptCode).FirstOrDefault();
+                                        var clientCoupon = CurrentDb.ClientCoupon.Where(m => m.ClientId == model.ClientId && m.WxCouponId == model.WxCouponId && m.WxCouponDecryptCode == model.WxCouponDecryptCode).FirstOrDefault();
 
-                                        if (promoteUserCoupon == null)
+                                        if (clientCoupon == null)
                                         {
                                             LogUtil.Info("用户:" + model.ClientId + ",找不到卡券");
                                         }
 
-                                        if (promoteUserCoupon.RefereeId == null)
+                                        if (clientCoupon.RefereeId == null)
                                         {
                                             LogUtil.Info("用户:" + model.ClientId + ",推荐人为空");
 
                                             return;
                                         }
 
-                                        if (promoteUserCoupon.ClientId == promoteUserCoupon.RefereeId)
+                                        if (clientCoupon.ClientId == clientCoupon.RefereeId)
                                         {
-                                            LogUtil.Info("用户和推荐人是同一个人:" + model.ClientId );
+                                            LogUtil.Info("用户和推荐人是同一个人:" + model.ClientId);
                                             return;
                                         }
 
-                                        if (promoteUserCoupon.IsConsume == true)
+                                        if (clientCoupon.IsConsume == true)
                                         {
                                             LogUtil.Info("用户:" + model.ClientId + ",已核销");
                                             return;
                                         }
 
-                                        promoteUserCoupon.IsConsume = true;
-                                        promoteUserCoupon.ConsumeTime = DateTime.Now;
-                                        promoteUserCoupon.Mender = GuidUtil.Empty();
-                                        promoteUserCoupon.MendTime = DateTime.Now;
+                                        clientCoupon.IsConsume = true;
+                                        clientCoupon.ConsumeTime = DateTime.Now;
+                                        clientCoupon.Mender = GuidUtil.Empty();
+                                        clientCoupon.MendTime = DateTime.Now;
 
-                                        var fund = CurrentDb.Fund.Where(m => m.ClientId == promoteUserCoupon.RefereeId).FirstOrDefault();
+                                        var fund = CurrentDb.Fund.Where(m => m.ClientId == clientCoupon.RefereeId).FirstOrDefault();
                                         if (fund == null)
                                         {
                                             return;
                                         }
 
-                                        var wxUserInfo = CurrentDb.WxUserInfo.Where(m => m.ClientId == promoteUserCoupon.ClientId).FirstOrDefault();
+                                        var promote = CurrentDb.Promote.Where(m => m.Id == clientCoupon.PromoteId).FirstOrDefault();
+
+                                        if (promote == null)
+                                        {
+                                            return;
+                                        }
+
+                                        var wxUserInfo = CurrentDb.WxUserInfo.Where(m => m.ClientId == clientCoupon.ClientId).FirstOrDefault();
                                         string nickname = "";
                                         string headImgUrl = IconUtil.ConsumeCoupon;
                                         if (wxUserInfo != null)
                                         {
                                             nickname = wxUserInfo.Nickname;
 
-                                            if(!string.IsNullOrEmpty(wxUserInfo.HeadImgUrl))
+                                            if (!string.IsNullOrEmpty(wxUserInfo.HeadImgUrl))
                                             {
                                                 headImgUrl = wxUserInfo.HeadImgUrl;
                                             }
                                         }
 
-                                        decimal profit = 500m;
+                                        decimal profit = promote.ConsumeProfit;
+
                                         fund.CurrentBalance += profit;
                                         fund.AvailableBalance += profit;
                                         fund.MendTime = DateTime.Now;

@@ -19,7 +19,8 @@ namespace Lumos.Entity
         public DateTime EndTime { get; set; }
         public string Creator { get; set; }
         public DateTime CreateTime { get; set; }
-
         public bool IsNeedBuy { get; set; }
+
+        public decimal ConsumeProfit { get; set; }
     }
 }
