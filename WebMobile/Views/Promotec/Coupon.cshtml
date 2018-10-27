@@ -211,7 +211,7 @@
     <script type="text/javascript">
 
         var pConfig;
-        var orderSn;
+     
         $(document).ready(function () {
 
             initConfig();
@@ -223,23 +223,28 @@
                     return;
                 }
 
-                var _this = $(this);
-                $(_this).attr("disabled", "disabled");
-                $.lumos.postJson({
-                    url: "/Promote/UnifiedOrder",
-                    isShowLoading: true,
-                    data: { type: "1", refereeId: pConfig.refereeId, orderPms: { promoteId: pConfig.promoteId, promoteCouponId: pConfig.promoteCouponId } },
-                    success: function (d) {
-                        if (d.result == $.lumos.resultType.success) {
-                            var params = d.data;
-                            orderSn = param.orderSn;
-                            getCoupon();
-                        } else {
-                            $.lumos.tips(d.message);
-                            $(_this).removeAttr("disabled");
+                if (pConfig.isGet) {
+                    openCoupon();
+                }
+                else {
+                    var _this = $(this);
+                    $(_this).attr("disabled", "disabled");
+                    $.lumos.postJson({
+                        url: "/Promote/UnifiedOrder",
+                        isShowLoading: true,
+                        data: { type: "1", refereeId: pConfig.refereeId, orderPms: { promoteId: pConfig.promoteId, promoteCouponId: pConfig.promoteCouponId } },
+                        success: function (d) {
+                            if (d.result == $.lumos.resultType.success) {
+                                var params = d.data;
+                                pConfig.orderSn = params.orderSn;
+                                getCoupon();
+                            } else {
+                                $.lumos.tips(d.message);
+                                $(_this).removeAttr("disabled");
+                            }
                         }
-                    }
-                });
+                    });
+                }
             });
 
             $("#btn_OpenCoupon").live("click", function (e) {
@@ -301,7 +306,7 @@
                     data: { promoteId: pConfig.promoteId, ctName: ctName, ctPhone: ctPhone, ctIsStudent: ctIsStudent, ctSchool: ctSchool },
                     success: function (d) {
                         if (d.result == $.lumos.resultType.success) {
-                            $('.popd').hide();
+                            $('##popd4Info').hide();
                             getCoupon();
                         }
                         else {
@@ -423,7 +428,7 @@
                 return;
             }
 
-            if ($.lumos.isNullOrEmpty(orderSn)) {
+            if ($.lumos.isNullOrEmpty(pConfig.orderSn)) {
                 $.lumos.tips("订单未创建");
                 return;
             }
@@ -444,9 +449,9 @@
                             wx.addCard({
                                 cardList: cardList,
                                 success: function (res) {
-                                    addCouponNotifyResult(orderSn, res.cardList);
-                                    //window.location.href = "/Promotec/PayResult?promoteId=" + pConfig.promoteId + "&orderSn=" + orderSn + "&isSuccessed=True&isGet=True";
-                                    //addCouponNotifyResult(orderSn, res.cardList);
+                                    pConfig.isGet = true;
+                                    addCouponNotifyResult(res.cardList);
+                                    //$.lumos.tips(JSON.stringify(res))
                                 },
                                 cancel: function (res) {
                                     //$.lumos.tips(JSON.stringify(res))
@@ -456,7 +461,7 @@
                     }
                     else {
                         if (d.code == "4001") {
-                            $('.popd').show();
+                            $('#popd4Info').show();
                         }
                         else {
                             $.lumos.tips(d.messages);
@@ -466,7 +471,7 @@
             });
         }
 
-        function addCouponNotifyResult(orderSn, cards) {
+        function addCouponNotifyResult(cards) {
 
             var l_Data = [];
             l_Data.push({ name: "Model.PromoteId", value: pConfig.promoteId });
@@ -480,7 +485,7 @@
                 data: l_Data,
                 success: function (d) {
                     if (d.result == $.lumos.resultType.success) {
-                        window.location.href = "/Promotec/PayResult?promoteId=" + pConfig.promoteId + "&orderSn=" + orderSn + "&isSuccessed=True";
+                        window.location.href = "/Promotec/PayResult?promoteId=" + pConfig.promoteId + "&orderSn=" + pConfig.orderSn + "&isSuccessed=True";
                         $.lumos.tips('成功领取卡券');
                     }
                 }

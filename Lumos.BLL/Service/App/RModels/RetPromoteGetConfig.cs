@@ -30,7 +30,7 @@ namespace Lumos.BLL.Service.App
         public string EndTime { get; set; }
         public string EndDesc { get; set; }
         public bool IsNeedFillInInfo { get; set; }
-
+        public string OrderSn { get; set; }
         public CouponPageModel CouponPage { get; set; }
 
         public PayResultPageModel PayResultPage { get; set; }
