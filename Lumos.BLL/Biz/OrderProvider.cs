@@ -122,7 +122,7 @@ namespace Lumos.BLL
 
                     decimal chargeAmount = order.ChargeAmount;
 
-                    if (chargeAmount > 0)
+                    if (promote.IsNeedBuy)
                     {
                         order.Status = Enumeration.OrderStatus.WaitPay; //待支付状态
                         order.WxPrepayIdExpireTime = this.DateTime.AddMinutes(5);

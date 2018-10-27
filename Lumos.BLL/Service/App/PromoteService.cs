@@ -78,7 +78,7 @@ namespace Lumos.BLL.Service.App
                 }
             }
 
-            ret.IsNeedBuy = false;
+            ret.IsNeedBuy = promote.IsNeedBuy;
 
             result = new CustomJsonResult(ResultType.Success, ResultCode.Success, "预定成功", ret);
 
