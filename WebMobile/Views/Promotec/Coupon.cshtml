@@ -124,32 +124,10 @@
                         </li>
                         <li class="list-input-item">
                             <div class="item-left fl">
-                                <div class="item-name fl"><span>校区选择</span></div>
+                                <div class="item-name fl"><span>校区</span></div>
                                 <div class="item-value fr">
-                                    <select id="sel_ctSchool">
-                                        <option value="">请选择</option>
-                                        <option value="越秀校">越秀校</option>
-                                        <option value="天润校">天润校</option>
-                                        <option value="合生广场校">合生广场校</option>
-                                        <option value="光大花园校">光大花园校</option>
-                                        <option value="嘉仕花园校">嘉仕花园校</option>
-                                        <option value="珠江帝景校">珠江帝景校</option>
-                                        <option value="颐景华苑校">颐景华苑校</option>
-                                        <option value="洛溪校">洛溪校</option>
-                                        <option value="喜盈雅境校">喜盈雅境校</option>
-                                        <option value="花样年华校">花样年华校</option>
-                                        <option value="金沙御苑校">金沙御苑校</option>
-                                        <option value="金海岸校">金海岸校</option>
-                                        <option value="金沙洲校">金沙洲校</option>
-                                        <option value="华发四季校">华发四季校</option>
-                                        <option value="白云尚城校">白云尚城校</option>
-                                        <option value="增城新塘校">增城新塘校</option>
-                                        <option value="增城凤凰城校">增城凤凰城校</option>
-                                        <option value="中海金沙湾校">中海金沙湾校</option>
-                                        <option value="千灯湖校">千灯湖校</option>
-                                        <option value="深圳龙岗校">深圳龙岗校</option>
-                                        <option value="深圳宝安校">深圳宝安校</option>
-                                    </select>
+                                    <input id="txt_ctSchool" value="" type="hidden" style="width:100%;" />
+                                    <div id="sel_ctSchool">选择</div>
                                 </div>
                             </div>
                         </li>
@@ -276,7 +254,7 @@
                 var ctName = $('#txt_ctName').val();
                 var ctPhone = $('#txt_ctPhone').val();
                 var ctIsStudent = $('input[name=rd_ctIsStudent]:checked').val();
-                var ctSchool = $('#sel_ctSchool').find('option:selected').val();
+                var ctSchool = $('#txt_ctSchool').val();
 
                 if ($.lumos.isNullOrEmpty(ctName)) {
                     $.lumos.tips("请输入姓名");
@@ -526,6 +504,19 @@
             });
         }
 
-
+        var mobileSelect1 = new MobileSelect({
+            trigger: '#sel_ctSchool',
+            title: '选择校区',
+            wheels: [
+                        { data: schoolArr }
+            ],
+            position: [1], //初始化定位 打开时默认选中的哪个 如果不填默认为0
+            transitionEnd: function (indexArr, data) {
+                //console.log(data);
+            },
+            callback: function (indexArr, data) {
+                $('#txt_ctSchool').val(data);
+            }
+        });
     </script>
 }

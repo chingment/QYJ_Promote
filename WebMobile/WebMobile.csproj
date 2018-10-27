@@ -439,6 +439,7 @@
     <Content Include="Content\images\promote20181021\share_icon.png" />
     <Content Include="Content\images\withdraw-top.png" />
     <Content Include="Content\images\operate-result-icon-success.png" />
+    <Content Include="Content\mobileSelect.css" />
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -471,6 +472,7 @@
     <Content Include="Scripts\jquery-1.8.3.min.js" />
     <Content Include="Scripts\jquery.lumos.mobile.1.0.0.js" />
     <Content Include="Scripts\jquery.tmpl.min.js" />
+    <Content Include="Scripts\mobileSelect.js" />
     <Content Include="Static\Promote\promote_a999753c5fe14e26bbecad576b6a6909.jpg" />
     <Content Include="Static\Promote\promote_bg_1.jpg" />
     <Content Include="Static\Promote\user\50eccc439fda47138145defd71fb36c5.jpg" />

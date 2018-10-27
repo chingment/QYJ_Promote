@@ -13,7 +13,9 @@
     <title>@ViewBag.Title</title>
     <script src="~/Scripts/jquery-1.8.3.min.js"></script>
     <script src="~/Scripts/jquery.tmpl.min.js"></script>
+    <script src="~/Scripts/mobileSelect.js"></script>
     <link href="~/Content/Site.css?@DateTime.Now.ToUnifiedFormatDateTime()" rel="stylesheet" />
+    <link href="~/Content/mobileSelect.css" rel="stylesheet" />
     @RenderSection("styles", required: false)
     <style type="text/css">
         body {
@@ -170,6 +172,8 @@
         }
     </style>
     <script type="text/javascript">
+
+        var schoolArr = ['越秀校', '天润校', '合生广场校', '光大花园校', '嘉仕花园校', '珠江帝景校', '颐景华苑校', '洛溪校', '喜盈雅境校', '喜盈雅境校', '花样年华校', '金沙御苑校', '金海岸校', '金沙洲校', '华发四季校', '白云尚城校', '增城新塘校', '增城凤凰城校', '中海金沙湾校', '千灯湖校', '深圳龙岗校', '深圳宝安校', '其他'];
 
         window.onerror = function (errorMessage, scriptURI, lineNumber, columnNumber, errorObj) {
             $.ajax({
