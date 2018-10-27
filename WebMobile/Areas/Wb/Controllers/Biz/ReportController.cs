@@ -72,7 +72,7 @@ namespace WebMobile.Areas.Wb.Controllers
             else
             {
                 #region POST
-                StringBuilder sql = new StringBuilder(" select b.Nickname,c.CtName,c.CtPhone,c.CtIsStudent, CtSchool,  a.IsBuy,a.BuyTime,a.IsGet,a.GetTime,a.IsConsume,a.ConsumeTime from PromoteUserCoupon a left join WxUserInfo  b on a.ClientId=b.ClientId left join PromoteUser c on a.ClientId=c.ClientId ");
+                StringBuilder sql = new StringBuilder(" select b.Nickname,c.CtName,c.CtPhone,c.CtIsStudent, CtSchool,  a.IsBuy,a.BuyTime,a.IsGet,a.GetTime,a.IsConsume,a.ConsumeTime from ClientCoupon a left join WxUserInfo  b on a.ClientId=b.ClientId left join PromoteUser c on a.ClientId=c.ClientId ");
 
                 sql.Append(" where a.BuyTime is not null ");
 
@@ -217,7 +217,7 @@ namespace WebMobile.Areas.Wb.Controllers
             else
             {
                 #region POST
-                StringBuilder sql = new StringBuilder(" select b.Nickname,a.CreateTime,a.[Type],a.ShareLink from PromoteShareLog a left join WxUserInfo  b on a.ClientId=b.ClientId ");
+                StringBuilder sql = new StringBuilder(" select b.Nickname,a.CreateTime,a.[Type],a.ShareLink from ClientShareLog a left join WxUserInfo  b on a.ClientId=b.ClientId ");
 
                 sql.Append(" where 1=1 ");
 
@@ -323,7 +323,7 @@ namespace WebMobile.Areas.Wb.Controllers
             else
             {
                 #region POST
-                StringBuilder sql = new StringBuilder(" select ClientId, Nickname,b.Num from WxUserInfo a inner join (select  RefereeId, count(*) as Num from[dbo].[PromoteUserCoupon]  group by RefereeId) b on a.ClientId = b.RefereeId ");
+                StringBuilder sql = new StringBuilder(" select ClientId, Nickname,b.Num from WxUserInfo a inner join (select  RefereeId, count(*) as Num from[dbo].[ClientCoupon]  group by RefereeId) b on a.ClientId = b.RefereeId ");
 
                 sql.Append(" where 1=1 ");
 
@@ -339,7 +339,7 @@ namespace WebMobile.Areas.Wb.Controllers
                     var num = dtData.Rows[r]["Num"].ToString().Trim();
 
 
-                    string sql2 = "  select b.Nickname,  a.IsBuy,a.BuyTime,a.IsGet,a.GetTime,a.IsConsume,a.ConsumeTime from PromoteUserCoupon a inner join WxUserInfo  b on a.ClientId=b.ClientId    where a.RefereeId='" + clientId + "' ";
+                    string sql2 = "  select b.Nickname,  a.IsBuy,a.BuyTime,a.IsGet,a.GetTime,a.IsConsume,a.ConsumeTime from ClientCoupon a inner join WxUserInfo  b on a.ClientId=b.ClientId    where a.RefereeId='" + clientId + "' ";
 
                     DataTable dtData2 = DatabaseFactory.GetIDBOptionBySql().GetDataSet(sql2).Tables[0].ToStringDataTable();
 
