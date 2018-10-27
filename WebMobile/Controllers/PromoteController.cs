@@ -24,7 +24,7 @@ namespace WebMobile.Controllers
             model.PromoteCouponId = "00000000000000000000000000000001";
             model.RefereeId = refereeId;
 
-            var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.ClientId == this.CurrentUserId && m.PromoteId == model.PromoteId && m.PromoteCouponId == model.PromoteCouponId).FirstOrDefault();
+            var promoteUserCoupon = CurrentDb.ClientCoupon.Where(m => m.ClientId == this.CurrentUserId && m.PromoteId == model.PromoteId && m.PromoteCouponId == model.PromoteCouponId).FirstOrDefault();
             if (promoteUserCoupon != null)
             {
                 if (promoteUserCoupon.IsBuy)
@@ -66,7 +66,7 @@ namespace WebMobile.Controllers
 
             bool isGoBuy = false;
 
-            var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.PromoteId == model.PromoteId && m.ClientId == this.CurrentUserId).FirstOrDefault();
+            var promoteUserCoupon = CurrentDb.ClientCoupon.Where(m => m.PromoteId == model.PromoteId && m.ClientId == this.CurrentUserId).FirstOrDefault();
 
             string refereeId = GuidUtil.Empty();
             if (promoteUserCoupon == null)
@@ -140,7 +140,7 @@ namespace WebMobile.Controllers
             List<WxCard> cardList = new List<WxCard>();
 
             string userId = this.CurrentUserId;
-            var promoteUserCoupons = CurrentDb.PromoteUserCoupon.Where(m => m.PromoteId == promoteId && m.ClientId == this.CurrentUserId).ToList();
+            var promoteUserCoupons = CurrentDb.ClientCoupon.Where(m => m.PromoteId == promoteId && m.ClientId == this.CurrentUserId).ToList();
 
             var promoteUserCouponsByBuyCount = promoteUserCoupons.Where(m => m.IsBuy == true).Count();
 
@@ -267,7 +267,7 @@ namespace WebMobile.Controllers
         public CustomJsonResult AddCouponNotifyResult(AddCouponNotifyResultModel model)
         {
 
-            var promoteUserCoupons = CurrentDb.PromoteUserCoupon.Where(m => m.PromoteId == model.PromoteId && m.ClientId == this.CurrentUserId).ToList();
+            var promoteUserCoupons = CurrentDb.ClientCoupon.Where(m => m.PromoteId == model.PromoteId && m.ClientId == this.CurrentUserId).ToList();
 
             foreach (var item in promoteUserCoupons)
             {

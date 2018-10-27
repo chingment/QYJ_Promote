@@ -30,7 +30,7 @@ namespace Lumos.DAL
         public IDbSet<PromoteProfitSet> PromoteProfitSet { get; set; }
         public IDbSet<OrderNotifyLog> OrderNotifyLog { get; set; }
 
-        public IDbSet<PromoteUserCoupon>  PromoteUserCoupon { get; set; }
+        public IDbSet<ClientCoupon> ClientCoupon { get; set; }
 
         public IDbSet<ClientAccessLog> ClientAccessLog { get; set; }
         public IDbSet<ClientShareLog> ClientShareLog { get; set; }

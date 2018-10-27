@@ -158,22 +158,22 @@ namespace Lumos.BLL
                         order.Status = Enumeration.OrderStatus.Payed; 
                         order.PayTime = this.DateTime;
 
-                        var promoteUserCoupon = new PromoteUserCoupon();
-                        promoteUserCoupon.Id = GuidUtil.New();
-                        promoteUserCoupon.ClientId = order.ClientId;
-                        promoteUserCoupon.PromoteId = promoteCoupon.PromoteId;
-                        promoteUserCoupon.PromoteCouponId = promoteCoupon.Id;
-                        promoteUserCoupon.WxCouponId = promoteCoupon.WxCouponId;
-                        promoteUserCoupon.IsBuy = true;
-                        promoteUserCoupon.BuyTime = this.DateTime;
-                        promoteUserCoupon.IsGet = false;
-                        promoteUserCoupon.IsConsume = false;
-                        promoteUserCoupon.Creator = pOperater;
-                        promoteUserCoupon.CreateTime = this.DateTime;
-                        promoteUserCoupon.RefereeId = order.RefereeId;
-                        promoteUserCoupon.OrderId = order.Id;
-                        promoteUserCoupon.OrderSn = order.Sn;
-                        CurrentDb.PromoteUserCoupon.Add(promoteUserCoupon);
+                        var clientCoupon = new ClientCoupon();
+                        clientCoupon.Id = GuidUtil.New();
+                        clientCoupon.ClientId = order.ClientId;
+                        clientCoupon.PromoteId = promoteCoupon.PromoteId;
+                        clientCoupon.PromoteCouponId = promoteCoupon.Id;
+                        clientCoupon.WxCouponId = promoteCoupon.WxCouponId;
+                        clientCoupon.IsBuy = true;
+                        clientCoupon.BuyTime = this.DateTime;
+                        clientCoupon.IsGet = false;
+                        clientCoupon.IsConsume = false;
+                        clientCoupon.Creator = pOperater;
+                        clientCoupon.CreateTime = this.DateTime;
+                        clientCoupon.RefereeId = order.RefereeId;
+                        clientCoupon.OrderId = order.Id;
+                        clientCoupon.OrderSn = order.Sn;
+                        CurrentDb.ClientCoupon.Add(clientCoupon);
                     }
 
                     CurrentDb.SaveChanges();
@@ -296,22 +296,31 @@ namespace Lumos.BLL
 
                     var promoteCoupon = CurrentDb.PromoteCoupon.Where(m => m.ProductSkuId == orderDetails.ProductSkuId && m.PromoteId == order.PromoteId).FirstOrDefault();
 
-                    var promoteUserCoupon = new PromoteUserCoupon();
-                    promoteUserCoupon.Id = GuidUtil.New();
-                    promoteUserCoupon.ClientId = order.ClientId;
-                    promoteUserCoupon.PromoteId = promoteCoupon.PromoteId;
-                    promoteUserCoupon.PromoteCouponId = promoteCoupon.Id;
-                    promoteUserCoupon.WxCouponId = promoteCoupon.WxCouponId;
-                    promoteUserCoupon.IsBuy = true;
-                    promoteUserCoupon.BuyTime = this.DateTime;
-                    promoteUserCoupon.IsGet = false;
-                    promoteUserCoupon.IsConsume = false;
-                    promoteUserCoupon.Creator = pOperater;
-                    promoteUserCoupon.CreateTime = this.DateTime;
-                    promoteUserCoupon.RefereeId = order.RefereeId;
-                    promoteUserCoupon.OrderId = order.Id;
-                    promoteUserCoupon.OrderSn = order.Sn;
-                    CurrentDb.PromoteUserCoupon.Add(promoteUserCoupon);
+                    var clientCoupon = new ClientCoupon();
+                    clientCoupon.Id = GuidUtil.New();
+                    clientCoupon.ClientId = order.ClientId;
+                    clientCoupon.PromoteId = promoteCoupon.PromoteId;
+                    clientCoupon.PromoteCouponId = promoteCoupon.Id;
+                    clientCoupon.WxCouponId = promoteCoupon.WxCouponId;
+                    clientCoupon.IsBuy = true;
+                    clientCoupon.BuyTime = this.DateTime;
+                    clientCoupon.IsGet = false;
+                    clientCoupon.IsConsume = false;
+                    clientCoupon.Creator = pOperater;
+                    clientCoupon.CreateTime = this.DateTime;
+                    clientCoupon.RefereeId = order.RefereeId;
+                    clientCoupon.OrderId = order.Id;
+                    clientCoupon.OrderSn = order.Sn;
+
+                    clientCoupon.Name = promoteCoupon.Name;
+                    clientCoupon.Number = promoteCoupon.Number;
+                    clientCoupon.NumberType = promoteCoupon.NumberType;
+                    clientCoupon.NumberUnit = promoteCoupon.NumberUnit;
+                    clientCoupon.ValidStartTime = promoteCoupon.ValidStartTime;
+                    clientCoupon.ValidEndTime = promoteCoupon.ValidEndTime;
+                    clientCoupon.Description = promoteCoupon.Description;
+                    clientCoupon.Discounttip = promoteCoupon.Discounttip;
+                    CurrentDb.ClientCoupon.Add(clientCoupon);
                     CurrentDb.SaveChanges();
                 }
 

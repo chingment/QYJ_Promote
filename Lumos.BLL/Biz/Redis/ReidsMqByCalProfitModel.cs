@@ -56,7 +56,7 @@ namespace Lumos.BLL
                                         LogUtil.Info(msg);
                                         Console.WriteLine(msg);
 
-                                        var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.ClientId == model.ClientId && m.WxCouponId == model.WxCouponId && m.WxCouponDecryptCode == model.WxCouponDecryptCode).FirstOrDefault();
+                                        var promoteUserCoupon = CurrentDb.ClientCoupon.Where(m => m.ClientId == model.ClientId && m.WxCouponId == model.WxCouponId && m.WxCouponDecryptCode == model.WxCouponDecryptCode).FirstOrDefault();
 
                                         if (promoteUserCoupon == null)
                                         {

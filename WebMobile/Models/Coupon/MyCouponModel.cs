@@ -9,7 +9,9 @@ namespace WebMobile.Models.Coupon
     {
         public string Name { get; set; }
 
-        public string Amount { get; set; }
+        public string Number { get; set; }
+
+        public string NumberUnit { get; set; }
 
         public string Discounttip { get; set; }
 

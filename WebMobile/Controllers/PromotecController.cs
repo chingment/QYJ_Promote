@@ -37,7 +37,7 @@ namespace WebMobile.Controllers
 
             bool isGoBuy = false;
 
-            var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.PromoteId == model.PromoteId && m.ClientId == this.CurrentUserId).FirstOrDefault();
+            var promoteUserCoupon = CurrentDb.ClientCoupon.Where(m => m.PromoteId == model.PromoteId && m.ClientId == this.CurrentUserId).FirstOrDefault();
 
             string refereeId = GuidUtil.Empty();
             if (promoteUserCoupon == null)

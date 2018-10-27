@@ -67,7 +67,7 @@ namespace Lumos.BLL.Service.App
                     ret.Status = 3;//活动结束
                 }
 
-                var promoteUserCoupon = CurrentDb.PromoteUserCoupon.Where(m => m.ClientId == pClientId && m.PromoteId == rup.PromoteId && m.PromoteCouponId == ret.PromoteCouponId).FirstOrDefault();
+                var promoteUserCoupon = CurrentDb.ClientCoupon.Where(m => m.ClientId == pClientId && m.PromoteId == rup.PromoteId && m.PromoteCouponId == ret.PromoteCouponId).FirstOrDefault();
                 if (promoteUserCoupon == null)
                 {
                     ret.IsGet = false;

@@ -9,17 +9,23 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Lumos.Entity
 {
-    [Table("PromoteUserCoupon")]
-    public class PromoteUserCoupon
+    [Table("ClientCoupon")]
+    public class ClientCoupon
     {
         [Key]
         public string Id { get; set; }
+
+        public string Name { get; set; }
+        public string ClientId { get; set; }
+        public string Discounttip { get; set; }
+        public string Description { get; set; }
+        public decimal Number { get; set; }
+        public string NumberType { get; set; }
+        public string NumberUnit { get; set; }
+        public DateTime? ValidStartTime { get; set; }
+        public DateTime? ValidEndTime { get; set; }
         public string PromoteId { get; set; }
         public string PromoteCouponId { get; set; }
-        public string WxCouponId { get; set; }
-        public string WxCouponEncryptCode { get; set; }
-        public string WxCouponDecryptCode { get; set; }
-        public string ClientId { get; set; }
         public string OrderId { get; set; }
         public string OrderSn { get; set; }
         public bool IsBuy { get; set; }
@@ -32,8 +38,10 @@ namespace Lumos.Entity
         public DateTime CreateTime { get; set; }
         public string Mender { get; set; }
         public DateTime? MendTime { get; set; }
-
         public string RefereeId { get; set; }
+        public string WxCouponId { get; set; }
+        public string WxCouponEncryptCode { get; set; }
+        public string WxCouponDecryptCode { get; set; }
 
     }
 }

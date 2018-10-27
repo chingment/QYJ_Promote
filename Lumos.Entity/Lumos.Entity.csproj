@@ -71,7 +71,7 @@
     <Compile Include="Biz\PromoteProfitSet.cs" />
     <Compile Include="Biz\ClientShareLog.cs" />
     <Compile Include="Biz\PromoteUser.cs" />
-    <Compile Include="Biz\PromoteUserCoupon.cs" />
+    <Compile Include="Biz\ClientCoupon.cs" />
     <Compile Include="Biz\PromoteUserRelation.cs" />
     <Compile Include="Biz\Withdraw.cs" />
     <Compile Include="ImgSet.cs" />

@@ -14,6 +14,14 @@ namespace Lumos.Entity
     {
         [Key]
         public string Id { get; set; }
+        public string Name { get; set; }
+        public string Discounttip { get; set; }
+        public string Description { get; set; }
+        public decimal Number { get; set; }
+        public string NumberType { get; set; }
+        public string NumberUnit { get; set; }
+        public DateTime? ValidStartTime { get; set; }
+        public DateTime? ValidEndTime { get; set; }
         public string PromoteId { get; set; }
         public string ProductSkuId { get; set; }
         public string WxCouponId { get; set; }

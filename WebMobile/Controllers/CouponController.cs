@@ -20,11 +20,11 @@ namespace WebMobile.Controllers
         [HttpPost]
         public CustomJsonResult GetMy(SearchCondition model)
         {
-            var query = (from o in CurrentDb.PromoteUserCoupon
+            var query = (from o in CurrentDb.ClientCoupon
                          where
                          o.ClientId == this.CurrentUserId &&
                          o.IsBuy == true
-                         select new { o.Id, o.PromoteId, o.OrderSn, o.WxCouponId, o.WxCouponDecryptCode, o.IsGet, o.IsConsume, o.CreateTime });
+                         select new { o.Id, o.Name, o.Number, o.NumberUnit, o.Discounttip, o.Description, o.ValidStartTime, o.ValidEndTime, o.PromoteId, o.OrderSn, o.WxCouponId, o.WxCouponDecryptCode, o.IsGet, o.IsConsume, o.CreateTime });
 
             int total = query.Count();
 
@@ -39,14 +39,14 @@ namespace WebMobile.Controllers
             foreach (var item in list)
             {
                 var myCoupon = new MyCouponModel();
-                myCoupon.Name = "代金券";
-                myCoupon.Discounttip = "";
-                myCoupon.Validdate = "2018.09.07-2018.09.30";
+                myCoupon.Name = item.Name;
+                myCoupon.Validdate = item.ValidStartTime.ToUnifiedFormatDate() + "-" + item.ValidEndTime.ToUnifiedFormatDate();
                 myCoupon.WxCouponId = item.WxCouponId;
                 myCoupon.WxCouponDecryptCode = item.WxCouponDecryptCode;
-                myCoupon.Amount = "7200";
-                myCoupon.Discounttip = "报读课程使用";
-                myCoupon.Description = "·具体详情到校区咨询";
+                myCoupon.Number = item.Number.ToF2Price();
+                myCoupon.NumberUnit = item.NumberUnit;
+                myCoupon.Discounttip = item.Discounttip;
+                myCoupon.Description = item.Description;
 
                 //1待领取，2打开（待核销），3 已核销
                 if (!item.IsGet)
