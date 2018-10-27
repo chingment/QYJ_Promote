@@ -173,6 +173,14 @@ namespace Lumos.BLL
                         clientCoupon.RefereeId = order.RefereeId;
                         clientCoupon.OrderId = order.Id;
                         clientCoupon.OrderSn = order.Sn;
+                        clientCoupon.Name = promoteCoupon.Name;
+                        clientCoupon.Number = promoteCoupon.Number;
+                        clientCoupon.NumberType = promoteCoupon.NumberType;
+                        clientCoupon.NumberUnit = promoteCoupon.NumberUnit;
+                        clientCoupon.ValidStartTime = promoteCoupon.ValidStartTime;
+                        clientCoupon.ValidEndTime = promoteCoupon.ValidEndTime;
+                        clientCoupon.Description = promoteCoupon.Description;
+                        clientCoupon.Discounttip = promoteCoupon.Discounttip;
                         CurrentDb.ClientCoupon.Add(clientCoupon);
                     }
 
