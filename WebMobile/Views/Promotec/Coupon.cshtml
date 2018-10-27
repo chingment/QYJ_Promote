@@ -130,10 +130,10 @@
     </div>
 </div>
 
-<div class="popd" style="display:none">
+<div class="popd" id="popd4Info" style="display:none">
     <div class="popd-outer">
         <div class="popd-inter">
-            <div class="popd-close" style="position: absolute; right: -6px;top:-16px;"> <img src="~/Content/images/promote20180910/popd_close.png" style="width:32px;height:32px;" /></div>
+            <div id="popd4Info_btn_close" class="popd-close operate" style="position: absolute; right: -6px;top:-16px;"> <img src="~/Content/images/promote20180910/popd_close.png" style="width:32px;height:32px;" /></div>
             <div>
                 <p style="color:#fb6088;text-align:center;font-size:18px;font-weight:bold; line-height:24px;margin-top:20px;">领取卡券</p>
                 <p style="color:#fb6088;text-align:center;font-size:18px;font-weight:bold; line-height:24px;">请先填写以下信息</p>
@@ -200,7 +200,7 @@
                     </ul>
                 </div>
                 <div style="text-align:center;">
-                    <img id="btn_Pop_Sure" src="~/Content/images/promote20180910/btn_submit.png" class="btn-com operate" style="display: inline-block;" />
+                    <img id="popd4Info_btn_sure" src="~/Content/images/promote20180910/btn_submit.png" class="btn-com operate" style="display: inline-block;" />
                 </div>
             </div>
         </div>
@@ -211,39 +211,36 @@
     <script type="text/javascript">
 
         var pConfig;
-
+        var orderSn;
         $(document).ready(function () {
 
+            initConfig();
 
-            $.lumos.getJson({
-                url: "/Promotec/GetConfig",
-                isShowLoading: false,
-                success: function (d) {
-                    if (d.result == $.lumos.resultType.success) {
-                        pConfig = d.data;
-                        document.title = pConfig.couponPage.title;//更改网页标题
-                        $('#config').html($("#config_tmpl").tmpl(pConfig));
-                        if (pConfig.isGet) {
-                            $('#btn_GetCoupon').css("display", "none");
-                            $('#btn_OpenCoupon').css("display", "inline-block");
+            $("#btn_GetCoupon").live("click", function (e) {
+                var _this = $(this);
+                $(_this).attr("disabled", "disabled");
+                $.lumos.postJson({
+                    url: "/Promote/UnifiedOrder",
+                    isShowLoading: true,
+                    data: { type: "1", refereeId: pConfig.refereeId, orderPms: { promoteId: pConfig.promoteId, promoteCouponId: pConfig.promoteCouponId } },
+                    success: function (d) {
+                        if (d.result == $.lumos.resultType.success) {
+                            var params = d.data;
+                            orderSn = param.orderSn;
+                            getCoupon();
+                        } else {
+                            $.lumos.tips(d.message);
+                            $(_this).removeAttr("disabled");
                         }
-                        else {
-                            $('#btn_GetCoupon').css("display", "inline-block");
-                            $('#btn_OpenCoupon').css("display", "none");
-                        }
-                        initShareInfo();
-                        initGetCoupon();
-                        initOpenCoupon();
                     }
-                }
+                });
             });
 
-
-            $("#modal_Invite").live("click", function (e) {
-                $("#modal_Invite").hide();
+            $("#btn_OpenCoupon").live("click", function (e) {
+                openCoupon();
             });
 
-            $('#btn_GoInvite').live("click", function () {
+            $('#btn_GoInvite').live("click", function (e) {
 
                 var scrollTop = document.body.scrollTop;//网页被卷去的高
                 $("#modal_Invite").css({ top: scrollTop + "px" });
@@ -261,7 +258,16 @@
                     });
             });
 
-            $('#btn_Pop_Sure').live("click", function () {
+            $("#modal_Invite").live("click", function (e) {
+                $("#modal_Invite").hide();
+            });
+
+            $('#popd4Info_btn_sure').live("click", function (e) {
+
+                if ($.lumos.isUndefined(pConfig)) {
+                    $.lumos.tips("信息配置加载未完成");
+                    return;
+                }
 
                 var ctName = $('#txt_ctName').val();
                 var ctPhone = $('#txt_ctPhone').val();
@@ -290,19 +296,50 @@
                     success: function (d) {
                         if (d.result == $.lumos.resultType.success) {
                             $('.popd').hide();
-                            getCard();
+                            getCoupon();
+                        }
+                        else {
+                            $.lumos.tips(d.message);
                         }
                     }
                 });
             });
 
-            $(".popd-close").live("click", function (e) {
-                $(".popd").hide();
+            $("#popd4Info_btn_close").live("click", function (e) {
+                $("#popd4Info").hide();
             });
 
         });
 
+        function initConfig() {
+            $.lumos.getJson({
+                url: "/Promotec/GetConfig",
+                isShowLoading: true,
+                success: function (d) {
+                    if (d.result == $.lumos.resultType.success) {
+                        pConfig = d.data;
+                        initShareInfo();
+                        document.title = pConfig.couponPage.title;//更改网页标题
+                        $('#config').html($("#config_tmpl").tmpl(pConfig));
+                        if (pConfig.isGet) {
+                            $('#btn_GetCoupon').css("display", "none");
+                            $('#btn_OpenCoupon').css("display", "inline-block");
+                        }
+                        else {
+                            $('#btn_GetCoupon').css("display", "inline-block");
+                            $('#btn_OpenCoupon').css("display", "none");
+                        }
+                    }
+                }
+            });
+        }
+
         function initShareInfo() {
+
+            if ($.lumos.isUndefined(pConfig)) {
+                $.lumos.tips("信息配置加载未完成");
+                return;
+            }
 
             var promoteId = pConfig.promoteId;
             var refereeId = pConfig.refereeId;
@@ -347,54 +384,43 @@
 
         }
 
-        function initGetCoupon() {
-            $("#btn_GetCoupon").live("click", function () {
-                var _this = $(this);
+        function openCoupon() {
 
-                $(_this).attr("disabled", "disabled");
+            if ($.lumos.isUndefined(pConfig)) {
+                $.lumos.tips("信息配置加载未完成");
+                return;
+            }
 
-                $.lumos.postJson({
-                    url: "/Promote/UnifiedOrder",
-                    isShowLoading: true,
-                    data: { type: "1", refereeId: pConfig.refereeId, orderPms: { promoteId: pConfig.promoteId, promoteCouponId: pConfig.promoteCouponId } },
-                    success: function (d) {
-                        if (d.result == $.lumos.resultType.success) {
-                            var params = d.data;
-                            getCard(params.orderSn);
-                        } else {
-                            $.lumos.tips(d.message);
-                            $(_this).removeAttr("disabled");
-                        }
+            $.lumos.postJson({
+                url: "/Promote/GetCardList",
+                data: { promoteId: pConfig.promoteId },
+                success: function (d) {
+                    var cards = d.data;
+                    var cardList = [];
+                    for (var p in cards) {
+                        cardList.push({ cardId: cards[p].cardId, code: cards[p].code });
                     }
-                });
+                    wx.openCard({
+                        cardList: cardList,
+                        cancel: function (res) {
+
+                        }
+                    });
+                }
             });
         }
 
-        function initOpenCoupon() {
-            $("#btn_OpenCoupon").live("click", function () {
+        function getCoupon() {
 
-                var _this = $(this);
-                $.lumos.postJson({
-                    url: "/Promote/GetCardList",
-                    data: { promoteId: pConfig.promoteId },
-                    success: function (d) {
-                        var cards = d.data;
-                        var cardList = [];
-                        for (var p in cards) {
-                            cardList.push({ cardId: cards[p].cardId, code: cards[p].code });
-                        }
-                        wx.openCard({
-                            cardList: cardList,
-                            cancel: function (res) {
+            if ($.lumos.isUndefined(pConfig)) {
+                $.lumos.tips("信息配置加载未完成");
+                return;
+            }
 
-                            }
-                        });
-                    }
-                });
-            });
-        }
-
-        function getCard(orderSn) {
+            if ($.lumos.isNullOrEmpty(orderSn)) {
+                $.lumos.tips("订单未创建");
+                return;
+            }
 
             $.lumos.postJson({
                 url: "/Promote/GetCardList",

@@ -34,6 +34,12 @@
                 return false;
             }
         },
+        isUndefined: function (obj) {
+            if (typeof obj == "undefined")
+                return true;
+
+            return false;
+        },
         trim: function (str) {
 
             if (str == null) {
