@@ -408,17 +408,19 @@
                         for (var p in cards) {
                             cardList.push({ cardId: cards[p].cardId, cardExt: cards[p].cardExt });
                         }
-                        wx.addCard({
-                            cardList: cardList,
-                            success: function (res) {
-                                addCouponNotifyResult(orderSn, res.cardList);
-                                //window.location.href = "/Promotec/PayResult?promoteId=" + pConfig.promoteId + "&orderSn=" + orderSn + "&isSuccessed=True&isGet=True";
-                                //addCouponNotifyResult(orderSn, res.cardList);
-                            },
-                            cancel: function (res) {
-                                //$.lumos.tips(JSON.stringify(res))
-                            }
-                        });
+                        if (cardList.length > 0) {
+                            wx.addCard({
+                                cardList: cardList,
+                                success: function (res) {
+                                    addCouponNotifyResult(orderSn, res.cardList);
+                                    //window.location.href = "/Promotec/PayResult?promoteId=" + pConfig.promoteId + "&orderSn=" + orderSn + "&isSuccessed=True&isGet=True";
+                                    //addCouponNotifyResult(orderSn, res.cardList);
+                                },
+                                cancel: function (res) {
+                                    //$.lumos.tips(JSON.stringify(res))
+                                }
+                            });
+                        }
                     }
                     else {
                         if (d.code == "4001") {

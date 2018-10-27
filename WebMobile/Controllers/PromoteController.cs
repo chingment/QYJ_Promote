@@ -149,7 +149,6 @@ namespace WebMobile.Controllers
                 return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, "未购买卡券，不能操作！", cardList);
             }
 
-
             var promoteUser = CurrentDb.PromoteUser.Where(m => m.PromoteId == promoteId && m.ClientId == this.CurrentUserId).FirstOrDefault();
 
             if (promoteUser == null)
@@ -186,7 +185,15 @@ namespace WebMobile.Controllers
                     //sParams.Add("outer_id", outer_id);
                     sParams.Add("api_ticket", api_ticket);
 
+
+                    LogUtil.Info("api_ticket:" + api_ticket);
+                    LogUtil.Info("timestamp:" + timestamp);
+                    LogUtil.Info("nonce_str:" + nonce_str);
+                    LogUtil.Info("card_id:" + card_id);
+
                     string signature = Lumos.WeiXinSdk.CommonUtil.MakeCardSign(sParams);
+
+                    LogUtil.Info("signature:" + signature);
 
                     WxCardExt cardExt = new WxCardExt();
 

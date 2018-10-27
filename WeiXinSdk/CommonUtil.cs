@@ -9,6 +9,14 @@ using System.Xml;
 
 namespace Lumos.WeiXinSdk
 {
+    public class ComparerString : IComparer<String>
+    {
+        public int Compare(String x, String y)
+        {
+            return string.CompareOrdinal(x, y);
+        }
+    }
+
     public static class CommonUtil
     {
         public static string GetTimeStamp()
@@ -101,15 +109,35 @@ namespace Lumos.WeiXinSdk
         {
             StringBuilder sb = new StringBuilder();
 
+            //            List<KeyValuePair<string, string>> myList = parameters.ToList();
+            //            myList.Sort(
+            //    delegate (KeyValuePair<string, string> pair1,
+            //    KeyValuePair<string, string> pair2)
+            //    {
+            //        return pair1.Value.CompareTo(pair2.Value);
+            //    }
+            //);
+            var arr_s = parameters.OrderBy(o => o.Value).Select(o=>o.Value).ToArray();
 
-            var vDic = parameters.OrderBy(o => o.Value);
 
 
-            foreach (KeyValuePair<string, string> k in vDic)
+            Array.Sort(arr_s, (a, b) => string.Compare(a,b, StringComparison.Ordinal));
+            //返回{"A","AB","Ab","B","a","aB","ab","b"}
+            Array.Sort(arr_s, (a, b) => string.CompareOrdinal(a,b));
+
+            //sb.Append(parameters["timestamp"]);
+
+            //var myList = parameters.Where(x => x.Key != "timestamp").OrderBy(x => x.Key, new ComparerString()).ToDictionary(x => x.Value, y => y.Value);
+
+            //var vDic = parameters.OrderBy(o => o.Value);
+
+
+            foreach (string s in arr_s)
             {
-                sb.Append(k.Value);
+                sb.Append(s);
             }
 
+            LogUtil.Info("排序后:" + sb.ToString());
 
             //var vDic = (from objDic in parameters orderby objDic.Value ascending select objDic);
 
