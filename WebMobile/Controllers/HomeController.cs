@@ -402,7 +402,7 @@ namespace WebMobile.Controllers
 
             if (string.IsNullOrEmpty(promoteUser.WxPromoteImgMediaId))
             {
-                System.Drawing.Image oImg = System.Drawing.Image.FromFile(Server.MapPath("~/Static/Promote/promote_bg_2.jpg"));
+                System.Drawing.Image oImg = System.Drawing.Image.FromFile(Server.MapPath("~/Static/Promote/promote_bg_2.png"));
                 BarcodeWriter writer = new BarcodeWriter();
                 writer.Format = BarcodeFormat.QR_CODE;
                 QrCodeEncodingOptions options = new QrCodeEncodingOptions();
