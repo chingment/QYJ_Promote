@@ -217,6 +217,12 @@
             initConfig();
 
             $("#btn_GetCoupon").live("click", function (e) {
+
+                if ($.lumos.isUndefined(pConfig)) {
+                    $.lumos.tips("信息配置加载未完成");
+                    return;
+                }
+
                 var _this = $(this);
                 $(_this).attr("disabled", "disabled");
                 $.lumos.postJson({
