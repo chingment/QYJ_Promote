@@ -219,11 +219,11 @@
     <Compile Include="Models\Home\SearchCondition.cs" />
     <Compile Include="Models\OwnBaseViewModel.cs" />
     <Compile Include="Models\Personal\IndexViewModel.cs" />
-    <Compile Include="Models\Promote\AccessLogModel.cs" />
+    <Compile Include="Models\Home\AccessLogModel.cs" />
     <Compile Include="Models\Promote\CouponViewModel.cs" />
     <Compile Include="Models\Promote\EditPromoteUserInfoViewModel.cs" />
     <Compile Include="Models\Promote\PayResultViewModel.cs" />
-    <Compile Include="Models\Promote\ShareLogModel.cs" />
+    <Compile Include="Models\Home\ShareLogModel.cs" />
     <Compile Include="Models\ShareLog\MyShareLogModel.cs" />
     <Compile Include="Models\ShareLog\SearchCondition.cs" />
     <Compile Include="Models\Withdraw\ApplyViewModel.cs" />

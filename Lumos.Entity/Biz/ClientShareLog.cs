@@ -10,8 +10,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Lumos.Entity
 {
-    [Table("PromoteShareLog")]
-    public class PromoteShareLog
+    [Table("ClientShareLog")]
+    public class ClientShareLog
     {
         [Key]
         public string Id { get; set; }

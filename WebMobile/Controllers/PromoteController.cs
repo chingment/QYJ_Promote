@@ -295,50 +295,6 @@ namespace WebMobile.Controllers
             return new CustomJsonResult(ResultType.Success, ResultCode.Success, "保存成功");
         }
 
-        [HttpPost]
-        [AllowAnonymous]
-        public CustomJsonResult ShareLog(ShareLogModel model)
-        {
-
-            var promoteShareLog = new PromoteShareLog();
-            promoteShareLog.Id = GuidUtil.New();
-            promoteShareLog.ClientId = this.CurrentUserId;
-            promoteShareLog.ShareLink = model.ShareLink;
-            promoteShareLog.RefereeId = model.RefereeId;
-            promoteShareLog.PromoteId = model.PromoteId;
-            promoteShareLog.Type = model.Type;
-            promoteShareLog.CreateTime = DateTime.Now;
-            promoteShareLog.Creator = this.CurrentUserId;
-
-            CurrentDb.PromoteShareLog.Add(promoteShareLog);
-            CurrentDb.SaveChanges();
-
-            return new CustomJsonResult(ResultType.Success, ResultCode.Success, "");
-
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        public CustomJsonResult AccessLog()
-        {
-            var uri = new Uri(Request.UrlReferrer.AbsoluteUri);
-            string promoteId = HttpUtility.ParseQueryString(uri.Query).Get("promoteId");
-            string refereeId = HttpUtility.ParseQueryString(uri.Query).Get("refereeId");
-            var promoteAccessLog = new PromoteAccessLog();
-            promoteAccessLog.Id = GuidUtil.New();
-            promoteAccessLog.ClientId = this.CurrentUserId;
-            promoteAccessLog.AccessUrl = Request.UrlReferrer.AbsoluteUri;
-            promoteAccessLog.RefereeId = refereeId;
-            promoteAccessLog.PromoteId = promoteId;
-            promoteAccessLog.CreateTime = DateTime.Now;
-            promoteAccessLog.Creator = this.CurrentUserId;
-
-            CurrentDb.PromoteAccessLog.Add(promoteAccessLog);
-            CurrentDb.SaveChanges();
-
-            return new CustomJsonResult(ResultType.Success, ResultCode.Success, "");
-
-        }
 
     }
 

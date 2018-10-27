@@ -90,7 +90,7 @@ namespace Lumos.Web.Mvc
             if (request.HttpMethod == "POST")
             {
               
-                ///sb.Append("PostData: " + GetPostData(request.InputStream) + Environment.NewLine);
+                sb.Append("PostData: " + GetPostData(request.InputStream) + Environment.NewLine);
             }
 
             if (result != null)

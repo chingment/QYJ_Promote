@@ -125,11 +125,9 @@ namespace WebMobile.Controllers
         [AllowAnonymous]
         public ContentResult PayResult()
         {
-            Int32 intLen = Convert.ToInt32(Request.InputStream.Length);
-            byte[] b = new byte[intLen];
-            Request.InputStream.Read(b, 0, intLen);
-
-            string xml = System.Text.Encoding.UTF8.GetString(b);
+            Stream stream = Request.InputStream;
+            stream.Seek(0, SeekOrigin.Begin);
+            string xml = new StreamReader(stream).ReadToEnd();
 
             if (string.IsNullOrEmpty(xml))
             {
@@ -494,6 +492,52 @@ namespace WebMobile.Controllers
             {
                 return null;
             }
+
+        }
+
+
+        [HttpPost]
+        [AllowAnonymous]
+        public CustomJsonResult ShareLog(ShareLogModel model)
+        {
+
+            var clientShareLog = new ClientShareLog();
+            clientShareLog.Id = GuidUtil.New();
+            clientShareLog.ClientId = this.CurrentUserId;
+            clientShareLog.ShareLink = model.ShareLink;
+            clientShareLog.RefereeId = model.RefereeId;
+            clientShareLog.PromoteId = model.PromoteId;
+            clientShareLog.Type = model.Type;
+            clientShareLog.CreateTime = DateTime.Now;
+            clientShareLog.Creator = this.CurrentUserId;
+
+            CurrentDb.ClientShareLog.Add(clientShareLog);
+            CurrentDb.SaveChanges();
+
+            return new CustomJsonResult(ResultType.Success, ResultCode.Success, "");
+
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public CustomJsonResult AccessLog()
+        {
+            var uri = new Uri(Request.UrlReferrer.AbsoluteUri);
+            string promoteId = HttpUtility.ParseQueryString(uri.Query).Get("promoteId");
+            string refereeId = HttpUtility.ParseQueryString(uri.Query).Get("refereeId");
+            var clientAccessLog = new ClientAccessLog();
+            clientAccessLog.Id = GuidUtil.New();
+            clientAccessLog.ClientId = this.CurrentUserId;
+            clientAccessLog.AccessUrl = Request.UrlReferrer.AbsoluteUri;
+            clientAccessLog.RefereeId = refereeId;
+            clientAccessLog.PromoteId = promoteId;
+            clientAccessLog.CreateTime = DateTime.Now;
+            clientAccessLog.Creator = this.CurrentUserId;
+
+            CurrentDb.ClientAccessLog.Add(clientAccessLog);
+            CurrentDb.SaveChanges();
+
+            return new CustomJsonResult(ResultType.Success, ResultCode.Success, "");
 
         }
 

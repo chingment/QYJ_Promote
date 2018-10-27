@@ -32,8 +32,8 @@ namespace Lumos.DAL
 
         public IDbSet<PromoteUserCoupon>  PromoteUserCoupon { get; set; }
 
-        public IDbSet<PromoteAccessLog> PromoteAccessLog { get; set; }
-        public IDbSet<PromoteShareLog> PromoteShareLog { get; set; }
+        public IDbSet<ClientAccessLog> ClientAccessLog { get; set; }
+        public IDbSet<ClientShareLog> ClientShareLog { get; set; }
 
         public IDbSet<Withdraw>  Withdraw { get; set; }
 

@@ -111,7 +111,7 @@
 
         function accessLog() {
             $.lumos.postJson({
-                url: "/Promote/AccessLog",
+                url: "/Home/AccessLog",
                 success: function (d) {
                 }
             });
@@ -119,7 +119,7 @@
 
         function shareLog(promoteId, refereeId, shareLink, type) {
             $.lumos.postJson({
-                url: "/Promote/ShareLog",
+                url: "/Home/ShareLog",
                 data: { promoteId: promoteId, refereeId: refereeId, shareLink: shareLink, type: type },
                 success: function (d) {
 
