@@ -415,7 +415,7 @@ namespace WebMobile.Controllers
                 //设置二维码的边距,单位不是固定像素
                 options.Margin = 1;
                 writer.Options = options;
-                System.Drawing.Image oImg1 = writer.Write(string.Format("http://qyj.17fanju.com/Promoteb/Coupon?promoteId={0}&refereeId={1}", promoteId, clientId));
+                System.Drawing.Image oImg1 = writer.Write(string.Format("http://qyj.17fanju.com/Promotec/Coupon?promoteId={0}&refereeId={1}", promoteId, clientId));
                 System.Drawing.Bitmap map = new Bitmap(oImg);
                 oImg.Dispose();
                 Graphics g = Graphics.FromImage(map);
