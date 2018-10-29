@@ -120,7 +120,7 @@ namespace Lumos.BLL.Service.App
 
             ret.IsNeedBuy = promote.IsNeedBuy;
 
-            var promoteUser = CurrentDb.PromoteUser.Where(m => m.CtPhone != null).OrderByDescending(m => m.CreateTime).FirstOrDefault();
+            var promoteUser = CurrentDb.PromoteUser.Where(m => m.ClientId == m.CtPhone != null).OrderByDescending(m => m.CreateTime).FirstOrDefault();
             if (promoteUser != null)
             {
                 ret.UserInfo.CtName = promoteUser.CtName ?? "";
