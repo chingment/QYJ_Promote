@@ -32,6 +32,8 @@ namespace Lumos.BLL
     {
         public string ClientId { get; set; }
 
+        public string PromoteId { get; set; }
+
     }
 
     public class ReidsMqByCalProfitModel
@@ -49,7 +51,6 @@ namespace Lumos.BLL
                 {
                     try
                     {
-
                         switch (this.Type)
                         {
                             case ReidsMqByCalProfitType.CouponConsume:
@@ -58,9 +59,7 @@ namespace Lumos.BLL
                             case ReidsMqByCalProfitType.CouponBuy:
                                 CouponBuy();
                                 break;
-
                         }
-
                     }
                     catch (Exception ex)
                     {
@@ -183,30 +182,21 @@ namespace Lumos.BLL
                 using (TransactionScope ts = new TransactionScope())
                 {
                     #region 核销优惠券
-                    var model = ((JObject)this.Pms).ToObject<ReidsMqByCalProfitByCouponConsumeModel>();
+                    var model = ((JObject)this.Pms).ToObject<ReidsMqByCalProfitByCouponBuyModel>();
                     var strjson_model = Newtonsoft.Json.JsonConvert.SerializeObject(model);
 
                     string msg = string.Format("正在处理信息，消息类型为佣金计算-{0},具体参数：{1}", this.Type.GetCnName(), strjson_model);
                     LogUtil.Info(msg);
                     Console.WriteLine(msg);
 
-                    var clientCoupon = CurrentDb.ClientCoupon.Where(m => m.ClientId == model.ClientId && m.WxCouponId == model.WxCouponId && m.WxCouponDecryptCode == model.WxCouponDecryptCode).FirstOrDefault();
-
-                    var fund = CurrentDb.Fund.Where(m => m.ClientId == clientCoupon.RefereeId).FirstOrDefault();
-
-                    if (fund == null)
-                    {
-                        LogUtil.Info("用户:" + model.ClientId + ",找不到钱包");
-                        return;
-                    }
-
-                    var promote = CurrentDb.Promote.Where(m => m.Id == clientCoupon.PromoteId).FirstOrDefault();
-
+                    var promote = CurrentDb.Promote.Where(m => m.Id == model.PromoteId).FirstOrDefault();
                     if (promote == null)
                     {
                         LogUtil.Info("用户:" + model.ClientId + ",找不到该活动");
                         return;
                     }
+
+                    var clientCoupon = CurrentDb.ClientCoupon.Where(m => m.ClientId == model.ClientId && m.PromoteId == model.PromoteId).FirstOrDefault();
 
                     if (clientCoupon == null)
                     {
@@ -227,11 +217,22 @@ namespace Lumos.BLL
                         return;
                     }
 
-                    clientCoupon.ConsumeTime = DateTime.Now;
-                    clientCoupon.Mender = GuidUtil.Empty();
-                    clientCoupon.MendTime = DateTime.Now;
+                    var fund = CurrentDb.Fund.Where(m => m.ClientId == clientCoupon.RefereeId).FirstOrDefault();
+
+                    if (fund == null)
+                    {
+                        LogUtil.Info("用户:" + model.ClientId + ",找不到钱包");
+                        return;
+                    }
 
                     var wxUserInfo = CurrentDb.WxUserInfo.Where(m => m.ClientId == clientCoupon.ClientId).FirstOrDefault();
+
+                    if (wxUserInfo == null)
+                    {
+                        LogUtil.Info("用户:" + clientCoupon.ClientId + ",找不到信息");
+                        return;
+                    }
+
                     string nickname = "";
                     string headImgUrl = IconUtil.ConsumeCoupon;
                     if (wxUserInfo != null)
@@ -243,6 +244,9 @@ namespace Lumos.BLL
                             headImgUrl = wxUserInfo.HeadImgUrl;
                         }
                     }
+
+
+
 
                     decimal profit = promote.BuyProfit;
 
@@ -266,8 +270,6 @@ namespace Lumos.BLL
                     fundTrans.TipsIcon = headImgUrl;
                     fundTrans.IsNoDisplay = false;
                     CurrentDb.FundTrans.Add(fundTrans);
-
-
                     CurrentDb.SaveChanges();
                     ts.Complete();
 

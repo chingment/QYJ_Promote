@@ -280,6 +280,7 @@ namespace Lumos.BLL
                             var promoteCoupon = CurrentDb.PromoteCoupon.Where(m => m.ProductSkuId == orderDetails.ProductSkuId && m.PromoteId == order.PromoteId).FirstOrDefault();
                             if (promoteCoupon != null)
                             {
+
                                 var clientCoupon = CurrentDb.ClientCoupon.Where(m => m.ClientId == order.ClientId && m.PromoteId == order.PromoteId && m.PromoteCouponId == promoteCoupon.Id).FirstOrDefault();
                                 if (clientCoupon == null)
                                 {
@@ -311,18 +312,19 @@ namespace Lumos.BLL
                                     CurrentDb.SaveChanges();
                                 }
 
-                                //if (promote.IsNeedSettleBuyProfit)
-                                //{
-                                //    var reidsMqByCalProfitModel = new ReidsMqByCalProfitModel();
-                                //    reidsMqByCalProfitModel.Type = ReidsMqByCalProfitType.CouponBuy;
 
-                                //    var reidsMqByCalProfitByCouponBuyModel = new ReidsMqByCalProfitByCouponBuyModel();
-                                //    reidsMqByCalProfitByCouponBuyModel.ClientId = order.ClientId;
+                                var reidsMqByCalProfitModel = new ReidsMqByCalProfitModel();
 
-                                //    reidsMqByCalProfitModel.Pms = reidsMqByCalProfitByCouponBuyModel;
+                                reidsMqByCalProfitModel.Type = ReidsMqByCalProfitType.CouponBuy;
 
-                                //    ReidsMqFactory.CalProfit.Push(reidsMqByCalProfitModel);
-                                //}
+                                var reidsMqByCalProfitByCouponBuyModel = new ReidsMqByCalProfitByCouponBuyModel();
+                                reidsMqByCalProfitByCouponBuyModel.ClientId = order.ClientId;
+                                reidsMqByCalProfitByCouponBuyModel.PromoteId = order.PromoteId;
+
+                                reidsMqByCalProfitModel.Pms = reidsMqByCalProfitByCouponBuyModel;
+
+                                ReidsMqFactory.CalProfit.Push(reidsMqByCalProfitModel);
+
                             }
                         }
                     }
