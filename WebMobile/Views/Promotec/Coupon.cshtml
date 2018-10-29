@@ -18,7 +18,7 @@
             </div>
             {{else status==2}}
             <div style="width:50%;float:left;text-align: right;">
-                <img class="btn-com operate btn-GoBuy" src="${couponPage.bg4GetCoupon}" style="margin-right:15px;display: inline-block;cursor:pointer" />
+                <img class="btn-com operate btn-GoBuy" src="${couponPage.bg4GoBuy}" style="margin-right:15px;display: inline-block;cursor:pointer" />
             </div>
             <div style="width:50%;float:left;text-align:left;">
                 <img class="btn-com operate btn-GoInvite " src="${couponPage.bg4GoInvite}" style="margin-left:15px;display: inline-block;cursor:pointer" />
@@ -172,7 +172,7 @@
                             if (d.result == $.lumos.resultType.success) {
                                 var params = d.data;
                                 pConfig.orderSn = params.orderSn;
-
+      
                                 if (pConfig.isNeedBuy) {
                                     wx.chooseWXPay({
                                         appId: params.appId,

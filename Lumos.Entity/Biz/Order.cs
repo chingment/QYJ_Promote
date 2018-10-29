@@ -24,7 +24,6 @@ namespace Lumos.Entity
         public Enumeration.OrderStatus Status { get; set; }
         public string Creator { get; set; }
         public DateTime CreateTime { get; set; }
-        public bool IsPromoteProfit { get; set; }
         public string PromoteId { get; set; }
         public string Mender { get; set; }
         public DateTime? MendTime { get; set; }
@@ -34,5 +33,6 @@ namespace Lumos.Entity
         public string RefereeId { get; set; }
 
         public string CancelReason { get; set; }
+
     }
 }

@@ -384,76 +384,89 @@ namespace WebMobile.Controllers
 
         public string GetWxPromoteImgMediaId(string promoteId, string clientId)
         {
-            var wxUserInfo = CurrentDb.WxUserInfo.Where(m => m.ClientId == clientId).FirstOrDefault();
-            var promoteUser = CurrentDb.PromoteUser.Where(m => m.PromoteId == promoteId && m.ClientId == clientId).FirstOrDefault();
-            if (promoteUser == null)
+            try
             {
-                promoteUser = new PromoteUser();
-                promoteUser.Id = GuidUtil.New();
-                promoteUser.PromoteId = promoteId;
-                promoteUser.ClientId = clientId;
-                promoteUser.RefereeId = null;
-                promoteUser.CreateTime = DateTime.Now;
-                promoteUser.Creator = clientId;
-                CurrentDb.PromoteUser.Add(promoteUser);
-                CurrentDb.SaveChanges();
-            }
+                var wxUserInfo = CurrentDb.WxUserInfo.Where(m => m.ClientId == clientId).FirstOrDefault();
+                if (wxUserInfo == null)
+                    return null;
+                var promote = CurrentDb.Promote.Where(m => m.Id == promoteId).FirstOrDefault();
 
-            if (string.IsNullOrEmpty(promoteUser.WxPromoteImgMediaId))
-            {
-                System.Drawing.Image oImg = System.Drawing.Image.FromFile(Server.MapPath("~/Static/Promote/promote_bg_2.png"));
-                BarcodeWriter writer = new BarcodeWriter();
-                writer.Format = BarcodeFormat.QR_CODE;
-                QrCodeEncodingOptions options = new QrCodeEncodingOptions();
-                options.DisableECI = true;
-                //设置内容编码
-                options.CharacterSet = "UTF-8";
-                //设置二维码的宽度和高度
-                options.Width = 500;
-                options.Height = 500;
-                //设置二维码的边距,单位不是固定像素
-                options.Margin = 1;
-                writer.Options = options;
-                System.Drawing.Image oImg1 = writer.Write(string.Format("http://qyj.17fanju.com/Promotec/Coupon?promoteId={0}&refereeId={1}", promoteId, clientId));
-                System.Drawing.Bitmap map = new Bitmap(oImg);
-                oImg.Dispose();
-                Graphics g = Graphics.FromImage(map);
-                g.InterpolationMode = InterpolationMode.HighQualityBilinear;
-                SolidBrush brush = new SolidBrush(Color.Green);
-                PointF P = new PointF(100, 100);
-                Font f = new Font("Arial", 20);
-                g.DrawImage(oImg1, 320, 1655, 150, 150);//画二维码图片      
+                if (promote == null)
+                    return null;
 
-
-                if (wxUserInfo != null)
+                var promoteUser = CurrentDb.PromoteUser.Where(m => m.PromoteId == promoteId && m.ClientId == clientId).FirstOrDefault();
+                if (promoteUser == null)
                 {
-                    if (!string.IsNullOrEmpty(wxUserInfo.HeadImgUrl))
-                    {
-                        var oImg4 = CirclePhoto(wxUserInfo.HeadImgUrl, 100);
-
-                        g.DrawImage(oImg4, 620, 1655, 150, 150);
-                    }
+                    promoteUser = new PromoteUser();
+                    promoteUser.Id = GuidUtil.New();
+                    promoteUser.PromoteId = promoteId;
+                    promoteUser.ClientId = clientId;
+                    promoteUser.RefereeId = null;
+                    promoteUser.CreateTime = DateTime.Now;
+                    promoteUser.Creator = clientId;
+                    CurrentDb.PromoteUser.Add(promoteUser);
+                    CurrentDb.SaveChanges();
                 }
 
-                string key = GuidUtil.New();
-                string path = Server.MapPath("~/Static/Promote/User/") + key + ".jpg";
+                if (string.IsNullOrEmpty(promoteUser.WxPromoteImgMediaId))
+                {
+                    System.Drawing.Image oImg = System.Drawing.Image.FromFile(Server.MapPath("~/Content/images/promote20181029/referee_bg.png"));
+                    BarcodeWriter writer = new BarcodeWriter();
+                    writer.Format = BarcodeFormat.QR_CODE;
+                    QrCodeEncodingOptions options = new QrCodeEncodingOptions();
+                    options.DisableECI = true;
+                    //设置内容编码
+                    options.CharacterSet = "UTF-8";
+                    //设置二维码的宽度和高度
+                    options.Width = 500;
+                    options.Height = 500;
+                    //设置二维码的边距,单位不是固定像素
+                    options.Margin = 1;
+                    writer.Options = options;
+                    System.Drawing.Image oImg1 = writer.Write(string.Format("http://qyj.17fanju.com/Promotec/Coupon?promoteId={0}&refereeId={1}", promoteId, clientId));
+                    System.Drawing.Bitmap map = new Bitmap(oImg);
+                    oImg.Dispose();
+                    Graphics g = Graphics.FromImage(map);
+                    g.InterpolationMode = InterpolationMode.HighQualityBilinear;
+                    SolidBrush brush = new SolidBrush(Color.Green);
+                    PointF P = new PointF(100, 100);
+                    Font f = new Font("Arial", 20);
+                    g.DrawImage(oImg1, 320, 1655, 150, 150);//画二维码图片      
 
-                map.Save(path, System.Drawing.Imaging.ImageFormat.Jpeg);
-                f.Dispose();
-                g.Dispose();
 
-                string media_Id = SdkFactory.Wx.Instance().UploadMultimediaImage(path);
-                promoteUser.PromoteImgUrl = string.Format("http://qyj.17fanju.com/Static/Promote/User/{0}.jpg", key);
-                promoteUser.WxPromoteImgMediaId = media_Id;
-                CurrentDb.SaveChanges();
+                    if (wxUserInfo != null)
+                    {
+                        if (!string.IsNullOrEmpty(wxUserInfo.HeadImgUrl))
+                        {
+                            var oImg4 = CirclePhoto(wxUserInfo.HeadImgUrl, 100);
 
-                return media_Id;
+                            g.DrawImage(oImg4, 620, 1655, 150, 150);
+                        }
+                    }
+
+                    string key = GuidUtil.New();
+                    string path = Server.MapPath("~/Static/Promote/User/") + key + ".jpg";
+
+                    map.Save(path, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    f.Dispose();
+                    g.Dispose();
+
+                    string media_Id = SdkFactory.Wx.Instance().UploadMultimediaImage(path);
+                    promoteUser.PromoteImgUrl = string.Format("http://qyj.17fanju.com/Static/Promote/User/{0}.jpg", key);
+                    promoteUser.WxPromoteImgMediaId = media_Id;
+                    CurrentDb.SaveChanges();
+
+                    return media_Id;
+                }
+                else
+                {
+                    return promoteUser.WxPromoteImgMediaId;
+                }
             }
-            else
+            catch
             {
-                return promoteUser.WxPromoteImgMediaId;
+                return null;
             }
-
         }
 
 

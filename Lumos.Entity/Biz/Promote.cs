@@ -20,7 +20,7 @@ namespace Lumos.Entity
         public string Creator { get; set; }
         public DateTime CreateTime { get; set; }
         public bool IsNeedBuy { get; set; }
-
         public decimal ConsumeProfit { get; set; }
+        public decimal BuyProfit { get; set; }
     }
 }
