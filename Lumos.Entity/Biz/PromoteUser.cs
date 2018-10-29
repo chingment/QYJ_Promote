@@ -16,9 +16,8 @@ namespace Lumos.Entity
         public string Id { get; set; }
        
         public string ClientId { get; set; }
-        public string PClientId { get; set; }
+        public string RefereeId { get; set; }
         public string PromoteId { get; set; }
-        public bool IsAgent { get; set; }
         public string Creator { get; set; }
         public DateTime CreateTime { get; set; }
         public string WxPromoteImgMediaId { get; set; }

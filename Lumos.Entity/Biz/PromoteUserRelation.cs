@@ -16,9 +16,9 @@ namespace Lumos.Entity
         [Key]
         public string Id { get; set; }
         public string ClientId { get; set; }
-        public string CClientId { get; set; }
+        public string RefereeId { get; set; }
         public string PromoteId { get; set; }
-        public int Dept { get; set; }
+        public int RefereeDept { get; set; }
         public string Creator { get; set; }
         public DateTime CreateTime { get; set; }
     }

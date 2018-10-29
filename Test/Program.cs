@@ -97,20 +97,6 @@ namespace Test
             //OAuthApi.CardCodeDecrypt("13_uev3UiFHaQYf_qG882v2w9_FBz8a18dIRMjWG1Axv7Wv4mpOLDzwgJB1tySq5QaT__5IBYRNrURk_K_T1GoHshkvWPasfTtIip2V5BzdNEBHNqIO1I3_SPRNIv0gfDUE7zlE-POZHdQo2aOKVDHhAHALTX", "ftp40hZGeN2MQYDTWpH4q93CwcrbioZuSXfi16qfI4o=");
             var operater = "00000000000000000000000000000000";
 
-            string refereeId = "dadd";
-            string s_returnUrl = "http://qyj.17fanju.com/Promote/Coupon?promoteId=a999753c5fe14e26bbecad576b6a6909&";
-            if (s_returnUrl.IndexOf("refereeId") < 0)
-            {
-                var b = s_returnUrl.Substring(s_returnUrl.Length - 1);
-                if (b == "&")
-                {
-                    s_returnUrl += "refereeId=" + refereeId;
-                }
-                else
-                {
-                    s_returnUrl += "&refereeId=" + refereeId;
-                }
-            }
 
             //BizFactory.Order.PayResultNotify(operater, Enumeration.OrderNotifyLogNotifyFrom.WebApp, "fdfsf", "2018090218544434811746");
 
@@ -123,8 +109,8 @@ namespace Test
             //sParams.Add("openid", "7777");
             sParams.Add("api_ticket", "E0o2-at6NcC2OsJiQTlwlKMSjtVtlHwVgHPyQXlh-RRu0M7pp7T-oWWkn7bFiipLVf0kMiaQpZ_K4KGLRI2cBg");
 
-            string s = Lumos.WeiXinSdk.CommonUtil.MakeCardSign(sParams);
-            Console.WriteLine(s);
+            //string s = Lumos.WeiXinSdk.CommonUtil.MakeCardSign(sParams);
+            //Console.WriteLine(s);
             //string xml= "<xml><ToUserName><![CDATA[gh_fc0a06a20993]]></ToUserName><FromUserName><![CDATA[oZI8Fj040-be6rlDohc6gkoPOQTQ]]></FromUserName><CreateTime>1472551036</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[user_get_card]]></Event><CardId><![CDATA[pZI8Fjwsy5fVPRBeD78J4RmqVvBc]]></CardId><IsGiveByFriend>0</IsGiveByFriend><UserCardCode><![CDATA[226009850808]]></UserCardCode><FriendUserName><![CDATA[]]></FriendUserName><OuterId>0</OuterId><OldUserCardCode><![CDATA[]]></OldUserCardCode><OuterStr><![CDATA[12b]]></OuterStr><IsRestoreMemberCard>0</IsRestoreMemberCard><IsRecommendByFriend>0</IsRecommendByFriend><UnionId>o6_bmasdasdsad6_2sgVt7hMZOPfL</UnionId></xml>";
 
             // var baseEventMsg = WxMsgFactory.CreateMessage(xml);
@@ -174,42 +160,88 @@ namespace Test
             //BizFactory.Order.PayCompleted(operater, "2018090214233885209742", DateTime.Now);
             //SnUtil.BulidOrderNo(Enumeration.BizSnType.Order);
 
-            //LumosDbContext CurrentDb = new LumosDbContext();
+            LumosDbContext CurrentDb = new LumosDbContext();
 
-            //var promoteId = "a999753c5fe14e26bbecad576b6a6909";
-            //var userId = "4";
-            //var pUserId = "3";
-            //var createTime = DateTime.Now;
+            int x =4;
+            var promoteId = "akkk753c5fe14e26bbecad576b6a6kkk";
+            var clientId = "0000000000000000000000000000000" + (x + 1).ToString();
+            var refereeId = "0000000000000000000000000000000" + x.ToString();
+            var createTime = DateTime.Now;
 
 
-            //var promoteUser = CurrentDb.PromoteUser.Where(m => m.UserId == userId && m.PromoteId == promoteId).FirstOrDefault();
-            //if (promoteUser == null)
-            //{
-            //    promoteUser = new PromoteUser();
-            //    promoteUser.Id = GuidUtil.New();
-            //    promoteUser.PromoteId = promoteId;
-            //    promoteUser.UserId = userId;
-            //    promoteUser.PUserId = pUserId;
-            //    promoteUser.IsAgent = false;
-            //    promoteUser.CreateTime = createTime;
-            //    promoteUser.Creator = operater;
-            //    CurrentDb.PromoteUser.Add(promoteUser);
-            //    CurrentDb.SaveChanges();
-            //}
+            var promoteUser = CurrentDb.PromoteUser.Where(m => m.ClientId == clientId && m.PromoteId == promoteId).FirstOrDefault();
+            if (promoteUser == null)
+            {
+                promoteUser = new PromoteUser();
+                promoteUser.Id = GuidUtil.New();
+                promoteUser.PromoteId = promoteId;
+                promoteUser.ClientId = clientId;
+                promoteUser.RefereeId = refereeId;
+                promoteUser.CreateTime = createTime;
+                promoteUser.Creator = operater;
+                CurrentDb.PromoteUser.Add(promoteUser);
+                CurrentDb.SaveChanges();
+            }
 
-            //var promoteUsers = CurrentDb.PromoteUser.ToList();
+            var promoteUserRelation = CurrentDb.PromoteUserRelation.Where(m => m.ClientId == clientId && m.RefereeDept == 1 && m.PromoteId == promoteId).FirstOrDefault();
+            if (promoteUserRelation == null)
+            {
+                promoteUserRelation = new PromoteUserRelation();
+                promoteUserRelation.Id = GuidUtil.New();
+                promoteUserRelation.PromoteId = promoteId;
+                promoteUserRelation.ClientId = clientId;
+                promoteUserRelation.RefereeId = refereeId;
+                promoteUserRelation.RefereeDept = 1;
+                promoteUserRelation.CreateTime = createTime;
+                promoteUserRelation.Creator = operater;
+                CurrentDb.PromoteUserRelation.Add(promoteUserRelation);
+                CurrentDb.SaveChanges();
+            }
 
-            //var promoteUserFathers = GetFatherList(promoteUsers, userId).Where(m => m.UserId != userId && m.IsAgent == false).Take(3).ToList();
+
+            var promoteUserRelationAll = CurrentDb.PromoteUserRelation.Where(m => m.PromoteId == promoteId).OrderByDescending(m => m.RefereeDept).ToList();
+
+            var promoteUserFathers = GetFatherList2(promoteUserRelationAll, clientId).Take(3).ToList();
+
+            for (int i = 0; i < promoteUserFathers.Count; i++)
+            {
+                int dept2 = (i + 1);
+                string refereeId2 = promoteUserFathers[i].RefereeId;
+                //string clientId2 = promoteUserFathers[i].ClientId;
+                Console.WriteLine("用户Id: " + clientId + "是用户Id:" + refereeId2 + "的" + dept2 + "级分销商");
+
+
+                var promoteUserRelation2 = CurrentDb.PromoteUserRelation.Where(m => m.ClientId == clientId && m.RefereeId == refereeId2 && m.PromoteId == promoteId && m.RefereeDept == dept2).FirstOrDefault();
+                if (promoteUserRelation2 == null)
+                {
+                    promoteUserRelation2 = new PromoteUserRelation();
+                    promoteUserRelation2.Id = GuidUtil.New();
+                    promoteUserRelation2.ClientId = clientId;
+                    promoteUserRelation2.PromoteId = promoteId;
+                    promoteUserRelation2.RefereeId = refereeId2;
+                    promoteUserRelation2.RefereeDept = dept2;
+                    promoteUserRelation2.CreateTime = createTime;
+                    promoteUserRelation2.Creator = operater;
+                    CurrentDb.PromoteUserRelation.Add(promoteUserRelation2);
+                    CurrentDb.SaveChanges();
+                }
+
+            }
+
+
+            //var promoteUsers = CurrentDb.PromoteUser.Where(m => m.PromoteId == promoteId).ToList();
+
+            //var promoteUserFathers = GetFatherList(promoteUsers, clientId).Where(m => m.ClientId != clientId && m.IsAgent == false).Take(3).ToList();
 
             //for (int i = 0; i < promoteUserFathers.Count; i++)
             //{
             //    int dept = (i + 1);
-            //    Console.WriteLine("用户Id: " + userId + "是用户Id:" + promoteUserFathers[i].UserId + "的" + dept + "级分销商");
+            //    Console.WriteLine("用户Id: " + clientId + "是用户Id:" + promoteUserFathers[i].ClientId + "的" + dept + "级分销商");
             //    var promoteUserRelation = new PromoteUserRelation();
             //    promoteUserRelation.Id = GuidUtil.New();
-            //    promoteUserRelation.UserId = promoteUserFathers[i].UserId;
+            //    promoteUserRelation.ClientId = promoteUserFathers[i].ClientId;
             //    promoteUserRelation.PromoteId = promoteId;
-            //    promoteUserRelation.CUserId = userId;
+            //    promoteUserRelation.CClientId = clientId;
             //    promoteUserRelation.Dept = dept;
             //    promoteUserRelation.CreateTime = createTime;
             //    promoteUserRelation.Creator = operater;
@@ -218,15 +250,15 @@ namespace Test
 
             //}
 
-            //foreach (var item in list)
+            //foreach (var item in promoteUserFathers)
             //{
-            //    //Console.WriteLine("父用户Id:" + item.UserId);
+            //    Console.WriteLine("父用户Id:" + item.UserId);
 
-            //    //var son = GetSonList(promoteUser, item.PUserId).ToList();
-            //    //for (int i = 0; i < son.Count; i++)
-            //    //{
-            //    //    Console.WriteLine("第" + (i + 1) + "个子用户Id:" + son[i].UserId);
-            //    //}
+            //    var son = GetSonList(promoteUser, item.PUserId).ToList();
+            //    for (int i = 0; i < son.Count; i++)
+            //    {
+            //        Console.WriteLine("第" + (i + 1) + "个子用户Id:" + son[i].ClientId);
+            //    }
 
             //}
         }
@@ -290,7 +322,13 @@ namespace Test
         public static IEnumerable<PromoteUser> GetFatherList(IList<PromoteUser> list, string userId)
         {
             var query = list.Where(p => p.ClientId == userId).ToList();
-            return query.ToList().Concat(query.ToList().SelectMany(t => GetFatherList(list, t.PClientId)));
+            return query.ToList().Concat(query.ToList().SelectMany(t => GetFatherList(list, t.RefereeId)));
+        }
+
+        public static IEnumerable<PromoteUserRelation> GetFatherList2(IList<PromoteUserRelation> list, string userId)
+        {
+            var query = list.Where(p => p.ClientId == userId && p.RefereeDept == 1).ToList();
+            return query.ToList().Concat(query.ToList().SelectMany(t => GetFatherList2(list, t.RefereeId)));
         }
 
         public static IEnumerable<PromoteUser> GetSons(IList<PromoteUser> list, string Fid)
@@ -302,7 +340,7 @@ namespace Test
 
         public static IEnumerable<PromoteUser> GetSonList(IList<PromoteUser> list, string Fid)
         {
-            var query = list.Where(p => p.PClientId == Fid).ToList();
+            var query = list.Where(p => p.RefereeId == Fid).ToList();
             return query.ToList().Concat(query.ToList().SelectMany(t => GetSonList(list, t.ClientId)));
         }
     }
