@@ -12,6 +12,11 @@ namespace Lumos.BLL.Service.App
         {
             this.CouponPage = new CouponPageModel();
             this.PayResultPage = new PayResultPageModel();
+            this.UserInfo = new UserInfoModel();
+            this.UserInfo.CtName = "";
+            this.UserInfo.CtPhone = "";
+            this.UserInfo.CtIsStudent = "0";
+            this.UserInfo.CtSchool = "";
         }
 
         public string PromoteId { get; set; }
@@ -34,6 +39,16 @@ namespace Lumos.BLL.Service.App
         public CouponPageModel CouponPage { get; set; }
 
         public PayResultPageModel PayResultPage { get; set; }
+
+        public UserInfoModel UserInfo { get; set; }
+
+        public class UserInfoModel
+        {
+            public string CtName { get; set; }
+            public string CtPhone { get; set; }
+            public string CtIsStudent { get; set; }
+            public string CtSchool { get; set; }
+        }
 
         public class CouponPageModel
         {

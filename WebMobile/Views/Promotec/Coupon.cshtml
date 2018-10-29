@@ -172,7 +172,7 @@
                             if (d.result == $.lumos.resultType.success) {
                                 var params = d.data;
                                 pConfig.orderSn = params.orderSn;
-      
+
                                 if (pConfig.isNeedBuy) {
                                     wx.chooseWXPay({
                                         appId: params.appId,
@@ -348,6 +348,11 @@
                             }
                         }
 
+
+                        $('#txt_ctName').val(pConfig.userInfo.ctName);
+                        $('#txt_ctPhone').val(pConfig.userInfo.ctPhone);
+                        //$('input[name=rd_ctIsStudent]:checked')
+                        //txt_ctSchool
                     }
                 }
             });

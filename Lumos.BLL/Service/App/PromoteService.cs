@@ -120,6 +120,15 @@ namespace Lumos.BLL.Service.App
 
             ret.IsNeedBuy = promote.IsNeedBuy;
 
+            var promoteUser = CurrentDb.PromoteUser.Where(m => m.CtPhone != null).OrderByDescending(m => m.CreateTime).FirstOrDefault();
+            if (promoteUser != null)
+            {
+                ret.UserInfo.CtName = promoteUser.CtName ?? "";
+                ret.UserInfo.CtPhone = promoteUser.CtPhone ?? "";
+                ret.UserInfo.CtIsStudent = promoteUser.CtIsStudent ?? "";
+                ret.UserInfo.CtSchool = promoteUser.CtSchool ?? "";
+            }
+
             result = new CustomJsonResult(ResultType.Success, ResultCode.Success, "预定成功", ret);
 
             return result;
