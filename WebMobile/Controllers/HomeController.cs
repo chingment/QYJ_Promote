@@ -237,7 +237,7 @@ namespace WebMobile.Controllers
 
                                             LogUtil.Info("文本消息:" + textMsg.Content);
 
-                                            if (textMsg.Content == "代金券" || textMsg.Content == "代金卷" || textMsg.Content == "代金劵")
+                                            if (textMsg.Content == "双11入场券" || textMsg.Content == "双11入场卷" || textMsg.Content == "双11入场劵")
                                             {
                                                 string promoteId = "80c71a0657924059b39895f9e406ef84";
                                                 string media_Id = GetWxPromoteImgMediaId(promoteId, wxUserInfo.ClientId);
