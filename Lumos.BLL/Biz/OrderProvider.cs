@@ -127,6 +127,13 @@ namespace Lumos.BLL
                         {
                             chargeAmount = 0.01m;
                         }
+                        else if (order.ClientId == "4faecb3507aa48698405cf492dc26916")
+                        {
+                            chargeAmount = 0.01m;
+                        }
+
+
+
 
                         string goods_tag = "";
                         if (order.ChargeAmount > 0)
