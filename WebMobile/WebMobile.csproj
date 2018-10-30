@@ -199,7 +199,6 @@
     <Compile Include="Controllers\CouponController.cs" />
     <Compile Include="Controllers\OperateController.cs" />
     <Compile Include="Controllers\PersonalController.cs" />
-    <Compile Include="Controllers\PromotebController.cs" />
     <Compile Include="Controllers\PromotecController.cs" />
     <Compile Include="Controllers\PromoteController.cs" />
     <Compile Include="Controllers\ShareLogController.cs" />
@@ -517,8 +516,6 @@
     <Content Include="Views\Withdraw\My.cshtml" />
     <Content Include="Views\Withdraw\Apply.cshtml" />
     <Content Include="Views\Operate\Result.cshtml" />
-    <Content Include="Views\Promoteb\Coupon.cshtml" />
-    <Content Include="Views\Promoteb\PayResult.cshtml" />
     <Content Include="Views\Promotec\Coupon.cshtml" />
     <Content Include="Views\Promotec\PayResult.cshtml" />
     <Content Include="Views\Promotec\CouponGet.cshtml" />
