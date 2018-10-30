@@ -239,7 +239,7 @@ namespace WebMobile.Controllers
 
                                             if (textMsg.Content == "代金券" || textMsg.Content == "代金卷" || textMsg.Content == "代金劵")
                                             {
-                                                string promoteId = "akkk753c5fe14e26bbecad576b6a6kkk";
+                                                string promoteId = "80c71a0657924059b39895f9e406ef84";
                                                 string media_Id = GetWxPromoteImgMediaId(promoteId, wxUserInfo.ClientId);
                                                 echoStr = WxMsgFactory.CreateReplyImage(baseEventMsg.FromUserName, baseEventMsg.ToUserName, media_Id);
                                             }
@@ -463,8 +463,9 @@ namespace WebMobile.Controllers
                     return promoteUser.WxPromoteImgMediaId;
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                LogUtil.Error("", ex);
                 return null;
             }
         }
