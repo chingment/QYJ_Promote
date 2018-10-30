@@ -29,10 +29,9 @@ namespace Lumos.Entity
         public DateTime? MendTime { get; set; }
         public string WxPrepayId { get; set; }
         public DateTime? WxPrepayIdExpireTime { get; set; }
-        
         public string RefereeId { get; set; }
-
         public string CancelReason { get; set; }
-
+        public bool BuyProfitIsSettled { get; set; }
+        public DateTime BuyProfitSettledTime { get; set; }
     }
 }

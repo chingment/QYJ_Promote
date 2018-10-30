@@ -84,7 +84,7 @@ namespace Lumos.BLL.Service.App
                 ret.PayResultPage.Bg4GoInvite = "/Content/images/promote20181029/bg_suc_btn_invite.png";
                 #endregion
             }
-            
+
             if (promote == null)
             {
                 ret.Status = 1;//活动未开始
@@ -120,7 +120,7 @@ namespace Lumos.BLL.Service.App
 
             ret.IsNeedBuy = promote.IsNeedBuy;
 
-            var promoteUser = CurrentDb.PromoteUser.Where(m => m.ClientId == m.CtPhone != null).OrderByDescending(m => m.CreateTime).FirstOrDefault();
+            var promoteUser = CurrentDb.PromoteUser.Where(m => m.ClientId == pClientId && m.CtPhone != null).OrderByDescending(m => m.CreateTime).FirstOrDefault();
             if (promoteUser != null)
             {
                 ret.UserInfo.CtName = promoteUser.CtName ?? "";

@@ -29,6 +29,7 @@ namespace Lumos.Entity
         public string OrderId { get; set; }
         public string OrderSn { get; set; }
         public bool IsBuy { get; set; }
+
         public DateTime BuyTime { get; set; }
         public bool IsGet { get; set; }
         public DateTime? GetTime { get; set; }

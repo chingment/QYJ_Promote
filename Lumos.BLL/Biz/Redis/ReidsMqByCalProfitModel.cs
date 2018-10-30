@@ -30,9 +30,11 @@ namespace Lumos.BLL
 
     public class ReidsMqByCalProfitByCouponBuyModel
     {
+        public string OrderId { get; set; }
         public string ClientId { get; set; }
-
         public string PromoteId { get; set; }
+        public string RefereeId { get; set; }
+        public string ClientCouponId { get; set; }
 
     }
 
@@ -192,32 +194,29 @@ namespace Lumos.BLL
                     var promote = CurrentDb.Promote.Where(m => m.Id == model.PromoteId).FirstOrDefault();
                     if (promote == null)
                     {
-                        LogUtil.Info("用户:" + model.ClientId + ",找不到该活动");
+                        LogUtil.Info("活动:" + model.PromoteId + ",为空");
                         return;
                     }
 
-                    var clientCoupon = CurrentDb.ClientCoupon.Where(m => m.ClientId == model.ClientId && m.PromoteId == model.PromoteId).FirstOrDefault();
-
-                    if (clientCoupon == null)
+                    if (model.ClientId == null)
                     {
-                        LogUtil.Info("用户:" + model.ClientId + ",找不到卡券");
+                        LogUtil.Info("用户:" + model.ClientId + ",为空");
                         return;
                     }
 
-                    if (clientCoupon.RefereeId == null)
+                    if (model.RefereeId == null)
                     {
-                        LogUtil.Info("用户:" + model.ClientId + ",推荐人为空");
-
+                        LogUtil.Info("推荐人:" + model.ClientId + ",为空");
                         return;
                     }
 
-                    if (clientCoupon.ClientId == clientCoupon.RefereeId)
+                    if (model.ClientId == model.RefereeId)
                     {
                         LogUtil.Info("用户和推荐人是同一个人:" + model.ClientId);
                         return;
                     }
 
-                    var fund = CurrentDb.Fund.Where(m => m.ClientId == clientCoupon.RefereeId).FirstOrDefault();
+                    var fund = CurrentDb.Fund.Where(m => m.ClientId == model.RefereeId).FirstOrDefault();
 
                     if (fund == null)
                     {
@@ -225,16 +224,33 @@ namespace Lumos.BLL
                         return;
                     }
 
-                    var wxUserInfo = CurrentDb.WxUserInfo.Where(m => m.ClientId == clientCoupon.ClientId).FirstOrDefault();
+                    var wxUserInfo = CurrentDb.WxUserInfo.Where(m => m.ClientId == model.ClientId).FirstOrDefault();
 
                     if (wxUserInfo == null)
                     {
-                        LogUtil.Info("用户:" + clientCoupon.ClientId + ",找不到信息");
+                        LogUtil.Info("用户:" + model.ClientId + ",找不到信息");
                         return;
                     }
 
+                    var order = CurrentDb.Order.Where(m => m.Id == model.OrderId).FirstOrDefault();
+
+                    if (order == null)
+                    {
+                        LogUtil.Info("订单:" + model.OrderId + ",找不到信息");
+                        return;
+                    }
+
+                    if (order.BuyProfitIsSettled)
+                    {
+                        LogUtil.Info("订单:" + model.OrderId + ",已经结算佣金");
+                        return;
+                    }
+
+                    order.BuyProfitIsSettled = true;
+                    order.BuyProfitSettledTime = DateTime.Now;
+
                     string nickname = "";
-                    string headImgUrl = IconUtil.ConsumeCoupon;
+                    string headImgUrl = IconUtil.BuyCoupon;
                     if (wxUserInfo != null)
                     {
                         nickname = wxUserInfo.Nickname;
@@ -244,9 +260,6 @@ namespace Lumos.BLL
                             headImgUrl = wxUserInfo.HeadImgUrl;
                         }
                     }
-
-
-
 
                     decimal profit = promote.BuyProfit;
 
