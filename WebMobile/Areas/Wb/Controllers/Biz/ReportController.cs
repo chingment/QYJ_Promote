@@ -72,7 +72,7 @@ namespace WebMobile.Areas.Wb.Controllers
             else
             {
                 #region POST
-                StringBuilder sql = new StringBuilder(" select b.Nickname,c.CtName,c.CtPhone,c.CtIsStudent, CtSchool,  a.IsBuy,a.BuyTime,a.IsGet,a.GetTime,a.IsConsume,a.ConsumeTime from ClientCoupon a left join WxUserInfo  b on a.ClientId=b.ClientId left join PromoteUser c on a.ClientId=c.ClientId ");
+                StringBuilder sql = new StringBuilder(" select b.Nickname,c.CtName,c.CtPhone,c.CtIsStudent, CtSchool,  a.IsBuy,a.BuyTime,a.IsGet,a.GetTime,a.IsConsume,a.ConsumeTime from ClientCoupon a left join WxUserInfo  b on a.ClientId=b.ClientId left join PromoteUser c on a.ClientId=c.ClientId  and a.PromoteId=c.PromoteId ");
 
                 sql.Append(" where a.BuyTime is not null ");
 
