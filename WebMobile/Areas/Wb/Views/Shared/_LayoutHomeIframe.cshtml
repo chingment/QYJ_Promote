@@ -82,6 +82,9 @@
                 var heightss = $(iframe).contents().find("body").height()
                 var height = Math.max(bHeight, dHeight);
 
+                if (heightss < 500) {
+                    heightss = 500;
+                }
                 iframe.height = heightss;
             } catch (ex) { }
         }
