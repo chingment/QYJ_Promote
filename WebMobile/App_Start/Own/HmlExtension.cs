@@ -39,7 +39,7 @@ namespace System.Web
             StringBuilder sb = new StringBuilder();
 
             string id = name.Replace('.', '_');
-            sb.Append("<select id=\"" + id + "\" data-placeholder=\"请选择\" name =\"" + name + "\" class=\"chosen-select\" style=\"width: 100px\" >");
+            sb.Append("<select id=\"" + id + "\" data-placeholder=\"请选择\" name =\"" + name + "\" class=\"chosen-select\" style=\"width: 230px\" >");
             sb.Append("<option value=\"-1\"></option>");
 
 
