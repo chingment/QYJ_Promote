@@ -32,6 +32,6 @@ namespace Lumos.Entity
         public string RefereeId { get; set; }
         public string CancelReason { get; set; }
         public bool BuyProfitIsSettled { get; set; }
-        public DateTime BuyProfitSettledTime { get; set; }
+        public DateTime? BuyProfitSettledTime { get; set; }
     }
 }

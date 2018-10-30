@@ -186,11 +186,11 @@ namespace Lumos.BLL
                     #region 核销优惠券
                     var model = ((JObject)this.Pms).ToObject<ReidsMqByCalProfitByCouponBuyModel>();
                     var strjson_model = Newtonsoft.Json.JsonConvert.SerializeObject(model);
-
+                    Console.WriteLine("11111");
                     string msg = string.Format("正在处理信息，消息类型为佣金计算-{0},具体参数：{1}", this.Type.GetCnName(), strjson_model);
                     LogUtil.Info(msg);
                     Console.WriteLine(msg);
-
+                    Console.WriteLine("22222");
                     var promote = CurrentDb.Promote.Where(m => m.Id == model.PromoteId).FirstOrDefault();
                     if (promote == null)
                     {

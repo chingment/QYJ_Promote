@@ -55,6 +55,7 @@ namespace WebMobile.Controllers
                 switch (item.ChangeType)
                 {
                     case Enumeration.FundTransChangeType.ConsumeCoupon:
+                    case Enumeration.FundTransChangeType.BuyCoupon:
                         myTran.ChangeType = item.Description;
                         break;
                     case Enumeration.FundTransChangeType.WtihdrawApply:
