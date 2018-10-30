@@ -452,6 +452,7 @@
     <Content Include="Content\images\promote20181029\bg_suc_btn_invite.png" />
     <Content Include="Content\images\promote20181029\bg_suc_btn_opencoupon.png" />
     <Content Include="Content\images\promote20181029\bg_suc_btn_getcoupon.png" />
+    <Content Include="Content\images\promote20181029\share_icon.png" />
     <Content Include="Content\images\withdraw-top.png" />
     <Content Include="Content\images\operate-result-icon-success.png" />
     <Content Include="Content\mobileSelect.css" />

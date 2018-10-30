@@ -60,7 +60,7 @@ namespace Lumos.BLL.Service.App
                 #region 80c71a0657924059b39895f9e406ef84
                 ret.ShareTitle = "超值推荐|¥2480元的早教大课包，双11秒杀仅需¥1111元";
                 ret.ShareDesc = "数量有限\n马上预购双11入场券\n获取秒杀资格吧！";
-                ret.ShareImgUrl = "http://qyj.17fanju.com/Content/images/promote20181021/share_icon.png";
+                ret.ShareImgUrl = "http://qyj.17fanju.com/Content/images/promote20181029/share_icon.png";
                 ret.EndDesc = "活动已经结束";
                 ret.NoStartDesc = "活动未开始";
 
@@ -84,7 +84,7 @@ namespace Lumos.BLL.Service.App
                 ret.PayResultPage.Bg4GoInvite = "/Content/images/promote20181029/bg_suc_btn_invite.png";
                 #endregion
             }
-
+            
             if (promote == null)
             {
                 ret.Status = 1;//活动未开始
