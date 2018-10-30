@@ -112,7 +112,7 @@ namespace Lumos.BLL
 
         public CustomJsonResult<JsApiConfigParams> GetJsApiConfigParams(string url)
         {
-            string jsApiTicket = WxUntil.GetInstance().GetJsApiTicket(wxConfig.AppId, this.GetApiAccessToken());
+            string jsApiTicket = WxUntil.GetInstance().GetJsApiTicket(wxConfig.AppId, wxConfig.AppSecret, this.GetApiAccessToken());
 
             JsApiConfigParams parms = new JsApiConfigParams(wxConfig.AppId, url, jsApiTicket);
 
@@ -134,7 +134,7 @@ namespace Lumos.BLL
 
         public string GetCardApiTicket()
         {
-            string cardApiTicket = WxUntil.GetInstance().GetCardApiTicket(wxConfig.AppId, this.GetApiAccessToken());
+            string cardApiTicket = WxUntil.GetInstance().GetCardApiTicket(wxConfig.AppId, wxConfig.AppSecret, this.GetApiAccessToken());
             return cardApiTicket;
         }
 
@@ -144,7 +144,7 @@ namespace Lumos.BLL
             return WxUntil.GetInstance().UploadMultimediaImage(this.GetApiAccessToken(), imageUrl);
         }
 
-        public List<WxUserCard> GetUserCards(string opendid,string cardid)
+        public List<WxUserCard> GetUserCards(string opendid, string cardid)
         {
             return WxUntil.GetInstance().GetUserCartList(this.GetApiAccessToken(), opendid, cardid);
         }
@@ -219,9 +219,6 @@ namespace Lumos.BLL
             }
 
         }
-
-
-
 
         //public string OrderPayReFund(string comCode, string orderSn, string orderReFundSn, decimal totalFee, decimal refundFee, string refundDesc)
         //{

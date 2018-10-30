@@ -37,7 +37,7 @@ namespace Lumos.BLL
 
 
 
-        public string GetAccessToken(string appId, string appSecret)
+        public string GetAccessToken(string appId, string appSecret, bool isReload = false)
         {
             //用于测试配置
             string wxAccessToken = System.Configuration.ConfigurationManager.AppSettings["custom:WxTestAccessToken"];
@@ -46,10 +46,17 @@ namespace Lumos.BLL
                 return wxAccessToken;
             }
 
-            string key = string.Format("Wx_AppId_{0}_AccessToken", appId);
 
+            string key = string.Format("Wx_AppId_{0}_AccessToken", appId);
             var redis = new RedisClient<string>();
+
+            if (isReload)
+            {
+                redis.KRemove(key);
+            }
+
             var accessToken = redis.KGetString(key);
+
 
             if (accessToken == null)
             {
@@ -84,7 +91,7 @@ namespace Lumos.BLL
         }
 
 
-        public string GetJsApiTicket(string appId, string access_token)
+        public string GetJsApiTicket(string appId, string appSecret, string access_token)
         {
 
             string key = string.Format("Wx_AppId_{0}_JsApiTicket", appId);
@@ -99,6 +106,14 @@ namespace Lumos.BLL
                 var wxApiJsApiTicket = new WxApiJsApiTicket(access_token);
 
                 var wxApiJsApiTicketResult = c.DoGet(wxApiJsApiTicket);
+
+                if (wxApiJsApiTicketResult.errcode == "40001")
+                {
+                    access_token = GetAccessToken(appId, appSecret, true);
+
+                    wxApiJsApiTicket = new WxApiJsApiTicket(access_token);
+                }
+
                 if (string.IsNullOrEmpty(wxApiJsApiTicketResult.ticket))
                 {
                     LogUtil.Info(string.Format("获取微信JsApiTicket，key：{0}，已过期，Api重新获取失败", key));
@@ -122,7 +137,7 @@ namespace Lumos.BLL
         }
 
 
-        public string GetCardApiTicket(string appId, string access_token)
+        public string GetCardApiTicket(string appId, string appSecret, string access_token)
         {
 
             string key = string.Format("Wx_AppId_{0}_CardApiTicket", appId);
@@ -137,6 +152,16 @@ namespace Lumos.BLL
                 var wxApiGetCardApiTicket = new WxApiGetCardApiTicket(access_token);
 
                 var wxApiGetCardApiTicketResult = c.DoGet(wxApiGetCardApiTicket);
+
+                if (wxApiGetCardApiTicketResult.errcode == "40001")
+                {
+                    access_token = GetAccessToken(appId, appSecret, true);
+
+                    wxApiGetCardApiTicket = new WxApiGetCardApiTicket(access_token);
+
+
+                }
+
                 if (string.IsNullOrEmpty(wxApiGetCardApiTicketResult.ticket))
                 {
                     LogUtil.Info(string.Format("获取微信CardApiTicket，key：{0}，已过期，Api重新获取失败", key));
