@@ -279,7 +279,7 @@ namespace Lumos.BLL
                     fundTrans.LockBalance = fund.LockBalance;
                     fundTrans.CreateTime = DateTime.Now;
                     fundTrans.Creator = GuidUtil.Empty();
-                    fundTrans.Description = string.Format("分享给用户({0})购买优惠券", nickname);
+                    fundTrans.Description = string.Format("分享给用户({0})购买入场券", nickname);
                     fundTrans.TipsIcon = headImgUrl;
                     fundTrans.IsNoDisplay = false;
                     CurrentDb.FundTrans.Add(fundTrans);
