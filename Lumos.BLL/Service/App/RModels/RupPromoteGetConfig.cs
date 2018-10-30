@@ -11,5 +11,7 @@ namespace Lumos.BLL.Service.App
         public string PromoteId { get; set; }
 
         public string RefereeId { get; set; }
+
+        public int ScreenHeight { get; set; }
     }
 }

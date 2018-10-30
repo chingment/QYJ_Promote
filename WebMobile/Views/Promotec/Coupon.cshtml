@@ -4,11 +4,11 @@
 }
 
 <script id="config_couponPage_tmpl" type="text/x-jquery-tmpl">
-    <div>
-        <img src="${couponPage.bg01}" />
+    <div style="height:${couponPage.bgHeight01}px">
+        <img src="${couponPage.bg01}" style="height:100%" />
     </div>
-    <div style="position: relative;">
-        <img src="${couponPage.bg02}" />
+    <div style="position: relative;height:${couponPage.bgHeight02}px">
+        <img src="${couponPage.bg02}" style="height:100%" />
         <div style="position: absolute;width: 100%;height: 100%;top: 0;align-items: center;justify-content: center; display: flex;">
 
 
@@ -30,8 +30,8 @@
             {{/if}}
         </div>
     </div>
-    <div style="position: relative;">
-        <img src="${couponPage.bg03}" />
+    <div style="position: relative;height:${couponPage.bgHeight03}px">
+        <img src="${couponPage.bg03}" style="height:100%" />
         <a href="/Personal/Index">
             <img class="btn-com operate btn-GoPersonal" src="${couponPage.bg4GoPersonal}" style="margin-right:15px;display: inline-block; bottom: 12%;right: 5%;position: absolute;" />
         </a>
@@ -39,11 +39,11 @@
 </script>
 
 <script id="config_payResultPage_tmpl" type="text/x-jquery-tmpl">
-    <div>
-        <img src="${payResultPage.bg01}" />
+    <div style="height:${payResultPage.bgHeight01}px">
+        <img src="${payResultPage.bg01}" style="height:100%"/>
     </div>
-    <div style="position: relative;">
-        <img src="${payResultPage.bg02}" />
+    <div style="position: relative;height:${payResultPage.bgHeight02}px">
+        <img src="${payResultPage.bg02}" style="height:100%" />
         <div style="position: absolute;width: 100%;height: 100%;top: 0;align-items: center;justify-content: center; display: flex;">
             {{if status==1 }}
             <div style="width:100%;top:0px;text-align: center;font-size:24px;color:#f53300;">
@@ -64,11 +64,11 @@
             {{/if}}
         </div>
     </div>
-    <div>
-        <img src="${payResultPage.bg03}" />
+    <div style="height:${payResultPage.bgHeight03}px">
+        <img src="${payResultPage.bg03}" style="height:100%" />
     </div>
-    <div style="position: relative;">
-        <img src="${payResultPage.bg04}" />
+    <div style="position: relative;height:${payResultPage.bgHeight04}px">
+        <img src="${payResultPage.bg04}" style="height:100%" />
         <div style="position: absolute;width: 100%;height: 100%;top: 0;align-items: center;justify-content: flex-end ;right: 5%;  display: flex;">
 
             <a href="/Personal/Index">
@@ -172,7 +172,7 @@
                             if (d.result == $.lumos.resultType.success) {
                                 var params = d.data;
                                 pConfig.orderSn = params.orderSn;
-
+                         
                                 if (pConfig.isNeedBuy) {
                                     wx.chooseWXPay({
                                         appId: params.appId,
@@ -307,8 +307,9 @@
         });
 
         function initConfig() {
+            var clientHeight = document.documentElement.clientHeight;
             $.lumos.getJson({
-                url: "/Promotec/GetConfig",
+                url: "/Promotec/GetConfig?screenHeight=" + clientHeight,
                 isShowLoading: true,
                 success: function (d) {
                     if (d.result == $.lumos.resultType.success) {

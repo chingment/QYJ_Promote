@@ -71,18 +71,18 @@ namespace WebMobile.Controllers
         }
 
         [HttpGet]
-        public CustomJsonResult GetConfig(RupPromoteGetConfig rup)
+        public CustomJsonResult GetConfig(int screenHeight)
         {
-            if (Request.UrlReferrer == null)
-            {
-
-            }
+            LogUtil.Info("rup.ScreenHeight" + screenHeight);
             var uri = new Uri(Request.UrlReferrer.AbsoluteUri);
+
+            var rup = new RupPromoteGetConfig();
             string promoteId = HttpUtility.ParseQueryString(uri.Query).Get("promoteId");
             string refereeId = HttpUtility.ParseQueryString(uri.Query).Get("refereeId");
 
             rup.PromoteId = promoteId;
             rup.RefereeId = refereeId;
+            rup.ScreenHeight = screenHeight;
             return AppServiceFactory.Promote.GetConfig(this.CurrentUserId, this.CurrentUserId, rup);
         }
 

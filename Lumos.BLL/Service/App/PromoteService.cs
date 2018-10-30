@@ -65,19 +65,27 @@ namespace Lumos.BLL.Service.App
                 ret.NoStartDesc = "活动未开始";
 
 
+                int sumHeight = 1920;
                 ret.CouponPage.Title = "超值推荐|¥2480元的早教大课包，双11秒杀仅需¥1111元";
                 ret.CouponPage.Bg01 = "/Content/images/promote20181029/bg_01.png";
+                ret.CouponPage.BgHeight01 = GetHeight(sumHeight, rup.ScreenHeight, 1020);
                 ret.CouponPage.Bg02 = "/Content/images/promote20181029/bg_02.jpg";
+                ret.CouponPage.BgHeight02 = GetHeight(sumHeight, rup.ScreenHeight, 200);
                 ret.CouponPage.Bg03 = "/Content/images/promote20181029/bg_03.png";
+                ret.CouponPage.BgHeight03 = GetHeight(sumHeight, rup.ScreenHeight, 700);
                 ret.CouponPage.Bg4GoBuy = "/Content/images/promote20181029/bg_btn_buy.png";
                 ret.CouponPage.Bg4GoPersonal = "/Content/images/promote20181029/bg_btn_personal.png";
                 ret.CouponPage.Bg4GoInvite = "/Content/images/promote20181029/bg_btn_invite.png";
 
                 ret.PayResultPage.Title = "恭喜您，抢购成功！";
                 ret.PayResultPage.Bg01 = "/Content/images/promote20181029/bg_suc_01.jpg";
+                ret.PayResultPage.BgHeight01 = GetHeight(sumHeight, rup.ScreenHeight, 1177);
                 ret.PayResultPage.Bg02 = "/Content/images/promote20181029/bg_suc_02.jpg";
+                ret.PayResultPage.BgHeight02 = GetHeight(sumHeight, rup.ScreenHeight, 200);
                 ret.PayResultPage.Bg03 = "/Content/images/promote20181029/bg_suc_03.jpg";
+                ret.PayResultPage.BgHeight03 = GetHeight(sumHeight, rup.ScreenHeight, 260);
                 ret.PayResultPage.Bg04 = "/Content/images/promote20181029/bg_suc_04.jpg";
+                ret.PayResultPage.BgHeight04 = GetHeight(sumHeight, rup.ScreenHeight, 283);
                 ret.PayResultPage.Bg4OpenCoupon = "/Content/images/promote20181029/bg_suc_btn_opencoupon.png";
                 ret.PayResultPage.Bg4GetCoupon = "/Content/images/promote20181029/bg_suc_btn_getcoupon.png";
                 ret.PayResultPage.Bg4GoPersonal = "/Content/images/promote20181029/bg_suc_btn_personal.png";
@@ -132,6 +140,13 @@ namespace Lumos.BLL.Service.App
             result = new CustomJsonResult(ResultType.Success, ResultCode.Success, "预定成功", ret);
 
             return result;
+        }
+
+        public static int GetHeight(int sumHeight, int sHeight, int oHeight)
+        {
+            double scale = Convert.ToDouble(Convert.ToDouble(oHeight) / Convert.ToDouble(sumHeight));
+            double a = sHeight * scale;
+            return Convert.ToInt32(a);
         }
     }
 }

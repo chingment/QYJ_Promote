@@ -92,8 +92,28 @@ namespace Test
 
     class Program
     {
+        public static int GetHeight(int sumHeight, int sHeight, int oHeight)
+        {
+            LogUtil.Info("sumHeight:" + sumHeight.ToString());
+            LogUtil.Info("sHeight:" + sHeight.ToString());
+            LogUtil.Info("oHeight:" + oHeight.ToString());
+            
+
+            double scale = Convert.ToDouble(Convert.ToDouble(oHeight) / Convert.ToDouble(sumHeight));
+
+            LogUtil.Info("scale:" + scale.ToString());
+
+            double a = sHeight * scale;
+
+            LogUtil.Info("a:" + a.ToString());
+
+            return Convert.ToInt32(a);
+        }
+
         static void Main(string[] args)
         {
+
+            int a= GetHeight(1920, 616, 1020);
             //OAuthApi.CardCodeDecrypt("13_uev3UiFHaQYf_qG882v2w9_FBz8a18dIRMjWG1Axv7Wv4mpOLDzwgJB1tySq5QaT__5IBYRNrURk_K_T1GoHshkvWPasfTtIip2V5BzdNEBHNqIO1I3_SPRNIv0gfDUE7zlE-POZHdQo2aOKVDHhAHALTX", "ftp40hZGeN2MQYDTWpH4q93CwcrbioZuSXfi16qfI4o=");
             var operater = "00000000000000000000000000000000";
 

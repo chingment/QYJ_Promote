@@ -54,9 +54,11 @@ namespace Lumos.BLL.Service.App
         {
             public string Title { get; set; }
             public string Bg01 { get; set; }
+            public int BgHeight01 { get; set; }
             public string Bg02 { get; set; }
+            public int BgHeight02 { get; set; }
             public string Bg03 { get; set; }
-
+            public int BgHeight03 { get; set; }
             public string Bg4GoPersonal { get; set; }
             public string Bg4GoInvite { get; set; }
             public string Bg4GoBuy { get; set; }
@@ -66,9 +68,13 @@ namespace Lumos.BLL.Service.App
         {
             public string Title { get; set; }
             public string Bg01 { get; set; }
+            public int BgHeight01 { get; set; }
             public string Bg02 { get; set; }
+            public int BgHeight02 { get; set; }
             public string Bg03 { get; set; }
+            public int BgHeight03 { get; set; }
             public string Bg04 { get; set; }
+            public int BgHeight04 { get; set; }
             public string Bg4GoPersonal { get; set; }
             public string Bg4GetCoupon { get; set; }
             public string Bg4OpenCoupon { get; set; }
