@@ -8,5 +8,6 @@ namespace WebMobile.Areas.Wb.Models.Biz.Report
 {
     public class PromoteShareBuyRecordViewModel : ReportModel
     {
+        public string PromoteId { get; set; }
     }
 }

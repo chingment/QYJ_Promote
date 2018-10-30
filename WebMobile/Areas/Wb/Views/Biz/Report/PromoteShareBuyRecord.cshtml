@@ -42,6 +42,12 @@
     <form id="form1" name="form1">
         <div class="search-bar">
             <div class="filter">
+                <span class="filter-label">活动：</span>
+                <span class="filter-input">
+                    @Html.initPromote("Model.PromoteId")
+                </span>
+            </div>
+            <div class="filter">
                 <input type="button" value="查询" class="btn btn-search" />
                 <input type="button" value="导出" class="btn btn-export-excel" />
             </div>

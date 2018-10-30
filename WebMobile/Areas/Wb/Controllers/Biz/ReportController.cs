@@ -76,6 +76,10 @@ namespace WebMobile.Areas.Wb.Controllers
 
                 sql.Append(" where a.BuyTime is not null ");
 
+                if (model.PromoteId != null)
+                {
+                    sql.Append(" and  a.PromoteId ='" + model.PromoteId + "'"); ;
+                }
 
                 if (model.StartTime != null)
                 {
@@ -221,6 +225,10 @@ namespace WebMobile.Areas.Wb.Controllers
 
                 sql.Append(" where 1=1 ");
 
+                if (model.PromoteId != null)
+                {
+                    sql.Append(" and  a.PromoteId ='" + model.PromoteId + "'"); ;
+                }
 
                 if (model.StartTime != null)
                 {
@@ -323,9 +331,19 @@ namespace WebMobile.Areas.Wb.Controllers
             else
             {
                 #region POST
-                StringBuilder sql = new StringBuilder(" select ClientId, Nickname,b.Num from WxUserInfo a inner join (select  RefereeId, count(*) as Num from[dbo].[ClientCoupon]  group by RefereeId) b on a.ClientId = b.RefereeId ");
+                StringBuilder sql = new StringBuilder(" select ClientId, Nickname,b.Num from WxUserInfo a inner join (select  RefereeId, count(*) as Num from[dbo].[ClientCoupon]   ");
+
+
+                if (model.PromoteId != null)
+                {
+                    sql.Append(" where  PromoteId ='" + model.PromoteId + "'"); ;
+                }
+
+                sql.Append(" group by RefereeId) b on a.ClientId = b.RefereeId ");
 
                 sql.Append(" where 1=1 ");
+
+
 
                 sql.Append(" order by Num desc  ");
 
