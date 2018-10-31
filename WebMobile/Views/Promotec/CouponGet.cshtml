@@ -12,42 +12,42 @@
 
             getCoupon();
 
-            $('#popd4Info_btn_sure').live("click", function (e) {
+            //$('#popd4Info_btn_sure').live("click", function (e) {
 
-                var ctName = $('#txt_ctName').val();
-                var ctPhone = $('#txt_ctPhone').val();
-                var ctIsStudent = $('input[name=rd_ctIsStudent]:checked').val();
-                var ctSchool = $('#txt_ctSchool').val();
+            //    var ctName = $('#txt_ctName').val();
+            //    var ctPhone = $('#txt_ctPhone').val();
+            //    var ctIsStudent = $('input[name=rd_ctIsStudent]:checked').val();
+            //    var ctSchool = $('#txt_ctSchool').val();
 
-                if ($.lumos.isNullOrEmpty(ctName)) {
-                    $.lumos.tips("请输入姓名");
-                    return false;
-                }
+            //    if ($.lumos.isNullOrEmpty(ctName)) {
+            //        $.lumos.tips("请输入姓名");
+            //        return false;
+            //    }
 
-                if ($.lumos.isNullOrEmpty(ctPhone)) {
-                    $.lumos.tips("请输入电话号码");
-                    return false;
-                }
+            //    if ($.lumos.isNullOrEmpty(ctPhone)) {
+            //        $.lumos.tips("请输入电话号码");
+            //        return false;
+            //    }
 
-                if ($.lumos.isNullOrEmpty(ctSchool)) {
-                    $.lumos.tips("请选择校区");
-                    return false;
-                }
+            //    if ($.lumos.isNullOrEmpty(ctSchool)) {
+            //        $.lumos.tips("请选择校区");
+            //        return false;
+            //    }
 
-                $.lumos.postJson({
-                    url: "/Promote/EditPromoteUserInfo",
-                    isShowLoading: true,
-                    data: { promoteId: promoteId, ctName: ctName, ctPhone: ctPhone, ctIsStudent: ctIsStudent, ctSchool: ctSchool },
-                    success: function (d) {
-                        if (d.result == $.lumos.resultType.success) {
-                            getCoupon();
-                        }
-                        else {
-                            $.lumos.tips(d.message);
-                        }
-                    }
-                });
-            });
+            //    $.lumos.postJson({
+            //        url: "/Promote/EditPromoteUserInfo",
+            //        isShowLoading: true,
+            //        data: { promoteId: promoteId, ctName: ctName, ctPhone: ctPhone, ctIsStudent: ctIsStudent, ctSchool: ctSchool },
+            //        success: function (d) {
+            //            if (d.result == $.lumos.resultType.success) {
+            //                getCoupon();
+            //            }
+            //            else {
+            //                $.lumos.tips(d.message);
+            //            }
+            //        }
+            //    });
+            //});
         });
 
         function getCoupon() {
@@ -70,6 +70,7 @@
                                     window.location.href = "/Coupon/My";
                                 },
                                 cancel: function (res) {
+                                    window.location.href = "/Coupon/My";
                                 }
                             });
                         }
@@ -97,7 +98,7 @@
 }
 
 
-<div class="popd" id="popd4Info" >
+@*<div class="popd" id="popd4Info" >
     <div class="popd-outer">
         <div class="popd-inter">
             <div id="popd4Info_btn_close" class="popd-close operate" style="position: absolute; right: -6px;top:-16px;"></div>
@@ -150,4 +151,4 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
