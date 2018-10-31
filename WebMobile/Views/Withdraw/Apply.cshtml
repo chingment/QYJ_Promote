@@ -134,10 +134,10 @@
     <ul class="list-input" style="overflow:hidden">
         <li class="list-input-item">
             <div class="item-left fl">
-                <div class="fl tl item-name"><span>银行名称</span></div>
+                <div class="fl tl item-name"><span>开户银行</span></div>
                 <div class="item-value fr">
 
-                    <input id="txt_acBank" placeholder="请优先填写建设银行" type="text" class="tr" value="@Model.AcBank" style="width:100%;" />
+                    <input id="txt_acBank" placeholder="例如xxx行xxx支行" type="text" class="tr" value="@Model.AcBank" style="width:100%;" />
 
                 </div>
             </div>
@@ -184,8 +184,12 @@
         </li>
     </ul>
 
+    <p style="color:red;font-size:12px;line-height:32px;padding-left:10px;">*提示：请优先填写建设银行</p>
 </div>
-<div style="text-align:center;padding:40px;">
+
+
+
+<div style="text-align:center;padding:20px;">
 
     <span id="btn_Sure" class="btn" operate="get" isone="true">立即提现</span>
 
