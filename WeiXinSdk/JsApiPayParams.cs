@@ -19,6 +19,8 @@ namespace Lumos.WeiXinSdk
         //扩展属性
         private string _orderSn = "";
         private string _orderId = "0";
+        private bool _isBuy = false;
+
         public string appId
         {
             get
@@ -91,10 +93,12 @@ namespace Lumos.WeiXinSdk
             }
         }
 
-        public JsApiPayParams(string appId, string key, string prepay_id, string orderId, string orderSn)
+        public JsApiPayParams(string appId, string key, string prepay_id, string orderId, string orderSn,bool isBuy)
         {
             _orderSn = orderSn;
             _orderId = orderId;
+            _isBuy = isBuy;
+
             _appId = appId;
 
             SortedDictionary<string, object> sParams = new SortedDictionary<string, object>();

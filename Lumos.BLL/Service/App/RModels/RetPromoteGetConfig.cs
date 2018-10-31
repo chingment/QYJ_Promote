@@ -52,33 +52,54 @@ namespace Lumos.BLL.Service.App
 
         public class CouponPageModel
         {
+            public CouponPageModel()
+            {
+                this.Bg01 = new ImgModel();
+                this.Bg02 = new ImgModel();
+                this.Bg03 = new ImgModel();
+                this.Bg4GoPersonal = new ImgModel();
+                this.Bg4GoInvite = new ImgModel();
+                this.Bg4GoBuy = new ImgModel();
+            }
             public string Title { get; set; }
-            public string Bg01 { get; set; }
-            public int BgHeight01 { get; set; }
-            public string Bg02 { get; set; }
-            public int BgHeight02 { get; set; }
-            public string Bg03 { get; set; }
-            public int BgHeight03 { get; set; }
-            public string Bg4GoPersonal { get; set; }
-            public string Bg4GoInvite { get; set; }
-            public string Bg4GoBuy { get; set; }
+            public ImgModel Bg01 { get; set; }
+            public ImgModel Bg02 { get; set; }
+            public ImgModel Bg03 { get; set; }
+            public ImgModel Bg4GoPersonal { get; set; }
+            public ImgModel Bg4GoInvite { get; set; }
+            public ImgModel Bg4GoBuy { get; set; }
         }
 
         public class PayResultPageModel
         {
+            public PayResultPageModel()
+            {
+                this.Bg01 = new ImgModel();
+                this.Bg02 = new ImgModel();
+                this.Bg03 = new ImgModel();
+                this.Bg04 = new ImgModel();
+                this.Bg4GoPersonal = new ImgModel();
+                this.Bg4GoInvite = new ImgModel();
+                this.Bg4GetCoupon = new ImgModel();
+                this.Bg4OpenCoupon = new ImgModel();
+            }
+
             public string Title { get; set; }
-            public string Bg01 { get; set; }
-            public int BgHeight01 { get; set; }
-            public string Bg02 { get; set; }
-            public int BgHeight02 { get; set; }
-            public string Bg03 { get; set; }
-            public int BgHeight03 { get; set; }
-            public string Bg04 { get; set; }
-            public int BgHeight04 { get; set; }
-            public string Bg4GoPersonal { get; set; }
-            public string Bg4GetCoupon { get; set; }
-            public string Bg4OpenCoupon { get; set; }
-            public string Bg4GoInvite { get; set; }
+            public ImgModel Bg01 { get; set; }
+            public ImgModel Bg02 { get; set; }
+            public ImgModel Bg03 { get; set; }
+            public ImgModel Bg04 { get; set; }
+            public ImgModel Bg4GoPersonal { get; set; }
+            public ImgModel Bg4GetCoupon { get; set; }
+            public ImgModel Bg4OpenCoupon { get; set; }
+            public ImgModel Bg4GoInvite { get; set; }
+        }
+
+        public class ImgModel
+        {
+            public string Src { get; set; }
+
+            public int Height { get; set; }
         }
     }
 }

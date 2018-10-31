@@ -4,11 +4,11 @@
 }
 
 <script id="config_couponPage_tmpl" type="text/x-jquery-tmpl">
-    <div style="height:${couponPage.bgHeight01}px">
-        <img src="${couponPage.bg01}" style="height:100%" />
+    <div style="height:${couponPage.bg01.height}px">
+        <img src="${couponPage.bg01.src}" style="height:100%" />
     </div>
-    <div style="position: relative;height:${couponPage.bgHeight02}px">
-        <img src="${couponPage.bg02}" style="height:100%" />
+    <div style="position: relative;height:${couponPage.bg02.height}px">
+        <img src="${couponPage.bg02.src}" style="height:100%" />
         <div style="position: absolute;width: 100%;height: 100%;top: 0;align-items: center;justify-content: center; display: flex;">
 
 
@@ -18,10 +18,10 @@
             </div>
             {{else status==2}}
             <div style="width:50%;float:left;text-align: right;">
-                <img class="btn-com operate btn-GoBuy" src="${couponPage.bg4GoBuy}" style="margin-right:25px;display: inline-block;cursor:pointer" />
+                <img class="btn-com operate btn-GoBuy" src="${couponPage.bg4GoBuy.src}" style="margin-right:25px;display: inline-block;cursor:pointer" />
             </div>
             <div style="width:50%;float:left;text-align:left;">
-                <img class="btn-com operate btn-GoInvite " src="${couponPage.bg4GoInvite}" style="margin-left:25px;display: inline-block;cursor:pointer" />
+                <img class="btn-com operate btn-GoInvite " src="${couponPage.bg4GoInvite.src}" style="margin-left:25px;display: inline-block;cursor:pointer" />
             </div>
             {{else status==3}}
             <div style="width:100%;top:0px;text-align: center;font-size:24px;color:#f53300;">
@@ -30,20 +30,20 @@
             {{/if}}
         </div>
     </div>
-    <div style="position: relative;height:${couponPage.bgHeight03}px">
-        <img src="${couponPage.bg03}" style="height:100%" />
+    <div style="position: relative;height:${couponPage.bg03.height}px">
+        <img src="${couponPage.bg03.src}" style="height:100%" />
         <a href="/Personal/Index">
-            <img class="btn-com operate btn-GoPersonal" src="${couponPage.bg4GoPersonal}" style="margin-right:15px;display: inline-block; bottom: 12%;right: 5%;position: absolute;" />
+            <img class="btn-com operate btn-GoPersonal" src="${couponPage.bg4GoPersonal.src}" style="margin-right:15px;display: inline-block; bottom: 12%;right: 5%;position: absolute;" />
         </a>
     </div>
 </script>
 
 <script id="config_payResultPage_tmpl" type="text/x-jquery-tmpl">
-    <div style="height:${payResultPage.bgHeight01}px">
-        <img src="${payResultPage.bg01}" style="height:100%"/>
+    <div style="height:${payResultPage.bg01.height}px">
+        <img src="${payResultPage.bg01.src}" style="height:100%" />
     </div>
-    <div style="position: relative;height:${payResultPage.bgHeight02}px">
-        <img src="${payResultPage.bg02}" style="height:100%" />
+    <div style="position: relative;height:${payResultPage.bg02.height}px">
+        <img src="${payResultPage.bg02.src}" style="height:100%" />
         <div style="position: absolute;width: 100%;height: 100%;top: 0;align-items: center;justify-content: center; display: flex;">
             {{if status==1 }}
             <div style="width:100%;top:0px;text-align: center;font-size:24px;color:#f53300;">
@@ -51,11 +51,11 @@
             </div>
             {{else status==2}}
             <div style="width:50%;float:left;text-align: right;">
-                <img class="btn-com operate btn-GetCoupon" src="${payResultPage.bg4GetCoupon}" style="margin-right:15px;display: none;cursor:pointer" />
-                <img class="btn-com operate btn-OpenCoupon" src="${payResultPage.bg4OpenCoupon}" style="margin-right:15px;display: inline-block;cursor:pointer" />
+                <img class="btn-com operate btn-GetCoupon" src="${payResultPage.bg4GetCoupon.src}" style="margin-right:15px;display: none;cursor:pointer" />
+                <img class="btn-com operate btn-OpenCoupon" src="${payResultPage.bg4OpenCoupon.src}" style="margin-right:15px;display: inline-block;cursor:pointer" />
             </div>
             <div style="width:50%;float:left;text-align:left;">
-                <img class="btn-com operate btn-GoInvite" src="${payResultPage.bg4GoInvite}" style="margin-left:15px;display: inline-block;cursor:pointer" />
+                <img class="btn-com operate btn-GoInvite" src="${payResultPage.bg4GoInvite.src}" style="margin-left:15px;display: inline-block;cursor:pointer" />
             </div>
             {{else status==3}}
             <div style="width:100%;top:0px;text-align: center;font-size:24px;color:#f53300;">
@@ -64,15 +64,15 @@
             {{/if}}
         </div>
     </div>
-    <div style="height:${payResultPage.bgHeight03}px">
-        <img src="${payResultPage.bg03}" style="height:100%" />
+    <div style="height:${payResultPage.bg03.height}px">
+        <img src="${payResultPage.bg03.src}" style="height:100%" />
     </div>
-    <div style="position: relative;height:${payResultPage.bgHeight04}px">
-        <img src="${payResultPage.bg04}" style="height:100%" />
+    <div style="position: relative;height:${payResultPage.bg04.height}px">
+        <img src="${payResultPage.bg04.src}" style="height:100%" />
         <div style="position: absolute;width: 100%;height: 100%;top: 0;align-items: center;justify-content: flex-end ;right: 5%;  display: flex;">
 
             <a href="/Personal/Index">
-                <img class="btn-com operate btn-GoPersonal" src="${payResultPage.bg4GoPersonal}" style="cursor:pointer" />
+                <img class="btn-com operate btn-GoPersonal" src="${payResultPage.bg4GoPersonal.src}" style="cursor:pointer" />
             </a>
 
         </div>
@@ -152,61 +152,12 @@
             initConfig();
 
             $(".btn-GoBuy").live("click", function (e) {
-
                 if ($.lumos.isUndefined(pConfig)) {
                     $.lumos.tips("信息配置加载未完成");
                     return;
                 }
-
-                if (pConfig.isGet) {
-                    openCoupon();
-                }
-                else {
-                    var _this = $(this);
-                    $(_this).attr("disabled", "disabled");
-                    $.lumos.postJson({
-                        url: "/Promote/UnifiedOrder",
-                        isShowLoading: true,
-                        data: { type: "1", refereeId: pConfig.refereeId, orderPms: { promoteId: pConfig.promoteId, promoteCouponId: pConfig.promoteCouponId } },
-                        success: function (d) {
-                            if (d.result == $.lumos.resultType.success) {
-                                var params = d.data;
-                                pConfig.orderSn = params.orderSn;
-                         
-                                if (pConfig.isNeedBuy) {
-                                    wx.chooseWXPay({
-                                        appId: params.appId,
-                                        timestamp: params.timestamp,
-                                        nonceStr: params.nonceStr,
-                                        package: params.package,
-                                        signType: params.signType,
-                                        paySign: params.paySign,
-                                        success: function (res) {
-                                            $.lumos.tips('您已支付成功');
-
-                                            $(couponPage).hide();
-                                            $(payResultPage).show();
-                                            $('.btn-GetCoupon').css("display", "inline-block");
-                                            $('.btn-OpenCoupon').hide();
-                                        },
-                                        cancel: function (res) {
-                                            $.lumos.tips('您已取消支付');
-                                        }
-                                    });
-                                }
-                                else {
-                                    getCoupon(function () {
-                                        $(couponPage).hide();
-                                        $(payResultPage).show();
-                                    });
-                                }
-                            } else {
-                                $.lumos.tips(d.message);
-                                $(_this).removeAttr("disabled");
-                            }
-                        }
-                    });
-                }
+                $('#popd4Info').data("funType", "unifiedOrder");
+                $('#popd4Info').show();
             });
 
             $(".btn-OpenCoupon").live("click", function (e) {
@@ -214,12 +165,7 @@
             });
 
             $(".btn-GetCoupon").live("click", function (e) {
-
-                getCoupon(function () {
-                    $('.btn-GetCoupon').hide();
-                    $('.btn-OpenCoupon').css("display", "inline-block");
-                });
-
+                getCoupon();
             });
 
             $('.btn-GoInvite').live("click", function (e) {
@@ -245,6 +191,8 @@
             });
 
             $('#popd4Info_btn_sure').live("click", function (e) {
+
+                var funTpye = $(this).data('funType');
 
                 if ($.lumos.isUndefined(pConfig)) {
                     $.lumos.tips("信息配置加载未完成");
@@ -278,20 +226,11 @@
                     success: function (d) {
                         if (d.result == $.lumos.resultType.success) {
                             $('#popd4Info').hide();
-
-                            if (pConfig.isNeedBuy) {
-                                getCoupon(function () {
-                                    $('.btn-GetCoupon').hide();
-                                    $('.btn-OpenCoupon').css("display", "inline-block");
-                                });
+                            switch (funTpye) {
+                                case "unifiedOrder":
+                                    unifiedOrder();
+                                    break;
                             }
-                            else {
-                                getCoupon(function () {
-                                    $(couponPage).hide();
-                                    $(payResultPage).show();
-                                });
-                            }
-
                         }
                         else {
                             $.lumos.tips(d.message);
@@ -319,34 +258,22 @@
                         $(couponPage).html($("#config_couponPage_tmpl").tmpl(pConfig));
                         $(payResultPage).html($("#config_payResultPage_tmpl").tmpl(pConfig));
 
-                        if (pConfig.isNeedBuy) {
-                            if (pConfig.isBuy) {
-                                $(couponPage).hide();
-                                $(payResultPage).show();
+                        if (pConfig.isBuy) {
+                            $(couponPage).hide();
+                            $(payResultPage).show();
 
-                                if (pConfig.isGet) {
-                                    $('.btn-GetCoupon').hide();
-                                    $('.btn-OpenCoupon').css("display", "inline-block");
-                                }
-                                else {
-                                    $('.btn-GetCoupon').css("display", "inline-block");
-                                    $('.btn-OpenCoupon').hide();
-                                }
+                            if (pConfig.isGet) {
+                                $('.btn-GetCoupon').hide();
+                                $('.btn-OpenCoupon').css("display", "inline-block");
                             }
                             else {
-                                $(couponPage).show();
-                                $(payResultPage).hide();
+                                $('.btn-GetCoupon').css("display", "inline-block");
+                                $('.btn-OpenCoupon').hide();
                             }
                         }
                         else {
-                            if (pConfig.isGet) {
-                                $(couponPage).hide();
-                                $(payResultPage).show();
-                            }
-                            else {
-                                $(couponPage).show();
-                                $(payResultPage).hide();
-                            }
+                            $(couponPage).show();
+                            $(payResultPage).hide();
                         }
 
 
@@ -435,7 +362,7 @@
             });
         }
 
-        function getCoupon(suc) {
+        function getCoupon() {
 
             if ($.lumos.isUndefined(pConfig)) {
                 $.lumos.tips("信息配置加载未完成");
@@ -464,12 +391,25 @@
                                 cardList: cardList,
                                 success: function (res) {
 
-                                    if (typeof suc != "undefined") {
-                                        suc();
-                                    }
-                                    pConfig.isGet = true;
-                                    addCouponNotifyResult(res.cardList);
-                                    //$.lumos.tips(JSON.stringify(res))
+                                    $.lumos.tips('成功领取卡券');
+
+                                    $('.btn-GetCoupon').hide();
+                                    $('.btn-OpenCoupon').css("display", "inline-block");
+
+                                    var l_Data = [];
+                                    l_Data.push({ name: "Model.PromoteId", value: pConfig.promoteId });
+                                    $.each(res.cardList, function (i, row) {
+                                        l_Data.push({ name: "Model.Coupons[" + i + "].WxCouponId", value: row.cardId });
+                                        l_Data.push({ name: "Model.Coupons[" + i + "].WxCouponEncryptCode", value: row.code });
+                                    });
+
+                                    $.lumos.postJson({
+                                        url: "/Promote/AddCouponNotifyResult",
+                                        data: l_Data,
+                                        success: function (d) {
+                                        }
+                                    });
+
                                 },
                                 cancel: function (res) {
                                     //$.lumos.tips(JSON.stringify(res))
@@ -478,36 +418,57 @@
                         }
                     }
                     else {
-                        if (d.code == "4001") {
-                            $('#popd4Info').show();
-                        }
-                        else {
-                            $.lumos.tips(d.messages);
-                        }
+                        $.lumos.tips(d.messages);
                     }
                 }
             });
         }
 
-        function addCouponNotifyResult(cards) {
-
-            var l_Data = [];
-            l_Data.push({ name: "Model.PromoteId", value: pConfig.promoteId });
-            $.each(cards, function (i, row) {
-                l_Data.push({ name: "Model.Coupons[" + i + "].WxCouponId", value: row.cardId });
-                l_Data.push({ name: "Model.Coupons[" + i + "].WxCouponEncryptCode", value: row.code });
-            });
+        function unifiedOrder() {
 
             $.lumos.postJson({
-                url: "/Promote/AddCouponNotifyResult",
-                data: l_Data,
+                url: "/Promote/UnifiedOrder",
+                isShowLoading: true,
+                data: { type: "1", refereeId: pConfig.refereeId, orderPms: { promoteId: pConfig.promoteId, promoteCouponId: pConfig.promoteCouponId } },
                 success: function (d) {
                     if (d.result == $.lumos.resultType.success) {
-                        //window.location.href = "/Promotec/PayResult?promoteId=" + pConfig.promoteId + "&orderSn=" + pConfig.orderSn + "&isSuccessed=True";
-                        $.lumos.tips('成功领取卡券');
+                        var params = d.data;
+                        pConfig.orderSn = params.orderSn;
+
+                        if (params.isBuy) {
+                            $(couponPage).hide();
+                            $(payResultPage).show();
+                            $('.btn-GetCoupon').css("display", "inline-block");
+                            $('.btn-OpenCoupon').hide();
+                        }
+                        else {
+                            wx.chooseWXPay({
+                                appId: params.appId,
+                                timestamp: params.timestamp,
+                                nonceStr: params.nonceStr,
+                                package: params.package,
+                                signType: params.signType,
+                                paySign: params.paySign,
+                                success: function (res) {
+                                    $.lumos.tips('您已支付成功');
+
+                                    $(couponPage).hide();
+                                    $(payResultPage).show();
+                                    $('.btn-GetCoupon').css("display", "inline-block");
+                                    $('.btn-OpenCoupon').hide();
+                                },
+                                cancel: function (res) {
+                                    $.lumos.tips('您已取消支付');
+                                }
+                            });
+                        }
+
+                    } else {
+                        $.lumos.tips(d.message);
                     }
                 }
             });
+
         }
 
         var mobileSelect1 = new MobileSelect({

@@ -119,10 +119,10 @@ namespace Lumos.BLL
             return new CustomJsonResult<JsApiConfigParams>(ResultType.Success, ResultCode.Success, "", parms);
         }
 
-        public CustomJsonResult GetJsApiPayParams(string prepayId, string orderId, string orderSn)
+        public CustomJsonResult GetJsApiPayParams(string prepayId, string orderId, string orderSn,bool isBuy)
         {
             CustomJsonResult result = new CustomJsonResult();
-            JsApiPayParams parms = new JsApiPayParams(wxConfig.AppId, wxConfig.Key, prepayId, orderId, orderSn);
+            JsApiPayParams parms = new JsApiPayParams(wxConfig.AppId, wxConfig.Key, prepayId, orderId, orderSn, isBuy);
 
             return new CustomJsonResult(ResultType.Success, ResultCode.Success, "", parms);
         }

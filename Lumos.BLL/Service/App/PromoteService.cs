@@ -32,27 +32,27 @@ namespace Lumos.BLL.Service.App
                 ret.NoStartDesc = "活动未开始";
 
 
-                ret.CouponPage.Title = "全优加周年庆福利，¥1248元优乐享卡，免费送！送！送！";
-                ret.CouponPage.Bg01 = "/Content/images/promote20181021/bg_01.jpg";
-                ret.CouponPage.Bg02 = "/Content/images/promote20181021/bg_02.jpg";
-                ret.CouponPage.Bg03 = "/Content/images/promote20181021/bg_03.jpg";
-                //ret.CouponPage.Bg04 = "/Content/images/promote20181021/bg_04.jpg";
-                ret.CouponPage.Bg4GoBuy = "/Content/images/promote20180910/btn_buy.png";
-                //ret.CouponPage.Bg4OpenCoupon = "/Content/images/promote20181021/btn_opencoupon.png";
-                //ret.CouponPage.Bg4GetCoupon = "/Content/images/promote20181021/btn_getcoupon.png";
-                ret.CouponPage.Bg4GoPersonal = "/Content/images/promote20181021/btn_personal.png";
-                ret.CouponPage.Bg4GoInvite = "/Content/images/promote20181021/btn_invite.png";
+                //ret.CouponPage.Title = "全优加周年庆福利，¥1248元优乐享卡，免费送！送！送！";
+                //ret.CouponPage.Bg01.Src = "/Content/images/promote20181021/bg_01.jpg";
+                //ret.CouponPage.Bg02 = "/Content/images/promote20181021/bg_02.jpg";
+                //ret.CouponPage.Bg03 = "/Content/images/promote20181021/bg_03.jpg";
+                ////ret.CouponPage.Bg04 = "/Content/images/promote20181021/bg_04.jpg";
+                //ret.CouponPage.Bg4GoBuy = "/Content/images/promote20180910/btn_buy.png";
+                ////ret.CouponPage.Bg4OpenCoupon = "/Content/images/promote20181021/btn_opencoupon.png";
+                ////ret.CouponPage.Bg4GetCoupon = "/Content/images/promote20181021/btn_getcoupon.png";
+                //ret.CouponPage.Bg4GoPersonal = "/Content/images/promote20181021/btn_personal.png";
+                //ret.CouponPage.Bg4GoInvite = "/Content/images/promote20181021/btn_invite.png";
 
-                ret.PayResultPage.Title = "恭喜您，抢购成功！";
-                ret.PayResultPage.Bg01 = "/Content/images/promote20181021/bg_suc_01.jpg";
-                ret.PayResultPage.Bg02 = "/Content/images/promote20181021/bg_suc_02.jpg";
-                ret.PayResultPage.Bg03 = "/Content/images/promote20181021/bg_suc_03.jpg";
-                ret.PayResultPage.Bg04 = "/Content/images/promote20181021/bg_suc_04.jpg";
-                //ret.PayResultPage.Bg4GoBuy = "/Content/images/promote20180910/btn_buy.png";
-                ret.PayResultPage.Bg4OpenCoupon = "/Content/images/promote20181021/btn_opencoupon.png";
-                ret.PayResultPage.Bg4GetCoupon = "/Content/images/promote20181021/btn_getcoupon.png";
-                ret.PayResultPage.Bg4GoPersonal = "/Content/images/promote20181021/btn_personal.png";
-                ret.PayResultPage.Bg4GoInvite = "/Content/images/promote20181021/btn_invite.png";
+                //ret.PayResultPage.Title = "恭喜您，抢购成功！";
+                //ret.PayResultPage.Bg01 = "/Content/images/promote20181021/bg_suc_01.jpg";
+                //ret.PayResultPage.Bg02 = "/Content/images/promote20181021/bg_suc_02.jpg";
+                //ret.PayResultPage.Bg03 = "/Content/images/promote20181021/bg_suc_03.jpg";
+                //ret.PayResultPage.Bg04 = "/Content/images/promote20181021/bg_suc_04.jpg";
+                ////ret.PayResultPage.Bg4GoBuy = "/Content/images/promote20180910/btn_buy.png";
+                //ret.PayResultPage.Bg4OpenCoupon = "/Content/images/promote20181021/btn_opencoupon.png";
+                //ret.PayResultPage.Bg4GetCoupon = "/Content/images/promote20181021/btn_getcoupon.png";
+                //ret.PayResultPage.Bg4GoPersonal = "/Content/images/promote20181021/btn_personal.png";
+                //ret.PayResultPage.Bg4GoInvite = "/Content/images/promote20181021/btn_invite.png";
                 #endregion
             }
             else if (rup.PromoteId == "80c71a0657924059b39895f9e406ef84")
@@ -67,29 +67,29 @@ namespace Lumos.BLL.Service.App
 
                 int sumHeight = 1920;
                 ret.CouponPage.Title = "超值推荐|¥2480元的早教大课包，双11秒杀仅需¥1111元";
-                ret.CouponPage.Bg01 = "/Content/images/promote20181029/bg_01.png";
-                ret.CouponPage.BgHeight01 = GetHeight(sumHeight, rup.ScreenHeight, 1020);
-                ret.CouponPage.Bg02 = "/Content/images/promote20181029/bg_02.jpg";
-                ret.CouponPage.BgHeight02 = GetHeight(sumHeight, rup.ScreenHeight, 200);
-                ret.CouponPage.Bg03 = "/Content/images/promote20181029/bg_03.png";
-                ret.CouponPage.BgHeight03 = GetHeight(sumHeight, rup.ScreenHeight, 700);
-                ret.CouponPage.Bg4GoBuy = "/Content/images/promote20181029/bg_btn_buy.png";
-                ret.CouponPage.Bg4GoPersonal = "/Content/images/promote20181029/bg_btn_personal.png";
-                ret.CouponPage.Bg4GoInvite = "/Content/images/promote20181029/bg_btn_invite.png";
+                ret.CouponPage.Bg01.Src = "/Content/images/promote20181029/bg_01.png";
+                ret.CouponPage.Bg01.Height = GetHeight(sumHeight, rup.ScreenHeight, 1020);
+                ret.CouponPage.Bg02.Src = "/Content/images/promote20181029/bg_02.jpg";
+                ret.CouponPage.Bg02.Height = GetHeight(sumHeight, rup.ScreenHeight, 200);
+                ret.CouponPage.Bg03.Src = "/Content/images/promote20181029/bg_03.png";
+                ret.CouponPage.Bg03.Height = GetHeight(sumHeight, rup.ScreenHeight, 700);
+                ret.CouponPage.Bg4GoBuy.Src = "/Content/images/promote20181029/bg_btn_buy.png";
+                ret.CouponPage.Bg4GoPersonal.Src = "/Content/images/promote20181029/bg_btn_personal.png";
+                ret.CouponPage.Bg4GoInvite.Src = "/Content/images/promote20181029/bg_btn_invite.png";
 
                 ret.PayResultPage.Title = "恭喜您，抢购成功！";
-                ret.PayResultPage.Bg01 = "/Content/images/promote20181029/bg_suc_01.jpg";
-                ret.PayResultPage.BgHeight01 = GetHeight(sumHeight, rup.ScreenHeight, 1177);
-                ret.PayResultPage.Bg02 = "/Content/images/promote20181029/bg_suc_02.jpg";
-                ret.PayResultPage.BgHeight02 = GetHeight(sumHeight, rup.ScreenHeight, 200);
-                ret.PayResultPage.Bg03 = "/Content/images/promote20181029/bg_suc_03.jpg";
-                ret.PayResultPage.BgHeight03 = GetHeight(sumHeight, rup.ScreenHeight, 260);
-                ret.PayResultPage.Bg04 = "/Content/images/promote20181029/bg_suc_04.jpg";
-                ret.PayResultPage.BgHeight04 = GetHeight(sumHeight, rup.ScreenHeight, 283);
-                ret.PayResultPage.Bg4OpenCoupon = "/Content/images/promote20181029/bg_suc_btn_opencoupon.png";
-                ret.PayResultPage.Bg4GetCoupon = "/Content/images/promote20181029/bg_suc_btn_getcoupon.png";
-                ret.PayResultPage.Bg4GoPersonal = "/Content/images/promote20181029/bg_suc_btn_personal.png";
-                ret.PayResultPage.Bg4GoInvite = "/Content/images/promote20181029/bg_suc_btn_invite.png";
+                ret.PayResultPage.Bg01.Src = "/Content/images/promote20181029/bg_suc_01.jpg";
+                ret.PayResultPage.Bg01.Height = GetHeight(sumHeight, rup.ScreenHeight, 1177);
+                ret.PayResultPage.Bg02.Src = "/Content/images/promote20181029/bg_suc_02.jpg";
+                ret.PayResultPage.Bg02.Height = GetHeight(sumHeight, rup.ScreenHeight, 200);
+                ret.PayResultPage.Bg03.Src = "/Content/images/promote20181029/bg_suc_03.jpg";
+                ret.PayResultPage.Bg03.Height = GetHeight(sumHeight, rup.ScreenHeight, 260);
+                ret.PayResultPage.Bg04.Src = "/Content/images/promote20181029/bg_suc_04.jpg";
+                ret.PayResultPage.Bg04.Height = GetHeight(sumHeight, rup.ScreenHeight, 283);
+                ret.PayResultPage.Bg4OpenCoupon.Src = "/Content/images/promote20181029/bg_suc_btn_opencoupon.png";
+                ret.PayResultPage.Bg4GetCoupon.Src = "/Content/images/promote20181029/bg_suc_btn_getcoupon.png";
+                ret.PayResultPage.Bg4GoPersonal.Src = "/Content/images/promote20181029/bg_suc_btn_personal.png";
+                ret.PayResultPage.Bg4GoInvite.Src = "/Content/images/promote20181029/bg_suc_btn_invite.png";
                 #endregion
             }
 

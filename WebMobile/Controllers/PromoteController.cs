@@ -105,7 +105,15 @@ namespace WebMobile.Controllers
             if (result.Result == ResultType.Success)
             {
                 LogUtil.Info("下单成功:" + Newtonsoft.Json.JsonConvert.SerializeObject(result));
-                return SdkFactory.Wx.Instance().GetJsApiPayParams(result.Data.WxPrepayId, result.Data.Id, result.Data.Sn);
+
+                bool isBuy = false;
+
+                if (result.Data.Status == Enumeration.OrderStatus.Payed || result.Data.Status == Enumeration.OrderStatus.Completed)
+                {
+                    isBuy = true;
+                }
+
+                return SdkFactory.Wx.Instance().GetJsApiPayParams(result.Data.WxPrepayId, result.Data.Id, result.Data.Sn, isBuy);
             }
             else
             {
