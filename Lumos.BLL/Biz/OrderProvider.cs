@@ -89,7 +89,7 @@ namespace Lumos.BLL
                     order.Sn = SnUtil.Build(Enumeration.BizSnType.Order, order.ClientId);
                     order.PromoteId = promote.Id;
                     order.RefereeId = pRefereeId;
-                    order.OriginalAmount = productSku.Price;
+                    order.OriginalAmount = productSku.SalePrice;
                     order.DiscountAmount = 0;
                     order.ChargeAmount = order.OriginalAmount - order.DiscountAmount;
                     order.SubmitTime = this.DateTime;
@@ -103,7 +103,7 @@ namespace Lumos.BLL
                     orderDetails.ClientId = pClientId;
                     orderDetails.OrderId = order.Id;
                     orderDetails.Quantity = 1;
-                    orderDetails.UnitPrice = productSku.Price;
+                    orderDetails.UnitPrice = productSku.SalePrice;
                     orderDetails.ProductSkuId = productSku.Id;
                     orderDetails.ProductSkuName = productSku.Name;
                     orderDetails.OriginalAmount = order.OriginalAmount;

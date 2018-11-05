@@ -84,6 +84,8 @@
     <Compile Include="Biz\WxUserProvider.cs" />
     <Compile Include="Factory..cs" />
     <Compile Include="IconUtil.cs" />
+    <Compile Include="RetOperateResult.cs" />
+    <Compile Include="RupOperateGetResult.cs" />
     <Compile Include="Sdk\SdkFactory.cs" />
     <Compile Include="Sdk\WxConfigByFanJu.cs" />
     <Compile Include="Sdk\WxConfigByQyj.cs" />
@@ -92,8 +94,11 @@
     <Compile Include="Sdk\WxUntil.cs" />
     <Compile Include="Service\App\AppServiceFactory.cs" />
     <Compile Include="Service\App\Models\PromoteConfigModel.cs" />
+    <Compile Include="Service\App\ProductSkuService.cs" />
     <Compile Include="Service\App\PromoteService.cs" />
+    <Compile Include="Service\App\RModels\RetProductSkuGetDetails.cs" />
     <Compile Include="Service\App\RModels\RetPromoteGetConfig.cs" />
+    <Compile Include="Service\App\RModels\RupProductSkuGetDetails.cs" />
     <Compile Include="Service\App\RModels\RupPromoteGetConfig.cs" />
     <Compile Include="SnUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,0 +1,56 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section scripts{
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+            initConfig();
+        });
+
+        function initConfig() {
+            var clientHeight = document.documentElement.clientHeight;
+            $.lumos.getJson({
+                url: "/Promotec/GetConfig?screenHeight=" + clientHeight,
+                isShowLoading: true,
+                success: function (d) {
+                    if (d.result == $.lumos.resultType.success) {
+                        pConfig = d.data;
+                        initShareInfo();
+                        document.title = pConfig.couponPage.title;//更改网页标题
+                        $(couponPage).html($("#config_couponPage_tmpl").tmpl(pConfig));
+                        $(payResultPage).html($("#config_payResultPage_tmpl").tmpl(pConfig));
+
+                        if (pConfig.isBuy) {
+                            $(couponPage).hide();
+                            $(payResultPage).show();
+
+                            if (pConfig.isGet) {
+                                $('.btn-GetCoupon').hide();
+                                $('.btn-OpenCoupon').css("display", "inline-block");
+                            }
+                            else {
+                                $('.btn-GetCoupon').css("display", "inline-block");
+                                $('.btn-OpenCoupon').hide();
+                            }
+                        }
+                        else {
+                            $(couponPage).show();
+                            $(payResultPage).hide();
+                        }
+
+
+                        $('#txt_ctName').val(pConfig.userInfo.ctName);
+                        $('#txt_ctPhone').val(pConfig.userInfo.ctPhone);
+                        //$('input[name=rd_ctIsStudent]:checked')
+                        //txt_ctSchool
+                    }
+                }
+            });
+        }
+
+    </script>
+}
