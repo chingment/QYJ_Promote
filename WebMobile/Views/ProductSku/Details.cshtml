@@ -3,50 +3,73 @@
 }
 
 
+<script id="operate_result_tmpl" type="text/x-jquery-tmpl">
+    <div class="it-result">
+        <div class="imgbox">
+            <img class="img" src="/Content/images/operate_result_ic_${result}.png" />
+        </div>
+    </div>
+    <div class="it-message">
+        <span class="txt">${message}</span>
+    </div>
+    <div class="it-btns">
+        {{each(j,btn) buttons}}
+        <div class="btnbox">
+            <a href="${btn.url}" class="btn" style="color:${btn.color}; border:1px solid ${btn.color} ;">${btn.name}</a>
+        </div>
+        {{/each}}
+    </div>
+    <div class="it-remarks">
+        <p class="txt">${remarks}</p>
+    </div>
+    <div class="its-a">
+        {{each(j,field) fields}}
+
+        <div class="it">
+
+            <div class="it-m">
+                <div class="it-ml w100">
+                    <text class='txt'>${field.name}</text>
+                </div>
+                <div class="it-mr flex1">
+                    <text class='txt'>${field.value}</text>
+                </div>
+            </div>
+        </div>
+
+        {{/each}}
+    </div>
+</script>
+
+
+<div id="operate_result" class="operate-result">
+
+</div>
+
+<div id="page_skusdetails" style="display:none">
+    sdadsds
+</div>
+
 @section scripts{
     <script type="text/javascript">
 
-
         $(document).ready(function () {
-            initConfig();
+            loadData();
         });
 
-        function initConfig() {
-            var clientHeight = document.documentElement.clientHeight;
+        function loadData() {
+
             $.lumos.getJson({
-                url: "/Promotec/GetConfig?screenHeight=" + clientHeight,
+                url: "/ProductSku/GetDetails",
                 isShowLoading: true,
                 success: function (d) {
                     if (d.result == $.lumos.resultType.success) {
-                        pConfig = d.data;
-                        initShareInfo();
-                        document.title = pConfig.couponPage.title;//更改网页标题
-                        $(couponPage).html($("#config_couponPage_tmpl").tmpl(pConfig));
-                        $(payResultPage).html($("#config_payResultPage_tmpl").tmpl(pConfig));
-
-                        if (pConfig.isBuy) {
-                            $(couponPage).hide();
-                            $(payResultPage).show();
-
-                            if (pConfig.isGet) {
-                                $('.btn-GetCoupon').hide();
-                                $('.btn-OpenCoupon').css("display", "inline-block");
-                            }
-                            else {
-                                $('.btn-GetCoupon').css("display", "inline-block");
-                                $('.btn-OpenCoupon').hide();
-                            }
-                        }
-                        else {
-                            $(couponPage).show();
-                            $(payResultPage).hide();
-                        }
-
-
-                        $('#txt_ctName').val(pConfig.userInfo.ctName);
-                        $('#txt_ctPhone').val(pConfig.userInfo.ctPhone);
-                        //$('input[name=rd_ctIsStudent]:checked')
-                        //txt_ctSchool
+                        $('#page_skusdetails').show();
+                        alert(JSON.stringify(d))
+                    }
+                    else {
+                        $('#operate_result').html($("#operate_result_tmpl").tmpl(d.data));
+                        $('#page_skusdetails').hide();
                     }
                 }
             });

@@ -17,6 +17,8 @@ namespace Lumos.DAL
     {
         public IDbSet<Promote> Promote { get; set; }
         public IDbSet<PromoteCoupon> PromoteCoupon { get; set; }
+
+        public IDbSet<PromoteSku> PromoteSku { get; set; }
         public IDbSet<PromoteUser> PromoteUser { get; set; }
         public IDbSet<PromoteUserRelation> PromoteUserRelation { get; set; }
         public IDbSet<ProductSku> ProductSku { get; set; }

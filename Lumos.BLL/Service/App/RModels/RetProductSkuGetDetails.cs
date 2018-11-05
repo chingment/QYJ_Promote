@@ -11,8 +11,8 @@ namespace Lumos.BLL.Service.App
         public string Id { get; set; }
         public string ImgUrl { get; set; }
         public string Name { get; set; }
-        public string SalePrice { get; set; }
-        public string ShowPrice { get; set; }
+        public decimal SalePrice { get; set; }
+        public decimal ShowPrice { get; set; }
         public bool IsHiddenShowPrice { get; set; }
         public string BriefInfo { get; set; }
         public List<string> BriefTag { get; set; }

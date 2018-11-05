@@ -70,6 +70,7 @@
     <Compile Include="Biz\PromoteCoupon.cs" />
     <Compile Include="Biz\PromoteProfitSet.cs" />
     <Compile Include="Biz\ClientShareLog.cs" />
+    <Compile Include="Biz\PromoteSku.cs" />
     <Compile Include="Biz\PromoteUser.cs" />
     <Compile Include="Biz\ClientCoupon.cs" />
     <Compile Include="Biz\PromoteUserRelation.cs" />

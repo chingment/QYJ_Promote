@@ -8,19 +8,25 @@ namespace Lumos.BLL.Service.App
 {
     public class ProductSkuService : BaseProvider
     {
+        private RetOperateResult GetNoExistsResult()
+        {
+            var ret = new RetOperateResult();
+            ret.Result = RetOperateResult.ResultType.Failure;
+            ret.Remarks = "";
+            ret.Message = "商品不存在";
+            ret.IsComplete = true;
+            ret.Buttons.Add(new RetOperateResult.Button() { Name = "返回个人中心", Color = "red", Url = "/Personal/Index" });
+
+            return ret;
+        }
+
         public CustomJsonResult GetDetails(string pOperater, string pClientId, RupProductSkuGetDetails rup)
         {
             var productSku = CurrentDb.ProductSku.Where(m => m.Id == rup.SkuId).FirstOrDefault();
 
             if (productSku == null)
             {
-                var ret = new RetOperateResult();
-                ret.Result = RetOperateResult.ResultType.Failure;
-                ret.Remarks = "";
-                ret.Message = "商品不存在";
-                ret.IsComplete = true;
-                ret.Buttons.Add(new RetOperateResult.Button() { Name = "返回个人中心", Color = "red", Url = "/Personal/Index" });
-                return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, "商品不存在", ret);
+                return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, "商品不存在", GetNoExistsResult());
             }
             else
             {
@@ -33,14 +39,33 @@ namespace Lumos.BLL.Service.App
                 ret.SaleQuantity = productSku.SaleQuantity;
                 ret.SellQuantity = productSku.SellQuantity;
                 ret.StockQuantity = productSku.StockQuantity;
+                ret.SalePrice = productSku.SalePrice;
+                ret.ShowPrice = productSku.ShowPrice;
 
-                if (string.IsNullOrEmpty(rup.PromoteId))
+                if (!string.IsNullOrEmpty(rup.PromoteId))
                 {
 
 
+                    var clientCoupon = CurrentDb.ClientCoupon.Where(m => m.PromoteId == rup.PromoteId && m.ClientId == pClientId).FirstOrDefault();
+                    if (clientCoupon != null)
+                    {
+                        if (clientCoupon.IsBuy)
+                        {
+                            var promoteSku = CurrentDb.PromoteSku.Where(m => m.PromoteId == rup.PromoteId && m.SkuId == rup.SkuId).FirstOrDefault();
+                            if (promoteSku != null)
+                            {
+                                ret.SalePrice = promoteSku.SkuSalePrice;
+                            }
+                        }
+                    }
                 }
 
-                return new CustomJsonResult(ResultType.Success, ResultCode.Success, "商品不存在", ret);
+                if (ret.SalePrice >= ret.SalePrice)
+                {
+                    ret.IsHiddenShowPrice = true;
+                }
+
+                return new CustomJsonResult(ResultType.Success, ResultCode.Success, "获取成功", ret);
             }
         }
     }
