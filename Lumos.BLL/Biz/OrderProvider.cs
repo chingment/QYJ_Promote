@@ -103,7 +103,7 @@ namespace Lumos.BLL
                     orderDetails.ClientId = pClientId;
                     orderDetails.OrderId = order.Id;
                     orderDetails.Quantity = 1;
-                    orderDetails.UnitPrice = productSku.SalePrice;
+                    orderDetails.SalePrice = productSku.SalePrice;
                     orderDetails.ProductSkuId = productSku.Id;
                     orderDetails.ProductSkuName = productSku.Name;
                     orderDetails.OriginalAmount = order.OriginalAmount;
@@ -131,8 +131,6 @@ namespace Lumos.BLL
                         {
                             chargeAmount = 0.01m;
                         }
-
-
 
 
                         string goods_tag = "";

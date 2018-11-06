@@ -17,8 +17,11 @@ namespace Lumos.Entity
         public string Id { get; set; }
         public string ClientId { get; set; }
         public string OrderId { get; set; }
+
+        public string PromoteId { get; set; }
+
         public int Quantity { get; set; }
-        public decimal UnitPrice { get; set; }
+        public decimal SalePrice { get; set; }
         public string ProductSkuId { get; set; }
         public string ProductSkuName { get; set; }
         public decimal OriginalAmount { get; set; }

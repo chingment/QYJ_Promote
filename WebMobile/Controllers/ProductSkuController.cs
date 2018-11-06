@@ -1,5 +1,7 @@
 ﻿using Lumos;
+using Lumos.BLL;
 using Lumos.BLL.Service.App;
+using Lumos.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,16 +19,38 @@ namespace WebMobile.Controllers
 
 
         [HttpGet]
-        public CustomJsonResult GetDetails()
+        public CustomJsonResult GetDetails(RupProductSkuGetDetails rup)
         {
-            var uri = new Uri(Request.UrlReferrer.AbsoluteUri);
+            //var uri = new Uri(Request.UrlReferrer.AbsoluteUri);
 
-            var rup = new RupProductSkuGetDetails();
-            string promoteId = HttpUtility.ParseQueryString(uri.Query).Get("promoteId");
-            string skuId = HttpUtility.ParseQueryString(uri.Query).Get("skuId");
-            rup.PromoteId = promoteId;
-            rup.SkuId = skuId;
+            //var rup = new RupProductSkuGetDetails();
+            //string promoteId = HttpUtility.ParseQueryString(uri.Query).Get("promoteId");
+            //string skuId = HttpUtility.ParseQueryString(uri.Query).Get("skuId");
+            //rup.PromoteId = promoteId;
+            //rup.SkuId = skuId;
             return AppServiceFactory.ProductSku.GetDetails(this.CurrentUserId, this.CurrentUserId, rup);
+        }
+
+
+        [HttpPost]
+        public CustomJsonResult UnifiedOrder(RopOrderUnifiedOrder rop)
+        {
+            LogUtil.Info("进入UnifiedOrder");
+            LogUtil.Info("用户.CurrentUserId:" + this.CurrentUserId);
+
+
+            var result = AppServiceFactory.Order.UnifiedOrder(this.CurrentUserId, this.CurrentUserId, rop);
+
+            if (result.Result == ResultType.Success)
+            {
+                LogUtil.Info("下单成功:" + Newtonsoft.Json.JsonConvert.SerializeObject(result));
+                return SdkFactory.Wx.Instance().GetJsApiPayParams(result.Data.WxPrepayId, result.Data.OrderId, result.Data.OrderSn, result.Data.IsBuy);
+            }
+            else
+            {
+                LogUtil.Info("下单失败");
+                return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, result.Message);
+            }
         }
     }
 }

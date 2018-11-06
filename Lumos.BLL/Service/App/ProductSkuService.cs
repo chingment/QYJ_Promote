@@ -42,6 +42,10 @@ namespace Lumos.BLL.Service.App
                 ret.SalePrice = productSku.SalePrice;
                 ret.ShowPrice = productSku.ShowPrice;
 
+
+                ret.BriefTags.Add("限时秒杀");
+                ret.BriefTags.Add("双11活动");
+
                 if (!string.IsNullOrEmpty(rup.PromoteId))
                 {
                     var clientCoupon = CurrentDb.ClientCoupon.Where(m => m.PromoteId == rup.PromoteId && m.ClientId == pClientId).FirstOrDefault();
@@ -55,11 +59,14 @@ namespace Lumos.BLL.Service.App
                                 if (promoteSku.BuyStartTime <= this.DateTime && promoteSku.BuyEndTime >= this.DateTime)
                                 {
                                     ret.SalePrice = promoteSku.SkuSalePrice;
+                                    ret.BriefTags.Add("专享特惠");
                                 }
                             }
                         }
                     }
                 }
+
+
 
                 if (ret.SalePrice >= ret.ShowPrice)
                 {

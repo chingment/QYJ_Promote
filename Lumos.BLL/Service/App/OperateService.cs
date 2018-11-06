@@ -41,7 +41,6 @@ namespace Lumos.BLL.Service.App
                 return new CustomJsonResult(ResultType.Success, ResultCode.Success, "查询支付结果失败：找不到该订单", ret);
             }
 
-
             switch (order.Status)
             {
                 case Enumeration.OrderStatus.Submitted:

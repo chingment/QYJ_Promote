@@ -37,7 +37,7 @@
             margin-left: .6rem;
         }
 
-        .summary .it-briefTag {
+        .summary .it-briefTags {
             display: flex;
         }
 
@@ -45,6 +45,7 @@
             border-radius: 5px;
             padding: .3rem .8rem;
             font-size: .8rem;
+            margin-right: .6rem;
         }
 
         .details {
@@ -105,9 +106,15 @@
                     <span class="salePrice ft-main">¥${salePrice}</span>
                     <span class="showPrice ft-gray1">¥${showPrice}</span>
                 </div>
-                <div class="it-briefTag">
-                    <span class="briefTag ft-white bg-main">限时秒杀</span>
+
+                <div class="it-briefTags">
+
+                    {{each(j,tag) briefTags}}
+                    <span class="briefTag ft-white bg-main">${tag}</span>
+                    {{/each}}
+
                 </div>
+
             </div>
         </div>
         <div class="line-space"></div>
@@ -123,13 +130,16 @@
         </div>
     </div>
     <div class="ct-nav">
-        <div class="it-buy" id="btn_buy"><span class="txt">立即购买</span></div>
+        <div class="it-buy" id="btn_Buy"><span class="txt">立即购买</span></div>
     </div>
 </script>
 
 @section scripts{
     <script src="~/Scripts/swiper.min.js"></script>
     <script type="text/javascript">
+
+        var promoteId = $.lumos.getUrlParamValue("promoteId");
+        var skuId = $.lumos.getUrlParamValue("skuId");
 
         $(document).ready(function () {
             loadData();
@@ -139,12 +149,17 @@
                 pagination: '.swiper-pagination',
                 paginationClickable: true
             });
+
+            $('#btn_Buy').live("click", function (e) {
+                unifiedOrder();
+            });
         });
 
         function loadData() {
 
             $.lumos.getJson({
                 url: "/ProductSku/GetDetails",
+                urlParams: { promoteId: promoteId, skuId: skuId },
                 isShowLoading: true,
                 success: function (d) {
                     if (d.result == $.lumos.resultType.success) {
@@ -158,5 +173,39 @@
             });
         }
 
+        function unifiedOrder() {
+
+            $.lumos.postJson({
+                url: "/ProductSku/UnifiedOrder",
+                isShowLoading: true,
+                data: { promoteId: promoteId, skuId: skuId },
+                success: function (d) {
+                    if (d.result == $.lumos.resultType.success) {
+                        var params = d.data;
+
+                        wx.chooseWXPay({
+                            appId: params.appId,
+                            timestamp: params.timestamp,
+                            nonceStr: params.nonceStr,
+                            package: params.package,
+                            signType: params.signType,
+                            paySign: params.paySign,
+                            success: function (res) {
+                                $.lumos.tips('您已支付成功');
+                                window.location.href = "/Operate/Result?id=" + params.orderId + "&type=1";
+                            },
+                            cancel: function (res) {
+                                $.lumos.tips('您已取消支付');
+                            }
+                        });
+
+
+                    } else {
+                        $.lumos.tips(d.message);
+                    }
+                }
+            });
+
+        }
     </script>
 }

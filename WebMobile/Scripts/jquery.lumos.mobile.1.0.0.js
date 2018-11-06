@@ -586,11 +586,34 @@
             }, opts || {});
 
             var _url = opts.url;
+            var _urlParams = opts.urlParams;
 
             if (_url == '') {
 
                 return;
             }
+
+            var paramStr = "";
+            if (_url.indexOf('?') > 0) {
+                paramStr = _url.substring(_url.indexOf('?') + 1, _url.length);
+            }
+
+            if (_urlParams != null) {
+
+                if (paramStr == "") {
+                    _url += '?';
+                }
+                else {
+                    _url += '&';
+                }
+
+                for (var p in _urlParams) {
+                    _url += p + '=' + encodeURIComponent(_urlParams[p]) + '&';
+                }
+
+                _url = _url.substring(0, _url.length - 1)
+            }
+
             var _async = opts.async;
             var _timeout = opts.timeout;
             var _success = opts.success;
@@ -608,7 +631,7 @@
             var handling;
 
             $.ajax({
-                type: "Get",
+                type: "GET",
                 dataType: "json",
                 async: _async,
                 headers: headers,

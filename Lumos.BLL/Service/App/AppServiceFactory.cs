@@ -40,5 +40,13 @@ namespace Lumos.BLL.Service.App
             }
         }
 
+        public static OrderService Order
+        {
+            get
+            {
+                return new OrderService();
+            }
+        }
+
     }
 }
