@@ -60,36 +60,38 @@ namespace Lumos.BLL.Service.App
                     ret.Remarks = "";
                     ret.Message = "支付成功";
                     ret.IsComplete = true;
-                    ret.Buttons.Add(new RetOperateResult.Button() { Name = "回到首页", Color = "red", Url = "" });
-                    ret.Buttons.Add(new RetOperateResult.Button() { Name = "查看详情", Color = "green", Url = "" });
+                    ret.Buttons.Add(new RetOperateResult.Button() { Name = "回到首页", Color = "red", Url = "/Personal/Index" });
+                    ret.Buttons.Add(new RetOperateResult.Button() { Name = "查看详情", Color = "green", Url = string.Format("/Order/Details?id={0}", order.Id) });
                     ret.Fields.Add(new RetOperateResult.Field() { Name = "订单号", Value = order.Sn });
+                    ret.Fields.Add(new RetOperateResult.Field() { Name = "支付金额", Value = order.ChargeAmount.ToF2Price() });
                     ret.Fields.Add(new RetOperateResult.Field() { Name = "提交时间", Value = order.SubmitTime.ToUnifiedFormatDateTime() });
                     ret.Fields.Add(new RetOperateResult.Field() { Name = "支付时间", Value = order.PayTime.ToUnifiedFormatDateTime() });
-                    result = new CustomJsonResult(ResultType.Success, ResultCode.Success, "操作成功", ret);
+                    result = new CustomJsonResult(ResultType.Success, ResultCode.Success, "订单已成功", ret);
                     break;
                 case Enumeration.OrderStatus.Completed:
                     ret.Result = RetOperateResult.ResultType.Success;
                     ret.Message = "该订单已经完成";
                     ret.IsComplete = true;
-                    ret.Buttons.Add(new RetOperateResult.Button() { Name = "回到首页", Color = "red", Url = "" });
-                    ret.Buttons.Add(new RetOperateResult.Button() { Name = "查看详情", Color = "green", Url = "" });
+                    ret.Buttons.Add(new RetOperateResult.Button() { Name = "回到首页", Color = "red", Url = "/Personal/Index" });
+                    ret.Buttons.Add(new RetOperateResult.Button() { Name = "查看详情", Color = "green", Url = string.Format("/Order/Details?id={0}", order.Id) });
                     ret.Fields.Add(new RetOperateResult.Field() { Name = "订单号", Value = order.Sn });
+                    ret.Fields.Add(new RetOperateResult.Field() { Name = "支付金额", Value = order.ChargeAmount.ToF2Price() });
                     ret.Fields.Add(new RetOperateResult.Field() { Name = "提交时间", Value = order.SubmitTime.ToUnifiedFormatDateTime() });
                     ret.Fields.Add(new RetOperateResult.Field() { Name = "支付时间", Value = order.PayTime.ToUnifiedFormatDateTime() });
                     ret.Fields.Add(new RetOperateResult.Field() { Name = "完成时间", Value = order.CompletedTime.ToUnifiedFormatDateTime() });
-                    result = new CustomJsonResult(ResultType.Success, ResultCode.Success, "订单已经完成", ret);
+                    result = new CustomJsonResult(ResultType.Success, ResultCode.Success, "订单已完成", ret);
                     break;
                 case Enumeration.OrderStatus.Cancled:
                     ret.Result = RetOperateResult.ResultType.Success;
                     ret.Message = "该订单已经取消";
                     ret.IsComplete = true;
                     ret.Buttons.Add(new RetOperateResult.Button() { Name = "回到首页", Color = "red", Url = "" });
-                    ret.Buttons.Add(new RetOperateResult.Button() { Name = "查看详情", Color = "green", Url = "" });
+                    ret.Buttons.Add(new RetOperateResult.Button() { Name = "查看详情", Color = "green", Url = string.Format("/Order/Details?id={0}", order.Id) });
                     ret.Fields.Add(new RetOperateResult.Field() { Name = "订单号", Value = order.Sn });
                     ret.Fields.Add(new RetOperateResult.Field() { Name = "提交时间", Value = order.SubmitTime.ToUnifiedFormatDateTime() });
                     ret.Fields.Add(new RetOperateResult.Field() { Name = "取消时间", Value = order.CancledTime.ToUnifiedFormatDateTime() });
                     ret.Fields.Add(new RetOperateResult.Field() { Name = "取消原因", Value = order.CancelReason });
-                    result = new CustomJsonResult(ResultType.Success, ResultCode.Success, "订单已经取消", ret);
+                    result = new CustomJsonResult(ResultType.Success, ResultCode.Success, "订单已取消", ret);
                     break;
                 default:
                     break;
@@ -143,7 +145,9 @@ namespace Lumos.BLL.Service.App
 
             ret.Buttons.Add(new RetOperateResult.Button() { Name = "继续提现", Color = "red", Url = "/Withdraw/Apply" });
             ret.Buttons.Add(new RetOperateResult.Button() { Name = "回到首页", Color = "green", Url = "/Personal/Index" });
+
             ret.Fields.Add(new RetOperateResult.Field() { Name = "流水号", Value = withdraw.Sn });
+            ret.Fields.Add(new RetOperateResult.Field() { Name = "提现金额", Value = withdraw.Amount.ToF2Price() });
             ret.Fields.Add(new RetOperateResult.Field() { Name = "提交时间", Value = withdraw.ApplyTime.ToUnifiedFormatDateTime() });
 
             result = new CustomJsonResult(ResultType.Success, ResultCode.Success, "操作成功", ret);

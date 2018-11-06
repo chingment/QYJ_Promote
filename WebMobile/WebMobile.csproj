@@ -198,6 +198,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\CouponController.cs" />
     <Compile Include="Controllers\OperateController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\PersonalController.cs" />
     <Compile Include="Controllers\ProductSkuController.cs" />
     <Compile Include="Controllers\PromotecController.cs" />
@@ -532,6 +533,7 @@
     <Content Include="Views\Promotec\PayResult.cshtml" />
     <Content Include="Views\Promotec\CouponGet.cshtml" />
     <Content Include="Views\ProductSku\Details.cshtml" />
+    <Content Include="Views\Order\Details.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>

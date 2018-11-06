@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,8 @@ namespace Lumos.BLL.Service.App
         public bool IsHiddenShowPrice { get; set; }
         public string BriefInfo { get; set; }
         public List<string> BriefTags { get; set; }
+
+        [JsonConverter(typeof(JsonObjectConvert))]
         public string DisplayImgUrls { get; set; }
         public string DetailsDes { get; set; }
         public int SaleQuantity { get; set; }

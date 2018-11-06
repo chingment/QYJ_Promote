@@ -97,6 +97,7 @@
     <Compile Include="Service\App\OperateService.cs" />
     <Compile Include="Service\App\ProductSkuService.cs" />
     <Compile Include="Service\App\PromoteService.cs" />
+    <Compile Include="Service\App\RModels\RetOrderGetDetails.cs" />
     <Compile Include="Service\App\RModels\RetOrderUnifiedOrder.cs" />
     <Compile Include="Service\App\RModels\RetProductSkuGetDetails.cs" />
     <Compile Include="Service\App\RModels\RetPromoteGetConfig.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Service\App\RModels\RopWithdrawApply.cs" />
     <Compile Include="Service\App\RModels\RupProductSkuGetDetails.cs" />
     <Compile Include="Service\App\RModels\RupPromoteGetConfig.cs" />
+    <Compile Include="Service\App\RModels\RupOrderGetDetails.cs" />
     <Compile Include="Service\App\WithdrawService.cs" />
     <Compile Include="Service\App\OrderService.cs" />
     <Compile Include="SnUtil.cs" />

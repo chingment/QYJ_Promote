@@ -84,12 +84,20 @@
     </style>
 }
 
+
+
+
 <script id="page_tmpl" type="text/x-jquery-tmpl">
     <div class="ct-main">
         <div class="swiper">
             <div class="swiper-container">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide"> <img src="/Images/Skus/1.png" /></div>
+
+                    {{each(j,item) displayImgUrls}}
+                    <div class="swiper-slide"> <img src="${item.imgUrl}"  /></div>
+                    {{/each}}
+
+
                 </div>
                 <div class="swiper-pagination"></div>
             </div>
@@ -124,7 +132,7 @@
             </div>
             <div class="its-ct">
                 <div class="it it-detailsDes">
-                    <img src="/Images/Skus/2.jpg" />
+                    {{html detailsDes}}
                 </div>
             </div>
         </div>

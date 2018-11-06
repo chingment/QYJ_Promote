@@ -35,7 +35,7 @@ namespace Lumos.BLL.Service.App
                 ret.Id = productSku.Id;
                 ret.Name = productSku.Name;
                 ret.DisplayImgUrls = productSku.DisplayImgUrls;
-                ret.DetailsDes = productSku.DisplayImgUrls;
+                ret.DetailsDes = productSku.DetailsDes;
                 ret.SaleQuantity = productSku.SaleQuantity;
                 ret.SellQuantity = productSku.SellQuantity;
                 ret.StockQuantity = productSku.StockQuantity;

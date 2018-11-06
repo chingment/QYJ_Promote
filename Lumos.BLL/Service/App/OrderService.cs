@@ -164,5 +164,14 @@ namespace Lumos.BLL.Service.App
 
             return result;
         }
+
+
+        public CustomJsonResult GetDetails(string pOperater, string pClientId, string orderId)
+        {
+            var result = new CustomJsonResult();
+
+
+            return result;
+        }
     }
 }

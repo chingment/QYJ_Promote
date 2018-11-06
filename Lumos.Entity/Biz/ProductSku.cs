@@ -18,6 +18,7 @@ namespace Lumos.Entity
         public decimal SalePrice { get; set; }
         public decimal ShowPrice { get; set; }
         public string DisplayImgUrls { get; set; }
+        public string DetailsDes { get; set; }
         public int SaleQuantity { get; set; }
         public int SellQuantity { get; set; }
         public int StockQuantity { get; set; }
