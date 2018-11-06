@@ -130,7 +130,7 @@
         </div>
     </div>
     <div class="ct-nav">
-        <div class="it-buy" id="btn_Buy"><span class="txt">立即购买</span></div>
+        <div class="it-buy operate" id="btn_Buy"><span class="txt">立即购买</span></div>
     </div>
 </script>
 
@@ -164,7 +164,9 @@
                 success: function (d) {
                     if (d.result == $.lumos.resultType.success) {
                         //alert(JSON.stringify(d))
-                        $('#page').html($("#page_tmpl").tmpl(d.data));
+                        var data = d.data;
+                        document.title = data.name;;//更改网页标题
+                        $('#page').html($("#page_tmpl").tmpl(data));
                     }
                     else {
                         $('#operate_result').html($("#operate_result_tmpl").tmpl(d.data));
