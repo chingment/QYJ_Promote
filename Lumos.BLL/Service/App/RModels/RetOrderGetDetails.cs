@@ -12,16 +12,19 @@ namespace Lumos.BLL.Service.App
         public RetOrderGetDetails()
         {
             this.Skus = new List<Sku>();
+            this.Fields = new List<Field>();
         }
 
         public string OrderSn { get; set; }
         public string SubmitTime { get; set; }
         public string PayTime { get; set; }
         public string CompletedTime { get; set; }
+        public string CancledTime { get; set; }
+        public string CancelReason { get; set; }
         public Enumeration.OrderStatus Status { get; set; }
         public string StatusName { get; set; }
+        public List<Field> Fields { get; set; }
         public List<Sku> Skus { get; set; }
-        public Student Stu { get; set; }
 
         public class Sku
         {
@@ -29,7 +32,7 @@ namespace Lumos.BLL.Service.App
 
             public string Name { get; set; }
 
-            public string Quantity { get; set; }
+            public int Quantity { get; set; }
 
             public string ImgUrl { get; set; }
 
@@ -38,12 +41,17 @@ namespace Lumos.BLL.Service.App
             public decimal ChargeAmount { get; set; }
         }
 
-        public class Student
+        public class Field
         {
-            public string CtName { get; set; }
-            public string CtPhone { get; set; }
-            public string CtIsStudent { get; set; }
-            public string CtSchool { get; set; }
+            public string Name
+            {
+                get; set;
+            }
+
+            public string Value
+            {
+                get; set;
+            }
         }
     }
 }

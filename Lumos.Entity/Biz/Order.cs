@@ -37,5 +37,10 @@ namespace Lumos.Entity
         public DateTime? BuyProfitSettledTime { get; set; }
 
         public bool IsInVisiable { get; set; }
+
+        public string CtName { get; set; }
+        public string CtPhone { get; set; }
+        public string CtIsStudent { get; set; }
+        public string CtSchool { get; set; }
     }
 }
