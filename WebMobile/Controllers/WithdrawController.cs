@@ -1,5 +1,6 @@
 ﻿using Lumos;
 using Lumos.BLL;
+using Lumos.BLL.Service.App;
 using Lumos.Common;
 using Lumos.Entity;
 using System;
@@ -27,11 +28,10 @@ namespace WebMobile.Controllers
         }
 
         [HttpPost]
-        public CustomJsonResult Apply(WithdrawApplyPms model)
+        public CustomJsonResult Apply(RopWithdrawApply rop)
         {
-            model.ClientId = this.CurrentUserId;
-            model.ApplyMethod = "wechat";
-            return BizFactory.Withdraw.Apply(this.CurrentUserId, model);
+            rop.ApplyMethod = "wechat";
+            return AppServiceFactory.Withdraw.Apply(this.CurrentUserId, this.CurrentUserId, rop);
         }
 
         [HttpPost]

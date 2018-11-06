@@ -24,5 +24,21 @@ namespace Lumos.BLL.Service.App
             }
         }
 
+        public static WithdrawService Withdraw
+        {
+            get
+            {
+                return new WithdrawService();
+            }
+        }
+
+        public static OperateService Operate
+        {
+            get
+            {
+                return new OperateService();
+            }
+        }
+
     }
 }

@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lumos.Entity
+namespace Lumos.BLL.Service.App
 {
-    public class WithdrawApplyPms
+    public class RopWithdrawApply
     {
-        public string ClientId { get; set; }
         public decimal Amount { get; set; }
         public string AcName { get; set; }
         public string AcIdNumber { get; set; }

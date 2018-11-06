@@ -18,6 +18,8 @@ namespace Lumos.Entity
         public string Sn { get; set; }
         public DateTime? SubmitTime { get; set; }
         public DateTime? PayTime { get; set; }
+        public DateTime? CompletedTime { get; set; }
+        public DateTime? CancledTime { get; set; }
         public decimal OriginalAmount { get; set; }
         public decimal DiscountAmount { get; set; }
         public decimal ChargeAmount { get; set; }

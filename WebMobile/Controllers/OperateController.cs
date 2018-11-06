@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Lumos;
+using Lumos.BLL;
+using Lumos.BLL.Service.App;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +14,11 @@ namespace WebMobile.Controllers
         public ActionResult Result()
         {
             return View();
+        }
+
+        public CustomJsonResult GetResult(RupOperateGetResult rup)
+        {
+            return AppServiceFactory.Operate.GetResult(this.CurrentUserId, this.CurrentUserId, rup);
         }
     }
 }

@@ -11,7 +11,9 @@ namespace Lumos.BLL
         [Remark("未知")]
         Unknow = 0,
         [Remark("支付")]
-        Pay = 1
+        Pay = 1,
+        [Remark("提现")]
+        Withdraw = 2
     }
 
     public class RupOperateGetResult
