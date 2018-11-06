@@ -44,8 +44,6 @@ namespace Lumos.BLL.Service.App
 
                 if (!string.IsNullOrEmpty(rup.PromoteId))
                 {
-
-
                     var clientCoupon = CurrentDb.ClientCoupon.Where(m => m.PromoteId == rup.PromoteId && m.ClientId == pClientId).FirstOrDefault();
                     if (clientCoupon != null)
                     {
@@ -54,7 +52,10 @@ namespace Lumos.BLL.Service.App
                             var promoteSku = CurrentDb.PromoteSku.Where(m => m.PromoteId == rup.PromoteId && m.SkuId == rup.SkuId).FirstOrDefault();
                             if (promoteSku != null)
                             {
-                                ret.SalePrice = promoteSku.SkuSalePrice;
+                                if (promoteSku.BuyStartTime <= this.DateTime && promoteSku.BuyEndTime >= this.DateTime)
+                                {
+                                    ret.SalePrice = promoteSku.SkuSalePrice;
+                                }
                             }
                         }
                     }

@@ -18,6 +18,8 @@ namespace Lumos.Entity
         public string SkuName { get; set; }
         public decimal SkuSalePrice { get; set; }
         public string PromoteId { get; set; }
+        public DateTime BuyStartTime { get; set; }
+        public DateTime BuyEndTime { get; set; }
         public string Creator { get; set; }
         public DateTime CreateTime { get; set; }
     }

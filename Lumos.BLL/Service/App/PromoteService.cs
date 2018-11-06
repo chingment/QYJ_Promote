@@ -99,11 +99,11 @@ namespace Lumos.BLL.Service.App
             }
             else
             {
-                if (promote.StartTime > this.DateTime)
+                if (promoteCoupon.BuyStartTime > this.DateTime)
                 {
                     ret.Status = 1;//活动未开始
                 }
-                else if (promote.StartTime <= this.DateTime && promote.EndTime >= this.DateTime)
+                else if (promoteCoupon.BuyStartTime <= this.DateTime && promoteCoupon.BuyEndTime >= this.DateTime)
                 {
                     ret.Status = 2;//活动中
                 }
