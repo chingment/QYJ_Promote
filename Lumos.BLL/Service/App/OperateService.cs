@@ -123,6 +123,7 @@ namespace Lumos.BLL.Service.App
                     ret.Result = RetOperateResult.ResultType.Success;
                     ret.Message = "提现申请成功，正在处理中";
                     ret.IsComplete = true;
+                    ret.Remarks = "因提现订单较多，我司统一在11月6日/12日/20日，统一进行打款到您的账户，请注意在这3天查收到款情况，如有任何问题，欢迎咨询：020-8231086";
                     result = new CustomJsonResult(ResultType.Success, ResultCode.Success, "订单未支付", ret);
                     break;
                 case Enumeration.WithdrawStatus.Success:
