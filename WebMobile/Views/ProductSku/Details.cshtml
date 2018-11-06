@@ -7,11 +7,20 @@
     <style type="text/css">
         .ct-main {
             margin-bottom: 3.2rem;
-            padding: .6em .6em 0 .6em;
+        }
+
+        .swiper, .summary, .details {
+            padding-left: .6rem;
+            padding-right: .6rem;
+        }
+
+        .swiper {
+            margin-top: .6rem;
         }
 
         .summary {
-            margin-top: .8rem;
+            margin-top: .6rem;
+            margin-bottom: .6rem;
         }
 
         .summary .name {
@@ -25,15 +34,42 @@
 
         .summary .showPrice {
             text-decoration: line-through;
+            margin-left: .6rem;
+        }
+
+        .summary .it-briefTag {
+            display: flex;
         }
 
         .summary .briefTag {
+            border-radius: 5px;
+            padding: .3rem .8rem;
+            font-size: .8rem;
+        }
+
+        .details {
+        }
+
+        .details .its-tabs {
+            display: flex;
+            margin-bottom: .6rem;
+        }
+
+        .details .its-tabs .it {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 3rem;
+            border-bottom: 2px solid #ff6c8d;
         }
 
         .ct-nav {
             display: flex;
             align-items: center;
-            background-color: #fff;
+            justify-content: center;
+            background: #ff6c8d;
+            color: #fff;
             position: fixed;
             bottom: 0;
             right: 0;
@@ -66,28 +102,28 @@
                     <span class="briefInfo"></span>
                 </div>
                 <div class="it-price">
-                    <span class="salePrice">${salePrice}</span>
-
-                    <span class="showPrice">${showPrice}</span>
+                    <span class="salePrice ft-main">¥${salePrice}</span>
+                    <span class="showPrice ft-gray1">¥${showPrice}</span>
                 </div>
                 <div class="it-briefTag">
-                    <span class="briefTag">限时秒杀</span>
+                    <span class="briefTag ft-white bg-main">限时秒杀</span>
                 </div>
             </div>
         </div>
         <div class="line-space"></div>
         <div class="details">
-            <div class="ct">
-                <div class="it-detailsDes">
+            <div class="its-tabs">
+                <div class="it"><span class="txt ft-main">商品详情</span></div>
+            </div>
+            <div class="its-ct">
+                <div class="it it-detailsDes">
                     <img src="/Images/Skus/2.jpg" />
                 </div>
             </div>
         </div>
     </div>
     <div class="ct-nav">
-        <div class="oparea">
-            <div class="it-buy" id="btn_buy"><span class="txt">立即购买</span></div>
-        </div>
+        <div class="it-buy" id="btn_buy"><span class="txt">立即购买</span></div>
     </div>
 </script>
 
@@ -97,14 +133,12 @@
 
         $(document).ready(function () {
             loadData();
-
             var mySwiper = new Swiper('.swiper-container', {
                 loop: true,
                 // 如果需要分页器
                 pagination: '.swiper-pagination',
                 paginationClickable: true
             });
-
         });
 
         function loadData() {

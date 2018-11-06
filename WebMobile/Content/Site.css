@@ -78,6 +78,30 @@ a, a:active, a:visited, a:hover, a:focus {
 	cursor: pointer;
 }
 
+.ft-white {
+	color: #fff;
+}
+
+.ft-gray1 {
+	color: #333;
+}
+
+.ft-gray2 {
+	color: #333;
+}
+
+.ft-main {
+	color: #ff6c8d;
+}
+
+.bd-main {
+	border-color: #ff6c8d;
+}
+
+.bg-main {
+	background: #ff6c8d;
+}
+
 .btn {
 	cursor: pointer;
 }
