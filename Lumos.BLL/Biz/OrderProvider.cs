@@ -95,6 +95,7 @@ namespace Lumos.BLL
                     order.SubmitTime = this.DateTime;
                     order.CreateTime = this.DateTime;
                     order.Creator = pOperater;
+                    order.IsInVisiable = true;
                     CurrentDb.Order.Add(order);
                     CurrentDb.SaveChanges();
 
@@ -269,7 +270,7 @@ namespace Lumos.BLL
                 order.PayTime = this.DateTime;
                 order.MendTime = this.DateTime;
                 order.Mender = pOperater;
-
+                order.IsInVisiable = false;
                 ReidsMqByCalProfitModel reidsMqByCalProfitModel = null;
 
                 if (order.PromoteId != null)

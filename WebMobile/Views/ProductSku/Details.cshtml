@@ -94,7 +94,7 @@
                 <div class="swiper-wrapper">
 
                     {{each(j,item) displayImgUrls}}
-                    <div class="swiper-slide"> <img src="${item.imgUrl}"  /></div>
+                    <div class="swiper-slide"> <img src="${item.imgUrl}" /></div>
                     {{/each}}
 
 
@@ -112,17 +112,16 @@
                 </div>
                 <div class="it-price">
                     <span class="salePrice ft-main">¥${salePrice}</span>
+                    {{if !showPriceIsInVisiable}}
                     <span class="showPrice ft-gray1">¥${showPrice}</span>
+                    {{/if}}
+
                 </div>
-
                 <div class="it-briefTags">
-
                     {{each(j,tag) briefTags}}
                     <span class="briefTag ft-white bg-main">${tag}</span>
                     {{/each}}
-
                 </div>
-
             </div>
         </div>
         <div class="line-space"></div>

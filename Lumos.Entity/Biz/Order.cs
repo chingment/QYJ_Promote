@@ -35,5 +35,7 @@ namespace Lumos.Entity
         public string CancelReason { get; set; }
         public bool BuyProfitIsSettled { get; set; }
         public DateTime? BuyProfitSettledTime { get; set; }
+
+        public bool IsInVisiable { get; set; }
     }
 }

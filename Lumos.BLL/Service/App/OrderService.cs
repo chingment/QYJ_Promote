@@ -74,6 +74,7 @@ namespace Lumos.BLL.Service.App
                     order.SubmitTime = this.DateTime;
                     order.CreateTime = this.DateTime;
                     order.Creator = pOperater;
+                    order.IsInVisiable = true;
                     CurrentDb.Order.Add(order);
                     CurrentDb.SaveChanges();
 
@@ -86,6 +87,7 @@ namespace Lumos.BLL.Service.App
                     orderDetails.SalePrice = salePrice;
                     orderDetails.ProductSkuId = productSku.Id;
                     orderDetails.ProductSkuName = productSku.Name;
+                    orderDetails.ProductSkuImgUrl = ImgSet.GetMain(productSku.DisplayImgUrls);
                     orderDetails.OriginalAmount = order.OriginalAmount;
                     orderDetails.DiscountAmount = order.DiscountAmount;
                     orderDetails.ChargeAmount = order.ChargeAmount;

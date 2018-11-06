@@ -57,7 +57,7 @@ namespace Lumos.BLL.Service.App
                     break;
                 case Enumeration.OrderStatus.Payed:
                     ret.Result = RetOperateResult.ResultType.Success;
-                    ret.Remarks = "";
+                    ret.Remarks = "3个工作日内校区客服会致电联系您上课时间等情况，请保持电话畅通，谢谢";
                     ret.Message = "支付成功";
                     ret.IsComplete = true;
                     ret.Buttons.Add(new RetOperateResult.Button() { Name = "回到首页", Color = "red", Url = "/Personal/Index" });

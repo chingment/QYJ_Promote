@@ -19,7 +19,7 @@ namespace Lumos.BLL.Service.App
         public string Name { get; set; }
         public decimal SalePrice { get; set; }
         public decimal ShowPrice { get; set; }
-        public bool IsHiddenShowPrice { get; set; }
+        public bool ShowPriceIsInVisiable { get; set; }
         public string BriefInfo { get; set; }
         public List<string> BriefTags { get; set; }
 

@@ -70,7 +70,7 @@ namespace Lumos.BLL.Service.App
 
                 if (ret.SalePrice >= ret.ShowPrice)
                 {
-                    ret.IsHiddenShowPrice = true;
+                    ret.ShowPriceIsInVisiable = true;
                 }
 
                 return new CustomJsonResult(ResultType.Success, ResultCode.Success, "获取成功", ret);
