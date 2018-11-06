@@ -34,55 +34,10 @@
     </script>
 }
 
-
-<script id="operate_result_tmpl" type="text/x-jquery-tmpl">
-    <div class="it-result">
-        <div class="imgbox">
-            <img class="img" src="/Content/images/operate_result_ic_${result}.png" />
-        </div>
-    </div>
+<div id="operate_check" class="operate-check">
+    <div class="it-countdown" id="rC_PB" style="text-align:center;"></div>
     <div class="it-message">
-        <span class="txt">${message}</span>
-    </div>
-    <div class="it-btns">
-        {{each(j,btn) buttons}}
-        <div class="btnbox">
-            <a href="${btn.url}" class="btn" style="color:${btn.color}; border:1px solid ${btn.color} ;">${btn.name}</a>
-        </div>
-        {{/each}}
-    </div>
-    <div class="it-remarks">
-        <p class="txt">${remarks}</p>
-    </div>
-    <div class="its-a">
-        {{each(j,field) fields}}
-
-        <div class="it">
-
-            <div class="it-m">
-                <div class="it-ml w100">
-                    <text class='txt'>${field.name}</text>
-                </div>
-                <div class="it-mr flex1">
-                    <text class='txt'>${field.value}</text>
-                </div>
-            </div>
-        </div>
-
-        {{/each}}
-    </div>
-</script>
-
-<div id="block_area">
-
-    <div id="operate_check" class="operate-check">
-        <div class="it-countdown" id="rC_PB" style="text-align:center;"></div>
-        <div class="it-message">
-            <span>正在查询信息，请耐心等候</span>
-        </div>
-    </div>
-    <div id="operate_result" class="operate-result">
-
-
+        <span>正在查询信息，请耐心等候</span>
     </div>
 </div>
+
