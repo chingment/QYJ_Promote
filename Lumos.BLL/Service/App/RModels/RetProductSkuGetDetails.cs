@@ -21,7 +21,6 @@ namespace Lumos.BLL.Service.App
         public int SaleQuantity { get; set; }
         public int SellQuantity { get; set; }
         public int StockQuantity { get; set; }
-
         public bool IsCanSale { get; set; }
 
     }

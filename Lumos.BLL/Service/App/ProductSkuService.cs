@@ -61,7 +61,7 @@ namespace Lumos.BLL.Service.App
                     }
                 }
 
-                if (ret.SalePrice >= ret.SalePrice)
+                if (ret.SalePrice >= ret.ShowPrice)
                 {
                     ret.IsHiddenShowPrice = true;
                 }
