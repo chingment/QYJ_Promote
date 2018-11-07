@@ -192,15 +192,13 @@
             '其他'];
 
         window.onerror = function (errorMessage, scriptURI, lineNumber, columnNumber, errorObj) {
-            $.ajax({
-                type: "post",
-                url: "/Home/LogJsError",
-                dataType: "json",
+            $.lumos.postJson({
+                url: "/Home/AccessLog",
+                isShowLoading: false,
                 data: { errorMessage: errorMessage, scriptURI: '@Request.Url.AbsolutePath', columnNumber: columnNumber, errorObj: errorObj.toString() },
-            }).done(function (data) {
-
+                success: function (d) {
+                }
             });
-
         }
 
 

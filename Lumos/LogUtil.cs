@@ -35,16 +35,20 @@ namespace Lumos
 
             Type type = MethodBase.GetCurrentMethod().DeclaringType;
 
-            var trace = new System.Diagnostics.StackTrace();
-
-            string name = type.Name;
-            if (trace.FrameCount >= 3)
+            string name = "";
+            if (type != null)
             {
-                System.Reflection.MethodBase mb = trace.GetFrame(2).GetMethod();
-                type = mb.DeclaringType;
+                var trace = new System.Diagnostics.StackTrace();
 
-                name = string.Format("{0}.{1}", mb.DeclaringType.FullName, mb.Name);
+                name = type.Name;
+                if (trace.FrameCount >= 3)
+                {
+                    System.Reflection.MethodBase mb = trace.GetFrame(2).GetMethod();
+                    type = mb.DeclaringType;
+                    name = string.Format("{0}.{1}", mb.DeclaringType.FullName, mb.Name);
+                }
             }
+
 
             return log4net.LogManager.GetLogger(name);
         }

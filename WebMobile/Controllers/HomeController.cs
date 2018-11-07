@@ -166,11 +166,11 @@ namespace WebMobile.Controllers
         {
             CustomJsonResult res = new CustomJsonResult();
             StringBuilder sb = new StringBuilder();
-            sb.Append("前端JS脚本错误：" + errorMessage + "\t\n");
-            sb.Append("错误信息：" + errorMessage + "\t\n");
-            sb.Append("出错文件：" + scriptURI + "\t\n");
-            sb.Append("出错列号：" + columnNumber + "\t\n");
-            sb.Append("错误详情：" + errorObj + "\t\n");
+            sb.Append("前端JS脚本错误：" + (errorMessage == null ? "" : errorMessage) + "\t\n");
+            sb.Append("错误信息：" + (errorMessage == null ? "" : errorMessage) + "\t\n");
+            sb.Append("出错文件：" + (scriptURI == null ? "" : scriptURI) + "\t\n");
+            sb.Append("出错列号：" + (columnNumber == null ? "" : columnNumber) + "\t\n");
+            sb.Append("错误详情：" + (errorObj == null ? "" : errorObj) + "\t\n");
             sb.Append("浏览器agent：" + Lumos.Common.CommonUtils.GetBrowserInfo() + "\t\n");
             LogUtil.Error(sb.ToString());
             return res;
@@ -178,7 +178,7 @@ namespace WebMobile.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult NotifyEvent()
+        public ContentResult NotifyEvent()
         {
             LogUtil.Info("开始接收事件推送通知");
 
@@ -343,9 +343,9 @@ namespace WebMobile.Controllers
                 Response.Write("wrong");
             }
 
-            //Response.End();
+            Response.End();
 
-            return View();
+            return Content("");
         }
 
         public Task<bool> WxMsgPushLog(WxMsgPushLog wxMsgPushLog)
