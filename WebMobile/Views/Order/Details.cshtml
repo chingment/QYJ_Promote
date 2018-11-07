@@ -273,7 +273,7 @@
                 isShowLoading: true,
                 success: function (d) {
                     if (d.result == $.lumos.resultType.success) {
-                        alert(JSON.stringify(d))
+                        //alert(JSON.stringify(d))
                         var data = d.data;
                         $('#page').html($("#page_tmpl").tmpl(data));
                     }

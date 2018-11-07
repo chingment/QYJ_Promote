@@ -35,8 +35,8 @@ namespace Lumos.BLL.Service.App
                         {
                             return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "找不到用户微信信息", null);
                         }
-
-                        var orderByBuyed = CurrentDb.OrderDetails.Where(m => m.ClientId == pClientId && m.ProductSkuId == rop.SkuId && m.Status == Enumeration.OrderDetailsStatus.Payed).FirstOrDefault();
+                        
+                        var orderByBuyed = CurrentDb.Order.Where(m => m.ClientId == pClientId && m.PromoteId == rop.PromoteId && m.Status == Enumeration.OrderStatus.Payed).FirstOrDefault();
                         if (orderByBuyed != null)
                         {
                             return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "您已成功抢购,支付成功", null);
@@ -47,26 +47,24 @@ namespace Lumos.BLL.Service.App
 
                         if (!string.IsNullOrEmpty(rop.PromoteId))
                         {
-
-                            var isHasBuyCoupon = false;
-                            var clientCoupon = CurrentDb.ClientCoupon.Where(m => m.PromoteId == rop.PromoteId && m.ClientId == pClientId).FirstOrDefault();
-                            if (clientCoupon != null)
+                            var promoteSku = CurrentDb.PromoteSku.Where(m => m.PromoteId == rop.PromoteId && m.SkuId == rop.SkuId && m.BuyStartTime <= this.DateTime && m.BuyEndTime >= this.DateTime).FirstOrDefault();
+                            if (promoteSku == null)
                             {
-                                if (clientCoupon.IsBuy)
-                                {
-                                    isHasBuyCoupon = true;
-                                }
+                                return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "谢谢参与，活动已经结束", null);
                             }
 
-                            if (!isHasBuyCoupon)
+                            if (!string.IsNullOrEmpty(promoteSku.PromoteCouponId))
                             {
-                                return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "谢谢参与，您没有资格参与购买", null);
+                                var clientCoupon = CurrentDb.ClientCoupon.Where(m => m.PromoteCouponId == promoteSku.PromoteCouponId && m.ClientId == pClientId && m.IsBuy == true).FirstOrDefault();
+                                if (clientCoupon == null)
+                                {
+                                    return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "谢谢参与，您没有资格参与购买", null);
+                                }
                             }
                         }
 
-                        Order order = null;
-                        var orderDetailsByWaitPay = CurrentDb.OrderDetails.Where(m => m.PromoteId == rop.PromoteId && m.ProductSkuId == rop.SkuId && m.ClientId == pClientId && m.Status == Entity.Enumeration.OrderDetailsStatus.WaitPay).FirstOrDefault();
-                        if (orderDetailsByWaitPay == null)
+                        var order = CurrentDb.Order.Where(m => m.PromoteId == rop.PromoteId && m.ClientId == pClientId && m.Status == Entity.Enumeration.OrderStatus.WaitPay).FirstOrDefault();
+                        if (order == null)
                         {
                             var promoteSku = CurrentDb.PromoteSku.Where(m => m.PromoteId == rop.PromoteId && m.SkuId == rop.SkuId && m.BuyStartTime <= this.DateTime && m.BuyEndTime >= this.DateTime).FirstOrDefault();
                             if (promoteSku == null)
@@ -120,10 +118,7 @@ namespace Lumos.BLL.Service.App
                             CurrentDb.OrderDetails.Add(orderDetails);
                             CurrentDb.SaveChanges();
                         }
-                        else
-                        {
-                            order = CurrentDb.Order.Where(m => m.Id == orderDetailsByWaitPay.OrderId).FirstOrDefault();
-                        }
+
 
                         bool isNeedBuy = true;
                         decimal chargeAmount = order.ChargeAmount;
