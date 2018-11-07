@@ -113,13 +113,13 @@
                 <div class="it-price">
                     <span class="salePrice ft-main">¥${salePrice}</span>
                     {{if !showPriceIsInVisiable}}
-                    <span class="showPrice ft-gray1">¥${showPrice}</span>
+                    <span class="showPrice cl2ft-gray1">¥${showPrice}</span>
                     {{/if}}
 
                 </div>
                 <div class="it-briefTags">
                     {{each(j,tag) briefTags}}
-                    <span class="briefTag ft-white bg-main">${tag}</span>
+                    <span class="briefTag cl2ft-white cl2bg-main">${tag}</span>
                     {{/each}}
                 </div>
             </div>
@@ -149,7 +149,7 @@
         var skuId = $.lumos.getUrlParamValue("skuId");
 
         $(document).ready(function () {
-            loadData();
+            onLoad();
             var mySwiper = new Swiper('.swiper-container', {
                 loop: true,
                 // 如果需要分页器
@@ -162,7 +162,7 @@
             });
         });
 
-        function loadData() {
+        function onLoad() {
 
             $.lumos.getJson({
                 url: "/ProductSku/GetDetails",

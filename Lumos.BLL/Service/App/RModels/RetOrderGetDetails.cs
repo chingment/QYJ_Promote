@@ -12,7 +12,7 @@ namespace Lumos.BLL.Service.App
         public RetOrderGetDetails()
         {
             this.Skus = new List<Sku>();
-            this.Fields = new List<Field>();
+            this.FieldBlocks = new List<Block>();
         }
 
         public string OrderSn { get; set; }
@@ -23,7 +23,7 @@ namespace Lumos.BLL.Service.App
         public string CancelReason { get; set; }
         public Enumeration.OrderStatus Status { get; set; }
         public string StatusName { get; set; }
-        public List<Field> Fields { get; set; }
+        public List<Block> FieldBlocks { get; set; }
         public List<Sku> Skus { get; set; }
 
         public class Sku
@@ -52,6 +52,19 @@ namespace Lumos.BLL.Service.App
             {
                 get; set;
             }
+        }
+
+        public class Block
+        {
+
+            public Block()
+            {
+                this.Fields = new List<Field>();
+            }
+
+            public string Name { get; set; }
+
+            public List<Field> Fields { get; set; }
         }
     }
 }

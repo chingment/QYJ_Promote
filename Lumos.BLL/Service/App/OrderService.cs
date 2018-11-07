@@ -125,8 +125,8 @@ namespace Lumos.BLL.Service.App
                         string prepayId = SdkFactory.Wx.Instance().GetPrepayId(pOperater, "JSAPI", wxUserInfo.OpenId, order.Sn, chargeAmount, goods_tag, Common.CommonUtils.GetIP(), productSku.Name, order.WxPrepayIdExpireTime);
                         if (string.IsNullOrEmpty(prepayId))
                         {
-                            LogUtil.Error("去结算，微信支付中生成预支付订单失败");
-                            return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "微信支付中生成预支付订单失败", null);
+                            //LogUtil.Error("去结算，微信支付中生成预支付订单失败");
+                            //return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "微信支付中生成预支付订单失败", null);
                         }
 
                         order.WxPrepayId = prepayId;
@@ -201,10 +201,14 @@ namespace Lumos.BLL.Service.App
                     ret.Skus.Add(new RetOrderGetDetails.Sku { Id = item.ProductSkuId, ImgUrl = item.ProductSkuImgUrl, Name = item.ProductSkuName, Quantity = item.Quantity, SalePrice = item.SalePrice, ChargeAmount = item.ChargeAmount });
                 }
 
+                var fieldBlock = new RetOrderGetDetails.Block();
 
-                ret.Fields.Add(new RetOrderGetDetails.Field { Name = "姓名", Value = order.CtName });
-                ret.Fields.Add(new RetOrderGetDetails.Field { Name = "联系电话", Value = order.CtPhone });
-                ret.Fields.Add(new RetOrderGetDetails.Field { Name = "校区", Value = order.CtSchool });
+                fieldBlock.Name = "联系人";
+                fieldBlock.Fields.Add(new RetOrderGetDetails.Field { Name = "宝宝姓名", Value = order.CtName });
+                fieldBlock.Fields.Add(new RetOrderGetDetails.Field { Name = "联系电话", Value = order.CtPhone });
+                fieldBlock.Fields.Add(new RetOrderGetDetails.Field { Name = "校区地址", Value = order.CtSchool });
+
+                ret.FieldBlocks.Add(fieldBlock);
 
                 return new CustomJsonResult(ResultType.Success, ResultCode.Success, "获取成功", ret);
             }
