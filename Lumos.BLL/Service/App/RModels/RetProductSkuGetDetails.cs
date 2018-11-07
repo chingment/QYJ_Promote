@@ -36,8 +36,9 @@ namespace Lumos.BLL.Service.App
 
         public string FlashSaleNextTips { get; set; }
         public bool IsCanBuy { get; set; }
-        public Button BuyBtn{get; set; }
+        public Button BuyBtn { get; set; }
 
+        public string OrderId { get; set; }
         public class Button
         {
             public string Text { get; set; }

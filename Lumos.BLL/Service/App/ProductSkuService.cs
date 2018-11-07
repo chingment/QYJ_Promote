@@ -129,14 +129,26 @@ namespace Lumos.BLL.Service.App
                 ret.FlashSaleStSecond = Convert.ToInt32((curPromoteSku.BuyStartTime - DateTime.Now).TotalSeconds);
                 ret.FlashSaleEnSecond = Convert.ToInt32((curPromoteSku.BuyEndTime - DateTime.Now).TotalSeconds);
 
-                if (curPromoteSku.SellQuantity <= 0)
+                var orderDetails2 = CurrentDb.OrderDetails.Where(m => m.PromoteId == rup.PromoteId && m.ProductSkuId == rup.SkuId && m.ClientId == pClientId && m.Status == Entity.Enumeration.OrderDetailsStatus.WaitPay).FirstOrDefault();
+
+                if (orderDetails2 == null)
                 {
-                    ret.IsCanBuy = false;
-                    ret.BuyBtn.Text = "已售完";
-                    ret.BuyBtn.Enabled = false;
+                    if (curPromoteSku.SellQuantity <= 0)
+                    {
+                        ret.IsCanBuy = false;
+                        ret.BuyBtn.Text = "已售完";
+                        ret.BuyBtn.Enabled = false;
+                    }
+                    else
+                    {
+                        ret.IsCanBuy = true;
+                        ret.BuyBtn.Text = "立即购买";
+                        ret.BuyBtn.Enabled = true;
+                    }
                 }
                 else
                 {
+                    ret.OrderId = orderDetails2.OrderId;
                     ret.IsCanBuy = true;
                     ret.BuyBtn.Text = "立即购买";
                     ret.BuyBtn.Enabled = true;

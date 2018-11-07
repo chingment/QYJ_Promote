@@ -62,8 +62,12 @@ namespace Lumos.BLL.Service.App
                             {
                                 return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "谢谢参与，您没有资格参与购买", null);
                             }
+                        }
 
-
+                        Order order = null;
+                        var orderDetails2 = CurrentDb.OrderDetails.Where(m => m.PromoteId == rop.PromoteId && m.ProductSkuId == rop.SkuId && m.ClientId == pClientId && m.Status == Entity.Enumeration.OrderDetailsStatus.WaitPay).FirstOrDefault();
+                        if (orderDetails2 == null)
+                        {
                             var promoteSku = CurrentDb.PromoteSku.Where(m => m.PromoteId == rop.PromoteId && m.SkuId == rop.SkuId && m.BuyStartTime <= this.DateTime && m.BuyEndTime >= this.DateTime).FirstOrDefault();
                             if (promoteSku == null)
                             {
@@ -80,43 +84,47 @@ namespace Lumos.BLL.Service.App
 
                             salePrice = promoteSku.SkuSalePrice;
 
+                            order = new Order();
+                            order.Id = GuidUtil.New();
+                            order.ClientId = pClientId;
+                            order.Sn = SnUtil.Build(Enumeration.BizSnType.Order, order.ClientId);
+                            order.PromoteId = rop.PromoteId;
+                            order.RefereeId = rop.RefereeId;
+                            order.OriginalAmount = salePrice;
+                            order.DiscountAmount = 0;
+                            order.ChargeAmount = order.OriginalAmount - order.DiscountAmount;
+                            order.SubmitTime = this.DateTime;
+                            order.CreateTime = this.DateTime;
+                            order.Creator = pOperater;
+                            order.IsInVisiable = true;
+                            order.Status = Enumeration.OrderStatus.WaitPay; //待支付状态
+                            CurrentDb.Order.Add(order);
+                            CurrentDb.SaveChanges();
+
+                            var orderDetails = new OrderDetails();
+                            orderDetails.Id = GuidUtil.New();
+                            orderDetails.PromoteId = rop.PromoteId;
+                            orderDetails.ClientId = pClientId;
+                            orderDetails.OrderId = order.Id;
+                            orderDetails.Quantity = 1;
+                            orderDetails.SalePrice = salePrice;
+                            orderDetails.ProductSkuId = productSku.Id;
+                            orderDetails.ProductSkuName = productSku.Name;
+                            orderDetails.ProductSkuImgUrl = ImgSet.GetMain(productSku.DisplayImgUrls);
+                            orderDetails.OriginalAmount = order.OriginalAmount;
+                            orderDetails.DiscountAmount = order.DiscountAmount;
+                            orderDetails.ChargeAmount = order.ChargeAmount;
+                            orderDetails.CreateTime = order.CreateTime;
+                            orderDetails.Creator = order.Creator;
+                            orderDetails.Status = Enumeration.OrderDetailsStatus.WaitPay;
+                            CurrentDb.OrderDetails.Add(orderDetails);
+                            CurrentDb.SaveChanges();
+                        }
+                        else
+                        {
+                            order = CurrentDb.Order.Where(m => m.Id == orderDetails2.OrderId).FirstOrDefault();
                         }
 
-                        var order = new Order();
-                        order.Id = GuidUtil.New();
-                        order.ClientId = pClientId;
-                        order.Sn = SnUtil.Build(Enumeration.BizSnType.Order, order.ClientId);
-                        order.PromoteId = rop.PromoteId;
-                        order.RefereeId = rop.RefereeId;
-                        order.OriginalAmount = salePrice;
-                        order.DiscountAmount = 0;
-                        order.ChargeAmount = order.OriginalAmount - order.DiscountAmount;
-                        order.SubmitTime = this.DateTime;
-                        order.CreateTime = this.DateTime;
-                        order.Creator = pOperater;
-                        order.IsInVisiable = true;
-                        order.Status = Enumeration.OrderStatus.WaitPay; //待支付状态
-                        CurrentDb.Order.Add(order);
-                        CurrentDb.SaveChanges();
-
-                        var orderDetails = new OrderDetails();
-                        orderDetails.Id = GuidUtil.New();
-                        orderDetails.PromoteId = rop.PromoteId;
-                        orderDetails.ClientId = pClientId;
-                        orderDetails.OrderId = order.Id;
-                        orderDetails.Quantity = 1;
-                        orderDetails.SalePrice = salePrice;
-                        orderDetails.ProductSkuId = productSku.Id;
-                        orderDetails.ProductSkuName = productSku.Name;
-                        orderDetails.ProductSkuImgUrl = ImgSet.GetMain(productSku.DisplayImgUrls);
-                        orderDetails.OriginalAmount = order.OriginalAmount;
-                        orderDetails.DiscountAmount = order.DiscountAmount;
-                        orderDetails.ChargeAmount = order.ChargeAmount;
-                        orderDetails.CreateTime = order.CreateTime;
-                        orderDetails.Creator = order.Creator;
-                        orderDetails.Status = Enumeration.OrderDetailsStatus.WaitPay;
-                        CurrentDb.OrderDetails.Add(orderDetails);
-                        CurrentDb.SaveChanges();
 
                         bool isNeedBuy = true;
                         decimal chargeAmount = order.ChargeAmount;

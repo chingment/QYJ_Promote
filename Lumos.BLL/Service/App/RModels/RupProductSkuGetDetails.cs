@@ -11,5 +11,6 @@ namespace Lumos.BLL.Service.App
         public string SkuId { get; set; }
 
         public string PromoteId { get; set; }
+        public string OrderId { get; set; }
     }
 }
