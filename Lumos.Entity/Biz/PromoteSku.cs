@@ -20,6 +20,10 @@ namespace Lumos.Entity
         public string PromoteId { get; set; }
         public DateTime BuyStartTime { get; set; }
         public DateTime BuyEndTime { get; set; }
+        public int SellQuantity { get; set; }
+        public int LockQuantity { get; set; }
+        public int StockQuantity { get; set; }
+        public int SaleQuantity { get; set; }
         public string Creator { get; set; }
         public DateTime CreateTime { get; set; }
     }

@@ -24,5 +24,6 @@ namespace Lumos.Entity
         public int StockQuantity { get; set; }
         public string Creator { get; set; }
         public DateTime CreateTime { get; set; }
+
     }
 }

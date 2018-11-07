@@ -115,6 +115,7 @@
             border-radius: 0;
             color: #000;
             background: #fff;
+            padding-left: 0px;
             box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
         }
 
@@ -160,7 +161,7 @@
 
                 {{if isFlashSale}}
                 <div id="first" class="it-timedown time-item">
-                    <span class="it title_show">${flashSaleTitle}</span>
+                    <span class="it title_show">距开始还剩</span>
                     <span class="it day_show">0天</span>
                     <span class="it hour_show">0时</span>
                     <span class="it minute_show">0分</span>
@@ -223,8 +224,8 @@
                             pagination: '.swiper-pagination',
                             paginationClickable: true
                         });
-
-                        timer(data.flashSaleStSecond, data.flashSaleEnSecond, '#first');
+                  
+                        timer(data.flashSaleStSecond, data.flashSaleEnSecond, data.isCanBuy, '#first');
                     }
                     else {
                         $('#operate_result').html($("#operate_result_tmpl").tmpl(d.data));
@@ -275,7 +276,7 @@
         var flashSaleEnSecond = 0;
         var intDiff = 0;
 
-        function timer(stSecond, enSecond, idName) {
+        function timer(stSecond, enSecond, isCanBuy, idName) {
             flashSaleStSecond = stSecond;
             flashSaleEnSecond = enSecond;
             var title_show = $('.title_show');
@@ -304,8 +305,10 @@
                         intDiff = enSecond;
                         isSetFlashSaleEnSecond = true;
 
-                        $('#btn_Buy').removeClass('false')
-                        $('#btn_Buy').addClass('true')
+                        if (isCanBuy) {
+                            $('#btn_Buy').removeClass('false')
+                            $('#btn_Buy').addClass('true')
+                        }
                     }
 
                     flashSaleEnSecond--;
@@ -341,7 +344,7 @@
                 $(idName + ' .minute_show').html('<s></s>' + minute + '分');
                 $(idName + ' .second_show').html('<s></s>' + second + '秒');
                 intDiff--;
-               
+
             }, 1000);
         }
     </script>

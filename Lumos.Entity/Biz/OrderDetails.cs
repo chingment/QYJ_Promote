@@ -28,5 +28,7 @@ namespace Lumos.Entity
         public decimal ChargeAmount { get; set; }
         public string Creator { get; set; }
         public DateTime CreateTime { get; set; }
+
+        public Enumeration.OrderStatus Status { get; set; }
     }
 }

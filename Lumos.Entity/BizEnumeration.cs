@@ -88,6 +88,23 @@ namespace Lumos.Entity
 
         }
 
+        public enum OrderDetailsStatus
+        {
+            [Remark("未知")]
+            Unknow = 0,
+            [Remark("已提交")]
+            Submitted = 1,
+            [Remark("待支付")]
+            WaitPay = 2,
+            [Remark("已支付")]
+            Payed = 3,
+            [Remark("已完成")]
+            Completed = 4,
+            [Remark("已失效")]
+            Cancled = 5
+
+        }
+
         public enum FundTransChangeType
         {
             [Remark("未知")]

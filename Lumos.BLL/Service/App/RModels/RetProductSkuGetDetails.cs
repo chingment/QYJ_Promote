@@ -33,6 +33,8 @@ namespace Lumos.BLL.Service.App
         public bool IsFlashSale { get; set; }
         public int FlashSaleStSecond { get; set; }
         public int FlashSaleEnSecond { get; set; }
+
+        public string FlashSaleNextTips { get; set; }
         public bool IsCanBuy { get; set; }
         public Button BuyBtn{get; set; }
 
