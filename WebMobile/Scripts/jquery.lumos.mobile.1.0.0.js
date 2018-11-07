@@ -608,7 +608,9 @@
                 }
 
                 for (var p in _urlParams) {
-                    _url += p + '=' + encodeURIComponent(_urlParams[p]) + '&';
+                    if (_urlParams[p] != null) {
+                        _url += p + '=' + encodeURIComponent(_urlParams[p]) + '&';
+                    }
                 }
 
                 _url = _url.substring(0, _url.length - 1)

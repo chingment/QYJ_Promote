@@ -12,6 +12,7 @@ namespace Lumos.BLL.Service.App
         public RetProductSkuGetDetails()
         {
             this.BriefTags = new List<string>();
+            this.BuyBtn = new Button();
         }
 
         public string Id { get; set; }
@@ -29,7 +30,18 @@ namespace Lumos.BLL.Service.App
         public int SaleQuantity { get; set; }
         public int SellQuantity { get; set; }
         public int StockQuantity { get; set; }
-        public bool IsCanSale { get; set; }
+        public bool IsFlashSale { get; set; }
+        public int FlashSaleStSecond { get; set; }
+        public int FlashSaleEnSecond { get; set; }
+        public bool IsCanBuy { get; set; }
+        public Button BuyBtn{get; set; }
+
+        public class Button
+        {
+            public string Text { get; set; }
+
+            public bool Enabled { get; set; }
+        }
 
     }
 }

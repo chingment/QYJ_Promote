@@ -46,27 +46,59 @@ namespace Lumos.BLL.Service.App
                 ret.BriefTags.Add("限时秒杀");
                 ret.BriefTags.Add("双11活动");
 
-                if (!string.IsNullOrEmpty(rup.PromoteId))
+
+                if (string.IsNullOrEmpty(rup.PromoteId))
                 {
+                    ret.IsCanBuy = false;
+                    ret.BuyBtn.Text = "活动已结束";
+                    ret.BuyBtn.Enabled = false;
+                }
+                else
+                {
+                    var promoteSkus = CurrentDb.PromoteSku.Where(m => m.PromoteId == rup.PromoteId && m.SkuId == rup.SkuId).OrderBy(m => m.BuyStartTime).ToList();
+                    if (promoteSkus.Count > 0)
+                    {
+                        ret.BriefTags.Add("专享特惠");
+
+                        ret.IsFlashSale = true;
+                        ret.FlashSaleStSecond = 10;
+                        ret.FlashSaleEnSecond = 10;
+
+                        foreach (var item in promoteSkus)
+                        {
+                            if (item.BuyStartTime <= this.DateTime && item.BuyEndTime >= this.DateTime)
+                            {
+                                ret.SalePrice = item.SkuSalePrice;
+                                break;
+                            }
+                        }
+
+
+                    }
+
+                    var isCanBuy = false;
                     var clientCoupon = CurrentDb.ClientCoupon.Where(m => m.PromoteId == rup.PromoteId && m.ClientId == pClientId).FirstOrDefault();
                     if (clientCoupon != null)
                     {
                         if (clientCoupon.IsBuy)
                         {
-                            var promoteSku = CurrentDb.PromoteSku.Where(m => m.PromoteId == rup.PromoteId && m.SkuId == rup.SkuId).FirstOrDefault();
-                            if (promoteSku != null)
-                            {
-                                if (promoteSku.BuyStartTime <= this.DateTime && promoteSku.BuyEndTime >= this.DateTime)
-                                {
-                                    ret.SalePrice = promoteSku.SkuSalePrice;
-                                    ret.BriefTags.Add("专享特惠");
-                                }
-                            }
+                            isCanBuy = true;
                         }
                     }
+
+                    if (isCanBuy)
+                    {
+                        ret.IsCanBuy = true;
+                        ret.BuyBtn.Text = "立即购买";
+                        ret.BuyBtn.Enabled = false;
+                    }
+                    else
+                    {
+                        ret.IsCanBuy = false;
+                        ret.BuyBtn.Text = "您没有资格购买";
+                        ret.BuyBtn.Enabled = false;
+                    }
                 }
-
-
 
                 if (ret.SalePrice >= ret.ShowPrice)
                 {

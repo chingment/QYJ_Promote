@@ -48,6 +48,10 @@
             margin-right: .6rem;
         }
 
+        .summary .it-timedown {
+            margin-top: .6rem;
+        }
+
         .details {
         }
 
@@ -69,7 +73,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #ff6c8d;
             color: #fff;
             position: fixed;
             bottom: 0;
@@ -81,23 +84,55 @@
             overflow: hidden;
             z-index: 999;
         }
+
+        .ct-nav .it-buy {
+            width: 100%;
+            text-align: center;
+        }
+
+        .ct-nav .true {
+            background: #ff6c8d;
+        }
+
+        .ct-nav .false {
+            background: #999;
+        }
+
+
+        .time-item .it {
+            background: #C71C60;
+            color: #fff;
+            line-height: 2rem;
+            font-size: 1.2rem;
+            font-family: Arial;
+            padding: 3px 5px;
+            margin-right: 5px;
+            border-radius: 5px;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .time-item .title_show {
+            border-radius: 0;
+            color: #000;
+            background: #fff;
+            box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+        }
+
+        .time-item .day_show {
+            color: #c71c60;
+            background: #fff;
+        }
     </style>
 }
-
-
-
 
 <script id="page_tmpl" type="text/x-jquery-tmpl">
     <div class="ct-main">
         <div class="swiper">
             <div class="swiper-container">
                 <div class="swiper-wrapper">
-
                     {{each(j,item) displayImgUrls}}
                     <div class="swiper-slide"> <img src="${item.imgUrl}" /></div>
                     {{/each}}
-
-
                 </div>
                 <div class="swiper-pagination"></div>
             </div>
@@ -122,6 +157,17 @@
                     <span class="briefTag cl2ft-white cl2bg-main">${tag}</span>
                     {{/each}}
                 </div>
+
+                {{if isFlashSale}}
+                <div id="first" class="it-timedown time-item">
+                    <span class="it title_show">${flashSaleTitle}</span>
+                    <span class="it day_show">0天</span>
+                    <span class="it hour_show">0时</span>
+                    <span class="it minute_show">0分</span>
+                    <span class="it second_show">0秒</span>
+                </div>
+                {{/if}}
+
             </div>
         </div>
         <div class="line-space"></div>
@@ -137,27 +183,23 @@
         </div>
     </div>
     <div class="ct-nav">
-        <div class="it-buy operate" id="btn_Buy"><span class="txt">立即购买</span></div>
+        <div class="it-buy operate ${buyBtn.enabled}" id="btn_Buy"><span class="txt">${buyBtn.text}</span></div>
     </div>
 </script>
 
 @section scripts{
     <script src="~/Scripts/swiper.min.js"></script>
+
     <script type="text/javascript">
 
         var promoteId = $.lumos.getUrlParamValue("promoteId");
         var skuId = $.lumos.getUrlParamValue("skuId");
 
         $(document).ready(function () {
-            onLoad();
-            var mySwiper = new Swiper('.swiper-container', {
-                loop: true,
-                // 如果需要分页器
-                pagination: '.swiper-pagination',
-                paginationClickable: true
-            });
 
-            $('#btn_Buy').live("click", function (e) {
+            onLoad();
+
+            $('.ct-nav .true').live("click", function (e) {
                 unifiedOrder();
             });
         });
@@ -174,6 +216,15 @@
                         var data = d.data;
                         document.title = data.name;;//更改网页标题
                         $('#page').html($("#page_tmpl").tmpl(data));
+
+                        var mySwiper = new Swiper('.swiper-container', {
+                            loop: true,
+                            // 如果需要分页器
+                            pagination: '.swiper-pagination',
+                            paginationClickable: true
+                        });
+
+                        timer(data.flashSaleStSecond, data.flashSaleEnSecond, '#first');
                     }
                     else {
                         $('#operate_result').html($("#operate_result_tmpl").tmpl(d.data));
@@ -215,6 +266,83 @@
                 }
             });
 
+        }
+
+
+        var isSetFlashSaleStSecond = false;
+        var isSetFlashSaleEnSecond = false;
+        var flashSaleStSecond = 0;
+        var flashSaleEnSecond = 0;
+        var intDiff = 0;
+
+        function timer(stSecond, enSecond, idName) {
+            flashSaleStSecond = stSecond;
+            flashSaleEnSecond = enSecond;
+            var title_show = $('.title_show');
+
+
+            var interval = window.setInterval(function () {
+                var day = 0,
+                    hour = 0,
+                    minute = 0,
+                    second = 0; //时间默认值
+
+                if (flashSaleStSecond > 0) {
+
+                    $(title_show).text("距开始还剩");
+
+                    if (!isSetFlashSaleStSecond) {
+                        intDiff = stSecond;
+                        isSetFlashSaleStSecond = true;
+                    }
+
+                    flashSaleStSecond--;
+                }
+                else if (flashSaleEnSecond > 0) {
+                    $(title_show).text("距结束还剩");
+                    if (!isSetFlashSaleEnSecond) {
+                        intDiff = enSecond;
+                        isSetFlashSaleEnSecond = true;
+
+                        $('#btn_Buy').removeClass('false')
+                        $('#btn_Buy').addClass('true')
+                    }
+
+                    flashSaleEnSecond--;
+                }
+                else {
+                    $(title_show).text("已结束");
+
+                    $('#btn_Buy').addClass('false')
+                    $('#btn_Buy').removeClass('true')
+                }
+
+                if (intDiff > 0) {
+                    day = Math.floor(intDiff / (60 * 60 * 24));
+                    hour = Math.floor(intDiff / (60 * 60)) - (day * 24);
+                    minute = Math.floor(intDiff / 60) - (day * 24 * 60) - (hour * 60);
+                    second = Math.floor(intDiff) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+                }
+                else {
+                    //clearInterval(interval);
+
+                    //intDiff = enSecond;
+
+                    //if (enSecond > 0) {
+
+                    //}
+                }
+
+
+                if (minute <= 9) minute = '0' + minute;
+                if (second <= 9) second = '0' + second;
+                $(idName + ' .day_show').html(day + "天");
+                $(idName + ' .hour_show').html('<s id="h"></s>' + hour + '时');
+                $(idName + ' .minute_show').html('<s></s>' + minute + '分');
+                $(idName + ' .second_show').html('<s></s>' + second + '秒');
+                intDiff--;
+               
+            }, 1000);
         }
     </script>
 }

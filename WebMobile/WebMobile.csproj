@@ -503,6 +503,8 @@
     <Content Include="Scripts\jquery.redcountdown.js" />
     <Content Include="Scripts\jquery.tmpl.min.js" />
     <Content Include="Scripts\mobileSelect.js" />
+    <Content Include="Scripts\swiper.min.4.4.2.js" />
+    <Content Include="Scripts\swiper.min.js" />
     <Content Include="Static\Promote\promote_a999753c5fe14e26bbecad576b6a6909.jpg" />
     <Content Include="Static\Promote\promote_bg_1.jpg" />
     <Content Include="Static\Promote\user\50eccc439fda47138145defd71fb36c5.jpg" />
