@@ -102,6 +102,7 @@
     <Compile Include="Service\App\RModels\RetProductSkuGetDetails.cs" />
     <Compile Include="Service\App\RModels\RetPromoteGetConfig.cs" />
     <Compile Include="Service\App\RModels\RetWithdrawApply.cs" />
+    <Compile Include="Service\App\RModels\RopOrderCancleOrder.cs" />
     <Compile Include="Service\App\RModels\RopOrderUnifiedOrder.cs" />
     <Compile Include="Service\App\RModels\RopWithdrawApply.cs" />
     <Compile Include="Service\App\RModels\RupProductSkuGetDetails.cs" />

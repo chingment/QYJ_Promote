@@ -256,7 +256,16 @@
                                 window.location.href = "/Operate/Result?id=" + params.orderId + "&type=1";
                             },
                             cancel: function (res) {
-                                $.lumos.tips('您已取消支付');
+                                $.lumos.postJson({
+                                    url: "/ProductSku/CancleOrder",
+                                    isShowLoading: true,
+                                    data: { orderId: orderId },
+                                    success: function (d2) {
+                                        if (d2.result == $.lumos.resultType.success) {
+                                            $.lumos.tips('您已取消支付');
+                                        }
+                                    }
+                                });
                             }
                         });
 

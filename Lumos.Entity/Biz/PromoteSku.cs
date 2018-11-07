@@ -26,5 +26,7 @@ namespace Lumos.Entity
         public int SaleQuantity { get; set; }
         public string Creator { get; set; }
         public DateTime CreateTime { get; set; }
+        public string Mender { get; set; }
+        public DateTime? MendTime { get; set; }
     }
 }

@@ -39,7 +39,7 @@ namespace Lumos.BLL.Service.App
                         var orderByBuyed = CurrentDb.OrderDetails.Where(m => m.ClientId == pClientId && m.ProductSkuId == rop.SkuId && m.Status == Enumeration.OrderDetailsStatus.Payed).FirstOrDefault();
                         if (orderByBuyed != null)
                         {
-                            return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "您已成功抢购", null);
+                            return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "您已成功抢购,支付成功", null);
                         }
 
 
@@ -65,8 +65,8 @@ namespace Lumos.BLL.Service.App
                         }
 
                         Order order = null;
-                        var orderDetails2 = CurrentDb.OrderDetails.Where(m => m.PromoteId == rop.PromoteId && m.ProductSkuId == rop.SkuId && m.ClientId == pClientId && m.Status == Entity.Enumeration.OrderDetailsStatus.WaitPay).FirstOrDefault();
-                        if (orderDetails2 == null)
+                        var orderDetailsByWaitPay = CurrentDb.OrderDetails.Where(m => m.PromoteId == rop.PromoteId && m.ProductSkuId == rop.SkuId && m.ClientId == pClientId && m.Status == Entity.Enumeration.OrderDetailsStatus.WaitPay).FirstOrDefault();
+                        if (orderDetailsByWaitPay == null)
                         {
                             var promoteSku = CurrentDb.PromoteSku.Where(m => m.PromoteId == rop.PromoteId && m.SkuId == rop.SkuId && m.BuyStartTime <= this.DateTime && m.BuyEndTime >= this.DateTime).FirstOrDefault();
                             if (promoteSku == null)
@@ -122,9 +122,8 @@ namespace Lumos.BLL.Service.App
                         }
                         else
                         {
-                            order = CurrentDb.Order.Where(m => m.Id == orderDetails2.OrderId).FirstOrDefault();
+                            order = CurrentDb.Order.Where(m => m.Id == orderDetailsByWaitPay.OrderId).FirstOrDefault();
                         }
-
 
                         bool isNeedBuy = true;
                         decimal chargeAmount = order.ChargeAmount;
@@ -132,7 +131,6 @@ namespace Lumos.BLL.Service.App
                         {
                             isNeedBuy = false;
                         }
-
 
                         string[] testClientId = new string[2] { "62c587c13c124f96b436de9522fb31f0", "4faecb3507aa48698405cf492dc26916" };
 
@@ -237,5 +235,8 @@ namespace Lumos.BLL.Service.App
 
             return result;
         }
+
+
+
     }
 }

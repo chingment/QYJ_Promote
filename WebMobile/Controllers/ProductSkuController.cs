@@ -45,5 +45,12 @@ namespace WebMobile.Controllers
                 return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, result.Message);
             }
         }
+
+        [HttpPost]
+        public CustomJsonResult CancleOrder(RopOrderCancleOrder rop)
+        {
+            var result = BizFactory.Order.Cancle(this.CurrentUserId, rop.OrderId, "用户取消支付");
+            return result;
+        }
     }
 }

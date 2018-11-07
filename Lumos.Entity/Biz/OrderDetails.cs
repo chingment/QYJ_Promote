@@ -30,5 +30,8 @@ namespace Lumos.Entity
         public DateTime CreateTime { get; set; }
 
         public Enumeration.OrderDetailsStatus Status { get; set; }
+
+        public string Mender { get; set; }
+        public DateTime? MendTime { get; set; }
     }
 }

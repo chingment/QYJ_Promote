@@ -351,6 +351,65 @@ namespace Lumos.BLL
             return result;
         }
 
+        public CustomJsonResult Cancle(string pOperater, string pOrderId, string cancelReason)
+        {
+            var result = new CustomJsonResult();
 
+            using (TransactionScope ts = new TransactionScope())
+            {
+                var order = CurrentDb.Order.Where(m => m.Id == pOrderId).FirstOrDefault();
+                if (order == null)
+                {
+                    return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, "找不到该订单");
+                }
+
+                if (order.Status == Enumeration.OrderStatus.Payed)
+                {
+                    return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, "该订单已经支付成功");
+                }
+
+                if (order.Status == Enumeration.OrderStatus.Completed)
+                {
+                    return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, "该订单已经完成");
+                }
+
+                if (order.Status == Enumeration.OrderStatus.WaitPay)
+                {
+                    order.Status = Enumeration.OrderStatus.Cancled;
+                    order.CancledTime = this.DateTime;
+                    order.CancelReason = cancelReason;
+                    order.Mender = GuidUtil.Empty();
+                    order.MendTime = this.DateTime;
+
+                    var orderDetails = CurrentDb.OrderDetails.Where(m => m.OrderId == order.Id).ToList();
+
+                    foreach (var item in orderDetails)
+                    {
+                        item.Status = Enumeration.OrderDetailsStatus.Cancled;
+                        item.Mender = GuidUtil.Empty();
+                        item.MendTime = this.DateTime;
+
+                        if (!string.IsNullOrEmpty(item.PromoteId))
+                        {
+                            var promoteSku = CurrentDb.PromoteSku.Where(q => q.SkuId == item.ProductSkuId && q.PromoteId == order.PromoteId && q.BuyStartTime <= order.SubmitTime && q.BuyEndTime >= order.SubmitTime).FirstOrDefault();
+                            if (promoteSku != null)
+                            {
+                                promoteSku.LockQuantity -= 1;
+                                promoteSku.SellQuantity += 1;
+                                promoteSku.Mender = GuidUtil.Empty();
+                                promoteSku.MendTime = this.DateTime;
+                            }
+                        }
+                    }
+
+                    CurrentDb.SaveChanges();
+                    ts.Complete();
+
+                    result = new CustomJsonResult(ResultType.Success, ResultCode.Success, "操作成功");
+                }
+
+                return result;
+            }
+        }
     }
 }

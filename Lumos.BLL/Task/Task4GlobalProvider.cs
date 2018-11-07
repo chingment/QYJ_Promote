@@ -20,7 +20,6 @@ namespace Lumos.BLL.Task
             #region 检查支付状态
             var orders = OrderCacheUtil.GetCheckPayStatusQueue();
             LogUtil.Info(string.Format("共有{0}条待支付订单查询状态", orders.Count));
-
             LogUtil.Info(string.Format("开始执行订单查询,时间：{0}", this.DateTime));
             foreach (var m in orders)
             {
@@ -31,45 +30,20 @@ namespace Lumos.BLL.Task
                     if (m.PayExpireTime.Value.AddMinutes(1) >= DateTime.Now)
                     {
                         string xml = SdkFactory.Wx.Instance().OrderQuery(m.Sn);
-
                         LogUtil.Info(string.Format("订单号：{0},结果文件:{1}", m.Sn, xml));
-
                         bool isPaySuccessed = false;
                         BizFactory.Order.PayResultNotify(GuidUtil.Empty(), Entity.Enumeration.OrderNotifyLogNotifyFrom.OrderQuery, xml, m.Sn, out isPaySuccessed);
-
                         if (isPaySuccessed)
                         {
                             OrderCacheUtil.ExitQueue4CheckPayStatus(m.Sn);
-
                             LogUtil.Info(string.Format("订单号：{0},支付成功,删除缓存", m.Sn));
                         }
                     }
                     else
                     {
-                        var order = CurrentDb.Order.Where(q => q.Sn == m.Sn).FirstOrDefault();
-                        if (order != null)
+                        var rt = BizFactory.Order.Cancle(GuidUtil.Empty(), m.Id, "订单支付有效时间过期");
+                        if (rt.Result == ResultType.Success)
                         {
-                            order.Status = Enumeration.OrderStatus.Cancled;
-                            order.Mender = GuidUtil.Empty();
-                            order.MendTime = this.DateTime;
-                            order.CancelReason = "订单支付有效时间过期";
-
-
-                            var orderDetails = CurrentDb.OrderDetails.Where(q => q.OrderId == order.Id).FirstOrDefault();
-
-                            if (orderDetails != null)
-                            {
-                                var productSku = CurrentDb.PromoteSku.Where(q => q.SkuId == orderDetails.ProductSkuId && q.PromoteId == order.PromoteId && q.BuyStartTime <= order.SubmitTime && q.BuyEndTime >= order.SubmitTime).FirstOrDefault();
-
-                                if (productSku != null)
-                                {
-                                    productSku.LockQuantity -= 1;
-                                    productSku.SellQuantity += 1;
-                                }
-                            }
-
-
-                            CurrentDb.SaveChanges();
                             OrderCacheUtil.ExitQueue4CheckPayStatus(m.Sn);
                             LogUtil.Info(string.Format("订单号：{0},已经过期,删除缓存", m.Sn));
                         }
