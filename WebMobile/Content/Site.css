@@ -2,16 +2,10 @@
 	padding: 0;
 	margin: 0;
 	list-style: none;
-	/*font-weight: normal;*/
 	font-family: "微软雅黑";
 }
 
 * {
-	-webkit-touch-callout: none; /*系统默认菜单被禁用*/
-	-webkit-user-select: none; /*webkit浏览器*/
-	-khtml-user-select: none; /*早期浏览器*/
-	-moz-user-select: none; /*火狐*/
-	-ms-user-select: none; /*IE10*/
 	user-select: none;
 }
 
@@ -34,78 +28,6 @@ a, a:active, a:visited, a:hover, a:focus {
 	cursor: pointer;
 }
 
-.hid {
-	display: none;
-}
-
-
-.cfa:after, .cfb:before {
-	content: "\00A0";
-	display: table;
-}
-
-.cf:after {
-	clear: both;
-	overflow: hidden;
-}
-
-.cf {
-	zoom: 1;
-}
-
-.fr {
-	float: right;
-}
-
-.fl {
-	float: left;
-}
-
-.hr {
-	height: 20px;
-	background-color: #fff;
-}
-
-.hide {
-	display: none;
-}
-
-.show {
-	display: block;
-}
-
-.operate {
-	cursor: pointer;
-}
-
-.cl2ft-white {
-	color: #fff;
-}
-
-.cl2ft-gray1 {
-	color: #333;
-}
-
-.cl2ft-fldn {
-	color: #999;
-}
-
-.cl2ft-fldv {
-	color: #000;
-}
-
-.cl2ft-main {
-	color: #ff6c8d;
-}
-
-.cl2bd-main {
-	border-color: #ff6c8d;
-}
-
-.cl2bg-main {
-	background: #ff6c8d;
-}
-
 
 .btn {
 	cursor: pointer;
@@ -120,15 +42,20 @@ a, a:active, a:visited, a:hover, a:focus {
 	display: inline-block;
 }
 
+.line-space {
+	height: 0.6rem;
+	background-color: #f4f4f4;
+}
+
+.hr {
+	height: 20px;
+	background-color: #fff;
+}
 
 .hr60 {
 	height: 60px;
 }
 
-.line-space {
-	height: 0.6rem;
-	background-color: #f4f4f4;
-}
 
 /*提示框*/
 .dialog-tips {
@@ -221,6 +148,8 @@ a, a:active, a:visited, a:hover, a:focus {
 	font-size: 32px;
 	line-height: 60px;
 }
+
+
 
 .list-nav {
 	border-top: 1px solid #f6f6f6;
@@ -364,18 +293,7 @@ a, a:active, a:visited, a:hover, a:focus {
 	padding-right: 5px;
 }
 
-.bdb0 {
-	border-top: 0px;
-}
 
-.bdt0 {
-	border-top: 0px;
-}
-
-.pdlr14 {
-	padding-left: 14px;
-	padding-right: 14px;
-}
 
 .list-result {
 	display: none;
@@ -468,18 +386,6 @@ a, a:active, a:visited, a:hover, a:focus {
 .list-input-item .fr {
 	float: right;
 	width: 100%;
-	text-align: left;
-}
-
-.tc {
-	text-align: center;
-}
-
-.tr {
-	text-align: right;
-}
-
-.tl {
 	text-align: left;
 }
 
@@ -635,6 +541,8 @@ a, a:active, a:visited, a:hover, a:focus {
 	width: 100px;
 }
 
+/*operate-result*/
+
 .operate-result {
 	padding: 0 1rem;
 }
@@ -700,6 +608,94 @@ a, a:active, a:visited, a:hover, a:focus {
 
 .redCountdownDays, .redCountdownHours, redCountdownMinutes {
 	display: none;
+}
+
+/*attch*/
+.hide, hid {
+	display: none;
+}
+
+.show {
+	display: block;
+}
+
+.cfa:after, .cfb:before {
+	content: "\00A0";
+	display: table;
+}
+
+.cf:after {
+	clear: both;
+	overflow: hidden;
+}
+
+.cf {
+	zoom: 1;
+}
+
+.fr {
+	float: right;
+}
+
+.fl {
+	float: left;
+}
+
+.operate {
+	cursor: pointer;
+}
+
+.cl2ft-white {
+	color: #fff;
+}
+
+.cl2ft-gray1 {
+	color: #333;
+}
+
+.cl2ft-fldn {
+	color: #999;
+}
+
+.cl2ft-fldv {
+	color: #000;
+}
+
+.cl2ft-main {
+	color: #ff6c8d;
+}
+
+.cl2bd-main {
+	border-color: #ff6c8d;
+}
+
+.cl2bg-main {
+	background: #ff6c8d;
+}
+
+.bdb0 {
+	border-top: 0px;
+}
+
+.bdt0 {
+	border-top: 0px;
+}
+
+.pdlr14 {
+	padding-left: 14px;
+	padding-right: 14px;
+}
+
+.tc {
+	text-align: center;
+}
+
+.tr {
+	text-align: right;
+}
+
+.tl {
+	text-align: left;
 }
 
 /* #### Mobile Phones Portrait #### */
