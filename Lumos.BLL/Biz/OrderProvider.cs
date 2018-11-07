@@ -325,6 +325,15 @@ namespace Lumos.BLL
                                 reidsMqByCalProfitModel.Pms = reidsMqByCalProfitByCouponBuyModel;
                             }
                         }
+
+                        var productSku = CurrentDb.PromoteSku.Where(m => m.SkuId == orderDetails.ProductSkuId && m.PromoteId == order.PromoteId && m.BuyStartTime <= order.SubmitTime && m.BuyEndTime >= order.SubmitTime).FirstOrDefault();
+
+                        if (productSku != null)
+                        {
+                            productSku.LockQuantity -= 1;
+                            productSku.StockQuantity -= 1;
+                            productSku.SaleQuantity += 1;
+                        }
                     }
                 }
 

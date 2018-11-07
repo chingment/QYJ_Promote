@@ -53,6 +53,22 @@ namespace Lumos.BLL.Task
                             order.Mender = GuidUtil.Empty();
                             order.MendTime = this.DateTime;
                             order.CancelReason = "订单支付有效时间过期";
+
+
+                            var orderDetails = CurrentDb.OrderDetails.Where(q => q.OrderId == order.Id).FirstOrDefault();
+
+                            if (orderDetails != null)
+                            {
+                                var productSku = CurrentDb.PromoteSku.Where(q => q.SkuId == orderDetails.ProductSkuId && q.PromoteId == order.PromoteId && q.BuyStartTime <= order.SubmitTime && q.BuyEndTime >= order.SubmitTime).FirstOrDefault();
+
+                                if (productSku != null)
+                                {
+                                    productSku.LockQuantity -= 1;
+                                    productSku.SellQuantity += 1;
+                                }
+                            }
+
+
                             CurrentDb.SaveChanges();
                             OrderCacheUtil.ExitQueue4CheckPayStatus(m.Sn);
                             LogUtil.Info(string.Format("订单号：{0},已经过期,删除缓存", m.Sn));

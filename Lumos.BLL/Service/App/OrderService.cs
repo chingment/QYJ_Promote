@@ -75,6 +75,8 @@ namespace Lumos.BLL.Service.App
                                 return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "谢谢参与，活动已经售完", null);
                             }
 
+                            promoteSku.SellQuantity -= 1;
+                            promoteSku.LockQuantity += 1;
 
                             salePrice = promoteSku.SkuSalePrice;
 
