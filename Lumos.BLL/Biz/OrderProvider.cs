@@ -122,7 +122,7 @@ namespace Lumos.BLL
                     if (promote.IsNeedBuy)
                     {
                         order.Status = Enumeration.OrderStatus.WaitPay; //待支付状态
-                        order.WxPrepayIdExpireTime = this.DateTime.AddMinutes(5);
+                        order.PayExpireTime = this.DateTime.AddMinutes(5);
 
                         if (order.ClientId == "62c587c13c124f96b436de9522fb31f0")
                         {
@@ -137,7 +137,7 @@ namespace Lumos.BLL
                         string goods_tag = "";
                         if (order.ChargeAmount > 0)
                         {
-                            string prepayId = SdkFactory.Wx.Instance().GetPrepayId(pOperater, "JSAPI", wxUserInfo.OpenId, order.Sn, chargeAmount, goods_tag, Common.CommonUtils.GetIP(), productSku.Name, order.WxPrepayIdExpireTime);
+                            string prepayId = SdkFactory.Wx.Instance().GetPrepayId(pOperater, "JSAPI", wxUserInfo.OpenId, order.Sn, chargeAmount, goods_tag, Common.CommonUtils.GetIP(), productSku.Name, order.PayExpireTime);
 
                             if (string.IsNullOrEmpty(prepayId))
                             {
@@ -273,10 +273,12 @@ namespace Lumos.BLL
                 order.IsInVisiable = false;
                 ReidsMqByCalProfitModel reidsMqByCalProfitModel = null;
 
-                if (order.PromoteId != null)
+                var orderDetails = CurrentDb.OrderDetails.Where(m => m.OrderId == order.Id).FirstOrDefault();
+                if (orderDetails != null)
                 {
-                    var orderDetails = CurrentDb.OrderDetails.Where(m => m.OrderId == order.Id).FirstOrDefault();
-                    if (orderDetails != null)
+                    orderDetails.Status = Enumeration.OrderDetailsStatus.Payed;
+
+                    if (order.PromoteId != null)
                     {
                         var promoteCoupon = CurrentDb.PromoteCoupon.Where(m => m.ProductSkuId == orderDetails.ProductSkuId && m.PromoteId == order.PromoteId).FirstOrDefault();
                         if (promoteCoupon != null)

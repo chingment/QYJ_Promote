@@ -38,7 +38,7 @@ namespace Lumos.BLL.Service.App
                 return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, "该活动无效", ret_Operate);
             }
 
-            var orderDetails = CurrentDb.OrderDetails.Where(m => m.PromoteId == rup.PromoteId && m.ProductSkuId == rup.SkuId && m.ClientId == pClientId && m.Status == Entity.Enumeration.OrderStatus.Payed).FirstOrDefault();
+            var orderDetails = CurrentDb.OrderDetails.Where(m => m.PromoteId == rup.PromoteId && m.ProductSkuId == rup.SkuId && m.ClientId == pClientId && m.Status == Entity.Enumeration.OrderDetailsStatus.Payed).FirstOrDefault();
             if (orderDetails != null)
             {
                 var ret_Operate = new RetOperateResult();
@@ -51,21 +51,27 @@ namespace Lumos.BLL.Service.App
                 return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, "您已购买成功", ret_Operate);
             }
 
+            var isHasBuyCoupon = false;
             var clientCoupon = CurrentDb.ClientCoupon.Where(m => m.PromoteId == rup.PromoteId && m.ClientId == pClientId).FirstOrDefault();
             if (clientCoupon != null)
             {
-                if (!clientCoupon.IsBuy)
+                if (clientCoupon.IsBuy)
                 {
-                    var ret_Operate = new RetOperateResult();
-                    ret_Operate.Result = RetOperateResult.ResultType.Success;
-                    ret_Operate.Remarks = "";
-                    ret_Operate.Message = "您没有资格参与，谢谢关注";
-                    ret_Operate.IsComplete = true;
-                    ret_Operate.Buttons.Add(new RetOperateResult.Button() { Name = "回到首页", Color = "green", Url = "/Personal/Index" });
-                    ret_Operate.Buttons.Add(new RetOperateResult.Button() { Name = "个人中心", Color = "red", Url = "/Personal/Index" });
-                    return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, "您没有资格参与，谢谢关注", ret_Operate);
-
+                    isHasBuyCoupon = true;
                 }
+            }
+
+            if (!isHasBuyCoupon)
+            {
+                var ret_Operate = new RetOperateResult();
+                ret_Operate.Result = RetOperateResult.ResultType.Success;
+                ret_Operate.Remarks = "";
+                ret_Operate.Message = "您没有资格参与，谢谢关注";
+                ret_Operate.IsComplete = true;
+                ret_Operate.Buttons.Add(new RetOperateResult.Button() { Name = "回到首页", Color = "green", Url = "/Personal/Index" });
+                ret_Operate.Buttons.Add(new RetOperateResult.Button() { Name = "个人中心", Color = "red", Url = "/Personal/Index" });
+                return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, "您没有资格参与，谢谢关注", ret_Operate);
+
             }
 
 

@@ -29,6 +29,6 @@ namespace Lumos.Entity
         public string Creator { get; set; }
         public DateTime CreateTime { get; set; }
 
-        public Enumeration.OrderStatus Status { get; set; }
+        public Enumeration.OrderDetailsStatus Status { get; set; }
     }
 }

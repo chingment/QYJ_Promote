@@ -26,9 +26,9 @@ namespace Lumos.BLL.Task
             {
                 LogUtil.Info(string.Format("查询订单号：{0}", m.Sn));
 
-                if (m.WxPrepayIdExpireTime != null)
+                if (m.PayExpireTime != null)
                 {
-                    if (m.WxPrepayIdExpireTime.Value.AddMinutes(1) >= DateTime.Now)
+                    if (m.PayExpireTime.Value.AddMinutes(1) >= DateTime.Now)
                     {
                         string xml = SdkFactory.Wx.Instance().OrderQuery(m.Sn);
 

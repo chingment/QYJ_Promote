@@ -30,7 +30,7 @@ namespace Lumos.Entity
         public string Mender { get; set; }
         public DateTime? MendTime { get; set; }
         public string WxPrepayId { get; set; }
-        public DateTime? WxPrepayIdExpireTime { get; set; }
+        public DateTime? PayExpireTime { get; set; }
         public string RefereeId { get; set; }
         public string CancelReason { get; set; }
         public bool BuyProfitIsSettled { get; set; }
