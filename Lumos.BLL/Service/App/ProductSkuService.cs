@@ -129,7 +129,7 @@ namespace Lumos.BLL.Service.App
                     if (curPromoteSku.SellQuantity <= 0)
                     {
                         ret.IsCanBuy = false;
-                        ret.BuyBtn.Text = "已售完";
+                        ret.BuyBtn.Text = "已售罄";
                         ret.BuyBtn.Enabled = false;
                     }
                     else

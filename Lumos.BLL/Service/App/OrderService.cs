@@ -21,7 +21,6 @@ namespace Lumos.BLL.Service.App
                 {
                     using (TransactionScope ts = new TransactionScope())
                     {
-
                         var productSku = CurrentDb.ProductSku.Where(m => m.Id == rop.SkuId).FirstOrDefault();
 
                         if (productSku == null)
@@ -74,7 +73,7 @@ namespace Lumos.BLL.Service.App
 
                             if (promoteSku.SellQuantity <= 0)
                             {
-                                return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "谢谢参与，活动已经售完", null);
+                                return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "谢谢参与，商品已经售罄", null);
                             }
 
                             promoteSku.SellQuantity -= 1;
