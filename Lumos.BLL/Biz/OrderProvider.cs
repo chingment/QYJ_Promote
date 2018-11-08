@@ -327,7 +327,6 @@ namespace Lumos.BLL
                         }
 
                         var productSku = CurrentDb.PromoteSku.Where(m => m.Id == orderDetails.PromoteSkuId).FirstOrDefault();
-
                         if (productSku != null)
                         {
                             productSku.LockQuantity -= 1;
@@ -394,8 +393,8 @@ namespace Lumos.BLL
                             var promoteSku = CurrentDb.PromoteSku.Where(q => q.Id == item.PromoteSkuId).FirstOrDefault();
                             if (promoteSku != null)
                             {
-                                promoteSku.LockQuantity -= 1;
-                                promoteSku.SellQuantity += 1;
+                                promoteSku.LockQuantity -= item.Quantity;
+                                promoteSku.SellQuantity += item.Quantity;
                                 promoteSku.Mender = GuidUtil.Empty();
                                 promoteSku.MendTime = this.DateTime;
                             }
