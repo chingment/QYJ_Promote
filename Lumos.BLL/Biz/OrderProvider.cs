@@ -1,5 +1,6 @@
 ﻿using Lumos.Entity;
 using Lumos.Redis;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,18 @@ using System.Transactions;
 
 namespace Lumos.BLL
 {
+    public class CouponModel
+    {
+        public string Name { get; set; }
+        public string Discounttip { get; set; }
+        public string Description { get; set; }
+        public decimal Number { get; set; }
+        public string NumberType { get; set; }
+        public string NumberUnit { get; set; }
+        public DateTime? ValidStartTime { get; set; }
+        public DateTime? ValidEndTime { get; set; }
+    }
+
     public class OrderProvider : BaseProvider
     {
         private static readonly object lock_UnifiedOrder = new object();
@@ -96,11 +109,14 @@ namespace Lumos.BLL
                     order.CreateTime = this.DateTime;
                     order.Creator = pOperater;
                     order.IsInVisiable = true;
+                    order.Status = Enumeration.OrderStatus.WaitPay;
                     CurrentDb.Order.Add(order);
                     CurrentDb.SaveChanges();
 
                     var orderDetails = new OrderDetails();
                     orderDetails.Id = GuidUtil.New();
+                    orderDetails.PromoteId = promote.Id;
+                    orderDetails.PromoteSkuId = promoteSku.Id;
                     orderDetails.ClientId = pClientId;
                     orderDetails.OrderId = order.Id;
                     orderDetails.Quantity = 1;
@@ -112,7 +128,7 @@ namespace Lumos.BLL
                     orderDetails.ChargeAmount = order.ChargeAmount;
                     orderDetails.CreateTime = order.CreateTime;
                     orderDetails.Creator = order.Creator;
-
+                    orderDetails.Status = Enumeration.OrderDetailsStatus.WaitPay;
                     CurrentDb.OrderDetails.Add(orderDetails);
                     CurrentDb.SaveChanges();
 
@@ -121,7 +137,6 @@ namespace Lumos.BLL
 
                     if (promote.IsNeedBuy)
                     {
-                        order.Status = Enumeration.OrderStatus.WaitPay; //待支付状态
                         order.PayExpireTime = this.DateTime.AddMinutes(5);
 
                         if (order.ClientId == "62c587c13c124f96b436de9522fb31f0")
@@ -283,8 +298,12 @@ namespace Lumos.BLL
                         var promoteSku = CurrentDb.PromoteSku.Where(m => m.Id == item.PromoteSkuId).FirstOrDefault();
                         if (promoteSku != null)
                         {
-                            promoteSku.LockQuantity -= 1;
-                            promoteSku.StockQuantity -= 1;
+                            if (promoteSku.StockQuantity > 0)
+                            {
+                                promoteSku.LockQuantity -= 1;
+                                promoteSku.StockQuantity -= 1;
+                            }
+
                             promoteSku.SaleQuantity += 1;
 
                             var clientCoupon = CurrentDb.ClientCoupon.Where(m => m.ClientId == order.ClientId && m.PromoteId == order.PromoteId && m.PromoteSkuId == promoteSku.Id).FirstOrDefault();
@@ -306,13 +325,31 @@ namespace Lumos.BLL
                                 clientCoupon.OrderId = order.Id;
                                 clientCoupon.OrderSn = order.Sn;
 
-                                //clientCoupon.Number = promoteCoupon.Number;
-                                //clientCoupon.NumberType = promoteCoupon.NumberType;
-                                //clientCoupon.NumberUnit = promoteCoupon.NumberUnit;
-                                //clientCoupon.ValidStartTime = promoteCoupon.ValidStartTime;
-                                //clientCoupon.ValidEndTime = promoteCoupon.ValidEndTime;
-                                //clientCoupon.Description = promoteCoupon.Description;
-                                //clientCoupon.Discounttip = promoteCoupon.Discounttip;
+                                if (!string.IsNullOrEmpty(promoteSku.ExtAtrrs))
+                                {
+                                    CouponModel couponModel = null;
+                                    try
+                                    {
+                                        couponModel = Newtonsoft.Json.JsonConvert.DeserializeObject<CouponModel>(promoteSku.ExtAtrrs);
+                                    }
+                                    catch
+                                    {
+                                        couponModel = null;
+                                    }
+
+                                    if (couponModel != null)
+                                    {
+                                        clientCoupon.Name = couponModel.Name;
+                                        clientCoupon.Number = couponModel.Number;
+                                        clientCoupon.NumberType = couponModel.NumberType;
+                                        clientCoupon.NumberUnit = couponModel.NumberUnit;
+                                        clientCoupon.ValidStartTime = couponModel.ValidStartTime;
+                                        clientCoupon.ValidEndTime = couponModel.ValidEndTime;
+                                        clientCoupon.Description = couponModel.Description;
+                                        clientCoupon.Discounttip = couponModel.Discounttip;
+                                    }
+
+                                }
 
 
                                 CurrentDb.ClientCoupon.Add(clientCoupon);

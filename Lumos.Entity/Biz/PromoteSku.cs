@@ -30,5 +30,7 @@ namespace Lumos.Entity
         public string Mender { get; set; }
         public DateTime? MendTime { get; set; }
         public string RefereePromoteId { get; set; }
+
+        public string ExtAtrrs { get; set; }
     }
 }
