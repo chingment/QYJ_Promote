@@ -43,6 +43,10 @@ namespace WebMobile.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+
+            //var s = CurrentDb.PromoteCoupon.Where(m => m.Id == "00000000000000000000000000000004").FirstOrDefault();
+
+            //string b = JsonConvert.SerializeObject(s);
             //OrderConfirm();
             //string a = "/Promote/Coupon?promoteId=a999753c5fe14e26bbecad576b6a6909&amp;refereeId=00000000000000000000000000000000";
 

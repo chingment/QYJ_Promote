@@ -53,9 +53,9 @@ namespace Lumos.BLL.Service.App
                                 return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "谢谢参与，活动已经结束", null);
                             }
 
-                            if (!string.IsNullOrEmpty(promoteSku.PromoteCouponId))
+                            if (!string.IsNullOrEmpty(promoteSku.RefereePromoteId))
                             {
-                                var clientCoupon = CurrentDb.ClientCoupon.Where(m => m.PromoteCouponId == promoteSku.PromoteCouponId && m.ClientId == pClientId && m.IsBuy == true).FirstOrDefault();
+                                var clientCoupon = CurrentDb.ClientCoupon.Where(m => m.PromoteId == promoteSku.RefereePromoteId && m.ClientId == pClientId && m.IsBuy == true).FirstOrDefault();
                                 if (clientCoupon == null)
                                 {
                                     return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "谢谢参与，您没有资格参与购买", null);

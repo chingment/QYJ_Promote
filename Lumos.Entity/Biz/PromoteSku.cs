@@ -18,6 +18,7 @@ namespace Lumos.Entity
         public string SkuName { get; set; }
         public decimal SkuSalePrice { get; set; }
         public string PromoteId { get; set; }
+        public string WxCouponId { get; set; }
         public DateTime BuyStartTime { get; set; }
         public DateTime BuyEndTime { get; set; }
         public int SellQuantity { get; set; }
@@ -28,6 +29,6 @@ namespace Lumos.Entity
         public DateTime CreateTime { get; set; }
         public string Mender { get; set; }
         public DateTime? MendTime { get; set; }
-        public string PromoteCouponId { get; set; }
+        public string RefereePromoteId { get; set; }
     }
 }

@@ -532,7 +532,6 @@
     <Content Include="Views\Withdraw\Apply.cshtml" />
     <Content Include="Views\Operate\Result.cshtml" />
     <Content Include="Views\Promotec\Coupon.cshtml" />
-    <Content Include="Views\Promotec\PayResult.cshtml" />
     <Content Include="Views\Promotec\CouponGet.cshtml" />
     <Content Include="Views\ProductSku\Details.cshtml" />
     <Content Include="Views\Order\Details.cshtml" />

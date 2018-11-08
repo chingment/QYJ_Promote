@@ -14,85 +14,6 @@ namespace WebMobile.Controllers
 
     public class PromoteController : OwnBaseController
     {
-        public ActionResult Coupon(string promoteId, string refereeId)
-        {
-
-
-            //refereeId =00000000000000000000000000000000
-            var model = new CouponViewModel();
-            model.PromoteId = "a999753c5fe14e26bbecad576b6a6909";
-            model.PromoteCouponId = "00000000000000000000000000000001";
-            model.RefereeId = refereeId;
-
-            var promoteUserCoupon = CurrentDb.ClientCoupon.Where(m => m.ClientId == this.CurrentUserId && m.PromoteId == model.PromoteId && m.PromoteCouponId == model.PromoteCouponId).FirstOrDefault();
-            if (promoteUserCoupon != null)
-            {
-                if (promoteUserCoupon.IsBuy)
-                {
-                    return Redirect("~/Promote/PayResult?promoteId=" + model.PromoteId + "&orderSn=" + promoteUserCoupon.OrderSn + "&isSuccessed=True");
-                }
-            }
-
-            var promote = CurrentDb.Promote.Where(m => m.Id == model.PromoteId).FirstOrDefault();
-            if (promote != null)
-            {
-                if (promote.EndTime < DateTime.Now)
-                {
-                    model.PromoteIsEnd = true;
-                }
-            }
-
-            return View(model);
-        }
-
-        public ActionResult PayResult(string promoteId, string orderSn, bool isSuccessed = false)
-        {
-            var model = new PayResultViewModel();
-
-
-            model.PromoteId = promoteId;
-            model.OrderSn = orderSn;
-            model.IsSuccessed = isSuccessed;
-
-
-            var promote = CurrentDb.Promote.Where(m => m.Id == model.PromoteId).FirstOrDefault();
-            if (promote != null)
-            {
-                if (promote.EndTime < DateTime.Now)
-                {
-                    model.PromoteIsEnd = true;
-                }
-            }
-
-            bool isGoBuy = false;
-
-            var promoteUserCoupon = CurrentDb.ClientCoupon.Where(m => m.PromoteId == model.PromoteId && m.ClientId == this.CurrentUserId).FirstOrDefault();
-
-            string refereeId = GuidUtil.Empty();
-            if (promoteUserCoupon == null)
-            {
-                isGoBuy = true;
-            }
-            else
-            {
-                refereeId = promoteUserCoupon.RefereeId;
-
-                model.IsGetCoupon = promoteUserCoupon.IsGet;
-
-                if (!promoteUserCoupon.IsBuy)
-                {
-                    isGoBuy = true;
-                }
-            }
-
-            if (isGoBuy)
-            {
-                return Redirect("~/Promote/Coupon?promoteId=" + model.PromoteId + "&refereeId=" + refereeId);
-            }
-
-            return View(model);
-        }
-
         [HttpPost]
         public CustomJsonResult UnifiedOrder(UnifiedOrderPms model)
         {
@@ -121,7 +42,6 @@ namespace WebMobile.Controllers
                 return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, result.Message);
             }
         }
-
 
         [HttpPost]
         public CustomJsonResult CancleOrder(string orderSn, string res)

@@ -9,6 +9,6 @@ namespace Lumos.Entity
     public class OrderPmsByBuyPromoteCoupon
     {
         public string PromoteId { get; set; }
-        public string PromoteCouponId { get; set; }
+        public string PromoteSkuId { get; set; }
     }
 }

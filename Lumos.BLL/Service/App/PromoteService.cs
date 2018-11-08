@@ -14,11 +14,11 @@ namespace Lumos.BLL.Service.App
 
             var promote = CurrentDb.Promote.Where(m => m.Id == rup.PromoteId).FirstOrDefault();
 
-            var promoteCoupon = CurrentDb.PromoteCoupon.Where(m => m.PromoteId == rup.PromoteId).FirstOrDefault();
+            var promoteSku = CurrentDb.PromoteSku.Where(m => m.PromoteId == rup.PromoteId).FirstOrDefault();
 
             var ret = new RetPromoteGetConfig();
             ret.PromoteId = rup.PromoteId;
-            ret.PromoteCouponId = promoteCoupon.Id;
+            ret.PromoteSkuId = promoteSku.Id;
             ret.ClientId = pClientId;
             ret.RefereeId = rup.RefereeId;
 
@@ -99,11 +99,11 @@ namespace Lumos.BLL.Service.App
             }
             else
             {
-                if (promoteCoupon.BuyStartTime > this.DateTime)
+                if (promoteSku.BuyStartTime > this.DateTime)
                 {
                     ret.Status = 1;//活动未开始
                 }
-                else if (promoteCoupon.BuyStartTime <= this.DateTime && promoteCoupon.BuyEndTime >= this.DateTime)
+                else if (promoteSku.BuyStartTime <= this.DateTime && promoteSku.BuyEndTime >= this.DateTime)
                 {
                     ret.Status = 2;//活动中
                 }
@@ -112,7 +112,7 @@ namespace Lumos.BLL.Service.App
                     ret.Status = 3;//活动结束
                 }
 
-                var promoteUserCoupon = CurrentDb.ClientCoupon.Where(m => m.ClientId == pClientId && m.PromoteId == rup.PromoteId && m.PromoteCouponId == ret.PromoteCouponId).FirstOrDefault();
+                var promoteUserCoupon = CurrentDb.ClientCoupon.Where(m => m.ClientId == pClientId && m.PromoteId == rup.PromoteId && m.PromoteSkuId == promoteSku.Id).FirstOrDefault();
                 if (promoteUserCoupon == null)
                 {
                     ret.IsGet = false;

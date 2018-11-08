@@ -102,9 +102,9 @@ namespace Lumos.BLL.Service.App
                 ret.PromoteSkuId = curPromoteSku.Id;
                 ret.SalePrice = curPromoteSku.SkuSalePrice;
 
-                if (!string.IsNullOrEmpty(curPromoteSku.PromoteCouponId))
+                if (!string.IsNullOrEmpty(curPromoteSku.RefereePromoteId))
                 {
-                    var clientCoupon = CurrentDb.ClientCoupon.Where(m => m.ClientId == pClientId && m.PromoteCouponId == curPromoteSku.PromoteCouponId && m.IsBuy == true).FirstOrDefault();
+                    var clientCoupon = CurrentDb.ClientCoupon.Where(m => m.ClientId == pClientId && m.PromoteId == curPromoteSku.RefereePromoteId && m.IsBuy == true).FirstOrDefault();
                     if (clientCoupon == null)
                     {
                         var ret_Operate = new RetOperateResult();
