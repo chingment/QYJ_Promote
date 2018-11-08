@@ -23,7 +23,7 @@ namespace Lumos.Entity
         public DateTime? ValidStartTime { get; set; }
         public DateTime? ValidEndTime { get; set; }
         public string PromoteId { get; set; }
-        public string ProductSkuId { get; set; }
+        public string SkuId { get; set; }
         public string WxCouponId { get; set; }
         public DateTime BuyStartTime { get; set; }
         public DateTime BuyEndTime { get; set; }

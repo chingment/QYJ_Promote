@@ -195,6 +195,7 @@
 
         var promoteId = $.lumos.getUrlParamValue("promoteId");
         var skuId = $.lumos.getUrlParamValue("skuId");
+        var promoteSkuId = "";
         var orderId = "";
         $(document).ready(function () {
 
@@ -225,6 +226,7 @@
                             paginationClickable: true
                         });
                         orderId = data.orderId;
+                        promoteSkuId = data.promoteSkuId;
                         timer(data.flashSaleStSecond, data.flashSaleEnSecond, data.isCanBuy, '#first');
                     }
                     else {
@@ -239,7 +241,7 @@
             $.lumos.postJson({
                 url: "/ProductSku/UnifiedOrder",
                 isShowLoading: true,
-                data: { promoteId: promoteId, skuId: skuId, orderId: orderId },
+                data: { promoteId: promoteId, promoteSkuId: promoteSkuId, skuId: skuId, orderId: orderId },
                 success: function (d) {
                     if (d.result == $.lumos.resultType.success) {
                         var params = d.data;

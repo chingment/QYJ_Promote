@@ -46,5 +46,6 @@ namespace Lumos.BLL.Service.App
             public bool Enabled { get; set; }
         }
 
+        public string PromoteSkuId { get; set; }
     }
 }

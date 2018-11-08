@@ -15,5 +15,7 @@ namespace Lumos.BLL.Service.App
         public string RefereeId { get; set; }
 
         public string OrderId { get; set; }
+
+        public string PromoteSkuId { get; set; }
     }
 }

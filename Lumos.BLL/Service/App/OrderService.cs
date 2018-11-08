@@ -35,7 +35,7 @@ namespace Lumos.BLL.Service.App
                         {
                             return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "找不到用户微信信息", null);
                         }
-                        
+
                         var orderByBuyed = CurrentDb.Order.Where(m => m.ClientId == pClientId && m.PromoteId == rop.PromoteId && m.Status == Enumeration.OrderStatus.Payed).FirstOrDefault();
                         if (orderByBuyed != null)
                         {
@@ -47,7 +47,7 @@ namespace Lumos.BLL.Service.App
 
                         if (!string.IsNullOrEmpty(rop.PromoteId))
                         {
-                            var promoteSku = CurrentDb.PromoteSku.Where(m => m.PromoteId == rop.PromoteId && m.SkuId == rop.SkuId && m.BuyStartTime <= this.DateTime && m.BuyEndTime >= this.DateTime).FirstOrDefault();
+                            var promoteSku = CurrentDb.PromoteSku.Where(m => m.Id == rop.PromoteSkuId && m.BuyStartTime <= this.DateTime && m.BuyEndTime >= this.DateTime).FirstOrDefault();
                             if (promoteSku == null)
                             {
                                 return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "谢谢参与，活动已经结束", null);
@@ -66,7 +66,7 @@ namespace Lumos.BLL.Service.App
                         var order = CurrentDb.Order.Where(m => m.PromoteId == rop.PromoteId && m.ClientId == pClientId && m.Status == Entity.Enumeration.OrderStatus.WaitPay).FirstOrDefault();
                         if (order == null)
                         {
-                            var promoteSku = CurrentDb.PromoteSku.Where(m => m.PromoteId == rop.PromoteId && m.SkuId == rop.SkuId && m.BuyStartTime <= this.DateTime && m.BuyEndTime >= this.DateTime).FirstOrDefault();
+                            var promoteSku = CurrentDb.PromoteSku.Where(m => m.Id == rop.PromoteSkuId && m.BuyStartTime <= this.DateTime && m.BuyEndTime >= this.DateTime).FirstOrDefault();
                             if (promoteSku == null)
                             {
                                 return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "谢谢参与，活动已经结束", null);
@@ -101,14 +101,15 @@ namespace Lumos.BLL.Service.App
 
                             var orderDetails = new OrderDetails();
                             orderDetails.Id = GuidUtil.New();
-                            orderDetails.PromoteId = rop.PromoteId;
                             orderDetails.ClientId = pClientId;
                             orderDetails.OrderId = order.Id;
                             orderDetails.Quantity = 1;
                             orderDetails.SalePrice = salePrice;
-                            orderDetails.ProductSkuId = productSku.Id;
-                            orderDetails.ProductSkuName = productSku.Name;
-                            orderDetails.ProductSkuImgUrl = ImgSet.GetMain(productSku.DisplayImgUrls);
+                            orderDetails.PromoteId = rop.PromoteId;
+                            orderDetails.PromoteSkuId = rop.PromoteSkuId;
+                            orderDetails.SkuId = productSku.Id;
+                            orderDetails.SkuName = productSku.Name;
+                            orderDetails.SkuImgUrl = ImgSet.GetMain(productSku.DisplayImgUrls);
                             orderDetails.OriginalAmount = order.OriginalAmount;
                             orderDetails.DiscountAmount = order.DiscountAmount;
                             orderDetails.ChargeAmount = order.ChargeAmount;
@@ -213,7 +214,7 @@ namespace Lumos.BLL.Service.App
 
                 foreach (var item in orderDetails)
                 {
-                    ret.Skus.Add(new RetOrderGetDetails.Sku { Id = item.ProductSkuId, ImgUrl = item.ProductSkuImgUrl, Name = item.ProductSkuName, Quantity = item.Quantity, SalePrice = item.SalePrice, ChargeAmount = item.ChargeAmount });
+                    ret.Skus.Add(new RetOrderGetDetails.Sku { Id = item.SkuId, ImgUrl = item.SkuImgUrl, Name = item.SkuName, Quantity = item.Quantity, SalePrice = item.SalePrice, ChargeAmount = item.ChargeAmount });
                 }
 
                 var fieldBlock = new RetOrderGetDetails.Block();

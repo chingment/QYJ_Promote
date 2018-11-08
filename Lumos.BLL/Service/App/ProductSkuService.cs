@@ -99,6 +99,7 @@ namespace Lumos.BLL.Service.App
             }
             else
             {
+                ret.PromoteSkuId = curPromoteSku.Id;
                 ret.SalePrice = curPromoteSku.SkuSalePrice;
 
                 if (!string.IsNullOrEmpty(curPromoteSku.PromoteCouponId))
