@@ -149,7 +149,7 @@ namespace Lumos.BLL.Service.App
                             }
 
                             order.WxPrepayId = prepayId;
-                            order.PayExpireTime = this.DateTime.AddMinutes(5);
+                            order.PayExpireTime = this.DateTime.AddMinutes(2);
 
                             OrderCacheUtil.EnterQueue4CheckPayStatus(order.Sn, order);
                         }
