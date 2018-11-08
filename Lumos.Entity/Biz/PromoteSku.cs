@@ -32,5 +32,7 @@ namespace Lumos.Entity
         public string RefereePromoteId { get; set; }
 
         public string ExtAtrrs { get; set; }
+
+        public bool IsCoupon { get; set; }
     }
 }
