@@ -41,6 +41,11 @@ namespace Lumos.BLL.Service.App
                             return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "您已成功抢购,支付成功", null);
                         }
 
+                        if (pClientId == "ffcb48483a3940329424315c4c0264ea")
+                        {
+                            return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "谢谢参与，已售罄", null);
+                        }
+
 
                         decimal salePrice = productSku.SalePrice;
 
@@ -76,8 +81,11 @@ namespace Lumos.BLL.Service.App
                                 return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "谢谢参与，商品已经售罄", null);
                             }
 
-                            promoteSku.SellQuantity -= 1;
-                            promoteSku.LockQuantity += 1;
+                            if (promoteSku.StockQuantity > -1)
+                            {
+                                promoteSku.SellQuantity -= 1;
+                                promoteSku.LockQuantity += 1;
+                            }
 
                             salePrice = promoteSku.SkuSalePrice;
 

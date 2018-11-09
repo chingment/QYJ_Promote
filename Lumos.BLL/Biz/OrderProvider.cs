@@ -300,11 +300,11 @@ namespace Lumos.BLL
                         {
                             if (promoteSku.StockQuantity > 0)
                             {
-                                promoteSku.LockQuantity -= 1;
-                                promoteSku.StockQuantity -= 1;
+                                promoteSku.LockQuantity -= item.Quantity;
+                                promoteSku.StockQuantity -= item.Quantity;
                             }
 
-                            promoteSku.SaleQuantity += 1;
+                            promoteSku.SaleQuantity += item.Quantity; ;
 
                             if (promoteSku.IsCoupon)
                             {
@@ -430,8 +430,12 @@ namespace Lumos.BLL
                             var promoteSku = CurrentDb.PromoteSku.Where(q => q.Id == item.PromoteSkuId).FirstOrDefault();
                             if (promoteSku != null)
                             {
-                                promoteSku.LockQuantity -= item.Quantity;
-                                promoteSku.SellQuantity += item.Quantity;
+                                if (promoteSku.StockQuantity > 0)
+                                {
+                                    promoteSku.LockQuantity -= item.Quantity;
+                                    promoteSku.SellQuantity += item.Quantity;
+                                }
+
                                 promoteSku.Mender = GuidUtil.Empty();
                                 promoteSku.MendTime = this.DateTime;
                             }

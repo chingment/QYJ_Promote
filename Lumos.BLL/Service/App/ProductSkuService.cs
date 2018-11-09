@@ -154,6 +154,13 @@ namespace Lumos.BLL.Service.App
                 ret.ShowPriceIsInVisiable = true;
             }
 
+            if (pClientId == "ffcb48483a3940329424315c4c0264ea")
+            {
+                ret.IsCanBuy = false;
+                ret.BuyBtn.Text = "已售罄";
+                ret.BuyBtn.Enabled = false;
+            }
+
             return new CustomJsonResult(ResultType.Success, ResultCode.Success, "获取成功", ret);
 
         }
