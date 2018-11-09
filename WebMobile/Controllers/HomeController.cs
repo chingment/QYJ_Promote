@@ -180,10 +180,10 @@ namespace WebMobile.Controllers
         }
 
         [AllowAnonymous]
-        public ContentResult NotifyEvent()
+        public ActionResult NotifyEvent()
         {
             LogUtil.Info("开始接收事件推送通知");
-
+            string echoStr = "";
             if (Request.HttpMethod == "POST")
             {
                 Stream stream = Request.InputStream;
@@ -194,7 +194,6 @@ namespace WebMobile.Controllers
                 //byte[] b = new byte[intLen];
                 //Request.InputStream.Read(b, 0, intLen);
                 //string xml = System.Text.Encoding.UTF8.GetString(b);
-                string echoStr = "";
                 LogUtil.Info("接收事件推送内容:" + xml);
                 if (!string.IsNullOrEmpty(xml))
                 {
@@ -326,28 +325,29 @@ namespace WebMobile.Controllers
                         }
                     }
                 }
-
-                LogUtil.Info(string.Format("接收事件推送之后回复内容:{0}", echoStr));
-                Response.Write(echoStr);
             }
             else if (Request.HttpMethod == "GET") //微信服务器在首次验证时，需要进行一些验证，但。。。。  
             {
                 if (string.IsNullOrEmpty(Request["echostr"]))
                 {
-                    Response.Write("无法获取微信接入信息，仅供测试！");
+                    echoStr = "无法获取微信接入信息，仅供测试！";
 
                 }
+                else
+                {
+                    echoStr = Request["echostr"].ToString();
+                }
 
-                Response.Write(Request["echostr"].ToString());
             }
             else
             {
-                Response.Write("wrong");
+                echoStr = "wrong";
             }
 
+            LogUtil.Info(string.Format("接收事件推送之后回复内容:{0}", echoStr));
+            Response.Write(echoStr);
             Response.End();
-
-            return Content("");
+            return View();
         }
 
         public Task<bool> WxMsgPushLog(WxMsgPushLog wxMsgPushLog)
