@@ -41,7 +41,9 @@ namespace Lumos.BLL.Service.App
                             return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "您已成功抢购,支付成功", null);
                         }
 
-                        if (pClientId == "ffcb48483a3940329424315c4c0264ea")
+
+                        var promoteBlackList = CurrentDb.PromoteBlackList.Where(m => m.PromoteId == rop.PromoteId && m.ClientId == pClientId).FirstOrDefault();
+                        if (promoteBlackList != null)
                         {
                             return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "谢谢参与，已售罄", null);
                         }

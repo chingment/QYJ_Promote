@@ -39,6 +39,7 @@ namespace Lumos.DAL
 
         public IDbSet<Withdraw>  Withdraw { get; set; }
 
+        public IDbSet<PromoteBlackList> PromoteBlackList { get; set; }
 
         //public FxDbContext()
         //    : base("DefaultConnection")

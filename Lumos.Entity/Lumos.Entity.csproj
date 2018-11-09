@@ -66,6 +66,7 @@
     <Compile Include="Biz\ProductSku.cs" />
     <Compile Include="Biz\Promote.cs" />
     <Compile Include="Biz\ClientAccessLog.cs" />
+    <Compile Include="Biz\PromoteBlackList.cs" />
     <Compile Include="Biz\PromoteCoupon.cs" />
     <Compile Include="Biz\PromoteProfitSet.cs" />
     <Compile Include="Biz\ClientShareLog.cs" />

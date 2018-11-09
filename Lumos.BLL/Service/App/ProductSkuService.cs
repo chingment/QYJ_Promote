@@ -122,29 +122,38 @@ namespace Lumos.BLL.Service.App
                 ret.FlashSaleStSecond = Convert.ToInt32((curPromoteSku.BuyStartTime - DateTime.Now).TotalSeconds);
                 ret.FlashSaleEnSecond = Convert.ToInt32((curPromoteSku.BuyEndTime - DateTime.Now).TotalSeconds);
 
-                var orderByWaitPay = CurrentDb.Order.Where(m => m.PromoteId == rup.PromoteId && m.ClientId == pClientId && m.Status == Entity.Enumeration.OrderStatus.WaitPay).FirstOrDefault();
-
-                if (orderByWaitPay == null)
+                if (DateTime.Now < curPromoteSku.BuyStartTime)
                 {
-                    if (curPromoteSku.SellQuantity <= 0)
+                    ret.IsCanBuy = true;
+                    ret.BuyBtn.Text = "立即购买";
+                    ret.BuyBtn.Enabled = false;
+                }
+                else
+                {
+                    var orderByWaitPay = CurrentDb.Order.Where(m => m.PromoteId == rup.PromoteId && m.ClientId == pClientId && m.Status == Entity.Enumeration.OrderStatus.WaitPay).FirstOrDefault();
+
+                    if (orderByWaitPay == null)
                     {
-                        ret.IsCanBuy = false;
-                        ret.BuyBtn.Text = "已售罄";
-                        ret.BuyBtn.Enabled = false;
+                        if (curPromoteSku.SellQuantity <= 0)
+                        {
+                            ret.IsCanBuy = false;
+                            ret.BuyBtn.Text = "已售罄";
+                            ret.BuyBtn.Enabled = false;
+                        }
+                        else
+                        {
+                            ret.IsCanBuy = true;
+                            ret.BuyBtn.Text = "立即购买";
+                            ret.BuyBtn.Enabled = true;
+                        }
                     }
                     else
                     {
+                        ret.OrderId = orderByWaitPay.Id;
                         ret.IsCanBuy = true;
                         ret.BuyBtn.Text = "立即购买";
                         ret.BuyBtn.Enabled = true;
                     }
-                }
-                else
-                {
-                    ret.OrderId = orderByWaitPay.Id;
-                    ret.IsCanBuy = true;
-                    ret.BuyBtn.Text = "立即购买";
-                    ret.BuyBtn.Enabled = true;
                 }
             }
 
@@ -154,7 +163,8 @@ namespace Lumos.BLL.Service.App
                 ret.ShowPriceIsInVisiable = true;
             }
 
-            if (pClientId == "ffcb48483a3940329424315c4c0264ea")
+            var promoteBlackList = CurrentDb.PromoteBlackList.Where(m => m.PromoteId == rup.PromoteId && m.ClientId == pClientId).FirstOrDefault();
+            if (promoteBlackList != null)
             {
                 ret.IsCanBuy = false;
                 ret.BuyBtn.Text = "已售罄";
