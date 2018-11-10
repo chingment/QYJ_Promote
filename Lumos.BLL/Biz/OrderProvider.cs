@@ -281,6 +281,8 @@ namespace Lumos.BLL
                     return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, string.Format("找不到该订单号({0})", pOrderSn));
                 }
 
+              
+
                 order.Status = Enumeration.OrderStatus.Payed;
                 order.PayTime = this.DateTime;
                 order.MendTime = this.DateTime;

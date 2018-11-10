@@ -105,6 +105,16 @@ namespace Lumos.BLL.Service.App
                             order.Creator = pOperater;
                             order.IsInVisiable = true;
                             order.Status = Enumeration.OrderStatus.WaitPay; //待支付状态
+
+                            var promoteUser = CurrentDb.PromoteUser.Where(m => m.ClientId == order.ClientId && m.CtPhone != null).OrderByDescending(m => m.CreateTime).FirstOrDefault();
+                            if (promoteUser != null)
+                            {
+                                order.CtName = promoteUser.CtName;
+                                order.CtPhone = promoteUser.CtPhone;
+                                order.CtIsStudent = promoteUser.CtIsStudent;
+                                order.CtSchool = promoteUser.CtSchool;
+                            }
+
                             CurrentDb.Order.Add(order);
                             CurrentDb.SaveChanges();
 
@@ -237,11 +247,6 @@ namespace Lumos.BLL.Service.App
 
                 return new CustomJsonResult(ResultType.Success, ResultCode.Success, "获取成功", ret);
             }
-
-            return result;
         }
-
-
-
     }
 }
