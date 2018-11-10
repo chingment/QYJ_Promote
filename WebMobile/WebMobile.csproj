@@ -490,6 +490,7 @@
     <Content Include="Areas\Wb\Views\Biz\Withdraw\ListByDetails.cshtml" />
     <Content Include="Areas\Wb\Views\Biz\Withdraw\Details.cshtml" />
     <Content Include="Areas\Wb\Views\Biz\Report\PromoteShareBuyRecord.cshtml" />
+    <Content Include="Areas\Wb\Views\Biz\Report\PromoteSkuBuyRecord.cshtml" />
     <None Include="log4net.config">
       <SubType>Designer</SubType>
     </None>

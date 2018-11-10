@@ -462,5 +462,119 @@ namespace WebMobile.Areas.Wb.Controllers
                 #endregion
             }
         }
+
+
+        public ActionResult PromoteSkuBuyRecord(PromoteCouponBuyRecordViewModel model)
+        {
+            StringBuilder sbTable = new StringBuilder();
+            sbTable.Append("<table class='list-tb' cellspacing='0' cellpadding='0'>");
+            sbTable.Append("<thead>");
+            sbTable.Append("<tr>");
+            sbTable.Append("<th>序号</th>");
+            sbTable.Append("<th>订单号</th>");
+            sbTable.Append("<th>昵称</th>");
+            sbTable.Append("<th>姓名</th>");
+            sbTable.Append("<th>手机</th>");
+            sbTable.Append("<th>是否学员</th>");
+            sbTable.Append("<th>校区</th>");
+            sbTable.Append("<th>商品名称</th>");
+            sbTable.Append("<th>下单时间</th>");
+            sbTable.Append("<th>支付时间</th>");
+            sbTable.Append("</tr>");
+            sbTable.Append("</thead>");
+            sbTable.Append("<tbody>");
+            sbTable.Append("{content}");
+            sbTable.Append("</tbody>");
+            sbTable.Append("</table>");
+
+            if (Request.HttpMethod == "GET")
+            {
+                #region GET
+                sbTable.Replace("{content}", "<tr><td colspan=\"10\"></td></tr>");
+
+                model.TableHtml = sbTable.ToString();
+                return View(model);
+
+                #endregion
+            }
+            else
+            {
+                #region POST
+                StringBuilder sql = new StringBuilder(" select Sn,c.Nickname, a.CtName,a.CtPhone,a.CtIsStudent,a.CtSchool,b.SkuName,b.SalePrice,a.SubmitTime,a.PayTime from [Order] a  left join OrderDetails b on a.Id=b.OrderId  left join WxUserInfo c on a.ClientId=c.ClientId ");
+
+                sql.Append(" where a.[Status]=3 ");
+
+                if (model.PromoteId != null)
+                {
+                    sql.Append(" and  a.PromoteId ='" + model.PromoteId + "'"); ;
+                }
+
+                if (model.StartTime != null)
+                {
+                    sql.Append(" and  a.PayTime >='" + CommonUtils.ConverToShortDateStart(model.StartTime.Value) + "'"); ;
+                }
+                if (model.EndTime != null)
+                {
+                    sql.Append(" and  a.PayTime <='" + CommonUtils.ConverToShortDateEnd(model.EndTime.Value) + "'");
+                }
+
+
+                sql.Append(" order by a.PayTime desc  ");
+
+
+                DataTable dtData = DatabaseFactory.GetIDBOptionBySql().GetDataSet(sql.ToString()).Tables[0].ToStringDataTable();
+                StringBuilder sbTableContent = new StringBuilder();
+                for (int r = 0; r < dtData.Rows.Count; r++)
+                {
+                    sbTableContent.Append("<tr>");
+
+                    sbTableContent.Append("<td>" + (r + 1) + "</td>");
+
+                    for (int c = 0; c < dtData.Columns.Count; c++)
+                    {
+                        string td_value = "";
+
+                        switch (c)
+                        {
+                            case 4:
+                                td_value = dtData.Rows[r][c].ToString().Trim();
+                                if (td_value == "" || td_value == "0")
+                                {
+                                    td_value = "否";
+                                }
+                                else
+                                {
+                                    td_value = "是";
+                                }
+                                break;
+                            default:
+                                td_value = dtData.Rows[r][c].ToString().Trim();
+                                break;
+                        }
+
+                        sbTableContent.Append("<td>" + td_value + "</td>");
+
+                    }
+
+                    sbTableContent.Append("</tr>");
+                }
+
+                sbTable.Replace("{content}", sbTableContent.ToString());
+
+                ReportTable reportTable = new ReportTable(sbTable.ToString());
+
+                if (model.Operate == Enumeration.OperateType.Serach)
+                {
+                    return Json(ResultType.Success, reportTable, "");
+                }
+                else
+                {
+                    NPOIExcelHelper.HtmlTable2Excel(reportTable.Html, "商品购买记录报表");
+
+                    return Json(ResultType.Success, "");
+                }
+                #endregion
+            }
+        }
     }
 }

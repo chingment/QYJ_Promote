@@ -8,8 +8,6 @@
 
     <script type="text/javascript">
 
-
-
         function GetParams(operate) {
             var l_Data = $("#form1").serializeArray();
             l_Data.push({ name: "Model.Operate", value: operate });
@@ -17,7 +15,7 @@
             return l_Data;
         }
 
-        var url = "/Wb/Report/PromoteShareRecord";
+        var url = "/Wb/Report/PromoteSkuBuyRecord";
 
         function search() {
             $.lumos.postJson({
