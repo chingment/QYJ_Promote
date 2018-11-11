@@ -31,11 +31,17 @@ namespace System.Web
             }
         }
 
-        public static MvcHtmlString initPromote(this HtmlHelper helper, string name)
+        public static MvcHtmlString initPromote(this HtmlHelper helper, string name, Lumos.Entity.Enumeration.PromoteClass classs)
         {
 
             LumosDbContext dbContext = new LumosDbContext();
             var promote = dbContext.Promote.OrderByDescending(m => m.CreateTime).ToList();
+
+            if (classs != Lumos.Entity.Enumeration.PromoteClass.Unknow)
+            {
+                promote = promote.Where(m => m.Class == classs).ToList();
+            }
+
             StringBuilder sb = new StringBuilder();
 
             string id = name.Replace('.', '_');

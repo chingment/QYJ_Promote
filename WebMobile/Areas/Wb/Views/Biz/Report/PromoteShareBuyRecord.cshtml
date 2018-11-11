@@ -21,7 +21,7 @@
 
         function search() {
             $.lumos.postJson({
-                url:url,
+                url: url,
                 data: GetParams($.lumos.operateType.search),
                 success: function (d) {
                     $('#reporthtml').html(d.data.html);
@@ -44,7 +44,7 @@
             <div class="filter">
                 <span class="filter-label">活动：</span>
                 <span class="filter-input">
-                    @Html.initPromote("Model.PromoteId")
+                    @Html.initPromote("Model.PromoteId", Lumos.Entity.Enumeration.PromoteClass.Coupon)
                 </span>
             </div>
             <div class="filter">

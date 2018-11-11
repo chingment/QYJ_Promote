@@ -491,7 +491,7 @@ namespace WebMobile.Areas.Wb.Controllers
             if (Request.HttpMethod == "GET")
             {
                 #region GET
-                sbTable.Replace("{content}", "<tr><td colspan=\"10\"></td></tr>");
+                sbTable.Replace("{content}", "<tr><td colspan=\"11\"></td></tr>");
 
                 model.TableHtml = sbTable.ToString();
                 return View(model);

@@ -165,7 +165,7 @@ namespace Lumos.BLL.Service.App
                             if (string.IsNullOrEmpty(prepayId))
                             {
                                 LogUtil.Error("去结算，微信支付中生成预支付订单失败");
-                                return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "微信支付中生成预支付订单失败", null);
+                                return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "抢购失败，刷新页面再试试", null);
                             }
 
                             order.WxPrepayId = prepayId;

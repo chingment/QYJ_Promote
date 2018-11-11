@@ -22,5 +22,7 @@ namespace Lumos.Entity
         public bool IsNeedBuy { get; set; }
         public decimal ConsumeProfit { get; set; }
         public decimal BuyProfit { get; set; }
+
+        public Enumeration.PromoteClass Class { get; set; }
     }
 }

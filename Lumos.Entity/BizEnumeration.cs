@@ -148,5 +148,15 @@ namespace Lumos.Entity
             [Remark("失败")]
             Failure = 4
         }
+
+        public enum PromoteClass
+        {
+            [Remark("未知")]
+            Unknow = 0,
+            [Remark("卡券")]
+            Coupon = 1,
+            [Remark("商品")]
+            ProductSku = 2,
+        }
     }
 }
