@@ -491,6 +491,7 @@
     <Content Include="Areas\Wb\Views\Biz\Withdraw\Details.cshtml" />
     <Content Include="Areas\Wb\Views\Biz\Report\PromoteShareBuyRecord.cshtml" />
     <Content Include="Areas\Wb\Views\Biz\Report\PromoteSkuBuyRecord.cshtml" />
+    <Content Include="Files\a1.xls" />
     <None Include="log4net.config">
       <SubType>Designer</SubType>
     </None>
