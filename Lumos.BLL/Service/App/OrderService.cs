@@ -21,6 +21,8 @@ namespace Lumos.BLL.Service.App
                 {
                     using (TransactionScope ts = new TransactionScope())
                     {
+                        LogUtil.Info("用户id:" + pClientId);
+
                         var productSku = CurrentDb.ProductSku.Where(m => m.Id == rop.SkuId).FirstOrDefault();
 
                         if (productSku == null)

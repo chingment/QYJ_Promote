@@ -433,6 +433,7 @@
                 success: function (d) {
                     if (d.result == $.lumos.resultType.success) {
                         var params = d.data;
+                        pConfig.orderId = params.orderId;
                         pConfig.orderSn = params.orderSn;
 
                         if (params.isBuy) {
