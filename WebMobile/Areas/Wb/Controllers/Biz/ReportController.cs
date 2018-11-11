@@ -464,7 +464,7 @@ namespace WebMobile.Areas.Wb.Controllers
         }
 
 
-        public ActionResult PromoteSkuBuyRecord(PromoteCouponBuyRecordViewModel model)
+        public ActionResult PromoteSkuBuyRecord(PromoteShareRecordViewModel model)
         {
             StringBuilder sbTable = new StringBuilder();
             sbTable.Append("<table class='list-tb' cellspacing='0' cellpadding='0'>");
@@ -478,6 +478,7 @@ namespace WebMobile.Areas.Wb.Controllers
             sbTable.Append("<th>是否学员</th>");
             sbTable.Append("<th>校区</th>");
             sbTable.Append("<th>商品名称</th>");
+            sbTable.Append("<th>价格</th>");
             sbTable.Append("<th>下单时间</th>");
             sbTable.Append("<th>支付时间</th>");
             sbTable.Append("</tr>");

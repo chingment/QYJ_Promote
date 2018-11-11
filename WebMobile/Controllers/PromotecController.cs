@@ -118,7 +118,7 @@ namespace WebMobile.Controllers
                     fsRead.Close();
                     fsRead.Dispose();
                 }
-
+                LogUtil.Error("读取excel失败", ex);
                 return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, "Excel上传失败");
             }
 

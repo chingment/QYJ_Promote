@@ -8,6 +8,8 @@
 
     <script type="text/javascript">
 
+
+
         function GetParams(operate) {
             var l_Data = $("#form1").serializeArray();
             l_Data.push({ name: "Model.Operate", value: operate });
@@ -15,7 +17,7 @@
             return l_Data;
         }
 
-        var url = "/Wb/Report/PromoteSkuBuyRecord";
+        var url = "/Wb/Report/PromoteShareRecord";
 
         function search() {
             $.lumos.postJson({
@@ -46,7 +48,7 @@
                 </span>
             </div>
             <div class="filter">
-                <span class="filter-label">支付时间：</span>
+                <span class="filter-label">分享时间：</span>
                 <span class="filter-input">
                     <input type="text" class="input-control Wdate" id="Model_StartTime" name="Model.StartTime" onclick="WdatePicker({ maxDate: '#F{$dp.$D(\'Model_EndTime\')||\'@DateTime.Now.ToString("yyyy-MM-dd")\'}' })" style="width:80px;" value="@DateTime.Now.ToString("yyyy-MM-dd")" />至<input type="text" class="input-control Wdate" id="Model_EndTime" name="Model.EndTime" onclick="WdatePicker({ minDate: '#F{$dp.$D(\'Model_StartTime\')}' })" style="width:80px;" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
                 </span>
