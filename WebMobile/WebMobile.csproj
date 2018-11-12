@@ -185,6 +185,7 @@
     <Compile Include="Areas\Wb\Models\Biz\Report\PromoteShareBuyRecordViewModel.cs" />
     <Compile Include="Areas\Wb\Models\Biz\Report\PromoteShareRecordViewModel.cs" />
     <Compile Include="Areas\Wb\Models\Biz\Report\ReportModel.cs" />
+    <Compile Include="Areas\Wb\Models\Biz\Report\WithdrawRecordViewModel.cs" />
     <Compile Include="Areas\Wb\Models\Biz\Withdraw\AuditViewModel.cs" />
     <Compile Include="Areas\Wb\Models\Biz\Withdraw\DetailsViewModel.cs" />
     <Compile Include="Areas\Wb\Models\Biz\Withdraw\DoTransferViewModel.cs" />
@@ -492,6 +493,7 @@
     <Content Include="Areas\Wb\Views\Biz\Report\PromoteShareBuyRecord.cshtml" />
     <Content Include="Areas\Wb\Views\Biz\Report\PromoteSkuBuyRecord.cshtml" />
     <Content Include="Files\a1.xls" />
+    <Content Include="Areas\Wb\Views\Biz\Report\WithdrawRecord.cshtml" />
     <None Include="log4net.config">
       <SubType>Designer</SubType>
     </None>
