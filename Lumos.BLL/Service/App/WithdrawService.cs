@@ -38,6 +38,11 @@ namespace Lumos.BLL.Service.App
                         return new CustomJsonResult(ResultType.Failure, "可提现余额不够");
                     }
 
+                    if (DateTime.Now > DateTime.Parse("2018-11-15 14:00:00"))
+                    {
+                        return new CustomJsonResult(ResultType.Failure, "提现失败，已超过指定时间内提现，谢谢");
+                    }
+
                     var withdraw = new Withdraw();
                     withdraw.Id = GuidUtil.New();
                     withdraw.Sn = SnUtil.Build(Enumeration.BizSnType.Withraw, pClientId);
