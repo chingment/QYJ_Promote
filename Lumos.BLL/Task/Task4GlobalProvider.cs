@@ -89,41 +89,52 @@ namespace Lumos.BLL.Task
             #region 检查提现到期时间后，用户余额归0
 
 
-            if (DateTime.Now > DateTime.Parse("2018-11-16"))
-            {
+            //if (DateTime.Now > DateTime.Parse("2018-11-15"))
+            //{
+
+            //    var withdraws = CurrentDb.Withdraw.Where(m => m.Status == Enumeration.WithdrawStatus.Handing).ToList();
+
+            //    foreach (var withdraw in withdraws)
+            //    {
+            //        var pms = new WithdrawDoTransferPms();
+            //        pms.WithdrawId = withdraw.Id;
+            //        pms.Operate = WithdrawDoTransferOperate.Pass;
+            //        pms.AuditComments = "";
+            //        BizFactory.Withdraw.DoTransfer(GuidUtil.New(), pms);
+            //    }
 
 
-                var funds = CurrentDb.Fund.Where(m => m.AvailableBalance > 0).ToList();
+            //    var funds = CurrentDb.Fund.Where(m => m.AvailableBalance > 0).ToList();
 
-                foreach (var fund in funds)
-                {
+            //    foreach (var fund in funds)
+            //    {
 
-                    var dAmount = fund.AvailableBalance;
-                    fund.CurrentBalance -= dAmount;
-                    fund.AvailableBalance -= dAmount;
-                    fund.MendTime = DateTime.Now;
-                    fund.Mender = GuidUtil.Empty();
+            //        var dAmount = fund.AvailableBalance;
+            //        fund.CurrentBalance -= dAmount;
+            //        fund.AvailableBalance -= dAmount;
+            //        fund.MendTime = DateTime.Now;
+            //        fund.Mender = GuidUtil.Empty();
 
 
-                    var fundTrans = new FundTrans();
-                    fundTrans.Id = GuidUtil.New();
-                    fundTrans.Sn = SnUtil.Build(Enumeration.BizSnType.FundTrans, fund.ClientId);
-                    fundTrans.ClientId = fund.ClientId;
-                    fundTrans.ChangeType = Enumeration.FundTransChangeType.WtihdrawExpire;
-                    fundTrans.ChangeAmount = dAmount;
-                    fundTrans.CurrentBalance = fund.CurrentBalance;
-                    fundTrans.AvailableBalance = fund.AvailableBalance;
-                    fundTrans.LockBalance = fund.LockBalance;
-                    fundTrans.CreateTime = DateTime.Now;
-                    fundTrans.Creator = GuidUtil.Empty();
-                    fundTrans.Description = "提现期限到期，余额清零";
-                    fundTrans.TipsIcon = IconUtil.Withdraw;
-                    fundTrans.IsNoDisplay = false;
-                    CurrentDb.FundTrans.Add(fundTrans);
-                    CurrentDb.SaveChanges();
-                }
+            //        var fundTrans = new FundTrans();
+            //        fundTrans.Id = GuidUtil.New();
+            //        fundTrans.Sn = SnUtil.Build(Enumeration.BizSnType.FundTrans, fund.ClientId);
+            //        fundTrans.ClientId = fund.ClientId;
+            //        fundTrans.ChangeType = Enumeration.FundTransChangeType.WtihdrawExpire;
+            //        fundTrans.ChangeAmount = dAmount;
+            //        fundTrans.CurrentBalance = fund.CurrentBalance;
+            //        fundTrans.AvailableBalance = fund.AvailableBalance;
+            //        fundTrans.LockBalance = fund.LockBalance;
+            //        fundTrans.CreateTime = DateTime.Now;
+            //        fundTrans.Creator = GuidUtil.Empty();
+            //        fundTrans.Description = "提现期限到期，余额清零";
+            //        fundTrans.TipsIcon = IconUtil.Withdraw;
+            //        fundTrans.IsNoDisplay = false;
+            //        CurrentDb.FundTrans.Add(fundTrans);
+            //        CurrentDb.SaveChanges();
+            //    }
 
-            }
+            //}
 
             #endregion
             return result;
