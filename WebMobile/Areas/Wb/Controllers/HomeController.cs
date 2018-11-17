@@ -171,11 +171,11 @@ namespace WebMobile.Areas.Wb.Controllers
 
 
         [HttpPost]
-        public ActionResult LogOff()
+        public CustomJsonResult LogOff()
         {
             OwnRequest.Quit();
-
-            return Redirect(WebMobile.Areas.Wb.Own.OwnWebSettingUtils.GetLoginPage(""));
+            var ret = new { url = Areas.Wb.Own.OwnWebSettingUtils.GetLoginPage("") };
+            return new CustomJsonResult(ResultType.Success, ResultCode.Success, "退出成功", ret);
         }
 
         [HttpPost]

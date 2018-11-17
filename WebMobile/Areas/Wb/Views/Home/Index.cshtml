@@ -52,7 +52,7 @@
 
                 art.dialog.confirm('确定要退出？', function () {
                     $.lumos.postJson({
-                        url: "/Home/LogOff",
+                        url: "/Wb/Home/LogOff",
                         success: function (d) {
                             $.lumos.tips(d.message);
                             if (d.result == $.lumos.resultType.success) {
