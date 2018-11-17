@@ -4,22 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lumos.Entity
+namespace Lumos.BLL.Service.Admin
 {
-
-    public enum WithdrawAuditOperate
+    public enum RopWithdrawDoTransferOperate
     {
         Unknow = 0,
         Pass = 1,
         NoPass = 2
     }
 
-    public class WithdrawAuditPms
+    public class RopWithdrawDoTransfer
     {
         public string WithdrawId { get; set; }
 
         public string AuditComments { get; set; }
 
-        public WithdrawAuditOperate Operate { get; set; }
+        public RopWithdrawDoTransferOperate Operate { get; set; }
     }
 }

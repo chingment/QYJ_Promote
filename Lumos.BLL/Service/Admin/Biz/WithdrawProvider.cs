@@ -7,18 +7,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 
-namespace Lumos.BLL
+namespace Lumos.BLL.Service.Admin
 {
     public class WithdrawProvider : BaseProvider
     {
-        public CustomJsonResult Audit(string pOperater, WithdrawAuditPms pWithdrawAuditPms)
+        public CustomJsonResult Audit(string pOperater, RopWithdrawAudit rop)
         {
             CustomJsonResult result = new CustomJsonResult();
 
 
             using (TransactionScope ts = new TransactionScope())
             {
-                var withdraw = CurrentDb.Withdraw.Where(m => m.Id == pWithdrawAuditPms.WithdrawId).FirstOrDefault();
+                var withdraw = CurrentDb.Withdraw.Where(m => m.Id == rop.WithdrawId).FirstOrDefault();
 
                 if (withdraw == null)
                 {
@@ -35,11 +35,11 @@ namespace Lumos.BLL
                     return new CustomJsonResult(ResultType.Failure, "该提现申请已经被处理");
                 }
 
-                withdraw.AuditComments = pWithdrawAuditPms.AuditComments;
+                withdraw.AuditComments = rop.AuditComments;
 
-                switch (pWithdrawAuditPms.Operate)
+                switch (rop.Operate)
                 {
-                    case WithdrawAuditOperate.Pass:
+                    case RopWithdrawAuditOperate.Pass:
                         withdraw.Status = Enumeration.WithdrawStatus.Handing;
                         withdraw.Mender = pOperater;
                         withdraw.MendTime = this.DateTime;
@@ -49,10 +49,10 @@ namespace Lumos.BLL
                         result = new CustomJsonResult(ResultType.Success, ResultCode.Success, "审核通过");
 
                         break;
-                    case WithdrawAuditOperate.NoPass:
+                    case RopWithdrawAuditOperate.NoPass:
 
                         withdraw.Status = Enumeration.WithdrawStatus.Failure;
-                        withdraw.FailureReason = pWithdrawAuditPms.AuditComments;
+                        withdraw.FailureReason = rop.AuditComments;
                         withdraw.Mender = pOperater;
                         withdraw.MendTime = this.DateTime;
                         withdraw.Auditor = pOperater;
@@ -98,14 +98,14 @@ namespace Lumos.BLL
         }
 
 
-        public CustomJsonResult DoTransfer(string pOperater, WithdrawDoTransferPms pWithdrawDoTransferPms)
+        public CustomJsonResult DoTransfer(string pOperater, RopWithdrawDoTransfer rop)
         {
             CustomJsonResult result = new CustomJsonResult();
 
 
             using (TransactionScope ts = new TransactionScope())
             {
-                var withdraw = CurrentDb.Withdraw.Where(m => m.Id == pWithdrawDoTransferPms.WithdrawId).FirstOrDefault();
+                var withdraw = CurrentDb.Withdraw.Where(m => m.Id == rop.WithdrawId).FirstOrDefault();
 
                 if (withdraw == null)
                 {
@@ -120,11 +120,11 @@ namespace Lumos.BLL
 
                 var fund = CurrentDb.Fund.Where(m => m.ClientId == withdraw.ClientId).FirstOrDefault();
                 var fundTrans = new FundTrans();
-                switch (pWithdrawDoTransferPms.Operate)
+                switch (rop.Operate)
                 {
-                    case WithdrawDoTransferOperate.Pass:
+                    case RopWithdrawDoTransferOperate.Pass:
                         withdraw.Status = Enumeration.WithdrawStatus.Success;
-                        withdraw.FailureReason = pWithdrawDoTransferPms.AuditComments;
+                        withdraw.FailureReason = rop.AuditComments;
                         withdraw.Mender = pOperater;
                         withdraw.MendTime = this.DateTime;
                         withdraw.Auditor = pOperater;
@@ -153,10 +153,10 @@ namespace Lumos.BLL
                         result = new CustomJsonResult(ResultType.Success, ResultCode.Success, "审核通过");
 
                         break;
-                    case WithdrawDoTransferOperate.NoPass:
+                    case RopWithdrawDoTransferOperate.NoPass:
 
                         withdraw.Status = Enumeration.WithdrawStatus.Failure;
-                        withdraw.FailureReason = pWithdrawDoTransferPms.AuditComments;
+                        withdraw.FailureReason = rop.AuditComments;
                         withdraw.Mender = pOperater;
                         withdraw.MendTime = this.DateTime;
                         withdraw.Auditor = pOperater;

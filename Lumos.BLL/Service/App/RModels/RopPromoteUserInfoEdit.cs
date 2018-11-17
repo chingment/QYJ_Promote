@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace WebMobile.Models.Promote
+namespace Lumos.BLL.Service.App
 {
-    public class EditPromoteUserInfoViewModel
+    public class RopPromoteUserInfoEdit
     {
         public string PromoteId { get; set; }
 

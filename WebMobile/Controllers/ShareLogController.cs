@@ -1,11 +1,11 @@
 ﻿using Lumos;
+using Lumos.BLL.Service.App;
 using Lumos.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using WebMobile.Models.ShareLog;
 
 namespace WebMobile.Controllers
 {
@@ -17,7 +17,7 @@ namespace WebMobile.Controllers
         }
 
         [HttpPost]
-        public CustomJsonResult GetMy(SearchCondition model)
+        public CustomJsonResult GetMy(RupShareLogGetList rup)
         {
             var query = (from o in CurrentDb.ClientCoupon
                          join m in CurrentDb.WxUserInfo on o.ClientId equals m.ClientId
@@ -32,7 +32,7 @@ namespace WebMobile.Controllers
 
             int pageSize = 10;
 
-            query = query.OrderByDescending(r => r.BuyTime).Skip(pageSize * (model.PageIndex)).Take(pageSize);
+            query = query.OrderByDescending(r => r.BuyTime).Skip(pageSize * (rup.PageIndex)).Take(pageSize);
 
             var list = query.ToList();
 

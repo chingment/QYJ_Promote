@@ -1,11 +1,11 @@
 ﻿using Lumos;
+using Lumos.BLL.Service.App;
 using Lumos.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using WebMobile.Models.Coupon;
 
 namespace WebMobile.Controllers
 {
@@ -18,7 +18,7 @@ namespace WebMobile.Controllers
         }
 
         [HttpPost]
-        public CustomJsonResult GetMy(SearchCondition model)
+        public CustomJsonResult GetMy(RupCouponGetList rup)
         {
             var query = (from o in CurrentDb.ClientCoupon
                          where
@@ -30,7 +30,7 @@ namespace WebMobile.Controllers
 
             int pageSize = 10;
 
-            query = query.OrderByDescending(r => r.CreateTime).Skip(pageSize * (model.PageIndex)).Take(pageSize);
+            query = query.OrderByDescending(r => r.CreateTime).Skip(pageSize * (rup.PageIndex)).Take(pageSize);
 
             var list = query.ToList();
 

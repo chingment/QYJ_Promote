@@ -215,24 +215,9 @@
     <Compile Include="App_Start\Own\OwnExceptionAttribute.cs" />
     <Compile Include="App_Start\Own\OwnStaticResource.cs" />
     <Compile Include="App_Start\Own\OwnStatisticsTrackerAttribute.cs" />
-    <Compile Include="Models\Account\LoginViewModel.cs" />
-    <Compile Include="Models\Coupon\MyCouponModel.cs" />
-    <Compile Include="Models\Coupon\SearchCondition.cs" />
-    <Compile Include="Models\Fund\MyTranModel.cs" />
-    <Compile Include="Models\Fund\SearchCondition.cs" />
-    <Compile Include="Models\Home\SearchCondition.cs" />
     <Compile Include="Models\OwnBaseViewModel.cs" />
     <Compile Include="Models\Personal\IndexViewModel.cs" />
-    <Compile Include="Models\Home\AccessLogModel.cs" />
-    <Compile Include="Models\Promote\CouponViewModel.cs" />
-    <Compile Include="Models\Promote\EditPromoteUserInfoViewModel.cs" />
-    <Compile Include="Models\Promote\PayResultViewModel.cs" />
-    <Compile Include="Models\Home\ShareLogModel.cs" />
-    <Compile Include="Models\ShareLog\MyShareLogModel.cs" />
-    <Compile Include="Models\ShareLog\SearchCondition.cs" />
     <Compile Include="Models\Withdraw\ApplyViewModel.cs" />
-    <Compile Include="Models\Withdraw\MyWithdrawModel.cs" />
-    <Compile Include="Models\Withdraw\SearchCondition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

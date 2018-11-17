@@ -11,7 +11,6 @@ using Lumos.DAL.AuthorizeRelay;
 using Lumos.Redis;
 using System.ComponentModel.DataAnnotations;
 using Lumos;
-using WebMobile.Models.Account;
 using Lumos.Session;
 using Lumos.Web;
 using Newtonsoft.Json;
@@ -23,24 +22,6 @@ namespace WebMobile.Controllers
 {
     public class AccountController : OwnBaseController
     {
-        public string OrderConfirm()
-        {
-            Models.Home.SearchCondition model = new Models.Home.SearchCondition();
-
-            model.Name = "dasda";
-
-            string a1 = JsonConvert.SerializeObject(model);
-
-
-
-            Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("version", "1.3.0.7");
-            HttpUtil http = new HttpUtil();
-            string result = http.HttpPostJson("http://localhost:18068/Home/NotifyEvent", a1, headers);
-
-            return result;
-
-        }
 
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)

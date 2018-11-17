@@ -35,7 +35,7 @@ namespace WebMobile.Controllers
         }
 
         [HttpPost]
-        public CustomJsonResult GetMy(SearchCondition model)
+        public CustomJsonResult GetMy(RupWithdrawGetList rup)
         {
             var query = (from o in CurrentDb.Withdraw
                          where
@@ -46,7 +46,7 @@ namespace WebMobile.Controllers
 
             int pageSize = 10;
 
-            query = query.OrderByDescending(r => r.ApplyTime).Skip(pageSize * (model.PageIndex)).Take(pageSize);
+            query = query.OrderByDescending(r => r.ApplyTime).Skip(pageSize * (rup.PageIndex)).Take(pageSize);
 
             var list = query.ToList();
 

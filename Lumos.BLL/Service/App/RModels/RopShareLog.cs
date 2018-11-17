@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace WebMobile.Models.Promote
+namespace Lumos.BLL.Service.App
 {
-    public class CouponViewModel
+    public class RopShareLog
     {
+        public string Type { get; set; }
         public string PromoteId { get; set; }
-
-        public string PromoteCouponId { get; set; }
-
-        public bool PromoteIsEnd { get; set; }
-
         public string RefereeId { get; set; }
+        public string ShareLink { get; set; }
     }
 }

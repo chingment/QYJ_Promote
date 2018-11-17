@@ -1,12 +1,12 @@
 ﻿using Lumos;
 using Lumos.BLL;
+using Lumos.BLL.Service.App;
 using Lumos.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using WebMobile.Models.Fund;
 
 namespace WebMobile.Controllers
 {
@@ -19,7 +19,7 @@ namespace WebMobile.Controllers
 
 
         [HttpPost]
-        public CustomJsonResult GetMyTrans(SearchCondition model)
+        public CustomJsonResult GetMyTrans(RupFundGetList rup)
         {
             var query = (from o in CurrentDb.FundTrans
                          where
@@ -31,7 +31,7 @@ namespace WebMobile.Controllers
 
             int pageSize = 10;
 
-            query = query.OrderByDescending(r => r.CreateTime).Skip(pageSize * (model.PageIndex)).Take(pageSize);
+            query = query.OrderByDescending(r => r.CreateTime).Skip(pageSize * (rup.PageIndex)).Take(pageSize);
 
             var list = query.ToList();
 

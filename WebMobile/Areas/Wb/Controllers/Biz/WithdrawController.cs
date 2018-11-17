@@ -1,5 +1,6 @@
 ﻿using Lumos;
 using Lumos.BLL;
+using Lumos.BLL.Service.Admin;
 using Lumos.Entity;
 using System;
 using System.Collections.Generic;
@@ -154,9 +155,9 @@ namespace WebMobile.Areas.Wb.Controllers
         }
 
         [HttpPost]
-        public CustomJsonResult Audit(WithdrawAuditPms model)
+        public CustomJsonResult Audit(RopWithdrawAudit rop)
         {
-            return BizFactory.Withdraw.Audit(this.CurrentUserId, model);
+            return AdminServiceFactory.Withdraw.Audit(this.CurrentUserId, rop);
         }
 
 
@@ -207,9 +208,9 @@ namespace WebMobile.Areas.Wb.Controllers
 
 
         [HttpPost]
-        public CustomJsonResult DoTransfer(WithdrawDoTransferPms model)
+        public CustomJsonResult DoTransfer(RopWithdrawDoTransfer rop)
         {
-            return BizFactory.Withdraw.DoTransfer(this.CurrentUserId, model);
+            return AdminServiceFactory.Withdraw.DoTransfer(this.CurrentUserId, rop);
         }
     }
 }

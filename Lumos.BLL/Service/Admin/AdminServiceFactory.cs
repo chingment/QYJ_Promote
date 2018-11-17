@@ -8,6 +8,13 @@ namespace Lumos.BLL.Service.Admin
 {
     public class AdminServiceFactory : BaseFactory
     {
+        public static WithdrawProvider Withdraw
+        {
+            get
+            {
+                return new WithdrawProvider();
+            }
+        }
 
         public static SysUserProvider SysUser
         {

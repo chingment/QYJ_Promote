@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lumos.BLL.Service.App.Models
+namespace Lumos.BLL.Service.App
 {
     public class PromoteConfigModel
     {

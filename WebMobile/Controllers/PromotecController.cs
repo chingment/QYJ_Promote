@@ -8,7 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using WebMobile.Models.Promote;
 
 namespace WebMobile.Controllers
 {

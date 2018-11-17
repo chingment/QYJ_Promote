@@ -83,7 +83,9 @@
     <Compile Include="Biz\RModels\RetLogin.cs" />
     <Compile Include="Biz\RModels\RopLogin.cs" />
     <Compile Include="Biz\RModels\RupBaseGetList.cs" />
-    <Compile Include="Biz\WithdrawProvider.cs" />
+    <Compile Include="Service\Admin\Biz\RModels\RopWithdrawAudit.cs" />
+    <Compile Include="Service\Admin\Biz\RModels\RopWithdrawDoTransfer.cs" />
+    <Compile Include="Service\Admin\Biz\WithdrawProvider.cs" />
     <Compile Include="Biz\WxUserProvider.cs" />
     <Compile Include="Factory..cs" />
     <Compile Include="IconUtil.cs" />
@@ -117,7 +119,15 @@
     <Compile Include="Service\Admin\Sys\SysStaffUserProvider.cs" />
     <Compile Include="Service\Admin\Sys\SysUserProvider.cs" />
     <Compile Include="Service\App\AppServiceFactory.cs" />
+    <Compile Include="Service\App\Models\MyCouponModel.cs" />
+    <Compile Include="Service\App\Models\MyShareLogModel.cs" />
+    <Compile Include="Service\App\Models\MyTranModel.cs" />
+    <Compile Include="Service\App\Models\MyWithdrawModel.cs" />
     <Compile Include="Service\App\Models\PromoteConfigModel.cs" />
+    <Compile Include="Service\App\Models\RupShareLogGetList.cs" />
+    <Compile Include="Service\App\Models\RupWithdrawGetList.cs" />
+    <Compile Include="Service\App\RModels\RopPromoteUserInfoEdit.cs" />
+    <Compile Include="Service\App\RModels\RopShareLog.cs" />
     <Compile Include="Service\App\OperateService.cs" />
     <Compile Include="Service\App\ProductSkuService.cs" />
     <Compile Include="Service\App\PromoteService.cs" />
@@ -129,6 +139,8 @@
     <Compile Include="Service\App\RModels\RopOrderCancleOrder.cs" />
     <Compile Include="Service\App\RModels\RopOrderUnifiedOrder.cs" />
     <Compile Include="Service\App\RModels\RopWithdrawApply.cs" />
+    <Compile Include="Service\App\RModels\RupCouponGetList.cs" />
+    <Compile Include="Service\App\RModels\RupFundGetList.cs" />
     <Compile Include="Service\App\RModels\RupProductSkuGetDetails.cs" />
     <Compile Include="Service\App\RModels\RupPromoteGetConfig.cs" />
     <Compile Include="Service\App\RModels\RupOrderGetDetails.cs" />

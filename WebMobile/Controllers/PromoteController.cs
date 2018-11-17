@@ -1,5 +1,6 @@
 ﻿using Lumos;
 using Lumos.BLL;
+using Lumos.BLL.Service.App;
 using Lumos.Entity;
 using Lumos.WeiXinSdk;
 using System;
@@ -7,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using WebMobile.Models.Promote;
 
 namespace WebMobile.Controllers
 {
@@ -157,32 +157,32 @@ namespace WebMobile.Controllers
         }
 
         [HttpPost]
-        public CustomJsonResult EditPromoteUserInfo(EditPromoteUserInfoViewModel model)
+        public CustomJsonResult EditPromoteUserInfo(RopPromoteUserInfoEdit rop)
         {
             LogUtil.Info("用户:" + this.CurrentUserId + ",提交卡券信息");
 
-            var promoteUser = CurrentDb.PromoteUser.Where(m => m.ClientId == this.CurrentUserId && m.PromoteId == model.PromoteId).FirstOrDefault();
+            var promoteUser = CurrentDb.PromoteUser.Where(m => m.ClientId == this.CurrentUserId && m.PromoteId == rop.PromoteId).FirstOrDefault();
 
             if (promoteUser == null)
             {
                 promoteUser = new PromoteUser();
                 promoteUser.Id = GuidUtil.New();
-                promoteUser.PromoteId = model.PromoteId;
+                promoteUser.PromoteId = rop.PromoteId;
                 promoteUser.ClientId = this.CurrentUserId;
-                promoteUser.CtName = model.CtName;
-                promoteUser.CtPhone = model.CtPhone;
-                promoteUser.CtIsStudent = model.CtIsStudent;
-                promoteUser.CtSchool = model.CtSchool;
+                promoteUser.CtName = rop.CtName;
+                promoteUser.CtPhone = rop.CtPhone;
+                promoteUser.CtIsStudent = rop.CtIsStudent;
+                promoteUser.CtSchool = rop.CtSchool;
                 promoteUser.CreateTime = DateTime.Now;
                 promoteUser.Creator = this.CurrentUserId;
                 CurrentDb.PromoteUser.Add(promoteUser);
             }
             else
             {
-                promoteUser.CtName = model.CtName;
-                promoteUser.CtPhone = model.CtPhone;
-                promoteUser.CtIsStudent = model.CtIsStudent;
-                promoteUser.CtSchool = model.CtSchool;
+                promoteUser.CtName = rop.CtName;
+                promoteUser.CtPhone = rop.CtPhone;
+                promoteUser.CtIsStudent = rop.CtIsStudent;
+                promoteUser.CtSchool = rop.CtSchool;
             }
 
             CurrentDb.SaveChanges();

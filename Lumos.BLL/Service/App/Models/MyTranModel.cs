@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace WebMobile.Models.Fund
+namespace Lumos.BLL.Service.App
 {
     public class MyTranModel
     {

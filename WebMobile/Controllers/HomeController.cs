@@ -6,7 +6,6 @@ using Lumos.Entity;
 using Lumos.WeiXinSdk;
 using System.Text;
 using System.Web.Security;
-using WebMobile.Models.Home;
 using Lumos.WeiXinSdk.MsgPush;
 using System.Linq;
 using System.Threading;
@@ -22,6 +21,7 @@ using System.Collections.Generic;
 using Lumos.Common;
 using System.IO;
 using Newtonsoft.Json.Linq;
+using Lumos.BLL.Service.App;
 
 namespace WebMobile.Controllers
 {
@@ -513,16 +513,16 @@ namespace WebMobile.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public CustomJsonResult ShareLog(ShareLogModel model)
+        public CustomJsonResult ShareLog(RopShareLog rop)
         {
 
             var clientShareLog = new ClientShareLog();
             clientShareLog.Id = GuidUtil.New();
             clientShareLog.ClientId = this.CurrentUserId;
-            clientShareLog.ShareLink = model.ShareLink;
-            clientShareLog.RefereeId = model.RefereeId;
-            clientShareLog.PromoteId = model.PromoteId;
-            clientShareLog.Type = model.Type;
+            clientShareLog.ShareLink = rop.ShareLink;
+            clientShareLog.RefereeId = rop.RefereeId;
+            clientShareLog.PromoteId = rop.PromoteId;
+            clientShareLog.Type = rop.Type;
             clientShareLog.CreateTime = DateTime.Now;
             clientShareLog.Creator = this.CurrentUserId;
 
