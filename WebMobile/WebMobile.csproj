@@ -369,6 +369,7 @@
     <Content Include="Areas\Wb\Scripts\jquery.mouseoverbox.js" />
     <Content Include="Areas\Wb\Scripts\jquery.mousewheel.js" />
     <Content Include="Areas\Wb\Scripts\jquery.resizeEnd.js" />
+    <Content Include="Areas\Wb\Scripts\jquery.tmpl.min.js" />
     <Content Include="Areas\Wb\Scripts\json2.js" />
     <Content Include="Areas\Wb\Scripts\owl.carousel.js" />
     <Content Include="Areas\Wb\Scripts\respond.js" />

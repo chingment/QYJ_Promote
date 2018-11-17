@@ -42,13 +42,8 @@
             $('a[gotopage]').live("click", function () {
                 var target = $(this).attr("target");
                 var gotopage = $(this).attr("gotopage");
-
-
                 $('a[gotopage]').parent().removeClass('active');
                 $(this).parent().addClass('active');
-
-
-
 
                 window.frames[target].document.location = gotopage;
             });
@@ -82,7 +77,7 @@
 
                 var heightss = $(iframe).contents().find("body").height()
                 var height = Math.max(bHeight, dHeight);
-
+                console.log(heightss)
                 iframe.height = heightss;
 
                 var tree_tab_left = $('.ztree');
