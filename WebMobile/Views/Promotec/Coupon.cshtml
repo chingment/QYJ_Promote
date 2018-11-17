@@ -220,7 +220,7 @@
                 }
 
                 $.lumos.postJson({
-                    url: "/Promote/EditPromoteUserInfo",
+                    url: "/Promotec/EditPromoteUserInfo",
                     isShowLoading: true,
                     data: { promoteId: pConfig.promoteId, ctName: ctName, ctPhone: ctPhone, ctIsStudent: ctIsStudent, ctSchool: ctSchool },
                     success: function (d) {
@@ -344,7 +344,7 @@
             }
 
             $.lumos.postJson({
-                url: "/Promote/GetCardList",
+                url: "/Promotec/GetCardList",
                 data: { promoteId: pConfig.promoteId },
                 success: function (d) {
                     var cards = d.data;
@@ -375,7 +375,7 @@
             }
 
             $.lumos.postJson({
-                url: "/Promote/GetCardList",
+                url: "/Promotec/GetCardList",
                 data: { promoteId: pConfig.promoteId },
                 isShowLoading: true,
                 success: function (d) {
@@ -404,7 +404,7 @@
                                     });
 
                                     $.lumos.postJson({
-                                        url: "/Promote/AddCouponNotifyResult",
+                                        url: "/Promotec/AddCouponNotifyResult",
                                         data: l_Data,
                                         success: function (d) {
                                         }
@@ -427,7 +427,7 @@
         function unifiedOrder() {
 
             $.lumos.postJson({
-                url: "/Promote/UnifiedOrder",
+                url: "/Promotec/UnifiedOrder",
                 isShowLoading: true,
                 data: { type: "1", refereeId: pConfig.refereeId, orderPms: { promoteId: pConfig.promoteId, promoteSkuId: pConfig.promoteSkuId } },
                 success: function (d) {
