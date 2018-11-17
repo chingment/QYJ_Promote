@@ -534,7 +534,7 @@
                 async: _async,
                 headers: headers,
                 timeout: _timeout,
-                data: _data,
+                data: postStr,
                 url: _url,
                 beforeSend: function (XMLHttpRequest) {
                     if (_isShowLoading) {

@@ -205,6 +205,7 @@
         function accessLog() {
             $.lumos.postJson({
                 url: "/Home/AccessLog",
+                isShowLoading: false,
                 success: function (d) {
                 }
             });
@@ -215,7 +216,6 @@
                 url: "/Home/ShareLog",
                 data: { promoteId: promoteId, refereeId: refereeId, shareLink: shareLink, type: type },
                 success: function (d) {
-
                 }
             });
         }
