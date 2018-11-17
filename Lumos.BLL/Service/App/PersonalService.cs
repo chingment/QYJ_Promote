@@ -14,6 +14,7 @@ namespace Lumos.BLL.Service.App
 
             var ret = new RetPersonalGetIndexPageData();
 
+            ret.ServicePhone = "020-82310186";
             var wxUserInfo = CurrentDb.WxUserInfo.Where(m => m.ClientId == pClientId).FirstOrDefault();
             if (wxUserInfo != null)
             {

@@ -83,8 +83,10 @@
     <Compile Include="Biz\RModels\RetLogin.cs" />
     <Compile Include="Biz\RModels\RopLogin.cs" />
     <Compile Include="Biz\RModels\RupBaseGetList.cs" />
+    <Compile Include="Service\Admin\Biz\RModels\RetWithdrawGetDetails.cs" />
     <Compile Include="Service\Admin\Biz\RModels\RopWithdrawAudit.cs" />
     <Compile Include="Service\Admin\Biz\RModels\RopWithdrawDoTransfer.cs" />
+    <Compile Include="Service\Admin\Biz\RModels\RupWithdrawGetList.cs" />
     <Compile Include="Service\Admin\Biz\WithdrawProvider.cs" />
     <Compile Include="Biz\WxUserProvider.cs" />
     <Compile Include="Factory..cs" />

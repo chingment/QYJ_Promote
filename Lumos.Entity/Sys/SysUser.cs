@@ -109,9 +109,6 @@ namespace Lumos.Entity
 
         public Enumeration.UserType Type { get; set; }
 
-        [NotMapped]
-        public string Password { get; set; }
-
         public bool IsCanDelete { get; set; }
 
     }

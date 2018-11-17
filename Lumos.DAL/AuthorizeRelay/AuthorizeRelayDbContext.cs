@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Lumos.Entity;
 using System.Data;
 using System.Data.SqlClient;
@@ -54,19 +50,18 @@ namespace Lumos.DAL.AuthorizeRelay
 
         public IDbSet<SysStaffUser> SysStaffUser { get; set; }
 
+        public IDbSet<SysClientUser> SysClientUser { get; set; }
+
+
         public IDbSet<SysProvinceCity> SysProvinceCity { get; set; }
 
         public IDbSet<SysClientCode> SysClientCode { get; set; }
         public IDbSet<SysOperateHistory> SysOperateHistory { get; set; }
         public IDbSet<SysPageAccessRecord> SysPageAccessRecord { get; set; }
 
-        public IDbSet<SysAppKeySecret> SysAppKeySecret { get; set; }
-
         public IDbSet<SysSmsSendHistory> SysSmsSendHistory { get; set; }
 
         public IDbSet<SysItemCacheUpdateTime> SysItemCacheUpdateTime { get; set; }
-
-        public IDbSet<SysClientUser> SysClientUser { get; set; }
 
         public AuthorizeRelayDbContext(string nameOrConnectionString)
             : base(nameOrConnectionString)
@@ -74,17 +69,10 @@ namespace Lumos.DAL.AuthorizeRelay
             // this.Configuration.ProxyCreationEnabled = false;
         }
 
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            //必须继承调用 base.OnModelCreating(modelBuilder);
             base.OnModelCreating(modelBuilder);
-            // Identity创建的表是带Identity开头的 这里重新定义以Sys开头
-            modelBuilder.Entity<SysUser>().ToTable("SysUser");
-            modelBuilder.Entity<SysUserRole>().HasKey(r => new { r.RoleId, r.UserId }).ToTable("SysUserRole");
-            modelBuilder.Entity<SysRole>().ToTable("SysRole");
         }
-
 
         public DataSet GetPageReocrdByProc(QueryParam model)
         {

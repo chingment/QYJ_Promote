@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using WebMobile.Areas.Wb.Models.Biz.Withdraw;
 
 namespace WebMobile.Areas.Wb.Controllers
 {
@@ -18,11 +17,9 @@ namespace WebMobile.Areas.Wb.Controllers
             return View();
         }
 
-        public ActionResult Details(string id)
+        public ActionResult Details()
         {
-            var model = new DetailsViewModel();
-            model.LoadData(id);
-            return View(model);
+            return View();
         }
 
 
@@ -31,11 +28,9 @@ namespace WebMobile.Areas.Wb.Controllers
             return View();
         }
 
-        public ActionResult Audit(string id)
+        public ActionResult Audit()
         {
-            var model = new AuditViewModel();
-            model.LoadData(id);
-            return View(model);
+            return View();
         }
 
         public ActionResult ListByDoTransfer()
@@ -43,29 +38,32 @@ namespace WebMobile.Areas.Wb.Controllers
             return View();
         }
 
-        public ActionResult DoTransfer(string id)
+        public ActionResult DoTransfer()
         {
-            var model = new DoTransferViewModel();
-            model.LoadData(id);
-            return View(model);
+            return View();
+        }
+
+        public CustomJsonResult GetDetails(string withdrawId)
+        {
+            return AdminServiceFactory.Withdraw.GetDetails(this.CurrentUserId, withdrawId);
         }
 
         [HttpPost]
-        public CustomJsonResult GetListByDetails(SearchCondition condition)
+        public CustomJsonResult GetListByDetails(RupWithdrawGetList rup)
         {
             var query = (from u in CurrentDb.Withdraw
 
                          join w in CurrentDb.WxUserInfo on u.ClientId equals w.ClientId
-                         where (condition.Name == null || u.AcName.Contains(condition.Name))
+                         where (rup.Name == null || u.AcName.Contains(rup.Name))
                          &&
-                         (condition.Sn == null || u.Sn.Contains(condition.Sn)) &&
-                          (condition.StartTime == null || u.ApplyTime >= condition.StartTime) &&
-                        (condition.EndTime == null || u.ApplyTime <= condition.EndTime)
+                         (rup.Sn == null || u.Sn.Contains(rup.Sn)) &&
+                          (rup.StartTime == null || u.ApplyTime >= rup.StartTime) &&
+                        (rup.EndTime == null || u.ApplyTime <= rup.EndTime)
                          select new { u.Id, u.Sn, w.Nickname, u.AcName, u.AcIdNumber, u.Amount, u.ApplyTime, u.Status });
 
             int total = query.Count();
 
-            int pageIndex = condition.PageIndex;
+            int pageIndex = rup.PageIndex;
             int pageSize = 10;
             query = query.OrderBy(r => r.ApplyTime).Skip(pageSize * (pageIndex)).Take(pageSize);
 
@@ -110,24 +108,24 @@ namespace WebMobile.Areas.Wb.Controllers
         }
 
         [HttpPost]
-        public CustomJsonResult GetListByAudit(SearchCondition condition)
+        public CustomJsonResult GetListByAudit(RupWithdrawGetList rup)
         {
             var query = (from u in CurrentDb.Withdraw
 
                          join w in CurrentDb.WxUserInfo on u.ClientId equals w.ClientId
 
-                         where (condition.Name == null || u.AcName.Contains(condition.Name))
+                         where (rup.Name == null || u.AcName.Contains(rup.Name))
                          &&
                          u.Status == Lumos.Entity.Enumeration.WithdrawStatus.Apply
                             &&
-                         (condition.Sn == null || u.Sn.Contains(condition.Sn)) &&
-                                                  (condition.StartTime == null || u.ApplyTime >= condition.StartTime) &&
-                        (condition.EndTime == null || u.ApplyTime <= condition.EndTime)
+                         (rup.Sn == null || u.Sn.Contains(rup.Sn)) &&
+                                                  (rup.StartTime == null || u.ApplyTime >= rup.StartTime) &&
+                        (rup.EndTime == null || u.ApplyTime <= rup.EndTime)
                          select new { u.Id, u.Sn, w.Nickname, u.AcName, u.AcIdNumber, u.Amount, u.ApplyTime });
 
             int total = query.Count();
 
-            int pageIndex = condition.PageIndex;
+            int pageIndex = rup.PageIndex;
             int pageSize = 10;
             query = query.OrderBy(r => r.ApplyTime).Skip(pageSize * (pageIndex)).Take(pageSize);
 
@@ -162,7 +160,7 @@ namespace WebMobile.Areas.Wb.Controllers
 
 
         [HttpPost]
-        public CustomJsonResult GetListByDoTransfer(SearchCondition condition)
+        public CustomJsonResult GetListByDoTransfer(RupWithdrawGetList condition)
         {
             var query = (from u in CurrentDb.Withdraw
 

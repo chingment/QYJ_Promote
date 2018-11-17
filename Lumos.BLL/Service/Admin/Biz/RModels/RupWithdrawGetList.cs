@@ -1,12 +1,12 @@
-﻿using Lumos.Web.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace WebMobile.Areas.Wb.Models.Biz.Withdraw
+namespace Lumos.BLL.Service.Admin
 {
-    public class SearchCondition: BaseSearchCondition
+    public class RupWithdrawGetList:RupBaseGetList
     {
         public DateTime? StartTime { get; set; }
 

@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using WebMobile.Areas.Wb.Models.Home;
 using WebMobile.Areas.Wb.Own;
 
 namespace WebMobile.Areas.Wb.Controllers
@@ -19,17 +18,10 @@ namespace WebMobile.Areas.Wb.Controllers
     public class HomeController : WebMobile.Areas.Wb.Own.OwnBaseController
     {
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        public ActionResult Login()
         {
-            string guid = Guid.Empty.ToString().Replace("-", "");
-
-            LogUtil.Info("daddsd");
             Session["WebSSOLoginVerifyCode"] = null;
-
-            WebMobile.Areas.Wb.Models.Home.LoginViewModel model = new WebMobile.Areas.Wb.Models.Home.LoginViewModel();
-            model.ReturnUrl = returnUrl;
-
-            return View(model);
+            return View();
         }
 
         public ActionResult Index()
@@ -122,10 +114,10 @@ namespace WebMobile.Areas.Wb.Controllers
         }
 
         [HttpPost]
-        public CustomJsonResult ChangePassword(ChangePasswordViewModel model)
+        public CustomJsonResult ChangePassword(RopChangePassword rop)
         {
 
-            var result = AdminServiceFactory.AuthorizeRelay.ChangePassword(this.CurrentUserId, this.CurrentUserId, model.OldPassword, model.NewPassword);
+            var result = AdminServiceFactory.AuthorizeRelay.ChangePassword(this.CurrentUserId, this.CurrentUserId, rop.OldPassword, rop.NewPassword);
 
             if (result.Result == ResultType.Success)
             {

@@ -1,5 +1,4 @@
-﻿@model WebMobile.Models.Personal.IndexViewModel
-@{
+﻿@{
     ViewBag.Title = "个人中心";
     Layout = "~/Views/Shared/_LayoutMainTabBar_Personal.cshtml";
 }
@@ -88,118 +87,123 @@
     </style>
 }
 
-
-
-
 @section scripts{
     @OwnStaticScriptsResource.Render("owl.carousel.min.js")
     <script type="text/javascript">
 
         $(document).ready(function () {
 
-
-            $('.noopen').on('click', function () {
-
-                $.lumos.tips("该功能9月18日开通敬请期待！")
-
+            $.lumos.getJson({
+                url: "/Personal/GetIndexPageData",
+                isShowLoading: true,
+                success: function (d) {
+                    if (d.result == $.lumos.resultType.success) {
+                        $('#page').html($("#page_tmpl").tmpl(d.data));
+                    }
+                }
             });
+
 
         });
 
     </script>
 }
+<script id="page_tmpl" type="text/x-jquery-tmpl">
+    <div class="personal-info-s1" style="margin-top:29px">
+        <div class="personal-info-s1-container">
+            <img src="/Content/images/personal_info_s1_bg.png" />
 
-<div class="personal-info-s1" style="margin-top:29px">
-    <div class="personal-info-s1-container">
-        <img src="~/Content/images/personal_info_s1_bg.png" />
+            <div class="item-top">
 
-        <div class="item-top">
-
-            <div class="item-left fl tc">
-                <div class="content">
-                    <div class="item-headimg fl">
-                        <img src="@(Model.HeadImgUrl==null?"/Content/images/personal_info_headerimg.png":Model.HeadImgUrl)" alt="" />
+                <div class="item-left fl tc">
+                    <div class="content">
+                        <div class="item-headimg fl">
+                            <img src="${headImgUrl}" alt="" />
+                        </div>
+                        <div class="item-nickname fl">${nickname} </div>
                     </div>
-                    <div class="item-nickname fl">
-                        @Model.Nickname
+                </div>
+                <div class="item-right fl tc">
+                    <div class="content">
+                        <div class="item-ac-title"><span> 账户余额（元）</span></div>
+                        <div class="item-ac-number">${availableBalance}</div>
                     </div>
                 </div>
             </div>
-            <div class="item-right fl tc">
-                <div class="content">
-                    <div class="item-ac-title"><span> 账户余额（元）</span></div>
-                    <div class="item-ac-number">@Model.AvailableBalance</div>
+
+            <div class="item-bottom">
+                <div class="item-left fl">
+                    <a href="/Withdraw/Apply">
+                        <span class="btn-s1">
+                            <span class="text">资金提现</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="item-right fl">
+                    <a href="/Fund/MyTrans">
+                        <span class="btn-s1">
+                            <span>资金流水</span>
+                        </span>
+                    </a>
                 </div>
             </div>
-        </div>
 
-        <div class="item-bottom">
-            <div class="item-left fl">
-                <a href="/Withdraw/Apply">
-                    <span class="btn-s1">
-                        <span class="text">资金提现</span>
-                    </span>
-                </a>
-            </div>
-            <div class="item-right fl">
-                <a href="/Fund/MyTrans">
-                    <span class="btn-s1">
-                        <span>资金流水</span>
-                    </span>
-                </a>
-            </div>
         </div>
-
     </div>
+
+    <div class="hr"></div>
+
+    <ul class="list-nav bdt0 pdlr14">
+        <li class="list-nav-item">
+            <a href="/Coupon/My">
+                <div class="item-left fl">
+                    <div class="item-icon fl"><img src="/Content/images/list_nav_item_icon_mycoupon.png" alt="" /> </div>
+                    <div class="item-txt fl"><span>我的优惠券</span></div>
+                </div>
+                <div class="item-right fl">
+                    <div class="item-txt fr"><span></span></div>
+                    <div class="item-icon fr"><img src="/Content/images/list_nav_item_icon_next.png" alt="" /> </div>
+                </div>
+            </a>
+        </li>
+        <li class="list-nav-item">
+            <a href="/Withdraw/My">
+                <div class="item-left fl">
+                    <div class="item-icon fl"><img src="/Content/images/list_nav_item_icon_withdraw.png" alt="" /> </div>
+                    <div class="item-txt fl"><span>提现记录</span></div>
+                </div>
+                <div class="item-right fl">
+                    <div class="item-txt fr"><span></span></div>
+                    <div class="item-icon fr"><img src="/Content/images/list_nav_item_icon_next.png" alt="" /></div>
+                </div>
+            </a>
+        </li>
+        <li class="list-nav-item">
+            <a href="/ShareLog/My">
+                <div class="item-left fl">
+                    <div class="item-icon fl"><img src="/Content/images/list_nav_item_icon_sharelog.png" alt="" /> </div>
+                    <div class="item-txt fl"><span>分享记录</span></div>
+                </div>
+                <div class="item-right fl">
+                    <div class="item-txt fr"><span></span></div>
+                    <div class="item-icon fr"><img src="/Content/images/list_nav_item_icon_next.png" alt="" /></div>
+                </div>
+            </a>
+        </li>
+        <li class="list-nav-item">
+            <div class="item-left fl">
+                <div class="item-icon fl"><img src="/Content/images/list_nav_item_icon_telphone.png" alt="" /> </div>
+                <div class="item-txt fl"><span>客服电话 <a href="tel:${servicePhone}" style="color:#666666;">${servicePhone}</a></span></div>
+            </div>
+            <div class="item-right fl">
+                <div class="item-txt fr"><span></span></div>
+                <div class="item-icon fr"> </div>
+            </div>
+        </li>
+    </ul>
+</script>
+
+<div id="page">
+
+
 </div>
-
-<div class="hr"></div>
-
-<ul class="list-nav bdt0 pdlr14">
-    <li class="list-nav-item">
-        <a href="/Coupon/My">
-            <div class="item-left fl">
-                <div class="item-icon fl"><img src="~/Content/images/list_nav_item_icon_mycoupon.png" alt="" /> </div>
-                <div class="item-txt fl"><span>我的优惠券</span></div>
-            </div>
-            <div class="item-right fl">
-                <div class="item-txt fr"><span></span></div>
-                <div class="item-icon fr"><img src="~/Content/images/list_nav_item_icon_next.png" alt="" /> </div>
-            </div>
-        </a>
-    </li>
-    <li class="list-nav-item">
-        <a href="/Withdraw/My">
-            <div class="item-left fl">
-                <div class="item-icon fl"><img src="~/Content/images/list_nav_item_icon_withdraw.png" alt="" /> </div>
-                <div class="item-txt fl"><span>提现记录</span></div>
-            </div>
-            <div class="item-right fl">
-                <div class="item-txt fr"><span></span></div>
-                <div class="item-icon fr"><img src="~/Content/images/list_nav_item_icon_next.png" alt="" /></div>
-            </div>
-        </a>
-    </li>
-    <li class="list-nav-item">
-        <a href="/ShareLog/My">
-            <div class="item-left fl">
-                <div class="item-icon fl"><img src="~/Content/images/list_nav_item_icon_sharelog.png" alt="" /> </div>
-                <div class="item-txt fl"><span>分享记录</span></div>
-            </div>
-            <div class="item-right fl">
-                <div class="item-txt fr"><span></span></div>
-                <div class="item-icon fr"><img src="~/Content/images/list_nav_item_icon_next.png" alt="" /></div>
-            </div>
-        </a>
-    </li>
-    <li class="list-nav-item">
-        <div class="item-left fl">
-            <div class="item-icon fl"><img src="~/Content/images/list_nav_item_icon_telphone.png" alt="" /> </div>
-            <div class="item-txt fl"><span>客服电话 <a href="tel:@OwnWebSettingUtils.GerServicePhone()" style="color:#666666;">@OwnWebSettingUtils.GerServicePhone()</a></span></div>
-        </div>
-        <div class="item-right fl">
-            <div class="item-txt fr"><span></span></div>
-            <div class="item-icon fr"> </div>
-        </div>
-    </li>
-</ul>

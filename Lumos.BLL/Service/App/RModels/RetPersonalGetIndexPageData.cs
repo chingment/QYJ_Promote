@@ -11,7 +11,7 @@ namespace Lumos.BLL.Service.App
         private string _headImgUrl = null;
         private string _nickname = null;
         private string _availableBalance = "0.00";
-
+        private string _servicePhone = "";
         public string HeadImgUrl
         {
             get
@@ -44,6 +44,18 @@ namespace Lumos.BLL.Service.App
             set
             {
                 _availableBalance = value;
+            }
+        }
+
+        public string ServicePhone
+        {
+            get
+            {
+                return _servicePhone;
+            }
+            set
+            {
+                _servicePhone = value;
             }
         }
     }

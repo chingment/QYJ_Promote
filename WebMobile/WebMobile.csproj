@@ -186,13 +186,6 @@
     <Compile Include="Areas\Wb\Models\Biz\Report\PromoteShareRecordViewModel.cs" />
     <Compile Include="Areas\Wb\Models\Biz\Report\ReportModel.cs" />
     <Compile Include="Areas\Wb\Models\Biz\Report\WithdrawRecordViewModel.cs" />
-    <Compile Include="Areas\Wb\Models\Biz\Withdraw\AuditViewModel.cs" />
-    <Compile Include="Areas\Wb\Models\Biz\Withdraw\DetailsViewModel.cs" />
-    <Compile Include="Areas\Wb\Models\Biz\Withdraw\DoTransferViewModel.cs" />
-    <Compile Include="Areas\Wb\Models\Biz\Withdraw\SearchCondition.cs" />
-    <Compile Include="Areas\Wb\Models\Home\ChangePasswordViewModel.cs" />
-    <Compile Include="Areas\Wb\Models\Home\LoginViewModel.cs" />
-    <Compile Include="Areas\Wb\Models\OwnBaseViewModel.cs" />
     <Compile Include="Areas\Wb\WbAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FundController.cs" />

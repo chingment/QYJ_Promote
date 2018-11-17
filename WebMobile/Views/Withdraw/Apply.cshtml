@@ -1,5 +1,4 @@
-﻿@model WebMobile.Models.Withdraw.ApplyViewModel
-@{
+﻿@{
     ViewBag.Title = "提现";
     Layout = "~/Views/Shared/_LayoutNavigationBar.cshtml";
 }
@@ -45,6 +44,15 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
+            $.lumos.getJson({
+                url: "/Withdraw/GetApplyPageData",
+                isShowLoading: true,
+                success: function (d) {
+                    if (d.result == $.lumos.resultType.success) {
+                        $('#page').html($("#page_tmpl").tmpl(d.data));
+                    }
+                }
+            });
 
             $('#btn_Sure').on("click", function () {
                 var _this = this;
@@ -108,74 +116,80 @@
     </script>
 }
 
-<div style="padding:15px;position: relative;">
-    <img src="~/Content/images/withdraw-top.png" />
+<script id="page_tmpl" type="text/x-jquery-tmpl">
+    <div style="padding:15px;position: relative;">
+        <img src="/Content/images/withdraw-top.png" />
 
-    <div style="width:120px;height:60px;position: absolute;  left:50%; top: 50%;  transform: translate(-50%,-50%);">
+        <div style="width:120px;height:60px;position: absolute;  left:50%; top: 50%;  transform: translate(-50%,-50%);">
 
-        <div class="item-ac-title"><span> 账户余额（元）</span></div>
-        <div class="item-ac-number">@Model.AvailableBalance</div>
+            <div class="item-ac-title"><span> 账户余额（元）</span></div>
+            <div class="item-ac-number">${availableBalance}</div>
+        </div>
     </div>
-</div>
-<div style="padding:25px 15px 15px 15px">
-    <ul class="list-input" style="overflow:hidden">
-        <li class="list-input-item">
-            <div class="item-left fl">
-                <div class="fl tl item-name"><span>开户银行</span></div>
-                <div class="item-value fr">
+    <div style="padding:25px 15px 15px 15px">
+        <ul class="list-input" style="overflow:hidden">
+            <li class="list-input-item">
+                <div class="item-left fl">
+                    <div class="fl tl item-name"><span>开户银行</span></div>
+                    <div class="item-value fr">
 
-                    <input id="txt_acBank" placeholder="例如xxx行xxx支行" type="text" class="tr" value="@Model.AcBank" style="width:100%;" />
+                        <input id="txt_acBank" placeholder="例如xxx行xxx支行" type="text" class="tr" value="${acBank}" style="width:100%;" />
 
+                    </div>
                 </div>
-            </div>
-        </li>
-        <li class="list-input-item">
-            <div class="item-left fl">
-                <div class="fl tl item-name"><span>银行卡号</span></div>
-                <div class="item-value fr">
+            </li>
+            <li class="list-input-item">
+                <div class="item-left fl">
+                    <div class="fl tl item-name"><span>银行卡号</span></div>
+                    <div class="item-value fr">
 
-                    <input id="txt_acBankCardNumber" placeholder="请输入银行卡号" type="text" class="tr" value="@Model.AcBankCardNumber" style="width:100%;" />
+                        <input id="txt_acBankCardNumber" placeholder="请输入银行卡号" type="text" class="tr" value="${acBankCardNumber}" style="width:100%;" />
 
+                    </div>
                 </div>
-            </div>
-        </li>
-        <li class="list-input-item">
-            <div class="item-left fl">
-                <div class="fl tl item-name"><span>姓名</span></div>
-                <div class="item-value fr">
+            </li>
+            <li class="list-input-item">
+                <div class="item-left fl">
+                    <div class="fl tl item-name"><span>姓名</span></div>
+                    <div class="item-value fr">
 
-                    <input id="txt_acName" placeholder="请输入姓名" type="text" class="tr" value="@Model.AcName" style="width:100%;" />
+                        <input id="txt_acName" placeholder="请输入姓名" type="text" class="tr" value="${acName}" style="width:100%;" />
 
+                    </div>
                 </div>
-            </div>
-        </li>
-        <li class="list-input-item">
-            <div class="item-left fl">
-                <div class="item-name tl fl"><span>身份证号码</span></div>
-                <div class="item-value fr">
+            </li>
+            <li class="list-input-item">
+                <div class="item-left fl">
+                    <div class="item-name tl fl"><span>身份证号码</span></div>
+                    <div class="item-value fr">
 
-                    <input id="txt_acIdNumber" placeholder="请输入身份证号码" type="text" class="tr" value="@Model.AcBankCardNumber" style="width:100%;" />
+                        <input id="txt_acIdNumber" placeholder="请输入身份证号码" type="text" class="tr" value="${acBankCardNumber}" style="width:100%;" />
 
+                    </div>
                 </div>
-            </div>
-        </li>
-        <li class="list-input-item">
-            <div class="item-left fl">
-                <div class="item-name tl fl"><span>提现金额</span></div>
-                <div class="item-value fr">
+            </li>
+            <li class="list-input-item">
+                <div class="item-left fl">
+                    <div class="item-name tl fl"><span>提现金额</span></div>
+                    <div class="item-value fr">
 
-                    <input id="txt_amount" placeholder="金额" type="text" class="tr" style="width:100%;" />
+                        <input id="txt_amount" placeholder="金额" type="text" class="tr" style="width:100%;" />
 
+                    </div>
                 </div>
-            </div>
-        </li>
-    </ul>
+            </li>
+        </ul>
 
-    <p style="color:red;font-size:12px;line-height:32px;padding-left:10px;">*提示：请优先填写建设银行</p>
-</div>
+        <p style="color:red;font-size:12px;line-height:32px;padding-left:10px;">*提示：请优先填写建设银行</p>
+    </div>
+    <div style="text-align:center;padding:20px;">
 
-<div style="text-align:center;padding:20px;">
+        <span id="btn_Sure" class="btn" operate="get" isone="true">立即提现</span>
 
-    <span id="btn_Sure" class="btn" operate="get" isone="true">立即提现</span>
+    </div>
+</script>
+
+<div id="page">
+
 
 </div>

@@ -11,6 +11,29 @@ namespace Lumos.BLL.Service.Admin
 {
     public class WithdrawProvider : BaseProvider
     {
+
+        public CustomJsonResult GetDetails(string pOperater, string pWithdrawId)
+        {
+            var ret = new RetWithdrawGetDetails();
+            var withdraw = CurrentDb.Withdraw.Where(m => m.Id == pWithdrawId).FirstOrDefault();
+            if (withdraw != null)
+            {
+                ret.AcName = withdraw.AcName;
+                ret.AcBankCardNumber = withdraw.AcBankCardNumber;
+                ret.AcName = withdraw.AcName;
+                ret.Amount = withdraw.Amount.ToF2Price();
+
+                var userInfo = CurrentDb.WxUserInfo.Where(m => m.ClientId == withdraw.ClientId).FirstOrDefault();
+
+                if (userInfo != null)
+                {
+                    ret.Nickname = userInfo.Nickname;
+                }
+            }
+
+            return new CustomJsonResult(ResultType.Success, ResultCode.Success, "获取成功", ret);
+        }
+
         public CustomJsonResult Audit(string pOperater, RopWithdrawAudit rop)
         {
             CustomJsonResult result = new CustomJsonResult();
@@ -96,7 +119,6 @@ namespace Lumos.BLL.Service.Admin
             return result;
 
         }
-
 
         public CustomJsonResult DoTransfer(string pOperater, RopWithdrawDoTransfer rop)
         {

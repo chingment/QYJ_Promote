@@ -528,8 +528,9 @@
             var handling;
 
             $.ajax({
-                type: "Post",
+                type: "POST",
                 dataType: "json",
+                contentType: 'application/json;charset=utf-8',
                 async: _async,
                 headers: headers,
                 timeout: _timeout,
