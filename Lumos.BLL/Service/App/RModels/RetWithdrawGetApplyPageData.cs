@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace WebMobile.Models.Withdraw
+namespace Lumos.BLL.Service.App
 {
-    public class ApplyViewModel : OwnBaseViewModel
+   public class RetWithdrawGetApplyPageData
     {
         private string _availableBalance = "0.00";
 
@@ -13,7 +14,6 @@ namespace WebMobile.Models.Withdraw
         private string _acIdNumber = "";
         private string _acBank = "";
         private string _acBankCardNumber = "";
-
 
         public string AvailableBalance
         {
@@ -69,25 +69,6 @@ namespace WebMobile.Models.Withdraw
             set
             {
                 _acBankCardNumber = value;
-            }
-        }
-
-        public void LoadData(string clientId)
-        {
-            var fund = CurrentDb.Fund.Where(m => m.ClientId == clientId).FirstOrDefault();
-
-            if (fund != null)
-            {
-                _availableBalance = fund.AvailableBalance.ToF2Price();
-            }
-
-            var withdraw = CurrentDb.Withdraw.Where(m => m.ClientId == clientId).OrderByDescending(m => m.ApplyTime).FirstOrDefault();
-            if (withdraw != null)
-            {
-                _acName = withdraw.AcName;
-                _acIdNumber = withdraw.AcIdNumber;
-                _acBank = withdraw.AcBank;
-                _acBankCardNumber = withdraw.AcBankCardNumber;
             }
         }
     }

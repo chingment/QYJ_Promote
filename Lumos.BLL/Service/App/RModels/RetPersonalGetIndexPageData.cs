@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace WebMobile.Models.Personal
+namespace Lumos.BLL.Service.App
 {
-    public class IndexViewModel : OwnBaseViewModel
+    public class RetPersonalGetIndexPageData
     {
         private string _headImgUrl = null;
         private string _nickname = null;
@@ -43,25 +44,6 @@ namespace WebMobile.Models.Personal
             set
             {
                 _availableBalance = value;
-            }
-        }
-
-
-
-        public void LoadData(string clientId)
-        {
-            var wxUserInfo = CurrentDb.WxUserInfo.Where(m => m.ClientId == clientId).FirstOrDefault();
-            if (wxUserInfo != null)
-            {
-                _nickname = wxUserInfo.Nickname;
-                _headImgUrl = wxUserInfo.HeadImgUrl;
-
-                var fund = CurrentDb.Fund.Where(m => m.ClientId == clientId).FirstOrDefault();
-
-                if (fund != null)
-                {
-                    _availableBalance = fund.AvailableBalance.ToF2Price();
-                }
             }
         }
     }

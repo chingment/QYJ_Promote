@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using WebMobile.Models.Withdraw;
 
 namespace WebMobile.Controllers
 {
@@ -21,10 +20,12 @@ namespace WebMobile.Controllers
 
         public ActionResult Apply()
         {
-            var model = new ApplyViewModel();
+            return View();
+        }
 
-            model.LoadData(this.CurrentUserId);
-            return View(model);
+        public CustomJsonResult GetApplyPageData()
+        {
+            return AppServiceFactory.Withdraw.GetApplyPageData(this.CurrentUserId, this.CurrentUserId);
         }
 
         [HttpPost]

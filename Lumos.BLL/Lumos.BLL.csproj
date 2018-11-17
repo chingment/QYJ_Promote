@@ -126,6 +126,8 @@
     <Compile Include="Service\App\Models\PromoteConfigModel.cs" />
     <Compile Include="Service\App\Models\RupShareLogGetList.cs" />
     <Compile Include="Service\App\Models\RupWithdrawGetList.cs" />
+    <Compile Include="Service\App\PersonalService.cs" />
+    <Compile Include="Service\App\RModels\RetPersonalGetIndexPageData.cs" />
     <Compile Include="Service\App\RModels\RopPromoteUserInfoEdit.cs" />
     <Compile Include="Service\App\RModels\RopShareLog.cs" />
     <Compile Include="Service\App\OperateService.cs" />
@@ -144,6 +146,7 @@
     <Compile Include="Service\App\RModels\RupProductSkuGetDetails.cs" />
     <Compile Include="Service\App\RModels\RupPromoteGetConfig.cs" />
     <Compile Include="Service\App\RModels\RupOrderGetDetails.cs" />
+    <Compile Include="Service\App\RModels\RetWithdrawGetApplyPageData.cs" />
     <Compile Include="Service\App\WithdrawService.cs" />
     <Compile Include="Service\App\OrderService.cs" />
     <Compile Include="SnUtil.cs" />

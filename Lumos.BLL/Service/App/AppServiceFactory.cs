@@ -48,5 +48,13 @@ namespace Lumos.BLL.Service.App
             }
         }
 
+        public static PersonalService Personal
+        {
+            get
+            {
+                return new PersonalService();
+            }
+        }
+
     }
 }

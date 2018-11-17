@@ -12,6 +12,36 @@ namespace Lumos.BLL.Service.App
     public class WithdrawService : BaseProvider
     {
         private static readonly object lock_Apply = new object();
+
+
+        public CustomJsonResult GetApplyPageData(string pOperater, string pClientId)
+        {
+            var result = new CustomJsonResult();
+
+            var ret = new RetWithdrawGetApplyPageData();
+
+            var fund = CurrentDb.Fund.Where(m => m.ClientId == pClientId).FirstOrDefault();
+
+            if (fund != null)
+            {
+                ret.AvailableBalance = fund.AvailableBalance.ToF2Price();
+            }
+
+            var withdraw = CurrentDb.Withdraw.Where(m => m.ClientId == pClientId).OrderByDescending(m => m.ApplyTime).FirstOrDefault();
+            if (withdraw != null)
+            {
+                ret.AcName = withdraw.AcName;
+                ret.AcIdNumber = withdraw.AcIdNumber;
+                ret.AcName = withdraw.AcBank;
+                ret.AcBankCardNumber = withdraw.AcBankCardNumber;
+            }
+
+            result = new CustomJsonResult(ResultType.Success, ResultCode.Success, "获取成功", ret);
+
+            return result;
+        }
+
+
         public CustomJsonResult Apply(string pOperater, string pClientId, RopWithdrawApply rop)
         {
             CustomJsonResult result = new CustomJsonResult();
@@ -93,5 +123,6 @@ namespace Lumos.BLL.Service.App
             return result;
 
         }
+
     }
 }
