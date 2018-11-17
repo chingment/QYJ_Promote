@@ -21,7 +21,7 @@ namespace Lumos.Common
     };
 
 
-    public static class CommonUtils
+    public static class CommonUtil
     {
         #region "数组转字符串"
         public static string ArraryToString(long[] l)

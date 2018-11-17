@@ -15,7 +15,7 @@ namespace Lumos.BLL
 {
     public class WxSdkProvider : BaseProvider
     {
-        private IWxConfig wxConfig = new WxConfigByTest();
+        private IWxConfig wxConfig = null;
         public WxSdkProvider Instance()
         {
             WxSdkProvider p = new WxSdkProvider();

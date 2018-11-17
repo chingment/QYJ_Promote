@@ -75,14 +75,7 @@
     <Compile Include="Biz\ClientCoupon.cs" />
     <Compile Include="Biz\PromoteUserRelation.cs" />
     <Compile Include="Biz\Withdraw.cs" />
-    <Compile Include="ImgSet.cs" />
-    <Compile Include="EnumerationRemarkConverter.cs" />
-    <Compile Include="IpInfo.cs" />
-    <Compile Include="DBNullCreationConverter.cs" />
-    <Compile Include="EnumerationTypeConverter.cs" />
-    <Compile Include="PageEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RemarkAttribute.cs" />
     <Compile Include="SysEnumeration.cs" />
     <Compile Include="Sys\SysAppKeySecret.cs" />
     <Compile Include="Sys\SysClientCode.cs" />

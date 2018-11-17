@@ -1,27 +1,15 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Lumos.Entity
+using System.Reflection;
+namespace Lumos
 {
-    // Summary:
-    //     Provides a base class for converting a System.DateTime to and from JSON.
-    public class EnumerationTypeConverter<T> : JsonConverter
+    public class RemarkConverter<T> : JsonConverter
     {
-        public EnumerationTypeConverter()
+        public RemarkConverter()
         {
 
         }
 
-        public string FieldName { get; set; }
-
-        public EnumerationTypeConverter(string fieldName)
-        {
-            this.FieldName = fieldName;
-        }
 
         /// <summary>
         /// 是否允许转换
@@ -46,7 +34,19 @@ namespace Lumos.Entity
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            writer.WriteValue(Enum.GetName(typeof(T), value));
+
+            Type type = typeof(T);
+            FieldInfo fd = type.GetField(value.ToString());
+
+            object[] attrs = fd.GetCustomAttributes(typeof(RemarkAttribute), false);
+            string name = string.Empty;
+            foreach (RemarkAttribute attr in attrs)
+            {
+                name = attr.CnName;
+            }
+
+
+            writer.WriteValue(name);
         }
 
         public override bool CanRead

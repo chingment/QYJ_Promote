@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Lumos;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace System
 {
@@ -104,6 +100,8 @@ namespace System
             }
             catch (Exception ex)
             {
+                LogUtil.Error("ToEnumCnName 错误", ex);
+
                 return "";
             }
         }
