@@ -174,7 +174,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Wb\App_Start\Own\OwnAuthorizeAttribute.cs" />
     <Compile Include="Areas\Wb\App_Start\Own\OwnBaseController.cs" />
-    <Compile Include="Areas\Wb\App_Start\Own\OwnCheckVerifyCodeAttribute.cs" />
     <Compile Include="Areas\Wb\App_Start\Own\OwnExceptionAttribute.cs" />
     <Compile Include="Areas\Wb\App_Start\Own\OwnWebSettingUtils.cs" />
     <Compile Include="Areas\Wb\Controllers\Biz\ReportController.cs" />
@@ -448,19 +447,14 @@
     <Content Include="Areas\Wb\Views\Home\Index.cshtml" />
     <Content Include="Areas\Wb\Scripts\jquery.lumos.1.0.0.Xjs" />
     <Content Include="Areas\Wb\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Wb\Views\Shared\_LayoutHomeIframe.cshtml" />
-    <Content Include="Areas\Wb\Views\Shared\_LayoutHomeIframeMainList.cshtml" />
-    <Content Include="Areas\Wb\Views\Shared\_LayoutHomeMainReport.cshtml" />
     <Content Include="Areas\Wb\Views\Home\Main.cshtml" />
     <Content Include="Areas\Wb\Views\Home\Login.cshtml" />
-    <Content Include="Areas\Wb\Views\Shared\_LayoutHome.cshtml" />
     <Content Include="Areas\Wb\Views\Biz\Report\PromoteCouponBuyRecord.cshtml" />
     <Content Include="Areas\Wb\Views\Biz\Report\PromoteShareRecord.cshtml" />
     <Content Include="Areas\Wb\Views\Home\ChangePassword.cshtml" />
     <Content Include="Areas\Wb\Views\Biz\Withdraw\ListByAudit.cshtml" />
     <Content Include="Areas\Wb\Views\Biz\Withdraw\ListByDoTransfer.cshtml" />
     <Content Include="Areas\Wb\Views\Biz\Withdraw\Audit.cshtml" />
-    <Content Include="Areas\Wb\Views\Shared\_LayoutHomeDialog.cshtml" />
     <Content Include="Areas\Wb\Views\Biz\Withdraw\DoTransfer.cshtml" />
     <Content Include="Areas\Wb\Views\Biz\Withdraw\ListByDetails.cshtml" />
     <Content Include="Areas\Wb\Views\Biz\Withdraw\Details.cshtml" />

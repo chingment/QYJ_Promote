@@ -8,20 +8,6 @@
             exception: 3,
         },
 
-        operateType: {
-            add: "1",
-            update: "2",
-            del: "3",
-            save: "4",
-            submit: "5",
-            pass: "6",
-            reject: "7",
-            refuse: "8",
-            cancle: "9",
-            search: "101",
-            exportExcel: "102"
-        },
-
         isNullOrEmpty: function (obj) {
             if (obj == null) {
                 return true;
@@ -476,14 +462,11 @@
             }
 
             //window.top.tips(message);
-            art.dialog.tips(message, 3000);
+            art.dialog.tips(message);
             return false;
         },
 
         parentDialog: art.dialog.open.origin,
-
-
-
 
         getUrlParamValue: function getUrlParam(name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
@@ -504,10 +487,10 @@
                 },
                 complete: function (XMLHttpRequest, status) {
                     if (status == 'timeout') {
-                        art.dialog.tips("网络请求超时,请重新打开页面");
+                        $.lumos.tips("网络请求超时,请重新打开页面");
                     }
                     else if (status == 'error') {
-                        art.dialog.tips("网络请求失败,请检查网络是否已连接");
+                        $.lumos.tips("网络请求失败,请检查网络是否已连接");
                     }
                 },
                 success: function () { }
@@ -516,7 +499,7 @@
             var _url = opts.url;
 
             if (_url == '') {
-                art.dialog.tips("请求失败,链接为空");
+                $.lumos.tips("请求失败,链接为空");
                 return;
             }
 
@@ -547,6 +530,8 @@
                     postStr = JSON.stringify(_data);
                 }
             }
+
+
 
             //判断__RequestVerificationToken是否存在
             //var tokeName = "__RequestVerificationToken";
@@ -606,12 +591,12 @@
 
 
             $.ajax({
-                type: "Post",
+                type: "POST",
                 dataType: "json",
+                contentType: 'application/json;charset=utf-8',
                 async: _async,
                 headers: headers,
                 timeout: _timeout,
-                contentType: 'application/json;charset=utf-8',
                 data: postStr,
                 url: _url,
                 beforeSend: function (XMLHttpRequest) {
@@ -623,7 +608,14 @@
                     }
                 },
                 complete: function (XMLHttpRequest, status) {
-                    _complete(XMLHttpRequest, status);
+                    if (XMLHttpRequest.status == 200) {
+                        _complete(XMLHttpRequest, status);
+                    }
+                    else {
+                        if (_isUseHandling) {
+                            handling.close();
+                        }
+                    }
                 }
             }).done(function (d) {
 
@@ -634,6 +626,117 @@
                 if (d.result == $.lumos.resultType.exception) {
                     var messsage = d.data;
                     $.lumos.messageBox({ type: messsage.type, title: messsage.title, content: messsage.content, isPopup: messsage.isPopup, errorStackTrace: messsage.errorStackTrace, isTop: messsage.isTop })
+                }
+                else {
+                    _success(d);
+                }
+            });
+        },
+
+        getJson: function (opts) {
+
+            opts = $.extend({
+                isUseHandling: false,
+                url: '',
+                urlParams: null,
+                async: true,
+                timeout: 0,
+                beforeSend: function (XMLHttpRequest) {
+                },
+                complete: function (XMLHttpRequest, status) {
+                    if (status == 'timeout') {
+
+                    }
+                    else if (status == 'error') {
+
+                    }
+                },
+                success: function () { }
+            }, opts || {});
+
+            var _url = opts.url;
+            var _urlParams = opts.urlParams;
+
+            if (_url == '') {
+                return;
+            }
+
+            var paramStr = "";
+            if (_url.indexOf('?') > 0) {
+                paramStr = _url.substring(_url.indexOf('?') + 1, _url.length);
+            }
+
+            if (_urlParams != null) {
+
+                if (paramStr == "") {
+                    _url += '?';
+                }
+                else {
+                    _url += '&';
+                }
+
+                for (var p in _urlParams) {
+                    _url += p + '=' + encodeURIComponent(_urlParams[p]) + '&';
+                }
+
+                _url = _url.substring(0, _url.length - 1)
+            }
+
+
+
+            var _async = opts.async;
+            var _timeout = opts.timeout;
+            var _success = opts.success;
+            var _beforeSend = opts.beforeSend;
+            var _complete = opts.complete;
+            var _isUseHandling = opts.isUseHandling
+
+            //获取防伪标记
+            var token = $('[name=__RequestVerificationToken]').val();
+            var headers = {};
+            //防伪标记放入headers
+            //也可以将防伪标记放入data
+            headers["__RequestVerificationToken"] = token;
+
+            var handling;
+
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                async: _async,
+                headers: headers,
+                timeout: _timeout,
+                url: _url,
+                beforeSend: function (XMLHttpRequest) {
+                    if (_isUseHandling) {
+                        handling = artDialog.loading2("正在加载");
+                    }
+                    else {
+                        _beforeSend(XMLHttpRequest);
+                    }
+                },
+                complete: function (XMLHttpRequest, status) {
+                    if (XMLHttpRequest.status == 200) {
+                        _complete(XMLHttpRequest, status);
+                    }
+                    else {
+                        if (_isUseHandling) {
+                            handling.close();
+                        }
+                    }
+                }
+            }).done(function (d) {
+
+                if (_isUseHandling) {
+                    handling.close();
+                }
+
+                if (d.result == $.lumos.resultType.exception) {
+                    $.lumos.tips(d.message);
+                }
+                else if (d.result == $.lumos.resultType.nologin) {
+                    var data = d.data;
+                    window.location = data.loginPage;
                 }
                 else {
                     _success(d);
@@ -654,7 +757,7 @@
             var _success = opts.success;
 
             if (_url == '') {
-                art.dialog.tips("请求失败,链接为空");
+                $.lumos.tips("请求失败,链接为空");
                 return;
             }
 
@@ -948,10 +1051,10 @@
                         // loading.close();
                     }
                     if (status == 'timeout') {
-                        art.dialog.tips("网络请求超时,请重新打开页面");
+                        $.lumos.tips("网络请求超时,请重新打开页面");
                     }
                     else if (status == 'error') {
-                        art.dialog.tips("网络请求失败,请检查网络是否已连接");
+                        $.lumos.tips("网络请求失败,请检查网络是否已连接");
 
                         if ($(_thisTable).find("tbody tr").length == 0) {
                             var headLen = $(_thisTable).find("thead tr th").length;
@@ -959,7 +1062,7 @@
                         }
                     }
                     else if (status == 'parsererror') {
-                        art.dialog.tips("网络请求发生错误");
+                        $.lumos.tips("网络请求发生错误");
                     }
                     else if (status == 'success') {
                         // loading.close();
@@ -1095,12 +1198,12 @@
             var pagecount = parseInt($(this).attr("pagecount"));
             var regexp = /^[1-9]\d*$/;
             if (!regexp.test(index)) {
-                art.dialog.tips("请输入大于0的正整数");
+                $.lumos.tips("请输入大于0的正整数");
                 return;
             }
 
             if (index > pagecount) {
-                art.dialog.tips("请重新输入,不能超过" + pagecount);
+                $.lumos.tips("请重新输入,不能超过" + pagecount);
                 return;
             }
 
@@ -1140,7 +1243,7 @@
                                 var tr_Checked = $(_thisTable).find(" tbody tr input[checked=checked]");
 
                                 if ($(tr_Checked).length <= 0) {
-                                    art.dialog.tips("请选择要删除的数据");
+                                    $.lumos.tips("请选择要删除的数据");
                                     return
                                 }
 
@@ -1178,7 +1281,7 @@
                                 var tr_Checked = $(_thisTable).find(" tbody tr input[checked=checked]");
 
                                 if ($(tr_Checked).length <= 0) {
-                                    art.dialog.tips("请选择数据");
+                                    $.lumos.tips("请选择数据");
                                     return
                                 }
                                 $(tr_Checked).each(function () {
@@ -1188,7 +1291,7 @@
                                 });
                             }
 
-                            art.dialog.confirm(del_tips, function () {
+                            $.lumos.confirm(del_tips, function () {
                                 f(keys)
                                 return true;
                             },
@@ -1317,7 +1420,7 @@
                 var extStart = fileName.lastIndexOf(".");
                 var ext = fileName.substring(extStart, fileName.length).toUpperCase();
                 if (ext != ".BMP" && ext != ".PNG" && ext != ".GIF" && ext != ".JPG" && ext != ".JPEG") {
-                    art.dialog.tips('您上传的图片格式(.jpg|.jpeg|.gif|.png|.bmp)不正确，请重新选择！');
+                    $.lumos.tips('您上传的图片格式(.jpg|.jpeg|.gif|.png|.bmp)不正确，请重新选择！');
                     return;
                 }
             }
@@ -1347,14 +1450,14 @@
                     var file = $(_this)
                     file.after(file.clone().val(""));
                     file.remove();
-                    art.dialog.tips('文件不存在或者文件的内容为空,请重新选择');
+                    $.lumos.tips('文件不存在或者文件的内容为空,请重新选择');
                     return;
                 }
                 else if (size > 10) {
                     var file = $(_this)
                     file.after(file.clone().val(""));
                     file.remove();
-                    art.dialog.tips('图片大小不能超过10M,请重新选择');
+                    $.lumos.tips('图片大小不能超过10M,请重新选择');
                     return;
                 }
             }
@@ -1438,7 +1541,7 @@
                         }
                     }
                     else {
-                        art.dialog.tips(d.message)
+                        $.lumos.tips(d.message)
                     }
                 }
             });
@@ -1454,7 +1557,7 @@
             }
 
             if (url == "") {
-                art.dialog.tips("没有图片可以预览");
+                $.lumos.tips("没有图片可以预览");
                 return;
             }
 
@@ -1750,6 +1853,76 @@
 
         return this;
 
+    }
+
+    $.fn.val2Arr = function (arr_val) {
+
+
+        if (typeof arr_val != "undefined") {
+            if (arr_val != null) {
+                var options = $(this).find("option");
+                for (var i = 0; i < options.length; i++) {
+                    var _v = $(options[i]).val();
+
+                    for (var j = 0; j < arr_val.length; j++) {
+
+                        if (_v == arr_val[j]) {
+                            $(options[i]).attr("selected", "selected");
+                        }
+                    }
+
+                }
+
+                $(this).trigger("chosen:updated");
+            }
+        }
+
+        var v = new Array()
+        var sels = $(this).find("option:selected");
+        for (var i = 0; i < sels.length; i++) {
+            var _v = $(sels[i]).val();
+            _v = _v.replace(/&nbsp;/ig, "");
+            _v = $.trim(_v);
+            if (_v != "") {
+                v.push(_v)
+            }
+        }
+
+
+
+
+
+        return v;
+    }
+
+
+    $.fn.val2ImgArr = function () {
+
+        var v = new Array()
+        var uploadimgbox = $(this).find('.uploadimgbox')
+
+        for (var i = 0; i < uploadimgbox.length; i++) {
+            var imgUrl = $(uploadimgbox[i]).find('.imgUrl').val();
+            imgUrl = imgUrl.replace(/&nbsp;/ig, "");
+            imgUrl = $.trim(imgUrl);
+            if (imgUrl != "") {
+                var isMain = $(uploadimgbox[i]).find('.isMain').val();
+
+                if (isMain == "true") {
+                    isMain = 1;
+                }
+                else {
+                    isMain = 0;
+                }
+
+                v.push({
+                    imgUrl: imgUrl,
+                    isMain: isMain
+                })
+            }
+        }
+
+        return v;
     }
 
 })(jQuery);

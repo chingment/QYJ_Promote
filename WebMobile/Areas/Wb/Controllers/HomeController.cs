@@ -17,10 +17,12 @@ namespace WebMobile.Areas.Wb.Controllers
 {
     public class HomeController : WebMobile.Areas.Wb.Own.OwnBaseController
     {
+        public readonly string sesionKeyLoginVerifyCode = "sesionKeyLoginVerifyCode";
+
         [AllowAnonymous]
         public ActionResult Login()
         {
-            Session["WebSSOLoginVerifyCode"] = null;
+            Session[sesionKeyLoginVerifyCode] = null;
             return View();
         }
 
@@ -39,6 +41,59 @@ namespace WebMobile.Areas.Wb.Controllers
             return View();
         }
 
+        public CustomJsonResult GetIndexPageData()
+        {
+            var ret = new IndexModel();
+
+            ret.Title = OwnWebSettingUtils.GetWebName();
+            ret.IsLogin = OwnRequest.IsLogin();
+
+            if (ret.IsLogin)
+            {
+                ret.UserName = OwnRequest.GetUserNameWithSymbol();
+
+            }
+
+
+            return new CustomJsonResult(ResultType.Success, ResultCode.Success, "获取成功", ret);
+        }
+
+
+        public class IndexModel
+        {
+            public IndexModel()
+            {
+                this.MenuNavByLeft = new List<MenuModel>();
+            }
+
+            public string Title { get; set; }
+
+            public bool IsLogin { get; set; }
+
+            public string UserName { get; set; }
+
+            public List<MenuModel> MenuNavByLeft { get; set; }
+
+            public class MenuModel
+            {
+                public MenuModel()
+                {
+                    this.SubMenus = new List<SubMenuModel>();
+                }
+
+                public string Name { get; set; }
+
+                public List<SubMenuModel> SubMenus { get; set; }
+            }
+
+            public class SubMenuModel
+            {
+                public string Url { get; set; }
+
+                public string Name { get; set; }
+            }
+        }
+
         /// <summary>
         /// 登录方法
         /// </summary>
@@ -46,10 +101,20 @@ namespace WebMobile.Areas.Wb.Controllers
         /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
-        [CheckVerifyCode("WebSSOLoginVerifyCode")]
+
         public CustomJsonResult Login(RopLogin rop)
         {
             RetLogin ret = new RetLogin();
+
+            if (Session[sesionKeyLoginVerifyCode] == null)
+            {
+                return Json(ResultType.Failure, ret, "验证码超时");
+            }
+
+            if (Session[sesionKeyLoginVerifyCode].ToString() != rop.VerifyCode)
+            {
+                return Json(ResultType.Failure, ret, "验证码不正确");
+            }
 
             var result = AdminServiceFactory.AuthorizeRelay.SignIn(rop.UserName, rop.Password, CommonUtil.GetIP(), Enumeration.LoginType.Website);
 

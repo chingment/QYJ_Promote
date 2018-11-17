@@ -1,7 +1,6 @@
-﻿@model WebMobile.Areas.Wb.Models.Home.LoginViewModel
-@{
+﻿@{
     ViewBag.Title = "Login";
-    Layout = "~/Areas/Wb/Views/Shared/_LayoutHome.cshtml";
+    Layout = "~/Areas/Wb/Views/Shared/_Layout.cshtml";
 }
 @section styles{
     <style type="text/css">
@@ -15,71 +14,72 @@
     </style>
 }
 
-@section scripts{
-
-
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-            $(window).resizeEnd({
-                delay: 0,
-                isLoad: true
-            }, function () {
-
-                var windowHeight = $(window).height();
-                var windowWidth = $(window).width();
-
-                $('#bg_page_login_img').width(windowWidth).height(windowHeight);;
-            });
-
-        });
-
-
-    </script>
-}
-
-<div id="bg_page_login" class="bg-page-login">
-    <img id="bg_page_login_img" src="~/Areas/Wb/Content/base/images/bg_login.jpg" style="position: absolute; left: 0px;opacity:1; overflow: hidden; transition: opacity .8s ease" />
-</div>
-<div class="gbr-row gbr-row-login">
-    <form id="form1" onsubmit="return login()">
-        <input type="hidden" id="txt_ReturnUrl" name="ReturnUrl" value="@Model.ReturnUrl" />
-
-        <div class="h-form-container login-box">
-            <div class="h-message">
-                <span id="lbl_Message"></span>
-            </div>
-            <dl class="h-entry clearfix">
-                <dt class="h-entry-label">用户名： </dt>
-                <dd class="h-entry-values">
-                    <span class="h-item "><input type="text" id="txt_UserName" autocomplete="off" name="UserName" value="" style="width:180px;" placeholder="请输入登录帐号" /></span>
-                    <div class="clear"></div>
-                </dd>
-            </dl>
-            <div class="h-line"></div>
-            <dl class="h-entry">
-                <dt class="h-entry-label">密码：</dt>
-                <dd class="h-entry-values">
-                    <span class="h-item"><input type="password" id="txt_Password" autocomplete="off" name="Password" value="" style="width: 180px;" placeholder="请输入密码" /></span>
-                    <div class="clear"></div>
-                </dd>
-            </dl>
-            <div class="h-line"></div>
-            <dl class="h-entry clearfix">
-                <dt class="h-entry-label">验证码：</dt>
-                <dd class="h-entry-values">
-                    <span class="h-item"><input type="text" id="txt_VerifyCode" name="txt_VerifyCode" value="" style="width: 100px;" placeholder="请输入密码" /><img id="img_VerifyCode" style="border:0px;" class="img-verify" alt="验证码" /></span>
-                    <div class="clear"></div>
-                </dd>
-            </dl>
-            <div class="h-line"></div>
-            <div class="h-button">
-                <input type="submit" id="btn_Login" name="btn_Login" value="登录" style="width: 100%;" />
+<div class="gb">
+    <div class="gbr gbr-header gbr-header-small" id="gbr_header">
+        <div class="wrapper">
+            <div class="content clearfix">
+                <ul class="content-left">
+                    <li>
+                        <span class="title">@WebMobile.Areas.Wb.Own.OwnWebSettingUtils.GetWebName()</span>
+                    </li>
+                </ul>
+                <ul class="content-right btn-dropdownmenu"></ul>
                 <div class="clear"></div>
             </div>
+            <div class="clear"></div>
         </div>
-    </form>
+        <div class="clear"></div>
+    </div>
+
+    <div class="gbr gbr-main" id="gbr_main">
+        <div class="wrapper">
+            <div class="content clearfix" id="gbr_main_content">
+                <div id="bg_page_login" class="bg-page-login">
+                    <img id="bg_page_login_img" src="~/Areas/Wb/Content/base/images/bg_login.jpg" style="position: absolute; left: 0px;opacity:1; overflow: hidden; transition: opacity .8s ease" />
+                </div>
+                <div class="gbr-row gbr-row-login">
+                    <div class="h-form-container login-box">
+                        <div class="h-message">
+                            <span id="lbl_Message"></span>
+                        </div>
+                        <dl class="h-entry clearfix">
+                            <dt class="h-entry-label">用户名： </dt>
+                            <dd class="h-entry-values">
+                                <span class="h-item "><input type="text" id="txt_UserName" autocomplete="off" name="UserName" value="" style="width:180px;" placeholder="请输入登录帐号" /></span>
+                                <div class="clear"></div>
+                            </dd>
+                        </dl>
+                        <div class="h-line"></div>
+                        <dl class="h-entry">
+                            <dt class="h-entry-label">密码：</dt>
+                            <dd class="h-entry-values">
+                                <span class="h-item"><input type="password" id="txt_Password" autocomplete="off" name="Password" value="" style="width: 180px;" placeholder="请输入密码" /></span>
+                                <div class="clear"></div>
+                            </dd>
+                        </dl>
+                        <div class="h-line"></div>
+                        <dl class="h-entry clearfix">
+                            <dt class="h-entry-label">验证码：</dt>
+                            <dd class="h-entry-values">
+                                <span class="h-item"><input type="text" id="txt_VerifyCode" name="txt_VerifyCode" value="" style="width: 100px;" placeholder="请输入密码" /><img id="img_VerifyCode" style="border:0px;" class="img-verify" alt="验证码" /></span>
+                                <div class="clear"></div>
+                            </dd>
+                        </dl>
+                        <div class="h-line"></div>
+                        <div class="h-button">
+                            <input type="submit" id="btn_Login" name="btn_Login" value="登录" style="width: 100%;" />
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
 </div>
+
 
 @section scriptsbyend{
     <script type="text/javascript">
@@ -116,7 +116,7 @@
                 type: "post",
                 url: "/Wb/Home/Login",
                 dataType: "json",
-                data: $('#form1').serialize(),
+                data: { userName: userName, passWord: passWord, returnUrl: $.lumos.getUrlParamValue("returnUrl"), verifyCode: verifyCode },
                 beforeSend: function (data) {
                     $(msgObj).text("正在登录中...");
                 },
@@ -131,7 +131,6 @@
                     }
                 }
             }).done(function (d) {
-
                 if (d.result == $.lumos.resultType.success) {
                     $(msgObj).text("");
                     window.location.href = d.data.url;
@@ -148,6 +147,12 @@
         var imgVerifyCode;
         $(document).ready(function () {
 
+            $('#btn_Login').live('click', function () {
+                login();
+
+                return false;
+            });
+
             if (window.parent.length > 0) {
                 window.top.location.href = "/Wb/Home/Login";
             }
@@ -155,7 +160,18 @@
             imgVerifyCode = $.imgVerifyCode.init({
                 imgId: 'img_VerifyCode',
                 btnId: 'a_VerifyCode',
-                sessionName: 'WebSSOLoginVerifyCode'
+                sessionName: 'sesionKeyLoginVerifyCode'
+            });
+
+            $(window).resizeEnd({
+                delay: 0,
+                isLoad: true
+            }, function () {
+
+                var windowHeight = $(window).height();
+                var windowWidth = $(window).width();
+
+                $('#bg_page_login_img').width(windowWidth).height(windowHeight);;
             });
 
         });
