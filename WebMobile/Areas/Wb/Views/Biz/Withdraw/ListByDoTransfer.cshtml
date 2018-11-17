@@ -35,7 +35,7 @@
             },
             operate: {
                 "edit": function (obj) {
-                    var url = '/Wb/Biz/Withdraw/DoTransfer?id=' + obj.id;
+                    var url = '/Wb/Biz/Withdraw/DoTransfer?withdrawId=' + obj.id;
                     var title = '转账';
                     art.dialog.open(url, {
                         id: "openDialog", title: title, width: '800px', height: '600px', lock: true, drag: false, cancelVal: '关闭', cancel: true,

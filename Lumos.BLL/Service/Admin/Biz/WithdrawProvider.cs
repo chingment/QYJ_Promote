@@ -18,11 +18,18 @@ namespace Lumos.BLL.Service.Admin
             var withdraw = CurrentDb.Withdraw.Where(m => m.Id == pWithdrawId).FirstOrDefault();
             if (withdraw != null)
             {
+                ret.WithdrawSn = withdraw.Sn;
+                ret.AcBank = withdraw.AcBank;
                 ret.AcName = withdraw.AcName;
                 ret.AcBankCardNumber = withdraw.AcBankCardNumber;
                 ret.AcName = withdraw.AcName;
+                ret.AcIdNumber = withdraw.AcIdNumber;
                 ret.Amount = withdraw.Amount.ToF2Price();
-
+                ret.ApplyTime = withdraw.ApplyTime.ToUnifiedFormatDateTime();
+                ret.Status = withdraw.Status;
+                ret.StatusName = withdraw.Status.GetCnName();
+                ret.FailureReason = withdraw.FailureReason;
+                ret.SettlementTime = withdraw.SettlementTime.ToUnifiedFormatDateTime();
                 var userInfo = CurrentDb.WxUserInfo.Where(m => m.ClientId == withdraw.ClientId).FirstOrDefault();
 
                 if (userInfo != null)

@@ -65,7 +65,12 @@
                 return false;
             });
 
-            setInterval("reinitIframe()", 200);
+            $('#abc').live("click", function () {
+                reinitIframe();
+
+            })
+
+            //setInterval("reinitIframe()", 200);
         });
 
         function reinitIframe() {
@@ -74,12 +79,17 @@
                 var bHeight = iframe.contentWindow.document.body.scrollHeight;
                 var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
                 var height = Math.max(bHeight, dHeight);
+                alert(bHeight + "," + dHeight + "," + height)
 
                 var heightss = $(iframe).contents().find("body").height()
+                //var heightss = $(iframe).height();
+                var a = window.frames["iframeMain"].document;
+                alert($(iframe).contents().find("body").height())
+
                 var height = Math.max(bHeight, dHeight);
                 console.log(heightss)
                 iframe.height = heightss;
-
+    
                 var tree_tab_left = $('.ztree');
                 if (tree_tab_left.length > 0) {
                     console.log($(tree_tab_left).height())
@@ -95,11 +105,12 @@
             <div class="content clearfix">
                 <ul class="content-left">
                     <li>
+                   
                         <span class="title">${title}</span>
                     </li>
                 </ul>
                 <ul class="content-right btn-dropdownmenu">
-
+                    <input type="button" value="dsad" id="abc" />
                     {{if isLogin}}
                     <li>
                         <a href="/Wb/home/main" target="iframeMain">

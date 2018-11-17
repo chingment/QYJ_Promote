@@ -12,6 +12,8 @@ namespace Lumos.BLL.Service.Admin
 
         public string WithdrawSn { get; set; }
 
+        public string AcBank { get; set; }
+
         public string AcBankCardNumber { get; set; }
 
         public string AcName { get; set; }
@@ -20,5 +22,11 @@ namespace Lumos.BLL.Service.Admin
 
         public string Amount { get; set; }
 
+        public Lumos.Entity.Enumeration.WithdrawStatus Status { get; set; }
+
+        public string ApplyTime { get; set; }
+        public string StatusName { get; set; }
+        public string SettlementTime { get; set; }
+        public string FailureReason { get; set; }
     }
 }
