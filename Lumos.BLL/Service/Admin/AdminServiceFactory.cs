@@ -4,23 +4,40 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lumos.BLL
+namespace Lumos.BLL.Service.Admin
 {
-    public class SysFactory : BaseFactory
+    public class AdminServiceFactory : BaseFactory
     {
-        public static SysAppKeySecretProvider AppKeySecret
-        {
-            get
-            {
-                return new SysAppKeySecretProvider();
-            }
-        }
 
         public static SysUserProvider SysUser
         {
             get
             {
                 return new SysUserProvider();
+            }
+        }
+
+        public static SysStaffUserProvider SysStaffUser
+        {
+            get
+            {
+                return new SysStaffUserProvider();
+            }
+        }
+
+        public static SysRoleProvider SysRole
+        {
+            get
+            {
+                return new SysRoleProvider();
+            }
+        }
+
+        public static SysMenuProvider SysMenu
+        {
+            get
+            {
+                return new SysMenuProvider();
             }
         }
 

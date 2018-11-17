@@ -89,7 +89,7 @@ namespace WebMobile.Areas.Wb.Own
 
             if (userInfo == null)
             {
-                MessageBoxModel messageBox = new MessageBoxModel();
+                MessageBox messageBox = new MessageBox();
                 messageBox.No = Guid.NewGuid().ToString();
                 messageBox.Type = MessageBoxTip.Failure;
                 messageBox.Title = "温馨提示";
@@ -115,7 +115,7 @@ namespace WebMobile.Areas.Wb.Own
 
             if (_permissions != null)
             {
-                MessageBoxModel messageBox = new MessageBoxModel();
+                MessageBox messageBox = new MessageBox();
                 messageBox.No = Guid.NewGuid().ToString();
                 messageBox.Type = MessageBoxTip.Warn;
                 messageBox.Title = "温馨提示";

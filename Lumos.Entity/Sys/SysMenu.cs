@@ -40,5 +40,7 @@ namespace Lumos.Entity
         [NotMapped]
         public string[] Permission { get; set; }
 
+        public bool IsCanDelete { get; set; }
+
     }
 }

@@ -163,7 +163,7 @@ namespace Lumos.BLL.Service.App
                             }
 
                             string goods_tag = "";
-                            string prepayId = SdkFactory.Wx.Instance().GetPrepayId(pOperater, "JSAPI", wxUserInfo.OpenId, order.Sn, chargeAmount, goods_tag, Common.CommonUtils.GetIP(), productSku.Name, order.PayExpireTime);
+                            string prepayId = SdkFactory.Wx.Instance().GetPrepayId(pOperater, "JSAPI", wxUserInfo.OpenId, order.Sn, chargeAmount, goods_tag, Common.CommonUtil.GetIP(), productSku.Name, order.PayExpireTime);
                             if (string.IsNullOrEmpty(prepayId))
                             {
                                 LogUtil.Error("去结算，微信支付中生成预支付订单失败");

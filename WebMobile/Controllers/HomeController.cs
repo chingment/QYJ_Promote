@@ -173,7 +173,7 @@ namespace WebMobile.Controllers
             sb.Append("出错文件：" + (scriptURI == null ? "" : scriptURI) + "\t\n");
             sb.Append("出错列号：" + (columnNumber == null ? "" : columnNumber) + "\t\n");
             sb.Append("错误详情：" + (errorObj == null ? "" : errorObj) + "\t\n");
-            sb.Append("浏览器agent：" + Lumos.Common.CommonUtils.GetBrowserInfo() + "\t\n");
+            sb.Append("浏览器agent：" + Lumos.Common.CommonUtil.GetBrowserInfo() + "\t\n");
             LogUtil.Error(sb.ToString());
             return res;
 

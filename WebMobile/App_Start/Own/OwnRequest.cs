@@ -1,4 +1,5 @@
 ﻿using Lumos.BLL;
+using Lumos.BLL.Service.Admin;
 using Lumos.Entity;
 using Lumos.Session;
 using System;
@@ -80,7 +81,7 @@ namespace WebMobile
 
         public static bool IsInPermission(string[] permissions)
         {
-            List<string> listPermissions = SysFactory.AuthorizeRelay.GetUserPermissions(GetCurrentUserId());
+            List<string> listPermissions = AdminServiceFactory.AuthorizeRelay.GetUserPermissions(GetCurrentUserId());
             if (listPermissions == null)
                 return false;
             if (listPermissions.Count < 1)

@@ -83,11 +83,11 @@ namespace WebMobile.Areas.Wb.Controllers
 
                 if (model.StartTime != null)
                 {
-                    sql.Append(" and  a.BuyTime >='" + CommonUtils.ConverToShortDateStart(model.StartTime.Value) + "'"); ;
+                    sql.Append(" and  a.BuyTime >='" + CommonUtil.ConverToShortDateStart(model.StartTime.Value) + "'"); ;
                 }
                 if (model.EndTime != null)
                 {
-                    sql.Append(" and  a.BuyTime <='" + CommonUtils.ConverToShortDateEnd(model.EndTime.Value) + "'");
+                    sql.Append(" and  a.BuyTime <='" + CommonUtil.ConverToShortDateEnd(model.EndTime.Value) + "'");
                 }
 
 
@@ -232,11 +232,11 @@ namespace WebMobile.Areas.Wb.Controllers
 
                 if (model.StartTime != null)
                 {
-                    sql.Append(" and  a.CreateTime >='" + CommonUtils.ConverToShortDateStart(model.StartTime.Value) + "'"); ;
+                    sql.Append(" and  a.CreateTime >='" + CommonUtil.ConverToShortDateStart(model.StartTime.Value) + "'"); ;
                 }
                 if (model.EndTime != null)
                 {
-                    sql.Append(" and  a.CreateTime <='" + CommonUtils.ConverToShortDateEnd(model.EndTime.Value) + "'");
+                    sql.Append(" and  a.CreateTime <='" + CommonUtil.ConverToShortDateEnd(model.EndTime.Value) + "'");
                 }
 
 
@@ -511,11 +511,11 @@ namespace WebMobile.Areas.Wb.Controllers
 
                 if (model.StartTime != null)
                 {
-                    sql.Append(" and  a.PayTime >='" + CommonUtils.ConverToShortDateStart(model.StartTime.Value) + "'"); ;
+                    sql.Append(" and  a.PayTime >='" + CommonUtil.ConverToShortDateStart(model.StartTime.Value) + "'"); ;
                 }
                 if (model.EndTime != null)
                 {
-                    sql.Append(" and  a.PayTime <='" + CommonUtils.ConverToShortDateEnd(model.EndTime.Value) + "'");
+                    sql.Append(" and  a.PayTime <='" + CommonUtil.ConverToShortDateEnd(model.EndTime.Value) + "'");
                 }
 
 
@@ -625,11 +625,11 @@ namespace WebMobile.Areas.Wb.Controllers
 
                 if (model.StartTime != null)
                 {
-                    sql.Append(" and  a.ApplyTime >='" + CommonUtils.ConverToShortDateStart(model.StartTime.Value) + "'"); ;
+                    sql.Append(" and  a.ApplyTime >='" + CommonUtil.ConverToShortDateStart(model.StartTime.Value) + "'"); ;
                 }
                 if (model.EndTime != null)
                 {
-                    sql.Append(" and  a.ApplyTime <='" + CommonUtils.ConverToShortDateEnd(model.EndTime.Value) + "'");
+                    sql.Append(" and  a.ApplyTime <='" + CommonUtil.ConverToShortDateEnd(model.EndTime.Value) + "'");
                 }
 
 

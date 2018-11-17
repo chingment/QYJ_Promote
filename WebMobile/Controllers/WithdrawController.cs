@@ -56,7 +56,7 @@ namespace WebMobile.Controllers
             {
                 var myWithdraw = new MyWithdrawModel();
                 myWithdraw.Sn = item.Sn;
-                myWithdraw.Title = string.Format("资金提现-到{0}({1})", item.AcBank, CommonUtils.GetLastString(item.AcBankCardNumber, 4));
+                myWithdraw.Title = string.Format("资金提现-到{0}({1})", item.AcBank, CommonUtil.GetLastString(item.AcBankCardNumber, 4));
                 myWithdraw.ApplyTime = item.ApplyTime.ToString("yyyy.MM.dd HH:mm:ss");
                 myWithdraw.Amount = item.Amount.ToF2Price();
 

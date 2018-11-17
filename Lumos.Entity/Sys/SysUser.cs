@@ -112,5 +112,7 @@ namespace Lumos.Entity
         [NotMapped]
         public string Password { get; set; }
 
+        public bool IsCanDelete { get; set; }
+
     }
 }

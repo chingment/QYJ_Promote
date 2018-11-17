@@ -1,5 +1,7 @@
 ﻿using Lumos;
 using Lumos.BLL;
+using Lumos.BLL.Biz;
+using Lumos.BLL.Service.Admin;
 using Lumos.Common;
 using Lumos.Entity;
 using Lumos.Session;
@@ -53,28 +55,28 @@ namespace WebMobile.Areas.Wb.Controllers
         [HttpPost]
         [AllowAnonymous]
         [CheckVerifyCode("WebSSOLoginVerifyCode")]
-        public CustomJsonResult Login(LoginViewModel model)
+        public CustomJsonResult Login(RopLogin rop)
         {
-            GoToViewModel gotoViewModel = new GoToViewModel();
+            RetLogin ret = new RetLogin();
 
-            var result = SysFactory.AuthorizeRelay.SignIn(model.UserName, model.Password, CommonUtils.GetIP(), Enumeration.LoginType.Website);
+            var result = AdminServiceFactory.AuthorizeRelay.SignIn(rop.UserName, rop.Password, CommonUtil.GetIP(), Enumeration.LoginType.Website);
 
             if (result.ResultType == Enumeration.LoginResult.Failure)
             {
 
                 if (result.ResultTip == Enumeration.LoginResultTip.UserNotExist || result.ResultTip == Enumeration.LoginResultTip.UserPasswordIncorrect)
                 {
-                    return Json(ResultType.Failure, gotoViewModel, "用户名或密码不正确");
+                    return Json(ResultType.Failure, ret, "用户名或密码不正确");
                 }
 
                 if (result.ResultTip == Enumeration.LoginResultTip.UserDisabled)
                 {
-                    return Json(ResultType.Failure, gotoViewModel, "账户被禁用");
+                    return Json(ResultType.Failure, ret, "账户被禁用");
                 }
 
                 if (result.ResultTip == Enumeration.LoginResultTip.UserDeleted)
                 {
-                    return Json(ResultType.Failure, gotoViewModel, "账户被删除");
+                    return Json(ResultType.Failure, ret, "账户被删除");
                 }
             }
 
@@ -104,9 +106,9 @@ namespace WebMobile.Areas.Wb.Controllers
 
             SSOUtil.SetUserInfo(userInfo);
 
-            gotoViewModel.Url = string.Format("{0}?token={1}", returnUrl, userInfo.Token);
+            ret.Url = string.Format("{0}?token={1}", returnUrl, userInfo.Token);
 
-            return Json(ResultType.Success, gotoViewModel, "登录成功");
+            return Json(ResultType.Success, ret, "登录成功");
 
         }
 
@@ -123,7 +125,7 @@ namespace WebMobile.Areas.Wb.Controllers
         public CustomJsonResult ChangePassword(ChangePasswordViewModel model)
         {
 
-            var result = SysFactory.AuthorizeRelay.ChangePassword(this.CurrentUserId, this.CurrentUserId, model.OldPassword, model.NewPassword);
+            var result = AdminServiceFactory.AuthorizeRelay.ChangePassword(this.CurrentUserId, this.CurrentUserId, model.OldPassword, model.NewPassword);
 
             if (result.Result == ResultType.Success)
             {

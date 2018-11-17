@@ -76,7 +76,7 @@ namespace Lumos.BLL.Service.App
                     fundTrans.Creator = pOperater;
                     fundTrans.CreateTime = this.DateTime;
                     fundTrans.TipsIcon = IconUtil.Withdraw;
-                    fundTrans.Description = string.Format("资金提现-到{0}({1})", withdraw.AcBank, CommonUtils.GetLastString(withdraw.AcBankCardNumber, 4));
+                    fundTrans.Description = string.Format("资金提现-到{0}({1})", withdraw.AcBank, CommonUtil.GetLastString(withdraw.AcBankCardNumber, 4));
                     CurrentDb.FundTrans.Add(fundTrans);
                     CurrentDb.SaveChanges();
                     ts.Complete();
