@@ -8,7 +8,16 @@
 
     <script type="text/javascript">
 
+        $(document).ready(function () {
 
+            $('.btn-search').live('click', function () {
+                search();
+            });
+
+            $('.btn-export-excel').live('click', function () {
+                exportExcel();
+            });
+        });
 
         function GetParams(operate) {
             var l_Data = $("#form1").serializeArray();
@@ -22,6 +31,7 @@
         function search() {
             $.lumos.postJson({
                 url: url,
+                isUseHandling: true,
                 data: GetParams($.lumos.operateType.search),
                 success: function (d) {
                     $('#reporthtml').html(d.data.html);
