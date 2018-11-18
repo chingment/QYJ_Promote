@@ -1,5 +1,6 @@
 ﻿using Lumos;
 using Lumos.BLL;
+using Lumos.BLL.Biz;
 using Lumos.BLL.Service.App;
 using Lumos.Entity;
 using Lumos.WeiXinSdk;
@@ -18,26 +19,18 @@ namespace WebMobile.Controllers
     {
 
         [HttpPost]
-        public CustomJsonResult UnifiedOrder(UnifiedOrderPms model)
+        public CustomJsonResult UnifiedOrder(RopOrderUnifiedOrder rop)
         {
             LogUtil.Info("进入UnifiedOrder");
             LogUtil.Info("用户.CurrentUserId:" + this.CurrentUserId);
 
-            model.ClientId = this.CurrentUserId;
-            var result = BizFactory.Order.UnifiedOrder(this.CurrentUserId, model);
+            var result = BizFactory.Order.UnifiedOrder(this.CurrentUserId, this.CurrentUserId, rop);
 
             if (result.Result == ResultType.Success)
             {
                 LogUtil.Info("下单成功:" + Newtonsoft.Json.JsonConvert.SerializeObject(result));
 
-                bool isBuy = false;
-
-                if (result.Data.Status == Enumeration.OrderStatus.Payed || result.Data.Status == Enumeration.OrderStatus.Completed)
-                {
-                    isBuy = true;
-                }
-
-                return SdkFactory.Wx.Instance().GetJsApiPayParams(result.Data.WxPrepayId, result.Data.Id, result.Data.Sn, isBuy);
+                return SdkFactory.Wx.Instance().GetJsApiPayParams(result.Data.WxPrepayId, result.Data.OrderId, result.Data.OrderSn, result.Data.IsBuy);
             }
             else
             {

@@ -1,5 +1,6 @@
 ﻿using Lumos;
 using Lumos.BLL;
+using Lumos.BLL.Biz;
 using Lumos.BLL.Service.App;
 using Lumos.Entity;
 using System;
@@ -32,7 +33,7 @@ namespace WebMobile.Controllers
             LogUtil.Info("用户.CurrentUserId:" + this.CurrentUserId);
 
 
-            var result = AppServiceFactory.Order.UnifiedOrder(this.CurrentUserId, this.CurrentUserId, rop);
+            var result =BizFactory.Order.UnifiedOrder(this.CurrentUserId, this.CurrentUserId, rop);
 
             if (result.Result == ResultType.Success)
             {

@@ -80,8 +80,12 @@
     <Compile Include="Biz\Redis\ReidsMqByCalProfit.cs" />
     <Compile Include="Biz\Redis\ReidsMqByCalProfitModel.cs" />
     <Compile Include="Biz\Redis\ReidsMqFactory.cs" />
+    <Compile Include="Biz\RModels\OrderPmsByBuyPromoteCoupon.cs" />
     <Compile Include="Biz\RModels\RetLogin.cs" />
+    <Compile Include="Biz\RModels\RetOrderUnifiedOrder.cs" />
     <Compile Include="Biz\RModels\RopLogin.cs" />
+    <Compile Include="Biz\RModels\RopOrderCancleOrder.cs" />
+    <Compile Include="Biz\RModels\RopOrderUnifiedOrder.cs" />
     <Compile Include="Biz\RModels\RupBaseGetList.cs" />
     <Compile Include="Service\Admin\Biz\RModels\RetWithdrawGetDetails.cs" />
     <Compile Include="Service\Admin\Biz\RModels\RopWithdrawAudit.cs" />
@@ -137,12 +141,9 @@
     <Compile Include="Service\App\ProductSkuService.cs" />
     <Compile Include="Service\App\PromoteService.cs" />
     <Compile Include="Service\App\RModels\RetOrderGetDetails.cs" />
-    <Compile Include="Service\App\RModels\RetOrderUnifiedOrder.cs" />
     <Compile Include="Service\App\RModels\RetProductSkuGetDetails.cs" />
     <Compile Include="Service\App\RModels\RetPromoteGetConfig.cs" />
     <Compile Include="Service\App\RModels\RetWithdrawApply.cs" />
-    <Compile Include="Service\App\RModels\RopOrderCancleOrder.cs" />
-    <Compile Include="Service\App\RModels\RopOrderUnifiedOrder.cs" />
     <Compile Include="Service\App\RModels\RopWithdrawApply.cs" />
     <Compile Include="Service\App\RModels\RupCouponGetList.cs" />
     <Compile Include="Service\App\RModels\RupFundGetList.cs" />
