@@ -186,6 +186,7 @@ namespace WebMobile.Areas.Wb.Controllers
 
             if (result.Result == ResultType.Success)
             {
+                OwnRequest.Quit();
                 return Json(ResultType.Success, "点击<a href=\"" + Wb.Own.OwnWebSettingUtils.GetLoginPage("") + "\">登录</a>");
             }
 
