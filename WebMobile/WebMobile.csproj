@@ -365,7 +365,6 @@
     <Content Include="Areas\Wb\Scripts\jquery.formValidatorRegex.js" />
     <Content Include="Areas\Wb\Scripts\jquery.js" />
     <Content Include="Areas\Wb\Scripts\jquery.lumos.back.1.0.0.js" />
-    <Content Include="Areas\Wb\Scripts\jquery.lumos.front.1.0.0.js" />
     <Content Include="Areas\Wb\Scripts\jquery.mouseoverbox.js" />
     <Content Include="Areas\Wb\Scripts\jquery.mousewheel.js" />
     <Content Include="Areas\Wb\Scripts\jquery.resizeEnd.js" />
@@ -449,7 +448,6 @@
     <Content Include="Global.asax" />
     <Content Include="Areas\Wb\Views\web.config" />
     <Content Include="Areas\Wb\Views\Home\Index.cshtml" />
-    <Content Include="Areas\Wb\Scripts\jquery.lumos.1.0.0.Xjs" />
     <Content Include="Areas\Wb\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Wb\Views\Home\Main.cshtml" />
     <Content Include="Areas\Wb\Views\Home\Login.cshtml" />

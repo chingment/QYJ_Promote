@@ -4,7 +4,7 @@
 }
 <div class="login">
     <div class="it-logo">
-        <img class="img" src="/Content/images/login-logo.png" />
+        <img class="img" src="/Content/images/login-logox.png" />
     </div>
     <div class="it-input its-input">
         <div class="it">
@@ -38,7 +38,7 @@
 
         $(document).ready(function () {
 
-            $('#btn_submit').on("click", function () {
+            $('#btn_submit').live("click", function () {
                 login();
             });
 
@@ -47,6 +47,7 @@
         function login() {
             var userName = $("#txt_UserName").val();
             var passWord = $("#txt_Password").val();
+
             if (userName.length == 0) {
                 $.lumos.tips('用户名不能为空');
                 return false;
