@@ -427,7 +427,7 @@
         function unifiedOrder() {
 
             $.lumos.postJson({
-                url: "/Promotec/UnifiedOrder",
+                url: "/Order/UnifiedOrder",
                 isShowLoading: true,
                 data: { type: "1", refereeId: pConfig.refereeId, orderPms: { promoteId: pConfig.promoteId, promoteSkuId: pConfig.promoteSkuId } },
                 success: function (d) {

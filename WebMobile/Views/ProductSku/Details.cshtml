@@ -239,7 +239,7 @@
         function unifiedOrder() {
 
             $.lumos.postJson({
-                url: "/ProductSku/UnifiedOrder",
+                url: "/Order/UnifiedOrder",
                 isShowLoading: true,
                 data: { promoteId: promoteId, promoteSkuId: promoteSkuId, skuId: skuId, orderId: orderId },
                 success: function (d) {
@@ -259,7 +259,7 @@
                             },
                             cancel: function (res) {
                                 $.lumos.postJson({
-                                    url: "/ProductSku/CancleOrder",
+                                    url: "/Order/Cancle",
                                     isShowLoading: true,
                                     data: { orderId: orderId },
                                     success: function (d2) {

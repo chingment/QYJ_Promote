@@ -22,6 +22,7 @@ using Lumos.Common;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using Lumos.BLL.Service.App;
+using Lumos.BLL.Biz;
 
 namespace WebMobile.Controllers
 {

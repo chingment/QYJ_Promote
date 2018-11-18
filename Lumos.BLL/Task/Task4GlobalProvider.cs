@@ -1,4 +1,5 @@
-﻿using Lumos.DAL;
+﻿using Lumos.BLL.Biz;
+using Lumos.DAL;
 using Lumos.Entity;
 using System;
 using System.Collections.Generic;
