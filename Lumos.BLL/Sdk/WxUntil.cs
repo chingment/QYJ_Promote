@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Lumos.WeiXinSdk;
 using System.Net;
 
-namespace Lumos.BLL
+namespace Lumos.BLL.Sdk
 {
     public sealed class WxUntil
     {

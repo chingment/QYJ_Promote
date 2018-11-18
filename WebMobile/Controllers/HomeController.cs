@@ -23,6 +23,7 @@ using System.IO;
 using Newtonsoft.Json.Linq;
 using Lumos.BLL.Service.App;
 using Lumos.BLL.Biz;
+using Lumos.BLL.Sdk;
 
 namespace WebMobile.Controllers
 {

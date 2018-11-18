@@ -1,6 +1,7 @@
 ﻿using Lumos;
 using Lumos.BLL;
 using Lumos.BLL.Biz;
+using Lumos.BLL.Sdk;
 using Lumos.BLL.Service.App;
 using Lumos.Entity;
 using Lumos.WeiXinSdk;

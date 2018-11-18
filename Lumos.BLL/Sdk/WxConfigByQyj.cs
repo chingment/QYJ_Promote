@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lumos.BLL
+namespace Lumos.BLL.Sdk
 {
 
     public class WxConfigByQyj : IWxConfig

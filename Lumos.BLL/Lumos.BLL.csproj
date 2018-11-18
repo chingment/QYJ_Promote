@@ -80,7 +80,6 @@
     <Compile Include="Biz\Redis\ReidsMqByCalProfit.cs" />
     <Compile Include="Biz\Redis\ReidsMqByCalProfitModel.cs" />
     <Compile Include="Biz\Redis\ReidsMqFactory.cs" />
-    <Compile Include="Biz\RModels\OrderPmsByBuyPromoteCoupon.cs" />
     <Compile Include="Biz\RModels\RetLogin.cs" />
     <Compile Include="Biz\RModels\RetOrderUnifiedOrder.cs" />
     <Compile Include="Biz\RModels\RopLogin.cs" />

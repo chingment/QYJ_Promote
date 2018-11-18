@@ -1,4 +1,5 @@
-﻿using Lumos.Entity;
+﻿using Lumos.BLL.Sdk;
+using Lumos.Entity;
 using Lumos.Redis;
 using Newtonsoft.Json.Linq;
 using System;

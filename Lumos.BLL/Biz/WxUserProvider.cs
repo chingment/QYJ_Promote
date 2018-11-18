@@ -7,8 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using Newtonsoft.Json;
+using Lumos.BLL.Sdk;
 
-namespace Lumos.BLL
+namespace Lumos.BLL.Biz
 {
     public class WxUserProvider : BaseProvider
     {

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 
-namespace Lumos.BLL
+namespace Lumos.BLL.Biz
 {
     public enum ReidsMqByCalProfitType
     {

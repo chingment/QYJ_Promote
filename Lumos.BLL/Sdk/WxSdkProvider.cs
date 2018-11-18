@@ -11,7 +11,7 @@ using Lumos.WeiXinSdk;
 using Lumos.WeiXinSdk.Tenpay;
 using System.Security.Cryptography;
 
-namespace Lumos.BLL
+namespace Lumos.BLL.Sdk
 {
     public class WxSdkProvider : BaseProvider
     {
