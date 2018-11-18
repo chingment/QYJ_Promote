@@ -81,24 +81,16 @@
 
                 clientHeight = clientHeight - 120;
 
-
                 var bHeight = iframe.contentWindow.document.body.scrollHeight;
-                var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
-                var height = Math.max(bHeight, dHeight);
 
-                //alert(bHeight + "," + dHeight + "," + height)
+                //console.log("bHeight:" + bHeight);
+                //console.log("clientHeight:" + clientHeight);
 
-                var heightss = $(iframe).contents().find("body").height()
-                //var heightss = $(iframe).height();
-                //var a = window.frames["iframeMain"].document;
-                //alert($(iframe).contents().find("body").height())
-                //console.log(heightss)
-
-                if (heightss < clientHeight) {
-                    heightss = clientHeight
+                if (bHeight < clientHeight) {
+                    bHeight = clientHeight
                 }
 
-                iframe.height = heightss;
+                iframe.height = bHeight;
 
                 var tree_tab_left = $('.ztree');
                 if (tree_tab_left.length > 0) {
@@ -120,7 +112,7 @@
                     </li>
                 </ul>
                 <ul class="content-right btn-dropdownmenu">
-                    <input style="display:none" type="button" value="dsad" id="abc" />
+                    <input style="display:none"  type="button" value="dsad" id="abc" />
                     {{if isLogin}}
                     <li>
                         <a href="/Wb/home/main" target="iframeMain">
