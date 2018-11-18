@@ -374,8 +374,11 @@
     <Content Include="Areas\Wb\Scripts\owl.carousel.js" />
     <Content Include="Areas\Wb\Scripts\respond.js" />
     <Content Include="Areas\Wb\Scripts\respond.min.js" />
+    <Content Include="Content\images\ic_pass.png" />
+    <Content Include="Content\images\ic_phone.png" />
     <Content Include="Content\images\list_icon_withdraw.png" />
     <Content Include="Content\images\list_nav_item_icon_sharelog.png" />
+    <Content Include="Content\images\login-logo.png" />
     <Content Include="Content\images\operate_result_ic_.png" />
     <Content Include="Content\images\operate_result_ic_0.png" />
     <Content Include="Content\images\operate_result_ic_1.png" />

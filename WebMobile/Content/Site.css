@@ -3,9 +3,6 @@
 	margin: 0;
 	list-style: none;
 	font-family: "微软雅黑";
-}
-
-* {
 	user-select: none;
 }
 
@@ -31,6 +28,15 @@ a, a:active, a:visited, a:hover, a:focus {
 
 .btn {
 	cursor: pointer;
+	border: 0;
+	background: rgb(241,141,0);
+	border-radius: 12px;
+	width: 100%;
+	padding: 0.5em 0;
+	font-size: 18px;
+	color: #fff;
+	display: inline-block;
+	text-align: center;
 }
 
 .btn-s1 {
@@ -149,8 +155,6 @@ a, a:active, a:visited, a:hover, a:focus {
 	line-height: 60px;
 }
 
-
-
 .list-nav {
 	border-top: 1px solid #f6f6f6;
 }
@@ -190,8 +194,6 @@ a, a:active, a:visited, a:hover, a:focus {
 	width: 18px;
 	padding: 14px 0px;
 }
-
-
 
 .list-nav2 {
 	border-top: 0px solid #f6f6f6;
@@ -259,7 +261,6 @@ a, a:active, a:visited, a:hover, a:focus {
 	color: #999;
 }
 
-
 .list-nav2 > .nav2-item > .item-right .txt-h1 {
 	height: 2rem;
 	line-height: 2rem;
@@ -292,8 +293,6 @@ a, a:active, a:visited, a:hover, a:focus {
 	text-align: right;
 	padding-right: 5px;
 }
-
-
 
 .list-result {
 	display: none;
@@ -698,17 +697,7 @@ a, a:active, a:visited, a:hover, a:focus {
 	text-align: left;
 }
 
-.btn {
-	border: 0;
-	background: rgb(241,141,0);
-	border-radius: 12px;
-	width: 100%;
-	padding: 0.5em 0;
-	font-size: 18px;
-	color: #fff;
-	display: inline-block;
-	text-align: center;
-}
+
 
 .login {
 	padding: 0 3rem;
