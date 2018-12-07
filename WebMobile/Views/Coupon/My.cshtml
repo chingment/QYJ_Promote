@@ -1,0 +1,203 @@
+﻿@{
+    ViewBag.Title = "我的优惠券";
+    Layout = "~/Views/Shared/_LayoutNavigationBar.cshtml";
+}
+
+@section styles{
+
+    <style type="text/css">
+        .list-coupon > .item {
+            border-radius: 1rem;
+            height: 8.4rem;
+            position: relative;
+            box-shadow: 2px 5px 8px 2px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+            padding: 0rem 0.8rem 0rem 0.8rem;
+        }
+
+        .list-coupon .item-top {
+            height: 5.4rem;
+            overflow: hidden;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .list-coupon .item-top .item-left {
+            width: 200px;
+            width: 40%;
+            float: left;
+        }
+
+        .list-coupon .item-top .item-right {
+            width: 200px;
+            text-align: right;
+            line-height: 5.4rem;
+            width: 60%;
+            float: left;
+        }
+
+        .list-coupon .amount, .list-coupon .name {
+            height: 3.4rem;
+            line-height: 4.4rem;
+        }
+
+        .list-coupon .discounttip, .list-coupon .validdate {
+            height: 2rem;
+            line-height: 2rem;
+        }
+
+        .list-coupon .item-bottom {
+            height: 3rem;
+            overflow: hidden;
+            border-top: 1px dashed #f5f5f5;
+            line-height: 3rem;
+        }
+
+        .list-coupon .item-bottom .item-left {
+            width: 50%;
+            float: left;
+        }
+
+        .list-coupon .item-bottom .item-right {
+            width: 50%;
+            float: right;
+            text-align: right;
+        }
+
+        .list-coupon .discount {
+            color: #f50;
+            font-weight: bold;
+            font-size: 2rem;
+        }
+
+        .list-coupon .discountunit {
+            color: #f50;
+            font-size: 1rem;
+            margin-left: 10px;
+        }
+
+        .list-coupon .discounttip, .list-coupon .validdate {
+            color: #555;
+            font-size: .8rem;
+            display: block;
+        }
+
+        .list-coupon .name {
+            font-weight: bold;
+            font-size: 1.6rem;
+            display: block;
+        }
+
+        .list-coupon .description {
+            color: #999;
+            font-size: .8rem;
+        }
+
+        .list-coupon .btn {
+            height: 2rem;
+            width: 6rem;
+            background: #f50;
+            color: #fff;
+            line-height: 2rem;
+            border-radius: 50px;
+            text-align: center;
+            display: inline-block;
+            font-size: 1rem;
+        }
+    </style>
+}
+
+@section headerleft{
+    <span class="title">我的优惠券</span>
+}
+
+@section scripts{
+    <script type="text/javascript">
+
+        var list_coupon;
+        $(document).ready(function () {
+
+            list_coupon = $("#list_coupon").loadDataUl({
+                url: "/Coupon/GetMy",
+                pageIndex: 0,
+                searchParams: $("#list_coupon").serializeArray(),
+                searchButtonId: "btn_Search",
+                loadmoreButtonId: "btn_More",
+                containerId: "list_coupon",
+                rowDataCombie: function (p_index, p_row) {
+
+                    var l_StrRows = "";
+
+                    l_StrRows += '<li class="item">';
+                    l_StrRows += '<div class="item-top">';
+                    l_StrRows += '<div class="item-left">';
+                    l_StrRows += '<div class="amount">';
+                    l_StrRows += '<span class="discount">' + p_row.number + '</span>';
+                    l_StrRows += '<span class="discountunit">' + p_row.numberUnit + '</span>';
+                    l_StrRows += '</div>';
+                    l_StrRows += '<div class="discounttip">' + p_row.discounttip + '</div>';
+                    l_StrRows += '</div>';
+                    l_StrRows += '<div class="item-right">';
+                    l_StrRows += '<span class="name">' + p_row.name + '</span>';
+                    l_StrRows += '<span class="validdate">' + p_row.validdate + '</span>';
+                    l_StrRows += '</div>';
+                    l_StrRows += '</div>';
+                    l_StrRows += '<div class="item-bottom">';
+                    l_StrRows += '<div class="item-left">';
+                    l_StrRows += '<div class="description">' + p_row.description + '</div>';
+                    l_StrRows += '</div>';
+                    l_StrRows += '<div class="item-right">';
+
+                    switch (p_row.status) {
+                        case 1:
+                            l_StrRows += '<span class="btn keyval" operate="get">领取</span>';
+                            break;
+                        case 2:
+                            l_StrRows += '<span class="btn keyval" operate="open">打开</span>';
+                            break;
+                        default:
+                            l_StrRows += '<span>' + p_row.statusName + '</span>';
+                            break;
+                    }
+
+                    l_StrRows += '</div>';
+                    l_StrRows += '</div>';
+                    l_StrRows += '</li>';
+
+                    return l_StrRows;
+                },
+                operate: {
+                    "open": function (obj) {
+                        var cardList = [];
+                        cardList.push({ cardId: obj.wxCouponId, code: obj.wxCouponDecryptCode });
+                        wx.openCard({
+                            cardList: cardList,
+                            cancel: function (res) {
+
+                            }
+                        });
+                    },
+                    "get": function (obj) {
+                        switch (obj.getMethod) {
+                            case "url":
+                                window.location.href = obj.getUrl;
+                                break;
+                            case "fun":
+                                break;
+                        }
+                    }
+                }
+            });
+        });
+
+    </script>
+}
+
+
+<ul id="list_coupon" class="list-coupon bdt0 pdlr14" style="margin-top:2px;"></ul>
+
+<div class="list-result">
+    <div class="tips">
+        <span></span>
+    </div>
+</div>

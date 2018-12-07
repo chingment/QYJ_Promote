@@ -1,0 +1,143 @@
+﻿@{
+    ViewBag.Title = "";
+    Layout = "~/Areas/Wb/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script type="text/javascript">
+
+        var withdrawId = $.lumos.getUrlParamValue("withdrawId");
+        $(document).ready(function () {
+
+            $.lumos.getJson({
+                url: "/Wb/Withdraw/GetDetails",
+                urlParams: { withdrawId: withdrawId },
+                isUseHandling: true,
+                success: function (d) {
+                    if (d.result == $.lumos.resultType.success) {
+                        $('#gbr_page').html($("#tmpl_block").tmpl(d.data));
+                    }
+                }
+            });
+        });
+    </script>
+}
+
+
+<script id="tmpl_block" type="text/x-jquery-tmpl">
+    <div class="gbr-row-title clearfix">
+        <div class="pull-left">
+            <h5>用户信息</h5>
+        </div>
+        <div class="pull-right f-tb1-item-pull-right">
+            <h6></h6>
+        </div>
+    </div>
+    <table class="f-tb" cellpadding="0" cellspacing="1">
+        <tr>
+            <td class="f-tb-t" style="width:80px">
+                昵称：
+            </td>
+            <td class="f-tb-c">
+                ${nickname}
+            </td>
+        </tr>
+    </table>
+    <div class="gbr-row-title clearfix">
+        <div class="pull-left">
+            <h5>提现信息</h5>
+        </div>
+        <div class="pull-right f-tb1-item-pull-right">
+            <h6></h6>
+        </div>
+    </div>
+    <table class="f-tb" cellpadding="0" cellspacing="1">
+        <tr>
+            <td class="f-tb-t" style="width:80px">
+                流水号：
+            </td>
+            <td class="f-tb-c">
+                ${withdrawSn}
+            </td>
+        </tr>
+        <tr>
+            <td class="f-tb-t">
+                银行名称：
+            </td>
+            <td class="f-tb-c">
+                ${acBank}
+            </td>
+        </tr>
+        <tr>
+            <td class="f-tb-t">
+                银行卡号码：
+            </td>
+            <td class="f-tb-c">
+                ${acBankCardNumber}
+            </td>
+        </tr>
+        <tr>
+            <td class="f-tb-t">
+                姓名：
+            </td>
+            <td class="f-tb-c">
+                ${acName}
+            </td>
+        </tr>
+        <tr>
+            <td class="f-tb-t">
+                身份证：
+            </td>
+            <td class="f-tb-c">
+                ${acIdNumber}
+            </td>
+        </tr>
+        <tr>
+            <td class="f-tb-t">
+                提交时间：
+            </td>
+            <td class="f-tb-c">
+                ${applyTime}
+            </td>
+        </tr>
+        <tr>
+            <td class="f-tb-t">
+                提现金额：
+            </td>
+            <td class="f-tb-c">
+                ${amount}
+            </td>
+        </tr>
+        <tr>
+            <td class="f-tb-t">
+                状态：
+            </td>
+            <td class="f-tb-c">
+                ${statusName}
+            </td>
+        </tr>
+        {{if status==3 }}
+        <tr>
+            <td class="f-tb-t">
+                转账时间：
+            </td>
+            <td class="f-tb-c">
+                ${settlementTime}
+            </td>
+        </tr>
+        {{else status==4}}
+        <tr>
+            <td class="f-tb-t">
+                失败原因：
+            </td>
+            <td class="f-tb-c">
+                ${failureReason}
+            </td>
+        </tr>
+        {{/if}}
+    </table>
+</script>
+
+<div class="gbr-row gbr-dialog" id="gbr_page">
+
+</div>

@@ -1,0 +1,154 @@
+﻿@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section scripts{
+    <script type="text/javascript">
+
+        var promoteId = '@Request.QueryString["promoteId"]';
+        $(document).ready(function () {
+
+            getCoupon();
+
+            //$('#popd4Info_btn_sure').live("click", function (e) {
+
+            //    var ctName = $('#txt_ctName').val();
+            //    var ctPhone = $('#txt_ctPhone').val();
+            //    var ctIsStudent = $('input[name=rd_ctIsStudent]:checked').val();
+            //    var ctSchool = $('#txt_ctSchool').val();
+
+            //    if ($.lumos.isNullOrEmpty(ctName)) {
+            //        $.lumos.tips("请输入姓名");
+            //        return false;
+            //    }
+
+            //    if ($.lumos.isNullOrEmpty(ctPhone)) {
+            //        $.lumos.tips("请输入电话号码");
+            //        return false;
+            //    }
+
+            //    if ($.lumos.isNullOrEmpty(ctSchool)) {
+            //        $.lumos.tips("请选择校区");
+            //        return false;
+            //    }
+
+            //    $.lumos.postJson({
+            //        url: "/Promote/EditPromoteUserInfo",
+            //        isShowLoading: true,
+            //        data: { promoteId: promoteId, ctName: ctName, ctPhone: ctPhone, ctIsStudent: ctIsStudent, ctSchool: ctSchool },
+            //        success: function (d) {
+            //            if (d.result == $.lumos.resultType.success) {
+            //                getCoupon();
+            //            }
+            //            else {
+            //                $.lumos.tips(d.message);
+            //            }
+            //        }
+            //    });
+            //});
+        });
+
+        function getCoupon() {
+            $.lumos.postJson({
+                url: "/Promote/GetCardList",
+                data: { promoteId: promoteId },
+                isShowLoading: true,
+                success: function (d) {
+
+                    if (d.result == $.lumos.resultType.success) {
+                        var cards = d.data;
+                        var cardList = [];
+                        for (var p in cards) {
+                            cardList.push({ cardId: cards[p].cardId, cardExt: cards[p].cardExt });
+                        }
+                        if (cardList.length > 0) {
+                            wx.addCard({
+                                cardList: cardList,
+                                success: function (res) {
+                                    window.location.href = "/Coupon/My";
+                                },
+                                cancel: function (res) {
+                                    window.location.href = "/Coupon/My";
+                                }
+                            });
+                        }
+                    }
+                }
+            });
+        }
+
+
+        var mobileSelect1 = new MobileSelect({
+            trigger: '#sel_ctSchool',
+            title: '选择校区',
+            wheels: [
+                        { data: schoolArr }
+            ],
+            position: [1], //初始化定位 打开时默认选中的哪个 如果不填默认为0
+            transitionEnd: function (indexArr, data) {
+                //console.log(data);
+            },
+            callback: function (indexArr, data) {
+                $('#txt_ctSchool').val(data);
+            }
+        });
+    </script>
+}
+
+
+@*<div class="popd" id="popd4Info" >
+    <div class="popd-outer">
+        <div class="popd-inter">
+            <div id="popd4Info_btn_close" class="popd-close operate" style="position: absolute; right: -6px;top:-16px;"></div>
+            <div>
+                <p style="color:#fb6088;text-align:center;font-size:18px;font-weight:bold; line-height:24px;margin-top:20px;">领取卡券</p>
+                <p style="color:#fb6088;text-align:center;font-size:18px;font-weight:bold; line-height:24px;">请先填写以下信息</p>
+
+                <div style="margin-top:20px;margin-bottom:20px;">
+
+                    <ul class="list-input" style="overflow:hidden">
+                        <li class="list-input-item">
+                            <div class="item-left fl">
+                                <div class="item-name  fl"><span>姓名</span></div>
+                                <div class="item-value fr">
+                                    <input id="txt_ctName" placeholder="请输入姓名" type="text" style="width:100%;" />
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-input-item">
+                            <div class="item-left fl">
+                                <div class="item-name fl"><span>手机号码</span></div>
+                                <div class="item-value fr">
+                                    <input id="txt_ctPhone" placeholder="请输入手机号码" type="text" style="width:100%;" />
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-input-item">
+                            <div class="item-left fl">
+                                <div class="item-name fl"><span>是否学员</span></div>
+                                <div class="item-value fr">
+                                    <span> <input id="rd_ctIsStudent_1" name="rd_ctIsStudent" class="radio" type="radio" value="1" checked /><label for="rd_ctIsStudent_1">是</label> </span>
+                                    <span> <input id="rd_ctIsStudent_0" name="rd_ctIsStudent" class="radio" type="radio" value="0" /><label for="rd_ctIsStudent_0">否</label> </span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-input-item">
+                            <div class="item-left fl">
+                                <div class="item-name fl"><span>校区</span></div>
+                                <div class="item-value fr">
+                                    <input id="txt_ctSchool" value="" type="hidden" style="width:100%;" />
+                                    <div id="sel_ctSchool">选择</div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div style="text-align:center;">
+                    <img id="popd4Info_btn_sure" src="~/Content/images/promote20180910/btn_submit.png" class="btn-com operate" style="display: inline-block;" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@

@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{640A898E-2B63-4A12-AC93-2C61D718CC6C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Lumos.BLL</RootNamespace>
+    <AssemblyName>Lumos.BLL</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\log4net465\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NPinyin">
+      <HintPath>..\packages\NPinyin-0.2.4588.20158-bin\NPinyin.dll</HintPath>
+    </Reference>
+    <Reference Include="StackExchange.Redis, Version=1.2.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\StackExchange.Redis.1.2.6\lib\net45\StackExchange.Redis.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.0.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="BaseProvider.cs" />
+    <Compile Include="Biz\BizFactory.cs" />
+    <Compile Include="Biz\OrderCacheUtil.cs" />
+    <Compile Include="Biz\OrderProvider.cs" />
+    <Compile Include="Biz\Redis\ReidsMqByCalProfit.cs" />
+    <Compile Include="Biz\Redis\ReidsMqByCalProfitModel.cs" />
+    <Compile Include="Biz\Redis\ReidsMqFactory.cs" />
+    <Compile Include="Biz\RModels\RetLogin.cs" />
+    <Compile Include="Biz\RModels\RetOrderUnifiedOrder.cs" />
+    <Compile Include="Biz\RModels\RopLogin.cs" />
+    <Compile Include="Biz\RModels\RopOrderCancleOrder.cs" />
+    <Compile Include="Biz\RModels\RopOrderUnifiedOrder.cs" />
+    <Compile Include="Biz\RModels\RupBaseGetList.cs" />
+    <Compile Include="Service\Admin\Biz\RModels\RetWithdrawGetDetails.cs" />
+    <Compile Include="Service\Admin\Biz\RModels\RopWithdrawAudit.cs" />
+    <Compile Include="Service\Admin\Biz\RModels\RopWithdrawDoTransfer.cs" />
+    <Compile Include="Service\Admin\Biz\RModels\RupWithdrawGetList.cs" />
+    <Compile Include="Service\Admin\Biz\WithdrawProvider.cs" />
+    <Compile Include="Biz\WxUserProvider.cs" />
+    <Compile Include="Factory..cs" />
+    <Compile Include="IconUtil.cs" />
+    <Compile Include="Biz\RModels\RetOperateResult.cs" />
+    <Compile Include="Biz\RModels\RupOperateGetResult.cs" />
+    <Compile Include="Sdk\SdkFactory.cs" />
+    <Compile Include="Sdk\WxConfigByQyj.cs" />
+    <Compile Include="Sdk\WxSdkProvider.cs" />
+    <Compile Include="Sdk\WxUntil.cs" />
+    <Compile Include="Service\Admin\AdminServiceFactory.cs" />
+    <Compile Include="Service\Admin\Sys\AuthorizeRelayProvider.cs" />
+    <Compile Include="Service\Admin\Sys\RModels\RetSysMenuGetDetails.cs" />
+    <Compile Include="Service\Admin\Sys\RModels\RetSysMenuGetPermissions.cs" />
+    <Compile Include="Service\Admin\Sys\RModels\RetSysRoleGetDetails.cs" />
+    <Compile Include="Service\Admin\Sys\RModels\RetSysStaffUserGetDetails.cs" />
+    <Compile Include="Service\Admin\Sys\RModels\RetSysUserGetDetails.cs" />
+    <Compile Include="Service\Admin\Sys\RModels\RopChangePassword.cs" />
+    <Compile Include="Service\Admin\Sys\RModels\RopSysMenuAdd.cs" />
+    <Compile Include="Service\Admin\Sys\RModels\RopSysMenuEdit.cs" />
+    <Compile Include="Service\Admin\Sys\RModels\RopSysMenuEditSort.cs" />
+    <Compile Include="Service\Admin\Sys\RModels\RopSysRoleAdd.cs" />
+    <Compile Include="Service\Admin\Sys\RModels\RopSysRoleEdit.cs" />
+    <Compile Include="Service\Admin\Sys\RModels\RopSysStaffUserAdd.cs" />
+    <Compile Include="Service\Admin\Sys\RModels\RopSysStaffUserEdit.cs" />
+    <Compile Include="Service\Admin\Sys\RModels\RupSysRoleUserGetList.cs" />
+    <Compile Include="Service\Admin\Sys\RModels\RupSysStaffUserGetList.cs" />
+    <Compile Include="Service\Admin\Sys\RModels\RupSysUserGetList.cs" />
+    <Compile Include="Service\Admin\Sys\SysItemCacheUpdateTimeProvider.cs" />
+    <Compile Include="Service\Admin\Sys\SysMenuProvider.cs" />
+    <Compile Include="Service\Admin\Sys\SysRoleProvider.cs" />
+    <Compile Include="Service\Admin\Sys\SysStaffUserProvider.cs" />
+    <Compile Include="Service\Admin\Sys\SysUserProvider.cs" />
+    <Compile Include="Service\App\AppServiceFactory.cs" />
+    <Compile Include="Service\App\Models\MyCouponModel.cs" />
+    <Compile Include="Service\App\Models\MyShareLogModel.cs" />
+    <Compile Include="Service\App\Models\MyTranModel.cs" />
+    <Compile Include="Service\App\Models\MyWithdrawModel.cs" />
+    <Compile Include="Service\App\Models\PromoteConfigModel.cs" />
+    <Compile Include="Service\App\Models\RupShareLogGetList.cs" />
+    <Compile Include="Service\App\Models\RupWithdrawGetList.cs" />
+    <Compile Include="Service\App\PersonalService.cs" />
+    <Compile Include="Service\App\RModels\RetPersonalGetIndexPageData.cs" />
+    <Compile Include="Service\App\RModels\RopCouponNotifyResult.cs" />
+    <Compile Include="Service\App\RModels\RopPromoteUserInfoEdit.cs" />
+    <Compile Include="Service\App\RModels\RopShareLog.cs" />
+    <Compile Include="Service\App\OperateService.cs" />
+    <Compile Include="Service\App\ProductSkuService.cs" />
+    <Compile Include="Service\App\PromoteService.cs" />
+    <Compile Include="Service\App\RModels\RetOrderGetDetails.cs" />
+    <Compile Include="Service\App\RModels\RetProductSkuGetDetails.cs" />
+    <Compile Include="Service\App\RModels\RetPromoteGetConfig.cs" />
+    <Compile Include="Service\App\RModels\RetWithdrawApply.cs" />
+    <Compile Include="Service\App\RModels\RopWithdrawApply.cs" />
+    <Compile Include="Service\App\RModels\RupCouponGetList.cs" />
+    <Compile Include="Service\App\RModels\RupFundGetList.cs" />
+    <Compile Include="Service\App\RModels\RupProductSkuGetDetails.cs" />
+    <Compile Include="Service\App\RModels\RupPromoteGetConfig.cs" />
+    <Compile Include="Service\App\RModels\RupOrderGetDetails.cs" />
+    <Compile Include="Service\App\RModels\RetWithdrawGetApplyPageData.cs" />
+    <Compile Include="Service\App\WithdrawService.cs" />
+    <Compile Include="Service\App\OrderService.cs" />
+    <Compile Include="SnUtil.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Task\BaseProgram.cs" />
+    <Compile Include="Task\ITask.cs" />
+    <Compile Include="Task\Launcher.cs" />
+    <Compile Include="Task\Task4CalProfitProvider.cs" />
+    <Compile Include="Task\Task4Factory.cs" />
+    <Compile Include="Task\Task4GlobalProvider.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Lumos.Common\Lumos.Common.csproj">
+      <Project>{241bdf50-401f-44bf-81cd-acc2ffc3a952}</Project>
+      <Name>Lumos.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lumos.Entity\Lumos.Entity.csproj">
+      <Project>{c19704c7-7d89-42e8-9f15-d8c1a1a0c525}</Project>
+      <Name>Lumos.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lumos.DAL\Lumos.DAL.csproj">
+      <Project>{0e039414-2a2e-48b4-8db7-c4346106fa68}</Project>
+      <Name>Lumos.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lumos.Web\Lumos.Web.csproj">
+      <Project>{ed113ad7-1b20-4b05-8961-9b701e51734c}</Project>
+      <Name>Lumos.Mvc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lumos.Redis\Lumos.Redis.csproj">
+      <Project>{c165e6a0-dd43-4aa1-94b1-d4bf5420a80d}</Project>
+      <Name>Lumos.Redis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lumos\Lumos.csproj">
+      <Project>{27883666-32aa-447f-aa1f-6128b76fbee8}</Project>
+      <Name>Lumos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MySDK\MySDK.csproj">
+      <Project>{8479fcaf-4aef-40d4-b76d-246282522fb7}</Project>
+      <Name>MySDK</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WeiXinSdk\WeiXinSdk.csproj">
+      <Project>{a8b6b73d-f2ee-41d7-9d96-ad65b31fcdc0}</Project>
+      <Name>WeiXinSdk</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

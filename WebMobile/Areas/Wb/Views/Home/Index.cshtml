@@ -1,0 +1,230 @@
+﻿@{
+    Layout = "~/Areas/Wb/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $.lumos.getJson({
+                url: "/Wb/Home/GetIndexPageData",
+                isUseHandling: true,
+                success: function (d) {
+
+                    if (d.result == $.lumos.resultType.success) {
+                        $('#gbr_page').html($("#tmpl_block").tmpl(d.data));
+                    }
+                }
+            });
+
+            $("ul.btn-dropdownmenu > .parent").live("mouseenter", function (e) {
+                var _this = $(this);
+
+                var children = $(_this).find('.children');
+                var display = $(children).css('display');
+
+                if (display == "none") {
+                    $(children).show();
+                    $(_this).addClass('open');
+                }
+                else {
+                    $(children).hide();
+                    $(_this).removeClass('open');
+                }
+
+                $(_this).mouseleave(function () {
+                    $(children).hide();
+                    $(_this).removeClass('open');
+                });
+
+            });
+
+            $('a[gotopage]').live("click", function () {
+                var target = $(this).attr("target");
+                var gotopage = $(this).attr("gotopage");
+                $('a[gotopage]').parent().removeClass('active');
+                $(this).parent().addClass('active');
+
+                window.frames[target].document.location = gotopage;
+            });
+
+            $('#btn_LoginOut').live("click", function () {
+
+                art.dialog.confirm('确定要退出？', function () {
+                    $.lumos.postJson({
+                        url: "/Wb/Home/LogOff",
+                        success: function (d) {
+                            $.lumos.tips(d.message);
+                            if (d.result == $.lumos.resultType.success) {
+                                window.location.href = d.data.url;
+                            }
+                        }
+                    });
+                });
+
+                return false;
+            });
+
+            $('#abc').live("click", function () {
+                reinitIframe();
+
+            })
+
+            setInterval("reinitIframe()", 200);
+        });
+
+        function reinitIframe() {
+            var iframe = document.getElementById("iframeMain");
+            try {
+
+                var clientHeight = document.documentElement.clientHeight;
+
+                clientHeight = clientHeight - 120;
+
+                var bHeight = iframe.contentWindow.document.body.scrollHeight;
+
+                //console.log("bHeight:" + bHeight);
+                //console.log("clientHeight:" + clientHeight);
+
+                if (bHeight < clientHeight) {
+                    bHeight = clientHeight
+                }
+
+                iframe.height = bHeight;
+
+                var tree_tab_left = $('.ztree');
+                if (tree_tab_left.length > 0) {
+                    console.log($(tree_tab_left).height())
+                }
+            } catch (ex) { }
+        }
+    </script>
+}
+
+<script id="tmpl_block" type="text/x-jquery-tmpl">
+    <div class="gbr gbr-header" id="gbr_header">
+        <div class="wrapper">
+            <div class="content clearfix">
+                <ul class="content-left">
+                    <li>
+
+                        <span class="title">${title}</span>
+                    </li>
+                </ul>
+                <ul class="content-right btn-dropdownmenu">
+                    <input style="display:none"  type="button" value="dsad" id="abc" />
+                    {{if isLogin}}
+                    <li>
+                        <a href="/Wb/home/main" target="iframeMain">
+                            <span class="title">
+                                主界面
+                            </span>
+                        </a>
+                    </li>
+                    <li class="parent">
+                        <a href="javascript:void(0)" class="directory">
+                            <span class="title">
+                                欢迎您,${userName}
+                            </span>
+                            <span class="more"></span>
+                        </a>
+                        <ul class="children">
+                            <li><a href="/Wb/Home/ChangePassword" target="iframeMain">修改密码</a></li>
+                            <li>
+                                <a id="btn_LoginOut" href="javascript:void(0)">退出</a>
+                            </li>
+                        </ul>
+                    </li>
+                    {{/if}}
+                </ul>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="gbr gbr-main" id="gbr_main">
+        <div class="wrapper">
+            <div class="content clearfix" id="gbr_main_content">
+                <dl>
+                    <dd class="content-left">
+                        <ul class="navmenu-left">
+                            {{if isLogin}}
+                            <li class="parent">
+                                <span><span class="icon icon_navmenu_level1_common"></span><span>报表查看</span></span>
+                                <ul class="children">
+                                    <li>
+                                        <a gotopage="/Wb/Biz/Report/PromoteCouponBuyRecord" target="iframeMain">
+                                            <span class="icon"></span><span>卡券购买记录</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a gotopage="/Wb/Biz/Report/PromoteShareBuyRecord" target="iframeMain">
+                                            <span class="icon"></span><span>卡券分享购买记录</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a gotopage="/Wb/Biz/Report/PromoteSkuBuyRecord" target="iframeMain">
+                                            <span class="icon"></span><span>商品购买记录</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a gotopage="/Wb/Biz/Report/PromoteShareRecord" target="iframeMain">
+                                            <span class="icon"></span><span>用户分享记录</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a gotopage="/Wb/Biz/Report/WithdrawRecord" target="iframeMain">
+                                            <span class="icon"></span><span>提现记录</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="parent">
+                                <span><span class="icon icon_navmenu_level1_common"></span><span>提现管理</span></span>
+                                <ul class="children">
+                                    <li>
+                                        <a gotopage="/Wb/Biz/Withdraw/ListByAudit" target="iframeMain">
+                                            <span class="icon"></span><span>待审核提现</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a gotopage="/Wb/Biz/Withdraw/ListByDoTransfer" target="iframeMain">
+                                            <span class="icon"></span><span>待转账提现</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a gotopage="/Wb/Biz/Withdraw/ListByDetails" target="iframeMain">
+                                            <span class="icon"></span><span>提现记录查看</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            {{/if}}
+                        </ul>
+                    </dd>
+                    <dd class="content-right">
+                        <div class="gbr-row gbr-row-breadcrumb">
+                            <ul class="breadcrumb">
+                                <li><a target="iframeMain" href="/home/main" class="root">&nbsp;</a></li>
+                                <li><span class="site">主界面</span></li>
+                            </ul>
+                        </div>
+                        <div class="gbr-row gbr-row-functionpage">
+                            <iframe src="/Wb/home/Main" id="iframeMain" name="iframeMain" style="width:100%;" frameBorder="0px" scrolling="no"></iframe>
+                        </div>
+                    </dd>
+                    <div class="clear"></div>
+                </dl>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</script>
+
+
+<div class="gbr-row" id="gbr_page">
+
+</div>

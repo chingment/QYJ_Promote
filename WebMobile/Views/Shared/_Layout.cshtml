@@ -1,0 +1,338 @@
+﻿@{
+    var jsApiConfigParams = Lumos.BLL.Sdk.SdkFactory.Wx.Instance().GetJsApiConfigParams(Request.Url.AbsoluteUri);
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+    <meta http-equiv="Expires" CONTENT="0">
+    <meta http-equiv="Cache-Control" CONTENT="no-cache">
+    <meta http-equiv="Pragma" CONTENT="no-cache">
+    <title>@ViewBag.Title</title>
+    <script src="~/Scripts/jquery-1.8.3.min.js"></script>
+    <script src="~/Scripts/jquery.tmpl.min.js"></script>
+    <script src="~/Scripts/mobileSelect.js"></script>
+    <link href="~/Content/Site.css?@DateTime.Now.ToUnifiedFormatDateTime()" rel="stylesheet" />
+    <link href="~/Content/mobileSelect.css" rel="stylesheet" />
+    @RenderSection("styles", required: false)
+    <style type="text/css">
+        body {
+            /*background-image: url(~/Static/Promote/promote_a999753c5fe14e26bbecad576b6a6909.jpg);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;*/
+        }
+
+        img {
+            border: 0px;
+            padding: 0px;
+            margin: 0px;
+            display: inherit;
+            width: 100%;
+        }
+
+        /*分享模态层*/
+        #modal_Invite {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            z-index: 100;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            overflow-x: hidden;
+        }
+
+        #share_container {
+            position: relative;
+            width: 100%;
+            height: 20rem;
+            top: 0;
+            z-index: 110;
+            display: none;
+            right: 0;
+        }
+
+        #fly_img {
+            position: relative;
+            top: 0;
+            width: 100%;
+            vertical-align: middle;
+            text-align: center;
+            right: 0;
+            margin-top: -12rem;
+        }
+
+        #fly_img_inner {
+            width: 300px;
+            margin: 0 auto;
+            margin-right: 0.25rem;
+        }
+
+        #fly_img_inner img {
+            width: 300px;
+            margin-right: -12rem;
+        }
+
+        #fly_info {
+            font-size: 20px;
+            text-align: center;
+            color: #fff;
+            font-weight: 900;
+            width: 200px;
+            margin: -10rem auto;
+            margin-right: 5.3rem;
+        }
+
+        #fly_info_inner {
+            margin: 0 auto;
+            width: 16rem;
+        }
+
+        #fly_info_inner i {
+            margin-left: -5px;
+            margin-right: -6px;
+        }
+
+
+        #popd4Info {
+            /*display: none;*/
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            position: fixed;
+            background: rgba(0,0,0,0.3);
+            z-index: 100;
+        }
+
+        #popd4Info .popd-outer {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+        }
+
+        #popd4Info .popd-inter {
+            width: 300px;
+            height: 340px;
+            position: absolute;
+            left: -150px;
+            top: -170px;
+            border: 2px solid #fff;
+            background: #fff;
+            border-radius: 10px 9px 5px 8px;
+        }
+
+        #popd4Info .list-input-item .item-name {
+            width: 140px;
+            padding-right: 5px;
+            color: #fb6088;
+        }
+
+        #popd4Info .radio {
+            width: 23px;
+            height: 23px;
+            border-radius: 50%;
+            position: relative;
+            -webkit-appearance: none;
+            -webkit-tap-highlight-color: rgba(255,0,0,0);
+            outline: none;
+            border: none;
+            background-repeat: repeat;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        #popd4Info .radio::after {
+            content: '';
+            width: 23px;
+            height: 23px;
+            -webkit-appearance: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border: 1px solid gray;
+            border-radius: 50%;
+            padding: 0.4rem;
+            background-clip: content-box;
+            box-sizing: border-box;
+        }
+
+        #popd4Info .radio:checked::after {
+            outline: none;
+            background-color: #dc3729;
+            border: 1px solid #dc3729;
+            background-clip: content-box;
+            -webkit-appearance: none;
+            background-repeat: repeat;
+            -webkit-background-clip: content-box;
+            -webkit-text-fill-color: #dc3729;
+        }
+    </style>
+    <script type="text/javascript">
+
+        var schoolArr = ['越秀校', '天润校',
+            '天河五山校', '天河汇景新城',
+            '海珠合生广场校', '海珠光大花园校', '海珠嘉仕花园校', '海珠珠江帝景校', '海珠颐景华苑校',
+            '白云金沙洲校', '白云华发四季校', '白云尚城校', '白云高尔夫校', '白云富力城校',
+            '番禺洛溪校', '番禺喜盈雅境校', '番禺花样年华校', '番禺金沙御苑校', '番禺金海岸校', '番禺华南新城校', '番禺锦绣银湾校', '番禺金山谷校', '番禺时代倾城校', '番禺区南国奥园校',
+            '增城凤凰城校', '增城新塘校', '增城凤馨苑校', '增城翡翠绿洲校', '增城锦绣御景国际校',
+            '黄埔花园校',
+            '花都曙光路校',
+            '深圳龙岗校', '深圳宝安校', '龙华上塘校', '坪山招商花园校',
+            '佛山中海金沙湾校', '佛山千灯湖校', '佛山官窑校', '佛山保利西雅图校', '佛山城市花园校',
+            '肇庆华英校',
+            '东莞凤岗校', '虎门校',
+            '河源校',
+            '阳春校',
+            '阳江校',
+            '衡阳校',
+            '其他'];
+
+        window.onerror = function (errorMessage, scriptURI, lineNumber, columnNumber, errorObj) {
+            $.lumos.postJson({
+                url: "/Home/AccessLog",
+                isShowLoading: false,
+                data: { errorMessage: errorMessage, scriptURI: '@Request.Url.AbsolutePath', columnNumber: columnNumber, errorObj: errorObj.toString() },
+                success: function (d) {
+                }
+            });
+        }
+
+
+        function accessLog() {
+            $.lumos.postJson({
+                url: "/Home/AccessLog",
+                isShowLoading: false,
+                success: function (d) {
+                }
+            });
+        }
+
+        function shareLog(promoteId, refereeId, shareLink, type) {
+            $.lumos.postJson({
+                url: "/Home/ShareLog",
+                data: { promoteId: promoteId, refereeId: refereeId, shareLink: shareLink, type: type },
+                success: function (d) {
+                }
+            });
+        }
+
+    </script>
+</head>
+<body>
+    <script id="operate_result_tmpl" type="text/x-jquery-tmpl">
+        <div class="it-result">
+            <div class="imgbox">
+                <img class="img" src="/Content/images/operate_result_ic_${result}.png" />
+            </div>
+        </div>
+        <div class="it-message">
+            <span class="txt">${message}</span>
+        </div>
+        <div class="it-btns">
+            {{each(j,btn) buttons}}
+            <div class="btnbox">
+                <a href="${btn.url}" class="btn" style="color:${btn.color}; border:1px solid ${btn.color} ;">${btn.name}</a>
+            </div>
+            {{/each}}
+        </div>
+        <div class="it-remarks">
+            <p class="txt">${remarks}</p>
+        </div>
+        <div class="its-a">
+            {{each(j,field) fields}}
+
+            <div class="it">
+                <div class="it-m">
+                    <div class="it-ml w100">
+                        <text class='txt cl2ft-fldn'>${field.name}</text>
+                    </div>
+                    <div class="it-mr flex1">
+                        <text class='txt cl2ft-fldv'>${field.value}</text>
+                    </div>
+                </div>
+            </div>
+
+            {{/each}}
+        </div>
+    </script>
+    <div class="dialog-loading">
+        <img src="~/Content/images/loading.gif" style="width:32px;display: inline-block" />
+    </div>
+    <div class="dialog-tips">
+        <span></span>
+    </div>
+    <div id="page" class="gb">
+        @RenderBody()
+    </div>
+    <div id="operate_result" class="operate-result">
+
+    </div>
+    <div id="modal_Invite" class="operate">
+        <div id="share_container">
+            <div id="fly_img">
+                <div id="fly_img_inner">
+                    <img src="/Content/images/promote20180910/share_fly.png" />
+                </div>
+
+                <div id="fly_info">
+                    <div id="fly_info_inner">
+                        <div class="operate">
+                            戳这里
+                        </div>
+                        <div class="operate">
+                            <span>
+                                分享给朋友，邀请参加
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/jquery.lumos.mobile.1.0.0.js?@DateTime.Now.ToString("yyyyMMddHHmmss")"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script>
+        $(function () {
+
+            wx.config({
+                debug: false,
+                appId: '@jsApiConfigParams.Data.appId',
+                timestamp: '@jsApiConfigParams.Data.timestamp',
+                nonceStr: '@jsApiConfigParams.Data.nonceStr',
+                signature: '@jsApiConfigParams.Data.signature',
+                jsApiList: [
+                    'onMenuShareAppMessage',
+                    'onMenuShareTimeline',
+                    'showMenuItems',
+                    'showAllNonBaseMenuItem',
+                    'showOptionMenu',
+                    'chooseWXPay',
+                    'getLocation',
+                    'addCard',
+                    'chooseCard',
+                    'openCard'
+                ]
+            });
+
+
+            //if (window.history && window.history.pushState) {
+            //    $(window).on('popstate', function () {
+            //        window.history.pushState('forward', null, '#');
+            //        window.history.forward(1);
+            //        //alert("不可回退");
+            //        location.replace(document.referrer);//刷新
+            //        alert("ss")
+            //    });
+            //}
+
+            accessLog();
+
+        })
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,82 @@
+﻿@model WebMobile.Areas.Wb.Models.Biz.Report.PromoteShareRecordViewModel
+@{
+    Layout = "~/Areas/Wb/Views/Shared/_Layout.cshtml";
+}
+
+
+@section scripts{
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('.btn-search').live('click',function(){
+                search();
+            });
+          
+            $('.btn-export-excel').live('click',function(){
+                exportExcel();
+            });
+        });
+
+        function GetParams(operate) {
+            var l_Data = $("#form1").serializeArray();
+            l_Data.push({ name: "Model.Operate", value: operate });
+
+            return l_Data;
+        }
+
+        var url = "/Wb/Report/PromoteShareRecord";
+
+        function search() {
+            $.lumos.postJson({
+                url:url,
+                isUseHandling: true,
+                data: GetParams($.lumos.operateType.search),
+                success: function (d) {
+                    $('#reporthtml').html(d.data.html);
+                }
+            });
+
+            return false;
+        }
+
+        function exportExcel() {
+            $.lumos.download(url, GetParams($.lumos.operateType.exportExcel), 'post');
+        };
+
+    </script>
+}
+
+<div class="gbr-row">
+    <form id="form1" name="form1">
+        <div class="search-bar">
+            <div class="filter">
+                <span class="filter-label">活动：</span>
+                <span class="filter-input">
+                    @Html.initPromote("Model.PromoteId", Lumos.Entity.Enumeration.PromoteClass.Unknow)
+                </span>
+            </div>
+            <div class="filter">
+                <span class="filter-label">分享时间：</span>
+                <span class="filter-input">
+                    <input type="text" class="input-control Wdate" id="Model_StartTime" name="Model.StartTime" onclick="WdatePicker({ maxDate: '#F{$dp.$D(\'Model_EndTime\')||\'@DateTime.Now.ToString("yyyy-MM-dd")\'}' })" style="width:80px;" value="@DateTime.Now.ToString("yyyy-MM-dd")" />至<input type="text" class="input-control Wdate" id="Model_EndTime" name="Model.EndTime" onclick="WdatePicker({ minDate: '#F{$dp.$D(\'Model_StartTime\')}' })" style="width:80px;" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                </span>
+            </div>
+            <div class="filter">
+                <input type="button" value="查询" class="btn btn-search" />
+                <input type="button" value="导出" class="btn btn-export-excel" />
+            </div>
+
+            <div class="filter" style="float:right">
+
+            </div>
+        </div>
+
+        <div id="reporthtml">
+            @Html.Raw(Model.TableHtml)
+        </div>
+
+    </form>
+</div>
+
