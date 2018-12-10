@@ -18,6 +18,15 @@ namespace WebMobile.Controllers
 {
     public class PromotecController : OwnBaseController
     {
+        public ActionResult Coupon()
+        {
+            return View();
+        }
+
+        public ActionResult CouponGet()
+        {
+            return View();
+        }
 
         [HttpPost]
         public CustomJsonResult UnifiedOrder(RopOrderUnifiedOrder rop)
@@ -217,16 +226,6 @@ namespace WebMobile.Controllers
             CurrentDb.SaveChanges();
 
             return new CustomJsonResult(ResultType.Success, ResultCode.Success, "保存成功");
-        }
-
-        public ActionResult Coupon()
-        {
-            return View();
-        }
-
-        public ActionResult CouponGet()
-        {
-            return View();
         }
 
         [HttpGet]
