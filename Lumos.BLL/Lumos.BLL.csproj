@@ -47,6 +47,9 @@
     <Reference Include="NPinyin">
       <HintPath>..\packages\NPinyin-0.2.4588.20158-bin\NPinyin.dll</HintPath>
     </Reference>
+    <Reference Include="Quartz">
+      <HintPath>..\packages\Quartz.2.3.2\lib\net40\Quartz.dll</HintPath>
+    </Reference>
     <Reference Include="StackExchange.Redis, Version=1.2.6.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\StackExchange.Redis.1.2.6\lib\net45\StackExchange.Redis.dll</HintPath>
@@ -102,11 +105,15 @@
     <Compile Include="Sdk\WxUntil.cs" />
     <Compile Include="Service\Admin\AdminServiceFactory.cs" />
     <Compile Include="Service\Admin\Sys\AuthorizeRelayProvider.cs" />
+    <Compile Include="Service\Admin\Sys\BackgroundJobProvider.cs" />
+    <Compile Include="Service\Admin\Sys\RModels\RetBackgroundJobGetDetails.cs" />
     <Compile Include="Service\Admin\Sys\RModels\RetSysMenuGetDetails.cs" />
     <Compile Include="Service\Admin\Sys\RModels\RetSysMenuGetPermissions.cs" />
     <Compile Include="Service\Admin\Sys\RModels\RetSysRoleGetDetails.cs" />
     <Compile Include="Service\Admin\Sys\RModels\RetSysStaffUserGetDetails.cs" />
     <Compile Include="Service\Admin\Sys\RModels\RetSysUserGetDetails.cs" />
+    <Compile Include="Service\Admin\Sys\RModels\RopBackgroundJobAdd.cs" />
+    <Compile Include="Service\Admin\Sys\RModels\RopBackgroundJobEdit.cs" />
     <Compile Include="Service\Admin\Sys\RModels\RopChangePassword.cs" />
     <Compile Include="Service\Admin\Sys\RModels\RopSysMenuAdd.cs" />
     <Compile Include="Service\Admin\Sys\RModels\RopSysMenuEdit.cs" />
@@ -157,9 +164,11 @@
     <Compile Include="Task\BaseProgram.cs" />
     <Compile Include="Task\ITask.cs" />
     <Compile Include="Task\Launcher.cs" />
-    <Compile Include="Task\Task4CalProfitProvider.cs" />
+    <Compile Include="Task\Quartz\QuartzManager.cs" />
+    <Compile Include="Task\Quartz\SchedulerJobListener.cs" />
+    <Compile Include="Task\Task4Mq2GlobalProvder.cs" />
     <Compile Include="Task\Task4Factory.cs" />
-    <Compile Include="Task\Task4GlobalProvider.cs" />
+    <Compile Include="Task\Task4Tim2GlobalProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\SelfStoreCloudPlatform\Lumos.Common\Lumos.Common.csproj">

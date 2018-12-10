@@ -10,7 +10,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Task4CalculateProfit
+namespace Task4Mq2Global
 {
     class Program
     {
