@@ -9,7 +9,7 @@ namespace WebMobile.Areas.Wb.Own
         public static IHtmlString Render(string path)
         {
             string strPath = "/Scripts/" + path;
-            string strUrl = System.Configuration.ConfigurationManager.AppSettings["custom:StaticResourceServerUrl"];
+            string strUrl = System.Configuration.ConfigurationManager.AppSettings["custom:WbStaticResourceServerUrl"];
             if (strUrl != null)
             {
                 strPath = strUrl + strPath;
@@ -25,7 +25,7 @@ namespace WebMobile.Areas.Wb.Own
         public static IHtmlString Render(string path)
         {
             string strPath = "/Content/" + path;
-            string strUrl = System.Configuration.ConfigurationManager.AppSettings["custom:StaticResourceServerUrl"];
+            string strUrl = System.Configuration.ConfigurationManager.AppSettings["custom:WbStaticResourceServerUrl"];
             if (strUrl != null)
             {
                 strPath = strUrl + strPath;
@@ -41,7 +41,7 @@ namespace WebMobile.Areas.Wb.Own
         {
             string strPath = "/Content/base/images/" + path;
 
-            string strUrl = System.Configuration.ConfigurationManager.AppSettings["custom:StaticResourceServerUrl"];
+            string strUrl = System.Configuration.ConfigurationManager.AppSettings["custom:WbStaticResourceServerUrl"];
             if (strUrl != null)
             {
                 strPath = strUrl + strPath;

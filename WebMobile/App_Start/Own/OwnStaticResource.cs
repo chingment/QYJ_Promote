@@ -9,7 +9,7 @@ namespace WebMobile
         public static IHtmlString Render(string path)
         {
             string strPath = "/Scripts/" + path;
-            string strUrl = System.Configuration.ConfigurationManager.AppSettings["custom:WbStaticResourceServerUrl"];
+            string strUrl = System.Configuration.ConfigurationManager.AppSettings["custom:StaticResourceServerUrl"];
             if (strUrl != null)
             {
                 strPath = strUrl + strPath;
@@ -25,7 +25,7 @@ namespace WebMobile
         public static IHtmlString Render(string path)
         {
             string strPath = "/Content/" + path;
-            string strUrl = System.Configuration.ConfigurationManager.AppSettings["custom:WbStaticResourceServerUrl"];
+            string strUrl = System.Configuration.ConfigurationManager.AppSettings["custom:StaticResourceServerUrl"];
             if (strUrl != null)
             {
                 strPath = strUrl + strPath;

@@ -53,87 +53,89 @@
 
 </script>
 
-<form id="form1" name="form1">
-    <div class="search-bar">
-        <div class="filter">
-            <span class="filter-label">流水号：</span>
-            <span class="filter-input">
-                <input type="text" class="input-control" name="Sn" style="width:120px;" />
-            </span>
-        </div>
-        <div class="filter">
-            <span class="filter-label">姓名：</span>
-            <span class="filter-input">
-                <input type="text" class="input-control" name="Name" style="width:120px;" />
-            </span>
-        </div>
-        <div class="filter">
-            <span class="filter-label">提交时间：</span>
-            <span class="filter-input">
-                <input type="text" class="input-control Wdate" id="Model_StartTime" name="StartTime" onclick="WdatePicker({ maxDate: '#F{$dp.$D(\'Model_EndTime\')||\'@DateTime.Now.ToString("yyyy-MM-dd")\'}' })" style="width:80px;" value="" />至<input type="text" class="input-control Wdate" id="Model_EndTime" name="EndTime" onclick="WdatePicker({ minDate: '#F{$dp.$D(\'Model_StartTime\')}' })" style="width:80px;" value="" />
-            </span>
-        </div>
-        <div class="filter"><input type="button" class="btn btn-search" id="btn_Search" value="查询" /> </div>
-        <div class="filter" style="float:right">
+<div class="gbr-row gbr-page">
+    <form id="form1" name="form1">
+        <div class="search-bar">
+            <div class="filter">
+                <span class="filter-label">流水号：</span>
+                <span class="filter-input">
+                    <input type="text" class="input-control" name="Sn" style="width:120px;" />
+                </span>
+            </div>
+            <div class="filter">
+                <span class="filter-label">姓名：</span>
+                <span class="filter-input">
+                    <input type="text" class="input-control" name="Name" style="width:120px;" />
+                </span>
+            </div>
+            <div class="filter">
+                <span class="filter-label">提交时间：</span>
+                <span class="filter-input">
+                    <input type="text" class="input-control Wdate" id="Model_StartTime" name="StartTime" onclick="WdatePicker({ maxDate: '#F{$dp.$D(\'Model_EndTime\')||\'@DateTime.Now.ToString("yyyy-MM-dd")\'}' })" style="width:80px;" value="" />至<input type="text" class="input-control Wdate" id="Model_EndTime" name="EndTime" onclick="WdatePicker({ minDate: '#F{$dp.$D(\'Model_StartTime\')}' })" style="width:80px;" value="" />
+                </span>
+            </div>
+            <div class="filter"><input type="button" class="btn btn-search" id="btn_Search" value="查询" /> </div>
+            <div class="filter" style="float:right">
 
+            </div>
         </div>
-    </div>
-    <div class="list">
-        <table id="list_table" class="list-tb" cellpadding="0" cellspacing="0">
-            <thead>
-                <tr>
-                    <th style="width:5%" class="no">
-                        序号
-                    </th>
-                    <th style="width:15%">
-                        流水号
-                    </th>
-                    <th style="width:15%">
-                        昵称
-                    </th>
-                    <th style="width:10%">
-                        姓名
-                    </th>
-                    <th style="width:20%">
-                        身份证号码
-                    </th>
-                    <th style="width:10%">
-                        提现金额
-                    </th>
-                    <th style="width:10%">
-                        状态
-                    </th>
-                    <th style="width:10%">
-                        提交时间
-                    </th>
-                    <th style="width:5%" class="operation">
-                        操作
-                    </th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="9">
-                        <div class="pull-left">
-                            <span class="load-tip"></span>
-                        </div>
-                        <div class="pull-right pagination">
-                            <div class="pagination-info">
-
+        <div class="list">
+            <table id="list_table" class="list-tb" cellpadding="0" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th style="width:5%" class="no">
+                            序号
+                        </th>
+                        <th style="width:15%">
+                            流水号
+                        </th>
+                        <th style="width:15%">
+                            昵称
+                        </th>
+                        <th style="width:10%">
+                            姓名
+                        </th>
+                        <th style="width:20%">
+                            身份证号码
+                        </th>
+                        <th style="width:10%">
+                            提现金额
+                        </th>
+                        <th style="width:10%">
+                            状态
+                        </th>
+                        <th style="width:10%">
+                            提交时间
+                        </th>
+                        <th style="width:5%" class="operation">
+                            操作
+                        </th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="9">
+                            <div class="pull-left">
+                                <span class="load-tip"></span>
                             </div>
-                            <div class="pagination-index">
+                            <div class="pull-right pagination">
+                                <div class="pagination-info">
 
+                                </div>
+                                <div class="pagination-index">
+
+                                </div>
+                                <div class="pagination-goto">
+
+                                </div>
                             </div>
-                            <div class="pagination-goto">
-
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
-    </div>
-</form>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </form>
 
 
+</div>
