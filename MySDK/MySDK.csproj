@@ -76,6 +76,14 @@
     <Compile Include="SmsHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\SelfStoreCloudPlatform\Lumos.Common\Lumos.Common.csproj">
+      <Project>{241bdf50-401f-44bf-81cd-acc2ffc3a952}</Project>
+      <Name>Lumos.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SelfStoreCloudPlatform\Lumos\Lumos.csproj">
+      <Project>{27883666-32aa-447f-aa1f-6128b76fbee8}</Project>
+      <Name>Lumos</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Lumos.DAL\Lumos.DAL.csproj">
       <Project>{0e039414-2a2e-48b4-8db7-c4346106fa68}</Project>
       <Name>Lumos.DAL</Name>
@@ -83,14 +91,6 @@
     <ProjectReference Include="..\Lumos.Entity\Lumos.Entity.csproj">
       <Project>{c19704c7-7d89-42e8-9f15-d8c1a1a0c525}</Project>
       <Name>Lumos.Entity</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Lumos.Web\Lumos.Web.csproj">
-      <Project>{ed113ad7-1b20-4b05-8961-9b701e51734c}</Project>
-      <Name>Lumos.Mvc</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Lumos\Lumos.csproj">
-      <Project>{27883666-32aa-447f-aa1f-6128b76fbee8}</Project>
-      <Name>Lumos</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

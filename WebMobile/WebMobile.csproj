@@ -531,13 +531,29 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\SelfStoreCloudPlatform\Lumos.Common\Lumos.Common.csproj">
+      <Project>{241bdf50-401f-44bf-81cd-acc2ffc3a952}</Project>
+      <Name>Lumos.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SelfStoreCloudPlatform\Lumos.Redis\Lumos.Redis.csproj">
+      <Project>{c165e6a0-dd43-4aa1-94b1-d4bf5420a80d}</Project>
+      <Name>Lumos.Redis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SelfStoreCloudPlatform\Lumos.Session\Lumos.Session.csproj">
+      <Project>{d2f78ae2-3125-44b8-8629-ec3c5bc6c46b}</Project>
+      <Name>Lumos.Session</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SelfStoreCloudPlatform\Lumos.Web\Lumos.Web.csproj">
+      <Project>{ed113ad7-1b20-4b05-8961-9b701e51734c}</Project>
+      <Name>Lumos.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SelfStoreCloudPlatform\Lumos\Lumos.csproj">
+      <Project>{27883666-32aa-447f-aa1f-6128b76fbee8}</Project>
+      <Name>Lumos</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Lumos.BLL\Lumos.BLL.csproj">
       <Project>{640a898e-2b63-4a12-ac93-2c61d718cc6c}</Project>
       <Name>Lumos.BLL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Lumos.Common\Lumos.Common.csproj">
-      <Project>{241bdf50-401f-44bf-81cd-acc2ffc3a952}</Project>
-      <Name>Lumos.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Lumos.DAL\Lumos.DAL.csproj">
       <Project>{0e039414-2a2e-48b4-8db7-c4346106fa68}</Project>
@@ -546,22 +562,6 @@
     <ProjectReference Include="..\Lumos.Entity\Lumos.Entity.csproj">
       <Project>{c19704c7-7d89-42e8-9f15-d8c1a1a0c525}</Project>
       <Name>Lumos.Entity</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Lumos.Redis\Lumos.Redis.csproj">
-      <Project>{c165e6a0-dd43-4aa1-94b1-d4bf5420a80d}</Project>
-      <Name>Lumos.Redis</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Lumos.Session\Lumos.Session.csproj">
-      <Project>{d2f78ae2-3125-44b8-8629-ec3c5bc6c46b}</Project>
-      <Name>Lumos.Session</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Lumos.Web\Lumos.Web.csproj">
-      <Project>{ed113ad7-1b20-4b05-8961-9b701e51734c}</Project>
-      <Name>Lumos.Web</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Lumos\Lumos.csproj">
-      <Project>{27883666-32aa-447f-aa1f-6128b76fbee8}</Project>
-      <Name>Lumos</Name>
     </ProjectReference>
     <ProjectReference Include="..\MySDK\MySDK.csproj">
       <Project>{8479fcaf-4aef-40d4-b76d-246282522fb7}</Project>

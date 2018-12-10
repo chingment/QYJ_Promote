@@ -90,13 +90,14 @@ namespace WebMobile.Controllers
                         {
                             LogUtil.Info("用户Id：" + wxUserInfo.ClientId);
 
+                            string key = GuidUtil.New();
+
                             UserInfo userInfo = new UserInfo();
-                            userInfo.Token = GuidUtil.New();
                             userInfo.UserId = wxUserInfo.ClientId;
                             userInfo.WxOpenId = oauth2_Result.openid;
                             userInfo.WxAccessToken = oauth2_Result.access_token;
-                            SSOUtil.SetUserInfo(userInfo);
-                            Response.Cookies.Add(new HttpCookie(OwnRequest.SESSION_NAME, userInfo.Token));
+                            SSOUtil.SetUserInfo(key, userInfo);
+                            Response.Cookies.Add(new HttpCookie(OwnRequest.SESSION_NAME, key));
 
                             LogUtil.Info("returnUrl.UrlDecode 前：" + returnUrl);
                             string s_returnUrl = HttpUtility.UrlDecode(returnUrl);
@@ -289,17 +290,15 @@ namespace WebMobile.Controllers
 
                                                 if (userConsumeCardMsg != null)
                                                 {
-                                                    var reidsMqByCalProfitModel = new ReidsMqByCalProfitModel();
+                                                    var reidsMqByCalProfitModel = new RedisMq4GlobalHandle();
                                                     var reidsMqByCalProfitByCouponConsumeModel = new ReidsMqByCalProfitByCouponConsumeModel();
-                                                    reidsMqByCalProfitModel.Type = ReidsMqByCalProfitType.CouponConsume;
-
                                                     reidsMqByCalProfitByCouponConsumeModel.ClientId = wxUserInfo.ClientId;
                                                     reidsMqByCalProfitByCouponConsumeModel.WxCouponDecryptCode = userConsumeCardMsg.UserCardCode;
                                                     reidsMqByCalProfitByCouponConsumeModel.WxCouponId = userConsumeCardMsg.CardId;
 
                                                     reidsMqByCalProfitModel.Pms = reidsMqByCalProfitByCouponConsumeModel;
 
-                                                    ReidsMqFactory.CalProfit.Push(reidsMqByCalProfitModel);
+                                                    ReidsMqFactory.Global.Push(RedisMqHandleType.CouponConsume,reidsMqByCalProfitModel);
                                                 }
 
 

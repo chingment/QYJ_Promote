@@ -156,14 +156,16 @@ namespace WebMobile.Areas.Wb.Controllers
             }
 
 
+            string key = GuidUtil.New();
+
             UserInfo userInfo = new UserInfo();
             userInfo.UserId = result.User.Id;
             userInfo.UserName = result.User.UserName;
-            userInfo.Token = GuidUtil.New();
 
-            SSOUtil.SetUserInfo(userInfo);
 
-            ret.Url = string.Format("{0}?token={1}", returnUrl, userInfo.Token);
+            SSOUtil.SetUserInfo(key, userInfo);
+
+            ret.Url = string.Format("{0}?token={1}", returnUrl, key);
 
             return Json(ResultType.Success, ret, "登录成功");
 

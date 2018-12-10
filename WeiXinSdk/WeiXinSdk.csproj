@@ -124,7 +124,7 @@
     <Folder Include="Post\Model\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Lumos\Lumos.csproj">
+    <ProjectReference Include="..\..\SelfStoreCloudPlatform\Lumos\Lumos.csproj">
       <Project>{27883666-32aa-447f-aa1f-6128b76fbee8}</Project>
       <Name>Lumos</Name>
     </ProjectReference>

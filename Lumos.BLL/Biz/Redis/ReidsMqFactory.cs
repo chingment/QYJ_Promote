@@ -8,11 +8,11 @@ namespace Lumos.BLL.Biz
 {
     public static class ReidsMqFactory
     {
-        public static ReidsMqByCalProfit CalProfit
+        public static RedisMq4GlobalProvider Global
         {
             get
             {
-                return new ReidsMqByCalProfit();
+                return new RedisMq4GlobalProvider();
             }
         }
     }

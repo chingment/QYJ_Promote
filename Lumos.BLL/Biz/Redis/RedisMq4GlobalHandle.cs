@@ -10,7 +10,7 @@ using System.Transactions;
 
 namespace Lumos.BLL.Biz
 {
-    public enum ReidsMqByCalProfitType
+    public enum RedisMqHandleType
     {
         [Remark("未知")]
         Unknow = 0,
@@ -38,9 +38,9 @@ namespace Lumos.BLL.Biz
 
     }
 
-    public class ReidsMqByCalProfitModel
+    public class RedisMq4GlobalHandle
     {
-        public ReidsMqByCalProfitType Type { get; set; }
+        public RedisMqHandleType Type { get; set; }
 
         public object Pms { get; set; }
 
@@ -55,10 +55,10 @@ namespace Lumos.BLL.Biz
                     {
                         switch (this.Type)
                         {
-                            case ReidsMqByCalProfitType.CouponConsume:
+                            case RedisMqHandleType.CouponConsume:
                                 CouponConsume();
                                 break;
-                            case ReidsMqByCalProfitType.CouponBuy:
+                            case RedisMqHandleType.CouponBuy:
                                 CouponBuy();
                                 break;
                         }

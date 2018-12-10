@@ -47,7 +47,7 @@ namespace Lumos.BLL.Task
             //    ReidsMqFactory.CalProfit.Push(reidsMqByCalProfitModel);
             //}
 
-            ReidsMqByCalProfit redisMq = new ReidsMqByCalProfit();
+            RedisMq4GlobalProvider redisMq = new RedisMq4GlobalProvider();
             while (true)
             {
                 try

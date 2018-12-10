@@ -67,15 +67,14 @@ namespace WebMobile.Controllers
                 }
             }
 
+            string key = GuidUtil.New();
             UserInfo userInfo = new UserInfo();
-            userInfo.Token = GuidUtil.New();
             userInfo.UserId = result.User.Id;
             userInfo.UserName = result.User.UserName;
 
-            SSOUtil.SetUserInfo(userInfo);
+            SSOUtil.SetUserInfo(key,  userInfo);
 
-
-            Response.Cookies.Add(new HttpCookie(OwnRequest.SESSION_NAME, userInfo.Token));
+            Response.Cookies.Add(new HttpCookie(OwnRequest.SESSION_NAME, key));
 
 
             ret.Url = rop.ReturnUrl;

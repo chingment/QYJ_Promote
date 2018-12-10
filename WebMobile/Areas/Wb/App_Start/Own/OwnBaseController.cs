@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Lumos.Web.Mvc;
+using Lumos.DAL;
 
 namespace WebMobile.Areas.Wb.Own
 {
@@ -12,12 +13,27 @@ namespace WebMobile.Areas.Wb.Own
     [ValidateInput(false)]
     public abstract class OwnBaseController : BaseController
     {
+        private LumosDbContext _CurrentDb = null;
+
 
         public override string CurrentUserId
         {
             get
             {
                 return OwnRequest.GetCurrentUserId();
+            }
+        }
+
+        public LumosDbContext CurrentDb
+        {
+            get
+            {
+                if (_CurrentDb == null)
+                {
+                    _CurrentDb = new LumosDbContext();
+                }
+
+                return _CurrentDb;
             }
         }
     }

@@ -113,7 +113,15 @@ namespace WebMobile
             var userInfo = GetUserInfo();
             if (userInfo != null)
             {
-                SSOUtil.Postpone(userInfo.Token);
+                var context = HttpContext.Current;
+                var request = context.Request;
+                var response = context.Response;
+                var token = request.Cookies[OwnRequest.SESSION_NAME];
+                if (token == null)
+                {
+
+                    SSOUtil.Postpone(token.Value);
+                }
             }
 
         }
@@ -123,14 +131,15 @@ namespace WebMobile
             var userInfo = GetUserInfo();
             if (userInfo != null)
             {
-                SSOUtil.Quit(userInfo.Token);
-
+          
                 var context = HttpContext.Current;
                 var request = context.Request;
                 var response = context.Response;
                 HttpCookie cookie_session = request.Cookies[OwnRequest.SESSION_NAME];
                 if (cookie_session != null)
                 {
+                    SSOUtil.Quit(cookie_session.Value);
+
                     TimeSpan ts = new TimeSpan(-1, 0, 0, 0);
                     cookie_session.Expires = DateTime.Now.Add(ts);
                     response.AppendCookie(cookie_session);

@@ -1,5 +1,6 @@
 ﻿using log4net;
 using Lumos;
+using Lumos.DAL;
 using Lumos.Web;
 using Lumos.Web.Mvc;
 using System;
@@ -16,6 +17,7 @@ namespace WebMobile
     public abstract class OwnBaseController : BaseController
     {
 
+        private LumosDbContext _CurrentDb = null;
 
         public OwnBaseController()
         {
@@ -28,6 +30,20 @@ namespace WebMobile
             get
             {
                 return OwnRequest.GetCurrentUserId();
+            }
+        }
+
+
+        public LumosDbContext CurrentDb
+        {
+            get
+            {
+                if(_CurrentDb==null)
+                {
+                    _CurrentDb = new LumosDbContext();
+                }
+
+                return _CurrentDb;
             }
         }
 

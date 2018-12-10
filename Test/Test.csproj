@@ -64,13 +64,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\SelfStoreCloudPlatform\Lumos\Lumos.csproj">
+      <Project>{27883666-32aa-447f-aa1f-6128b76fbee8}</Project>
+      <Name>Lumos</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Lumos.BLL\Lumos.BLL.csproj">
       <Project>{640a898e-2b63-4a12-ac93-2c61d718cc6c}</Project>
       <Name>Lumos.BLL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Lumos.Common\Lumos.Common.csproj">
-      <Project>{241bdf50-401f-44bf-81cd-acc2ffc3a952}</Project>
-      <Name>Lumos.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Lumos.DAL\Lumos.DAL.csproj">
       <Project>{0e039414-2a2e-48b4-8db7-c4346106fa68}</Project>
@@ -79,10 +79,6 @@
     <ProjectReference Include="..\Lumos.Entity\Lumos.Entity.csproj">
       <Project>{c19704c7-7d89-42e8-9f15-d8c1a1a0c525}</Project>
       <Name>Lumos.Entity</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Lumos\Lumos.csproj">
-      <Project>{27883666-32aa-447f-aa1f-6128b76fbee8}</Project>
-      <Name>Lumos</Name>
     </ProjectReference>
     <ProjectReference Include="..\WeiXinSdk\WeiXinSdk.csproj">
       <Project>{a8b6b73d-f2ee-41d7-9d96-ad65b31fcdc0}</Project>

@@ -318,7 +318,8 @@ namespace Lumos.BLL.Biz
                 order.MendTime = this.DateTime;
                 order.Mender = pOperater;
                 order.IsInVisiable = false;
-                ReidsMqByCalProfitModel reidsMqByCalProfitModel = null;
+
+                RedisMq4GlobalHandle reidsMqByCalProfitModel = null;
 
                 var orderDetails = CurrentDb.OrderDetails.Where(m => m.OrderId == order.Id).ToList();
                 foreach (var item in orderDetails)
@@ -389,8 +390,8 @@ namespace Lumos.BLL.Biz
                                     CurrentDb.ClientCoupon.Add(clientCoupon);
                                     CurrentDb.SaveChanges();
 
-                                    reidsMqByCalProfitModel = new ReidsMqByCalProfitModel();
-                                    reidsMqByCalProfitModel.Type = ReidsMqByCalProfitType.CouponBuy;
+                                    reidsMqByCalProfitModel = new RedisMq4GlobalHandle();
+                                    reidsMqByCalProfitModel.Type = RedisMqHandleType.CouponBuy;
 
                                     var reidsMqByCalProfitByCouponBuyModel = new ReidsMqByCalProfitByCouponBuyModel();
                                     reidsMqByCalProfitByCouponBuyModel.OrderId = order.Id;
@@ -410,7 +411,7 @@ namespace Lumos.BLL.Biz
 
                 if (reidsMqByCalProfitModel != null)
                 {
-                    ReidsMqFactory.CalProfit.Push(reidsMqByCalProfitModel);
+                    ReidsMqFactory.Global.Push(RedisMqHandleType.CouponBuy,reidsMqByCalProfitModel);
                 }
 
                 result = new CustomJsonResult(ResultType.Success, ResultCode.Success, string.Format("支付完成通知：订单号({0})通知成功", pOrderSn));
