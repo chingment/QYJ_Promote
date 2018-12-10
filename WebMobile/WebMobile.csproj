@@ -304,6 +304,7 @@
     <None Include="log4net.config">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Images\bg_login.jpg" />
     <Content Include="Images\Skus\1.png" />
     <Content Include="Images\Skus\2.jpg" />
     <Content Include="Scripts\jquery-1.8.3.js" />
