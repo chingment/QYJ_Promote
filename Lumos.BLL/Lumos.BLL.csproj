@@ -78,7 +78,6 @@
     </Compile>
     <Compile Include="BaseProvider.cs" />
     <Compile Include="Biz\BizFactory.cs" />
-    <Compile Include="Biz\OrderCacheUtil.cs" />
     <Compile Include="Biz\OrderProvider.cs" />
     <Compile Include="Biz\Redis\RedisMq4GlobalProvider.cs" />
     <Compile Include="Biz\Redis\RedisMq4GlobalHandle.cs" />

@@ -1,4 +1,5 @@
 ﻿using Lumos.BLL.Sdk;
+using Lumos.BLL.Task;
 using Lumos.Entity;
 using Lumos.Redis;
 using Newtonsoft.Json.Linq;
@@ -189,7 +190,7 @@ namespace Lumos.BLL.Biz
                             order.WxPrepayId = prepayId;
                             order.PayExpireTime = this.DateTime.AddMinutes(2);
 
-                            OrderCacheUtil.EnterQueue4CheckPayStatus(order.Sn, order);
+                            Task4Factory.Tim2Global.Enter(TimerTaskType.CheckOrderPay, order.PayExpireTime.Value, order);
                         }
                         else
                         {
@@ -311,7 +312,7 @@ namespace Lumos.BLL.Biz
                     return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, string.Format("找不到该订单号({0})", pOrderSn));
                 }
 
-              
+
 
                 order.Status = Enumeration.OrderStatus.Payed;
                 order.PayTime = this.DateTime;
@@ -411,7 +412,7 @@ namespace Lumos.BLL.Biz
 
                 if (reidsMqByCalProfitModel != null)
                 {
-                    ReidsMqFactory.Global.Push(RedisMqHandleType.CouponBuy,reidsMqByCalProfitModel);
+                    ReidsMqFactory.Global.Push(RedisMqHandleType.CouponBuy, reidsMqByCalProfitModel);
                 }
 
                 result = new CustomJsonResult(ResultType.Success, ResultCode.Success, string.Format("支付完成通知：订单号({0})通知成功", pOrderSn));
