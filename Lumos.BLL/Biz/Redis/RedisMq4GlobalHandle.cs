@@ -45,6 +45,7 @@ namespace Lumos.BLL.Biz
         public object Pms { get; set; }
 
         private static readonly object lock_Handle = new object();
+
         public void Handle()
         {
             lock (lock_Handle)
@@ -70,7 +71,6 @@ namespace Lumos.BLL.Biz
                 }
             }
         }
-
 
         private void CouponConsume()
         {
