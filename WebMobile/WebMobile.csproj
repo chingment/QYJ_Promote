@@ -175,6 +175,7 @@
     <Compile Include="Areas\Wb\App_Start\Own\OwnAuthorizeAttribute.cs" />
     <Compile Include="Areas\Wb\App_Start\Own\OwnBaseController.cs" />
     <Compile Include="Areas\Wb\App_Start\Own\OwnExceptionAttribute.cs" />
+    <Compile Include="Areas\Wb\App_Start\Own\OwnStaticResource.cs" />
     <Compile Include="Areas\Wb\App_Start\Own\OwnWebSettingUtils.cs" />
     <Compile Include="Areas\Wb\Controllers\Biz\ReportController.cs" />
     <Compile Include="Areas\Wb\Controllers\Biz\WithdrawController.cs" />

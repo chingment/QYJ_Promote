@@ -10,23 +10,23 @@
     <meta content="" name="description">
     <title>@ViewBag.Title</title>
     <link href="~/favicon.ico" type="image/x-icon" rel="shortcut icon" />
-    <link href="/Areas/Wb/Content/base/Site.css" rel="stylesheet" />
+    @WebMobile.Areas.Wb.Own.OwnStaticStylesResource.Render("base/Site.css")
     @RenderSection("styles", required: false)
-    <script src="~/Areas/Wb/Scripts/ArtDialog/artDialog.source.js?skin=default"></script>
-    <script src="~/Areas/Wb/Scripts/ArtDialog/iframeTools.source.js"></script>
-    <script src="~/Areas/Wb/Scripts/DatePicker/WdatePicker.js"></script>
-    <script src="~/Areas/Wb/Scripts/jquery-1.8.3.min.js"></script>
-    <script src="~/Areas/Wb/Scripts/jquery.tmpl.min.js"></script>
-    <script src="~/Areas/Wb/Scripts/json2.js"></script>
-    <script src="~/Areas/Wb/Scripts/jquery.form.js"></script>
-    <script src="~/Areas/Wb/Scripts/chosen.jquery.js"></script>
-    <script src="~/Areas/Wb/Scripts/jquery.cookie.js"></script>
-    <script src="~/Areas/Wb/Scripts/jquery.lumos.back.1.0.0.js?@(DateTime.Now.ToString("yyyyMMddHHmmss"))"></script>
-    <script src="~/Areas/Wb/Scripts/jquery.resizeEnd.js"></script>
-    <script src="~/Areas/Wb/Scripts/jquery.formValidator.js"></script>
-    <script src="~/Areas/Wb/Scripts/jquery.formValidatorRegex.js"></script>
-    <script src="~/Areas/Wb/Scripts/Jquery.tree/jquery.ztree.core-3.2.js"></script>
-    <script src="~/Areas/Wb/Scripts/Jquery.tree/jquery.ztree.excheck-3.2.js"></script>
+    @WebMobile.Areas.Wb.Own.OwnStaticScriptsResource.Render("ArtDialog/artDialog.source.js?skin=default")
+    @WebMobile.Areas.Wb.Own.OwnStaticScriptsResource.Render("ArtDialog/iframeTools.source.js")
+    @WebMobile.Areas.Wb.Own.OwnStaticScriptsResource.Render("DatePicker/WdatePicker.js")
+    @WebMobile.Areas.Wb.Own.OwnStaticScriptsResource.Render("jquery-1.8.3.min.js")
+    @WebMobile.Areas.Wb.Own.OwnStaticScriptsResource.Render("jquery.tmpl.min.js")
+    @WebMobile.Areas.Wb.Own.OwnStaticScriptsResource.Render("json2.js")
+    @WebMobile.Areas.Wb.Own.OwnStaticScriptsResource.Render("jquery.form.js")
+    @WebMobile.Areas.Wb.Own.OwnStaticScriptsResource.Render("chosen.jquery.js")
+    @WebMobile.Areas.Wb.Own.OwnStaticScriptsResource.Render("jquery.cookie.js")
+    @WebMobile.Areas.Wb.Own.OwnStaticScriptsResource.Render("jquery.lumos.back.1.0.0.js")
+    @WebMobile.Areas.Wb.Own.OwnStaticScriptsResource.Render("jquery.resizeEnd.js")
+    @WebMobile.Areas.Wb.Own.OwnStaticScriptsResource.Render("jquery.formValidator.js")
+    @WebMobile.Areas.Wb.Own.OwnStaticScriptsResource.Render("jquery.formValidatorRegex.js")
+    @WebMobile.Areas.Wb.Own.OwnStaticScriptsResource.Render("Jquery.tree/jquery.ztree.core.js")
+    @WebMobile.Areas.Wb.Own.OwnStaticScriptsResource.Render("Jquery.tree/jquery.ztree.excheck.js")
 
     <script type="text/javascript">
         (function ($) {
