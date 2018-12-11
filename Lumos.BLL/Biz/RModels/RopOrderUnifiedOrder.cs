@@ -8,14 +8,24 @@ namespace Lumos.BLL.Biz
 {
     public class RopOrderUnifiedOrder
     {
-        public string PromoteId { get; set; }
+        public RopOrderUnifiedOrder()
+        {
+            this.Skus = new List<SkuModel>();
+        }
 
-        public string SkuId { get; set; }
+        public string PromoteId { get; set; }
 
         public string RefereeId { get; set; }
 
         public string OrderId { get; set; }
 
-        public string PromoteSkuId { get; set; }
+        public List<SkuModel> Skus { get; set; }
+
+        public class SkuModel
+        {
+            public string PromoteSkuId { get; set; }
+            public string SkuId { get; set; }
+        }
+
     }
 }

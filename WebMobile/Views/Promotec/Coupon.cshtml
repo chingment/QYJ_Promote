@@ -252,6 +252,8 @@
                 isShowLoading: true,
                 success: function (d) {
                     if (d.result == $.lumos.resultType.success) {
+                        //alert(JSON.stringify(d))
+                        console.log(JSON.stringify(d))
                         pConfig = d.data;
                         initShareInfo();
                         document.title = pConfig.couponPage.title;//更改网页标题
@@ -279,8 +281,6 @@
 
                         $('#txt_ctName').val(pConfig.userInfo.ctName);
                         $('#txt_ctPhone').val(pConfig.userInfo.ctPhone);
-                        //$('input[name=rd_ctIsStudent]:checked')
-                        //txt_ctSchool
                     }
                 }
             });
@@ -429,7 +429,7 @@
             $.lumos.postJson({
                 url: "/Order/UnifiedOrder",
                 isShowLoading: true,
-                data: { type: "1", refereeId: pConfig.refereeId, orderPms: { promoteId: pConfig.promoteId, promoteSkuId: pConfig.promoteSkuId } },
+                data: { orderId: pConfig.orderId, refereeId: pConfig.refereeId, promoteId: pConfig.promoteId, skus: pConfig.skus },
                 success: function (d) {
                     if (d.result == $.lumos.resultType.success) {
                         var params = d.data;

@@ -157,6 +157,20 @@ namespace Lumos.Entity
             Coupon = 1,
             [Remark("商品")]
             ProductSku = 2,
+            [Remark("报名")]
+            Signup = 3
+        }
+
+        public enum PromoteTargetType
+        {
+            [Remark("未知")]
+            Unknow = 0,
+            [Remark("全部")]
+            All = 1,
+            [Remark("学员")]
+            Student = 2,
+            [Remark("非学员")]
+            NotStudent = 3
         }
     }
 }

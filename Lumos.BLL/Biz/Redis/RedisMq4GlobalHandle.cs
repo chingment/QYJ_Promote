@@ -144,7 +144,7 @@ namespace Lumos.BLL.Biz
                         }
                     }
 
-                    decimal profit = promote.ConsumeProfit;
+                    decimal profit = promote.RefereeConsumeProfit;
 
                     fund.CurrentBalance += profit;
                     fund.AvailableBalance += profit;
@@ -261,7 +261,7 @@ namespace Lumos.BLL.Biz
                         }
                     }
 
-                    decimal profit = promote.BuyProfit;
+                    decimal profit = promote.RefereeBuyProfit;
 
                     fund.CurrentBalance += profit;
                     fund.AvailableBalance += profit;

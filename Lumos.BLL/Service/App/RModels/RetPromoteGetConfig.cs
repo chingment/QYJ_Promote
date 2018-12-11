@@ -10,6 +10,7 @@ namespace Lumos.BLL.Service.App
     {
         public RetPromoteGetConfig()
         {
+            this.Skus = new List<SkuModel>();
             this.CouponPage = new CouponPageModel();
             this.PayResultPage = new PayResultPageModel();
             this.UserInfo = new UserInfoModel();
@@ -20,7 +21,7 @@ namespace Lumos.BLL.Service.App
         }
 
         public string PromoteId { get; set; }
-        public string PromoteSkuId { get; set; }
+        //public string PromoteSkuId { get; set; }
         public string RefereeId { get; set; }
         public string ClientId { get; set; }
         public string ShareTitle { get; set; }
@@ -41,6 +42,8 @@ namespace Lumos.BLL.Service.App
         public PayResultPageModel PayResultPage { get; set; }
 
         public UserInfoModel UserInfo { get; set; }
+
+        public List<SkuModel> Skus { get; set; }
 
         public class UserInfoModel
         {
@@ -100,6 +103,12 @@ namespace Lumos.BLL.Service.App
             public string Src { get; set; }
 
             public int Height { get; set; }
+        }
+
+        public class SkuModel
+        {
+            public string PromoteSkuId { get; set; }
+            public string SkuId { get; set; }
         }
     }
 }

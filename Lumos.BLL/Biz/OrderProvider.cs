@@ -28,7 +28,7 @@ namespace Lumos.BLL.Biz
     {
 
         private static readonly object lock_UnifiedOrder = new object();
-        public CustomJsonResult<RetOrderUnifiedOrder> UnifiedOrder(string pOperater, string pClientId, RopOrderUnifiedOrder rop)
+        public CustomJsonResult<RetOrderUnifiedOrder> UnifiedOrder(string operater, string clientId, RopOrderUnifiedOrder rop)
         {
             CustomJsonResult<RetOrderUnifiedOrder> result = new CustomJsonResult<RetOrderUnifiedOrder>();
 
@@ -38,90 +38,125 @@ namespace Lumos.BLL.Biz
                 {
                     using (TransactionScope ts = new TransactionScope())
                     {
-                        LogUtil.Info("用户id:" + pClientId);
+                        LogUtil.Info("用户id:" + clientId);
 
-                        var productSku = CurrentDb.ProductSku.Where(m => m.Id == rop.SkuId).FirstOrDefault();
-
-                        if (productSku == null)
-                        {
-                            return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "该商品不存在", null);
-                        }
-
-                        var wxUserInfo = CurrentDb.WxUserInfo.Where(m => m.ClientId == pClientId).FirstOrDefault();
+                        var wxUserInfo = CurrentDb.WxUserInfo.Where(m => m.ClientId == clientId).FirstOrDefault();
 
                         if (wxUserInfo == null)
                         {
                             return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "找不到用户微信信息", null);
                         }
 
-                        var orderByBuyed = CurrentDb.Order.Where(m => m.ClientId == pClientId && m.PromoteId == rop.PromoteId && m.Status == Enumeration.OrderStatus.Payed).FirstOrDefault();
+                        var orderByBuyed = CurrentDb.Order.Where(m => m.ClientId == clientId && m.PromoteId == rop.PromoteId && m.Status == Enumeration.OrderStatus.Payed).FirstOrDefault();
                         if (orderByBuyed != null)
                         {
                             return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "您已成功抢购,支付成功", null);
                         }
 
-
-                        var promoteBlackList = CurrentDb.PromoteBlackList.Where(m => m.PromoteId == rop.PromoteId && m.ClientId == pClientId).FirstOrDefault();
+                        var promoteBlackList = CurrentDb.PromoteBlackList.Where(m => m.PromoteId == rop.PromoteId && m.ClientId == clientId).FirstOrDefault();
                         if (promoteBlackList != null)
                         {
                             return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "谢谢参与，已售罄", null);
                         }
 
-
-                        decimal salePrice = productSku.SalePrice;
-
                         if (!string.IsNullOrEmpty(rop.PromoteId))
                         {
-                            var promoteSku = CurrentDb.PromoteSku.Where(m => m.Id == rop.PromoteSkuId && m.BuyStartTime <= this.DateTime && m.BuyEndTime >= this.DateTime).FirstOrDefault();
-                            if (promoteSku == null)
+                            foreach (var sku in rop.Skus)
                             {
-                                return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "谢谢参与，活动已经结束", null);
-                            }
+                                var productSku = CurrentDb.ProductSku.Where(m => m.Id == sku.SkuId).FirstOrDefault();
 
-                            if (!string.IsNullOrEmpty(promoteSku.RefereePromoteId))
-                            {
-                                var clientCoupon = CurrentDb.ClientCoupon.Where(m => m.PromoteId == promoteSku.RefereePromoteId && m.ClientId == pClientId && m.IsBuy == true).FirstOrDefault();
-                                if (clientCoupon == null)
+                                if (productSku == null)
                                 {
-                                    return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "谢谢参与，您没有资格参与购买", null);
+                                    return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "找不到该商品", null);
+                                }
+
+                                var promoteSku = CurrentDb.PromoteSku.Where(m => m.Id == sku.PromoteSkuId && m.SkuId == sku.SkuId && m.BuyStartTime <= this.DateTime && m.BuyEndTime >= this.DateTime).FirstOrDefault();
+
+                                if (promoteSku == null)
+                                {
+                                    return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "谢谢参与，活动已经结束", null);
+                                }
+
+                                if (!string.IsNullOrEmpty(promoteSku.RefereePromoteId))
+                                {
+                                    var clientCoupon = CurrentDb.ClientCoupon.Where(m => m.PromoteId == promoteSku.RefereePromoteId && m.ClientId == clientId && m.IsBuy == true).FirstOrDefault();
+                                    if (clientCoupon == null)
+                                    {
+                                        return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "谢谢参与，您没有资格参与购买", null);
+                                    }
+                                }
+
+                                if (promoteSku.StockQuantity > -1)
+                                {
+                                    if (promoteSku.SellQuantity <= 0)
+                                    {
+                                        return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "谢谢参与，商品已经售罄", null);
+                                    }
                                 }
                             }
                         }
 
-                        var order = CurrentDb.Order.Where(m => m.PromoteId == rop.PromoteId && m.ClientId == pClientId && m.Status == Entity.Enumeration.OrderStatus.WaitPay).FirstOrDefault();
+                        var order = CurrentDb.Order.Where(m => m.PromoteId == rop.PromoteId && m.ClientId == clientId && m.Status == Entity.Enumeration.OrderStatus.WaitPay).FirstOrDefault();
+
                         if (order == null)
                         {
-                            var promoteSku = CurrentDb.PromoteSku.Where(m => m.Id == rop.PromoteSkuId && m.BuyStartTime <= this.DateTime && m.BuyEndTime >= this.DateTime).FirstOrDefault();
-                            if (promoteSku == null)
+                            string orderId = GuidUtil.New();
+
+                            var l_orderDetails = new List<OrderDetails>();
+
+                            foreach (var sku in rop.Skus)
                             {
-                                return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "谢谢参与，活动已经结束", null);
+                                var productSku = CurrentDb.ProductSku.Where(m => m.Id == sku.SkuId).FirstOrDefault();
+
+                                var productSkuOriginalPrice = productSku.SalePrice;
+                                var productSkuSalePrice = productSku.SalePrice;
+
+                                var promoteSku = CurrentDb.PromoteSku.Where(m => m.Id == sku.PromoteSkuId && m.SkuId == sku.SkuId && m.BuyStartTime <= this.DateTime && m.BuyEndTime >= this.DateTime).FirstOrDefault();
+                                if (promoteSku != null)
+                                {
+                                    productSkuSalePrice = promoteSku.SkuSalePrice;
+
+                                    if (promoteSku.StockQuantity > -1)
+                                    {
+                                        promoteSku.SellQuantity -= 1;
+                                        promoteSku.LockQuantity += 1;
+                                    }
+                                }
+
+                                var orderDetails = new OrderDetails();
+                                orderDetails.Id = GuidUtil.New();
+                                orderDetails.ClientId = clientId;
+                                orderDetails.OrderId = orderId;
+                                orderDetails.PromoteId = rop.PromoteId;
+                                orderDetails.PromoteSkuId = sku.PromoteSkuId;
+                                orderDetails.SkuId = productSku.Id;
+                                orderDetails.SkuName = productSku.Name;
+                                orderDetails.SkuImgUrl = ImgSet.GetMain(productSku.DisplayImgUrls);
+                                orderDetails.Quantity = 1;
+                                orderDetails.SalePrice = productSkuSalePrice;
+                                orderDetails.OriginalAmount = productSkuOriginalPrice;
+                                orderDetails.DiscountAmount = productSkuOriginalPrice - productSkuSalePrice;
+                                orderDetails.ChargeAmount = orderDetails.OriginalAmount - orderDetails.DiscountAmount;
+                                orderDetails.CreateTime = this.DateTime;
+                                orderDetails.Creator = operater;
+                                orderDetails.Status = Enumeration.OrderDetailsStatus.WaitPay;
+                                CurrentDb.OrderDetails.Add(orderDetails);
+                                l_orderDetails.Add(orderDetails);
                             }
 
-                            if (promoteSku.SellQuantity <= 0)
-                            {
-                                return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "谢谢参与，商品已经售罄", null);
-                            }
-
-                            if (promoteSku.StockQuantity > -1)
-                            {
-                                promoteSku.SellQuantity -= 1;
-                                promoteSku.LockQuantity += 1;
-                            }
-
-                            salePrice = promoteSku.SkuSalePrice;
 
                             order = new Order();
-                            order.Id = GuidUtil.New();
-                            order.ClientId = pClientId;
+                            order.Id = orderId;
+                            order.ClientId = clientId;
                             order.Sn = SnUtil.Build(Enumeration.BizSnType.Order, order.ClientId);
                             order.PromoteId = rop.PromoteId;
                             order.RefereeId = rop.RefereeId;
-                            order.OriginalAmount = salePrice;
-                            order.DiscountAmount = 0;
+                            order.OriginalAmount = l_orderDetails.Sum(m => m.OriginalAmount);
+                            order.DiscountAmount = l_orderDetails.Sum(m => m.DiscountAmount);
                             order.ChargeAmount = order.OriginalAmount - order.DiscountAmount;
                             order.SubmitTime = this.DateTime;
                             order.CreateTime = this.DateTime;
-                            order.Creator = pOperater;
+                            order.Creator = operater;
                             order.IsInVisiable = true;
                             order.Status = Enumeration.OrderStatus.WaitPay; //待支付状态
 
@@ -135,26 +170,6 @@ namespace Lumos.BLL.Biz
                             }
 
                             CurrentDb.Order.Add(order);
-                            CurrentDb.SaveChanges();
-
-                            var orderDetails = new OrderDetails();
-                            orderDetails.Id = GuidUtil.New();
-                            orderDetails.ClientId = pClientId;
-                            orderDetails.OrderId = order.Id;
-                            orderDetails.Quantity = 1;
-                            orderDetails.SalePrice = salePrice;
-                            orderDetails.PromoteId = rop.PromoteId;
-                            orderDetails.PromoteSkuId = rop.PromoteSkuId;
-                            orderDetails.SkuId = productSku.Id;
-                            orderDetails.SkuName = productSku.Name;
-                            orderDetails.SkuImgUrl = ImgSet.GetMain(productSku.DisplayImgUrls);
-                            orderDetails.OriginalAmount = order.OriginalAmount;
-                            orderDetails.DiscountAmount = order.DiscountAmount;
-                            orderDetails.ChargeAmount = order.ChargeAmount;
-                            orderDetails.CreateTime = order.CreateTime;
-                            orderDetails.Creator = order.Creator;
-                            orderDetails.Status = Enumeration.OrderDetailsStatus.WaitPay;
-                            CurrentDb.OrderDetails.Add(orderDetails);
                             CurrentDb.SaveChanges();
                         }
 
@@ -174,13 +189,9 @@ namespace Lumos.BLL.Biz
                             {
                                 chargeAmount = 0.01m;
                             }
-                            else
-                            {
-                                chargeAmount = salePrice;
-                            }
 
                             string goods_tag = "";
-                            string prepayId = SdkFactory.Wx.Instance().GetPrepayId(pOperater, "JSAPI", wxUserInfo.OpenId, order.Sn, chargeAmount, goods_tag, Common.CommonUtil.GetIP(), productSku.Name, order.PayExpireTime);
+                            string prepayId = SdkFactory.Wx.Instance().GetPrepayId(operater, "JSAPI", wxUserInfo.OpenId, order.Sn, chargeAmount, goods_tag, Common.CommonUtil.GetIP(), "商品购买", order.PayExpireTime);
                             if (string.IsNullOrEmpty(prepayId))
                             {
                                 LogUtil.Error("去结算，微信支付中生成预支付订单失败");
@@ -194,7 +205,7 @@ namespace Lumos.BLL.Biz
                         }
                         else
                         {
-                            BizFactory.Order.PayCompleted(pOperater, order.Sn, this.DateTime);
+                            BizFactory.Order.PayCompleted(operater, order.Sn, this.DateTime);
                         }
 
                         CurrentDb.SaveChanges();

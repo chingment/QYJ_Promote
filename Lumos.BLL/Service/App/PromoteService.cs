@@ -14,13 +14,19 @@ namespace Lumos.BLL.Service.App
 
             var promote = CurrentDb.Promote.Where(m => m.Id == rup.PromoteId).FirstOrDefault();
 
-            var promoteSku = CurrentDb.PromoteSku.Where(m => m.PromoteId == rup.PromoteId).FirstOrDefault();
+            var promoteSkus = CurrentDb.PromoteSku.Where(m => m.PromoteId == rup.PromoteId).ToList();
+
 
             var ret = new RetPromoteGetConfig();
             ret.PromoteId = rup.PromoteId;
-            ret.PromoteSkuId = promoteSku.Id;
             ret.ClientId = pClientId;
             ret.RefereeId = rup.RefereeId;
+
+
+            foreach (var promoteSku in promoteSkus)
+            {
+                ret.Skus.Add(new RetPromoteGetConfig.SkuModel { PromoteSkuId = promoteSku.Id, SkuId = promoteSku.SkuId });
+            }
 
             if (rup.PromoteId == "akkk753c5fe14e26bbecad576b6a6kkk")
             {
@@ -92,6 +98,43 @@ namespace Lumos.BLL.Service.App
                 ret.PayResultPage.Bg4GoInvite.Src = "/Content/images/promote20181029/bg_suc_btn_invite.png";
                 #endregion
             }
+            else if (rup.PromoteId == "c0c71a0657924059b39895f9e406efff")
+            {
+                #region c0c71a0657924059b39895f9e406efff
+                ret.ShareTitle = "超值推荐|¥2480元的早教大课包，双11秒杀仅需¥1111元";
+                ret.ShareDesc = "数量有限\n马上预购双11入场券\n获取秒杀资格吧！";
+                ret.ShareImgUrl = "http://qyj.17fanju.com/Content/images/promote20181029/share_icon.png";
+                ret.EndDesc = "活动已经结束";
+                ret.NoStartDesc = "活动未开始";
+
+
+                int sumHeight = 1920;
+                ret.CouponPage.Title = "超值推荐|¥2480元的早教大课包，双11秒杀仅需¥1111元";
+                ret.CouponPage.Bg01.Src = "/Content/images/promote20181029/bg_01.png";
+                ret.CouponPage.Bg01.Height = GetHeight(sumHeight, rup.ScreenHeight, 1020);
+                ret.CouponPage.Bg02.Src = "/Content/images/promote20181029/bg_02.jpg";
+                ret.CouponPage.Bg02.Height = GetHeight(sumHeight, rup.ScreenHeight, 200);
+                ret.CouponPage.Bg03.Src = "/Content/images/promote20181029/bg_03.png";
+                ret.CouponPage.Bg03.Height = GetHeight(sumHeight, rup.ScreenHeight, 700);
+                ret.CouponPage.Bg4GoBuy.Src = "/Content/images/promote20181029/bg_btn_buy.png";
+                ret.CouponPage.Bg4GoPersonal.Src = "/Content/images/promote20181029/bg_btn_personal.png";
+                ret.CouponPage.Bg4GoInvite.Src = "/Content/images/promote20181029/bg_btn_invite.png";
+
+                ret.PayResultPage.Title = "恭喜您，抢购成功！";
+                ret.PayResultPage.Bg01.Src = "/Content/images/promote20181029/bg_suc_01.jpg";
+                ret.PayResultPage.Bg01.Height = GetHeight(sumHeight, rup.ScreenHeight, 1177);
+                ret.PayResultPage.Bg02.Src = "/Content/images/promote20181029/bg_suc_02.jpg";
+                ret.PayResultPage.Bg02.Height = GetHeight(sumHeight, rup.ScreenHeight, 200);
+                ret.PayResultPage.Bg03.Src = "/Content/images/promote20181029/bg_suc_03.jpg";
+                ret.PayResultPage.Bg03.Height = GetHeight(sumHeight, rup.ScreenHeight, 260);
+                ret.PayResultPage.Bg04.Src = "/Content/images/promote20181029/bg_suc_04.jpg";
+                ret.PayResultPage.Bg04.Height = GetHeight(sumHeight, rup.ScreenHeight, 283);
+                ret.PayResultPage.Bg4OpenCoupon.Src = "/Content/images/promote20181029/bg_suc_btn_opencoupon.png";
+                ret.PayResultPage.Bg4GetCoupon.Src = "/Content/images/promote20181029/bg_suc_btn_getcoupon.png";
+                ret.PayResultPage.Bg4GoPersonal.Src = "/Content/images/promote20181029/bg_suc_btn_personal.png";
+                ret.PayResultPage.Bg4GoInvite.Src = "/Content/images/promote20181029/bg_suc_btn_invite.png";
+                #endregion
+            }
 
             if (promote == null)
             {
@@ -99,11 +142,11 @@ namespace Lumos.BLL.Service.App
             }
             else
             {
-                if (promoteSku.BuyStartTime > this.DateTime)
+                if (promote.StartTime > this.DateTime)
                 {
                     ret.Status = 1;//活动未开始
                 }
-                else if (promoteSku.BuyStartTime <= this.DateTime && promoteSku.BuyEndTime >= this.DateTime)
+                else if (promote.StartTime <= this.DateTime && promote.EndTime >= this.DateTime)
                 {
                     ret.Status = 2;//活动中
                 }
@@ -112,17 +155,17 @@ namespace Lumos.BLL.Service.App
                     ret.Status = 3;//活动结束
                 }
 
-                var promoteUserCoupon = CurrentDb.ClientCoupon.Where(m => m.ClientId == pClientId && m.PromoteId == rup.PromoteId && m.PromoteSkuId == promoteSku.Id).FirstOrDefault();
-                if (promoteUserCoupon == null)
+                var order = CurrentDb.Order.Where(m => m.ClientId == pClientId && m.PromoteId == rup.PromoteId && m.Status == Entity.Enumeration.OrderStatus.Payed).FirstOrDefault();
+                if (order == null)
                 {
                     ret.IsGet = false;
                     ret.IsBuy = false;
                 }
                 else
                 {
-                    ret.IsGet = promoteUserCoupon.IsGet;
-                    ret.IsBuy = promoteUserCoupon.IsBuy;
-                    ret.OrderSn = promoteUserCoupon.OrderSn;
+                    //ret.IsGet = promoteUserCoupon.IsGet;
+                    ret.IsBuy = true;
+                    ret.OrderSn = order.Sn;
                 }
             }
 

@@ -29,44 +29,6 @@ namespace WebMobile.Controllers
         }
 
         [HttpPost]
-        public CustomJsonResult UnifiedOrder(RopOrderUnifiedOrder rop)
-        {
-            LogUtil.Info("进入UnifiedOrder");
-            LogUtil.Info("用户.CurrentUserId:" + this.CurrentUserId);
-
-            var result = BizFactory.Order.UnifiedOrder(this.CurrentUserId, this.CurrentUserId, rop);
-
-            if (result.Result == ResultType.Success)
-            {
-                LogUtil.Info("下单成功:" + Newtonsoft.Json.JsonConvert.SerializeObject(result));
-
-                return SdkFactory.Wx.Instance().GetJsApiPayParams(result.Data.WxPrepayId, result.Data.OrderId, result.Data.OrderSn, result.Data.IsBuy);
-            }
-            else
-            {
-                LogUtil.Info("下单失败");
-                return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, result.Message);
-            }
-        }
-
-        [HttpPost]
-        public CustomJsonResult CancleOrder(string orderSn, string res)
-        {
-            return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, "");
-        }
-
-        [HttpPost]
-        public CustomJsonResult PayNotifyResult(string orderSn, string res)
-        {
-            LogUtil.Info(string.Format("用户通知订单号({0})支付结果:{1}", orderSn, res));
-
-            bool isPaySuccessed = false;
-            var result = BizFactory.Order.PayResultNotify(this.CurrentUserId, Enumeration.OrderNotifyLogNotifyFrom.WebApp, res, orderSn, out isPaySuccessed);
-
-            return result;
-        }
-
-        [HttpPost]
         public CustomJsonResult GetCardList(string promoteId)
         {
             LogUtil.Info("用户:" + this.CurrentUserId + ",领取卡券");
