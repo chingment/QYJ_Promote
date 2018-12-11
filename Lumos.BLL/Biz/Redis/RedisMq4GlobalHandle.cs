@@ -33,7 +33,7 @@ namespace Lumos.BLL.Biz
         public string OrderId { get; set; }
         public string ClientId { get; set; }
         public string PromoteId { get; set; }
-        public string RefereeId { get; set; }
+        public string RefereerId { get; set; }
         public string ClientCouponId { get; set; }
 
     }
@@ -57,10 +57,10 @@ namespace Lumos.BLL.Biz
                         switch (this.Type)
                         {
                             case RedisMqHandleType.CouponConsume:
-                                CouponConsume();
+                                //CouponConsume();
                                 break;
                             case RedisMqHandleType.CouponBuy:
-                                CouponBuy();
+                                //CouponBuy();
                                 break;
                         }
                     }
@@ -94,14 +94,14 @@ namespace Lumos.BLL.Biz
                         return;
                     }
 
-                    if (clientCoupon.RefereeId == null)
+                    if (clientCoupon.RefereerId == null)
                     {
                         LogUtil.Info("用户:" + model.ClientId + ",推荐人为空");
 
                         return;
                     }
 
-                    if (clientCoupon.ClientId == clientCoupon.RefereeId)
+                    if (clientCoupon.ClientId == clientCoupon.RefereerId)
                     {
                         LogUtil.Info("用户和推荐人是同一个人:" + model.ClientId);
                         return;
@@ -118,7 +118,7 @@ namespace Lumos.BLL.Biz
                     clientCoupon.Mender = GuidUtil.Empty();
                     clientCoupon.MendTime = DateTime.Now;
 
-                    var fund = CurrentDb.Fund.Where(m => m.ClientId == clientCoupon.RefereeId).FirstOrDefault();
+                    var fund = CurrentDb.Fund.Where(m => m.ClientId == clientCoupon.RefereerId).FirstOrDefault();
                     if (fund == null)
                     {
                         return;
@@ -144,7 +144,7 @@ namespace Lumos.BLL.Biz
                         }
                     }
 
-                    decimal profit = promote.RefereeConsumeProfit;
+                    decimal profit = 0;
 
                     fund.CurrentBalance += profit;
                     fund.AvailableBalance += profit;
@@ -204,19 +204,19 @@ namespace Lumos.BLL.Biz
                         return;
                     }
 
-                    if (model.RefereeId == null)
+                    if (model.RefereerId == null)
                     {
                         LogUtil.Info("推荐人:" + model.ClientId + ",为空");
                         return;
                     }
 
-                    if (model.ClientId == model.RefereeId)
+                    if (model.ClientId == model.RefereerId)
                     {
                         LogUtil.Info("用户和推荐人是同一个人:" + model.ClientId);
                         return;
                     }
 
-                    var fund = CurrentDb.Fund.Where(m => m.ClientId == model.RefereeId).FirstOrDefault();
+                    var fund = CurrentDb.Fund.Where(m => m.ClientId == model.RefereerId).FirstOrDefault();
 
                     if (fund == null)
                     {
@@ -261,7 +261,7 @@ namespace Lumos.BLL.Biz
                         }
                     }
 
-                    decimal profit = promote.RefereeBuyProfit;
+                    decimal profit = 0;
 
                     fund.CurrentBalance += profit;
                     fund.AvailableBalance += profit;

@@ -20,9 +20,6 @@ namespace Lumos.Entity
         public string Creator { get; set; }
         public DateTime CreateTime { get; set; }
         public bool IsNeedBuy { get; set; }
-        public decimal RefereeConsumeProfit { get; set; }
-        public decimal RefereeBuyProfit { get; set; }
-
         public Enumeration.PromoteClass Class { get; set; }
     }
 }

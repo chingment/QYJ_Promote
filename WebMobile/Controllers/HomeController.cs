@@ -404,7 +404,7 @@ namespace WebMobile.Controllers
                     promoteUser.Id = GuidUtil.New();
                     promoteUser.PromoteId = promoteId;
                     promoteUser.ClientId = clientId;
-                    promoteUser.RefereeId = null;
+                    promoteUser.RefereerId = null;
                     promoteUser.CreateTime = DateTime.Now;
                     promoteUser.Creator = clientId;
                     CurrentDb.PromoteUser.Add(promoteUser);

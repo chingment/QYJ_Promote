@@ -15,7 +15,7 @@ namespace Lumos.BLL.Biz
 
         public string PromoteId { get; set; }
 
-        public string RefereeId { get; set; }
+        public string RefereerId { get; set; }
 
         public string OrderId { get; set; }
 
@@ -23,7 +23,6 @@ namespace Lumos.BLL.Biz
 
         public class SkuModel
         {
-            public string PromoteSkuId { get; set; }
             public string SkuId { get; set; }
         }
 

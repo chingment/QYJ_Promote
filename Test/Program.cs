@@ -196,22 +196,22 @@ namespace Test
                 promoteUser.Id = GuidUtil.New();
                 promoteUser.PromoteId = promoteId;
                 promoteUser.ClientId = clientId;
-                promoteUser.RefereeId = refereeId;
+                promoteUser.RefereerId = refereeId;
                 promoteUser.CreateTime = createTime;
                 promoteUser.Creator = operater;
                 CurrentDb.PromoteUser.Add(promoteUser);
                 CurrentDb.SaveChanges();
             }
 
-            var promoteUserRelation = CurrentDb.PromoteUserRelation.Where(m => m.ClientId == clientId && m.RefereeDept == 1 && m.PromoteId == promoteId).FirstOrDefault();
+            var promoteUserRelation = CurrentDb.PromoteUserRelation.Where(m => m.ClientId == clientId && m.RefereerDept == 1 && m.PromoteId == promoteId).FirstOrDefault();
             if (promoteUserRelation == null)
             {
                 promoteUserRelation = new PromoteUserRelation();
                 promoteUserRelation.Id = GuidUtil.New();
                 promoteUserRelation.PromoteId = promoteId;
                 promoteUserRelation.ClientId = clientId;
-                promoteUserRelation.RefereeId = refereeId;
-                promoteUserRelation.RefereeDept = 1;
+                promoteUserRelation.RefereerId = refereeId;
+                promoteUserRelation.RefereerDept = 1;
                 promoteUserRelation.CreateTime = createTime;
                 promoteUserRelation.Creator = operater;
                 CurrentDb.PromoteUserRelation.Add(promoteUserRelation);
@@ -219,27 +219,27 @@ namespace Test
             }
 
 
-            var promoteUserRelationAll = CurrentDb.PromoteUserRelation.Where(m => m.PromoteId == promoteId).OrderByDescending(m => m.RefereeDept).ToList();
+            var promoteUserRelationAll = CurrentDb.PromoteUserRelation.Where(m => m.PromoteId == promoteId).OrderByDescending(m => m.RefereerDept).ToList();
 
             var promoteUserFathers = GetFatherList2(promoteUserRelationAll, clientId).Take(3).ToList();
 
             for (int i = 0; i < promoteUserFathers.Count; i++)
             {
                 int dept2 = (i + 1);
-                string refereeId2 = promoteUserFathers[i].RefereeId;
+                string refereeId2 = promoteUserFathers[i].RefereerId;
                 //string clientId2 = promoteUserFathers[i].ClientId;
                 Console.WriteLine("用户Id: " + clientId + "是用户Id:" + refereeId2 + "的" + dept2 + "级分销商");
 
 
-                var promoteUserRelation2 = CurrentDb.PromoteUserRelation.Where(m => m.ClientId == clientId && m.RefereeId == refereeId2 && m.PromoteId == promoteId && m.RefereeDept == dept2).FirstOrDefault();
+                var promoteUserRelation2 = CurrentDb.PromoteUserRelation.Where(m => m.ClientId == clientId && m.RefereerId == refereeId2 && m.PromoteId == promoteId && m.RefereerDept == dept2).FirstOrDefault();
                 if (promoteUserRelation2 == null)
                 {
                     promoteUserRelation2 = new PromoteUserRelation();
                     promoteUserRelation2.Id = GuidUtil.New();
                     promoteUserRelation2.ClientId = clientId;
                     promoteUserRelation2.PromoteId = promoteId;
-                    promoteUserRelation2.RefereeId = refereeId2;
-                    promoteUserRelation2.RefereeDept = dept2;
+                    promoteUserRelation2.RefereerId = refereeId2;
+                    promoteUserRelation2.RefereerDept = dept2;
                     promoteUserRelation2.CreateTime = createTime;
                     promoteUserRelation2.Creator = operater;
                     CurrentDb.PromoteUserRelation.Add(promoteUserRelation2);
@@ -342,13 +342,13 @@ namespace Test
         public static IEnumerable<PromoteUser> GetFatherList(IList<PromoteUser> list, string userId)
         {
             var query = list.Where(p => p.ClientId == userId).ToList();
-            return query.ToList().Concat(query.ToList().SelectMany(t => GetFatherList(list, t.RefereeId)));
+            return query.ToList().Concat(query.ToList().SelectMany(t => GetFatherList(list, t.RefereerId)));
         }
 
         public static IEnumerable<PromoteUserRelation> GetFatherList2(IList<PromoteUserRelation> list, string userId)
         {
-            var query = list.Where(p => p.ClientId == userId && p.RefereeDept == 1).ToList();
-            return query.ToList().Concat(query.ToList().SelectMany(t => GetFatherList2(list, t.RefereeId)));
+            var query = list.Where(p => p.ClientId == userId && p.RefereerDept == 1).ToList();
+            return query.ToList().Concat(query.ToList().SelectMany(t => GetFatherList2(list, t.RefereerId)));
         }
 
         public static IEnumerable<PromoteUser> GetSons(IList<PromoteUser> list, string Fid)
@@ -360,7 +360,7 @@ namespace Test
 
         public static IEnumerable<PromoteUser> GetSonList(IList<PromoteUser> list, string Fid)
         {
-            var query = list.Where(p => p.RefereeId == Fid).ToList();
+            var query = list.Where(p => p.RefereerId == Fid).ToList();
             return query.ToList().Concat(query.ToList().SelectMany(t => GetSonList(list, t.ClientId)));
         }
     }

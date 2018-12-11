@@ -70,7 +70,7 @@ namespace Lumos.BLL.Biz
                                     return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "找不到该商品", null);
                                 }
 
-                                var promoteSku = CurrentDb.PromoteSku.Where(m => m.Id == sku.PromoteSkuId && m.SkuId == sku.SkuId && m.BuyStartTime <= this.DateTime && m.BuyEndTime >= this.DateTime).FirstOrDefault();
+                                var promoteSku = CurrentDb.PromoteSku.Where(m => m.PromoteId == rop.PromoteId && m.SkuId == sku.SkuId && m.BuyStartTime <= this.DateTime && m.BuyEndTime >= this.DateTime).FirstOrDefault();
 
                                 if (promoteSku == null)
                                 {
@@ -111,7 +111,7 @@ namespace Lumos.BLL.Biz
                                 var productSkuOriginalPrice = productSku.SalePrice;
                                 var productSkuSalePrice = productSku.SalePrice;
 
-                                var promoteSku = CurrentDb.PromoteSku.Where(m => m.Id == sku.PromoteSkuId && m.SkuId == sku.SkuId && m.BuyStartTime <= this.DateTime && m.BuyEndTime >= this.DateTime).FirstOrDefault();
+                                var promoteSku = CurrentDb.PromoteSku.Where(m => m.PromoteId == rop.PromoteId && m.SkuId == sku.SkuId && m.BuyStartTime <= this.DateTime && m.BuyEndTime >= this.DateTime).FirstOrDefault();
                                 if (promoteSku != null)
                                 {
                                     productSkuSalePrice = promoteSku.SkuSalePrice;
@@ -128,7 +128,6 @@ namespace Lumos.BLL.Biz
                                 orderDetails.ClientId = clientId;
                                 orderDetails.OrderId = orderId;
                                 orderDetails.PromoteId = rop.PromoteId;
-                                orderDetails.PromoteSkuId = sku.PromoteSkuId;
                                 orderDetails.SkuId = productSku.Id;
                                 orderDetails.SkuName = productSku.Name;
                                 orderDetails.SkuImgUrl = ImgSet.GetMain(productSku.DisplayImgUrls);
@@ -150,7 +149,7 @@ namespace Lumos.BLL.Biz
                             order.ClientId = clientId;
                             order.Sn = SnUtil.Build(Enumeration.BizSnType.Order, order.ClientId);
                             order.PromoteId = rop.PromoteId;
-                            order.RefereeId = rop.RefereeId;
+                            order.RefereerId = rop.RefereerId;
                             order.OriginalAmount = l_orderDetails.Sum(m => m.OriginalAmount);
                             order.DiscountAmount = l_orderDetails.Sum(m => m.DiscountAmount);
                             order.ChargeAmount = order.OriginalAmount - order.DiscountAmount;
@@ -340,7 +339,7 @@ namespace Lumos.BLL.Biz
 
                     if (order.PromoteId != null)
                     {
-                        var promoteSku = CurrentDb.PromoteSku.Where(m => m.Id == item.PromoteSkuId).FirstOrDefault();
+                        var promoteSku = CurrentDb.PromoteSku.Where(m => m.PromoteId == order.PromoteId && m.SkuId == item.SkuId).FirstOrDefault();
                         if (promoteSku != null)
                         {
                             if (promoteSku.StockQuantity > 0)
@@ -353,14 +352,14 @@ namespace Lumos.BLL.Biz
 
                             if (promoteSku.IsCoupon)
                             {
-                                var clientCoupon = CurrentDb.ClientCoupon.Where(m => m.ClientId == order.ClientId && m.PromoteId == order.PromoteId && m.PromoteSkuId == promoteSku.Id).FirstOrDefault();
+                                var clientCoupon = CurrentDb.ClientCoupon.Where(m => m.ClientId == order.ClientId && m.PromoteId == order.PromoteId && m.SkuId == promoteSku.SkuId).FirstOrDefault();
                                 if (clientCoupon == null)
                                 {
                                     clientCoupon = new ClientCoupon();
                                     clientCoupon.Id = GuidUtil.New();
                                     clientCoupon.ClientId = order.ClientId;
                                     clientCoupon.PromoteId = order.PromoteId;
-                                    clientCoupon.PromoteSkuId = promoteSku.Id;
+                                    clientCoupon.SkuId = promoteSku.SkuId;
                                     clientCoupon.WxCouponId = promoteSku.WxCouponId;
                                     clientCoupon.IsBuy = true;
                                     clientCoupon.BuyTime = this.DateTime;
@@ -368,7 +367,7 @@ namespace Lumos.BLL.Biz
                                     clientCoupon.IsConsume = false;
                                     clientCoupon.Creator = pOperater;
                                     clientCoupon.CreateTime = this.DateTime;
-                                    clientCoupon.RefereeId = order.RefereeId;
+                                    clientCoupon.RefereerId = order.RefereerId;
                                     clientCoupon.OrderId = order.Id;
                                     clientCoupon.OrderSn = order.Sn;
 
@@ -409,7 +408,7 @@ namespace Lumos.BLL.Biz
                                     reidsMqByCalProfitByCouponBuyModel.OrderId = order.Id;
                                     reidsMqByCalProfitByCouponBuyModel.ClientId = order.ClientId;
                                     reidsMqByCalProfitByCouponBuyModel.PromoteId = order.PromoteId;
-                                    reidsMqByCalProfitByCouponBuyModel.RefereeId = order.RefereeId;
+                                    reidsMqByCalProfitByCouponBuyModel.RefereerId = order.RefereerId;
                                     reidsMqByCalProfitByCouponBuyModel.ClientCouponId = clientCoupon.Id;
                                     reidsMqByCalProfitModel.Pms = reidsMqByCalProfitByCouponBuyModel;
                                 }
@@ -472,7 +471,7 @@ namespace Lumos.BLL.Biz
 
                         if (!string.IsNullOrEmpty(item.PromoteId))
                         {
-                            var promoteSku = CurrentDb.PromoteSku.Where(q => q.Id == item.PromoteSkuId).FirstOrDefault();
+                            var promoteSku = CurrentDb.PromoteSku.Where(q => q.PromoteId == item.PromoteId && q.SkuId == item.SkuId).FirstOrDefault();
                             if (promoteSku != null)
                             {
                                 if (promoteSku.StockQuantity > 0)

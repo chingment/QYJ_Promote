@@ -24,7 +24,7 @@ namespace WebMobile.Controllers
                          where
                          o.ClientId == this.CurrentUserId &&
                          o.IsBuy == true
-                         select new { o.Id, o.Name, o.Number, o.NumberUnit, o.RefereeId, o.Discounttip, o.Description, o.ValidStartTime, o.ValidEndTime, o.PromoteId, o.OrderSn, o.WxCouponId, o.WxCouponDecryptCode, o.IsGet, o.IsConsume, o.CreateTime });
+                         select new { o.Id, o.Name, o.Number, o.NumberUnit, o.RefereerId, o.Discounttip, o.Description, o.ValidStartTime, o.ValidEndTime, o.PromoteId, o.OrderSn, o.WxCouponId, o.WxCouponDecryptCode, o.IsGet, o.IsConsume, o.CreateTime });
 
             int total = query.Count();
 
@@ -71,7 +71,7 @@ namespace WebMobile.Controllers
                         myCoupon.StatusName = "待领取";
                         myCoupon.GetMethod = "url";
                         //myCoupon.GetUrl = string.Format("/Promotec/CouponGet?promoteId={0}&orderSn={1}&isSuccessed={2}", item.PromoteId, item.OrderSn, "True");
-                        myCoupon.GetUrl = string.Format("/Promotec/Coupon?promoteId={0}&refereeId={1}", item.PromoteId, item.RefereeId == null ? "" : item.RefereeId);
+                        myCoupon.GetUrl = string.Format("/Promotec/Coupon?promoteId={0}&refereeId={1}", item.PromoteId, item.RefereerId == null ? "" : item.RefereerId);
                     }
                     else
                     {

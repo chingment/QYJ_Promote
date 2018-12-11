@@ -23,8 +23,8 @@ namespace WebMobile.Controllers
                          join m in CurrentDb.WxUserInfo on o.ClientId equals m.ClientId
 
                          where
-                         o.RefereeId == this.CurrentUserId &&
-                         o.ClientId != o.RefereeId &&
+                         o.RefereerId == this.CurrentUserId &&
+                         o.ClientId != o.RefereerId &&
                          o.IsBuy == true
                          select new { o.IsBuy, o.BuyTime, o.IsConsume, o.IsGet, m.Nickname, m.HeadImgUrl });
 

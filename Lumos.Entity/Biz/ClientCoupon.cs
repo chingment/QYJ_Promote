@@ -25,7 +25,7 @@ namespace Lumos.Entity
         public DateTime? ValidStartTime { get; set; }
         public DateTime? ValidEndTime { get; set; }
         public string PromoteId { get; set; }
-        public string PromoteSkuId { get; set; }
+        public string SkuId { get; set; }
         public string OrderId { get; set; }
         public string OrderSn { get; set; }
         public bool IsBuy { get; set; }
@@ -39,7 +39,7 @@ namespace Lumos.Entity
         public DateTime CreateTime { get; set; }
         public string Mender { get; set; }
         public DateTime? MendTime { get; set; }
-        public string RefereeId { get; set; }
+        public string RefereerId { get; set; }
         public string WxCouponId { get; set; }
         public string WxCouponEncryptCode { get; set; }
         public string WxCouponDecryptCode { get; set; }

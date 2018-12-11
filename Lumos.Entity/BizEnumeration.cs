@@ -125,14 +125,26 @@ namespace Lumos.Entity
             WtihdrawExpire = 7
         }
 
-        public enum PromoteProfitSetValueType
+        public enum PromoteRefereerRewardSetValueType
         {
             [Remark("未知")]
             Unknow = 0,
-            [Remark("固定金额")]
-            FixedAmount = 1,
-            [Remark("比例")]
-            RateAmount = 2
+            [Remark("按消费金额的固定金额")]
+            AmountByFixed = 1,
+            [Remark("按消费金额的消费比例")]
+            AmountByRate = 2,
+            [Remark("商品库的商品")]
+            GiveBySku = 3
+        }
+
+        public enum PromoteRefereerRewardSetChannel
+        {
+            [Remark("未知")]
+            Unknow = 0,
+            [Remark("购买者购买商品")]
+            BuyerBuyProductSku = 1,
+            [Remark("购买者核销商品")]
+            BuyerConsumeProductSku = 2
         }
 
         public enum WithdrawStatus
@@ -172,5 +184,17 @@ namespace Lumos.Entity
             [Remark("非学员")]
             NotStudent = 3
         }
+
+        public enum PromoteSkuGetType
+        {
+            [Remark("未知")]
+            Unknow = 0,
+            [Remark("购买")]
+            Buy = 1,
+            [Remark("购买赠送")]
+            BuyGiveRefereer = 2
+        }
+
+        
     }
 }

@@ -29,7 +29,7 @@ namespace Lumos.DAL
         public IDbSet<WxAutoReply> WxAutoReply { get; set; }
         public IDbSet<Fund> Fund { get; set; }
         public IDbSet<FundTrans> FundTrans { get; set; }
-        public IDbSet<PromoteProfitSet> PromoteProfitSet { get; set; }
+        public IDbSet<PromoteRefereerRewardSet> PromoteRefereerRewardSet { get; set; }
         public IDbSet<OrderNotifyLog> OrderNotifyLog { get; set; }
 
         public IDbSet<ClientCoupon> ClientCoupon { get; set; }
