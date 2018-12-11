@@ -286,20 +286,20 @@ namespace WebMobile.Controllers
                                             case EventType.USER_CONSUME_CARD://核销卡卷
                                                 #region USER_CONSUME_CARD
 
-                                                var userConsumeCardMsg = (UserConsumeCardMsg)baseEventMsg;
+                                                //var userConsumeCardMsg = (UserConsumeCardMsg)baseEventMsg;
 
-                                                if (userConsumeCardMsg != null)
-                                                {
-                                                    var reidsMqByCalProfitModel = new RedisMq4GlobalHandle();
-                                                    var reidsMqByCalProfitByCouponConsumeModel = new ReidsMqByCalProfitByCouponConsumeModel();
-                                                    reidsMqByCalProfitByCouponConsumeModel.ClientId = wxUserInfo.ClientId;
-                                                    reidsMqByCalProfitByCouponConsumeModel.WxCouponDecryptCode = userConsumeCardMsg.UserCardCode;
-                                                    reidsMqByCalProfitByCouponConsumeModel.WxCouponId = userConsumeCardMsg.CardId;
+                                                //if (userConsumeCardMsg != null)
+                                                //{
+                                                //    var reidsMqByCalProfitModel = new RedisMq4GlobalHandle();
+                                                //    var reidsMqByCalProfitByCouponConsumeModel = new ReidsMqByCalProfitByCouponConsumeModel();
+                                                //    reidsMqByCalProfitByCouponConsumeModel.ClientId = wxUserInfo.ClientId;
+                                                //    reidsMqByCalProfitByCouponConsumeModel.WxCouponDecryptCode = userConsumeCardMsg.UserCardCode;
+                                                //    reidsMqByCalProfitByCouponConsumeModel.WxCouponId = userConsumeCardMsg.CardId;
 
-                                                    reidsMqByCalProfitModel.Pms = reidsMqByCalProfitByCouponConsumeModel;
+                                                //    reidsMqByCalProfitModel.Pms = reidsMqByCalProfitByCouponConsumeModel;
 
-                                                    ReidsMqFactory.Global.Push(RedisMqHandleType.CouponConsume,reidsMqByCalProfitModel);
-                                                }
+                                                //    ReidsMqFactory.Global.Push(RedisMqHandleType.CouponConsume,reidsMqByCalProfitModel);
+                                                //}
 
 
                                                 #endregion

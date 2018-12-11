@@ -330,8 +330,6 @@ namespace Lumos.BLL.Biz
                 order.Mender = pOperater;
                 order.IsInVisiable = false;
 
-                RedisMq4GlobalHandle reidsMqByCalProfitModel = null;
-
                 var orderDetails = CurrentDb.OrderDetails.Where(m => m.OrderId == order.Id).ToList();
                 foreach (var item in orderDetails)
                 {
@@ -394,23 +392,10 @@ namespace Lumos.BLL.Biz
                                             clientCoupon.Description = couponModel.Description;
                                             clientCoupon.Discounttip = couponModel.Discounttip;
                                         }
-
                                     }
-
 
                                     CurrentDb.ClientCoupon.Add(clientCoupon);
                                     CurrentDb.SaveChanges();
-
-                                    reidsMqByCalProfitModel = new RedisMq4GlobalHandle();
-                                    reidsMqByCalProfitModel.Type = RedisMqHandleType.CouponBuy;
-
-                                    var reidsMqByCalProfitByCouponBuyModel = new ReidsMqByCalProfitByCouponBuyModel();
-                                    reidsMqByCalProfitByCouponBuyModel.OrderId = order.Id;
-                                    reidsMqByCalProfitByCouponBuyModel.ClientId = order.ClientId;
-                                    reidsMqByCalProfitByCouponBuyModel.PromoteId = order.PromoteId;
-                                    reidsMqByCalProfitByCouponBuyModel.RefereerId = order.RefereerId;
-                                    reidsMqByCalProfitByCouponBuyModel.ClientCouponId = clientCoupon.Id;
-                                    reidsMqByCalProfitModel.Pms = reidsMqByCalProfitByCouponBuyModel;
                                 }
                             }
                         }
@@ -420,9 +405,20 @@ namespace Lumos.BLL.Biz
                 CurrentDb.SaveChanges();
                 ts.Complete();
 
-                if (reidsMqByCalProfitModel != null)
+
+                if (!string.IsNullOrEmpty(order.RefereerId))
                 {
-                    ReidsMqFactory.Global.Push(RedisMqHandleType.CouponBuy, reidsMqByCalProfitModel);
+                    var promoteRefereerRewardSets = CurrentDb.PromoteRefereerRewardSet.Where(m => m.PromoteId == order.PromoteId && m.Channel == Enumeration.PromoteRefereerRewardSetChannel.BuyerBuyProductSku).ToList();
+                    if (promoteRefereerRewardSets.Count > 0)
+                    {
+                        var handlePms = new PromoteRefereerRewardByBuyerBuyProductSkuModel();
+                        handlePms.OrderId = order.Id;
+                        handlePms.ClientId = order.ClientId;
+                        handlePms.PromoteId = order.PromoteId;
+                        handlePms.RefereerId = order.RefereerId;
+
+                        ReidsMqFactory.Global.Push(RedisMqHandleType.PromoteRefereerRewardByBuyerBuyProductSku, handlePms);
+                    }
                 }
 
                 result = new CustomJsonResult(ResultType.Success, ResultCode.Success, string.Format("支付完成通知：订单号({0})通知成功", pOrderSn));

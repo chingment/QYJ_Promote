@@ -14,10 +14,8 @@ namespace Lumos.BLL.Biz
     {
         [Remark("未知")]
         Unknow = 0,
-        [Remark("优惠卷核销")]
-        CouponConsume = 1,
-        [Remark("优惠卷购买")]
-        CouponBuy = 2
+        [Remark("购买者购物，推荐人奖励")]
+        PromoteRefereerRewardByBuyerBuyProductSku = 1
     }
 
     public class ReidsMqByCalProfitByCouponConsumeModel
@@ -28,14 +26,12 @@ namespace Lumos.BLL.Biz
 
     }
 
-    public class ReidsMqByCalProfitByCouponBuyModel
+    public class PromoteRefereerRewardByBuyerBuyProductSkuModel
     {
         public string OrderId { get; set; }
         public string ClientId { get; set; }
         public string PromoteId { get; set; }
         public string RefereerId { get; set; }
-        public string ClientCouponId { get; set; }
-
     }
 
     public class RedisMq4GlobalHandle
@@ -56,11 +52,8 @@ namespace Lumos.BLL.Biz
                     {
                         switch (this.Type)
                         {
-                            case RedisMqHandleType.CouponConsume:
-                                //CouponConsume();
-                                break;
-                            case RedisMqHandleType.CouponBuy:
-                                //CouponBuy();
+                            case RedisMqHandleType.PromoteRefereerRewardByBuyerBuyProductSku:
+                                PromoteRefereerRewardByBuyerBuyProductSku();
                                 break;
                         }
                     }
@@ -177,14 +170,14 @@ namespace Lumos.BLL.Biz
 
         }
 
-        private void CouponBuy()
+        private void PromoteRefereerRewardByBuyerBuyProductSku()
         {
             using (LumosDbContext CurrentDb = new LumosDbContext())
             {
                 using (TransactionScope ts = new TransactionScope())
                 {
                     #region 核销优惠券
-                    var model = ((JObject)this.Pms).ToObject<ReidsMqByCalProfitByCouponBuyModel>();
+                    var model = ((JObject)this.Pms).ToObject<PromoteRefereerRewardByBuyerBuyProductSkuModel>();
                     var strjson_model = Newtonsoft.Json.JsonConvert.SerializeObject(model);
                     Console.WriteLine("11111");
                     string msg = string.Format("正在处理信息，消息类型为佣金计算-{0},具体参数：{1}", this.Type.GetCnName(), strjson_model);

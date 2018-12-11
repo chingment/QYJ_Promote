@@ -34,7 +34,5 @@ namespace Lumos.Entity
         public string ExtAtrrs { get; set; }
 
         public bool IsCoupon { get; set; }
-
-        public Enumeration.PromoteSkuGetType GetType { get; set; }
     }
 }
