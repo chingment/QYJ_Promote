@@ -152,6 +152,7 @@
     <Compile Include="Service\App\RModels\RopWithdrawApply.cs" />
     <Compile Include="Service\App\RModels\RupCouponGetList.cs" />
     <Compile Include="Service\App\RModels\RupFundGetList.cs" />
+    <Compile Include="Service\App\RModels\RupGiftGiveGetMy.cs" />
     <Compile Include="Service\App\RModels\RupProductSkuGetDetails.cs" />
     <Compile Include="Service\App\RModels\RupPromoteGetConfig.cs" />
     <Compile Include="Service\App\RModels\RupOrderGetDetails.cs" />
