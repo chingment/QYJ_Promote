@@ -37,13 +37,15 @@ namespace Lumos.DAL
         public IDbSet<ClientAccessLog> ClientAccessLog { get; set; }
         public IDbSet<ClientShareLog> ClientShareLog { get; set; }
 
-        public IDbSet<Withdraw>  Withdraw { get; set; }
+        public IDbSet<Withdraw> Withdraw { get; set; }
 
         public IDbSet<GiftGive> GiftGive { get; set; }
 
         public IDbSet<GiftGiveTrans> GiftGiveTrans { get; set; }
 
         public IDbSet<PromoteBlackList> PromoteBlackList { get; set; }
+
+        public IDbSet<PromoteRefereerRewardFactor> PromoteRefereerRewardFactor { get; set; }
 
         //public FxDbContext()
         //    : base("DefaultConnection")

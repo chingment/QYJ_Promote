@@ -20,6 +20,8 @@ namespace Lumos.Entity
         public int Dept { get; set; }
         public string Creator { get; set; }
         public DateTime CreateTime { get; set; }
+
+        public int IncreaseFactor { get; set; }
     }
 
     public class RewardModel

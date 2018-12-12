@@ -294,10 +294,10 @@
             }
 
             var promoteId = pConfig.promoteId;
-            var refereeId = pConfig.clientId;
+            var refereerId = pConfig.clientId;
             var shareTitle = pConfig.shareTitle;
             var shareDesc = pConfig.shareDesc;
-            var shareLink = 'http://qyj.17fanju.com/Promotec/Coupon?promoteId=' + promoteId + '&refereeId=' + refereeId;
+            var shareLink = 'http://qyj.17fanju.com/Promotec/Coupon?promoteId=' + promoteId + '&refereerId=' + refereerId;
             var shareImgUrl = pConfig.shareImgUrl;
             wx.ready(function () {
 
@@ -309,7 +309,7 @@
                     trigger: function (res) {
                     },
                     success: function (res) {
-                        shareLog(promoteId, refereeId, shareLink, 1);
+                        shareLog(promoteId, refereerId, shareLink, 1);
                     },
                     cancel: function (res) {
                     },
@@ -324,7 +324,7 @@
                     trigger: function (res) {
                     },
                     success: function (res) {
-                        shareLog(promoteId, refereeId, shareLink, 2);
+                        shareLog(promoteId, refereerId, shareLink, 2);
                     },
                     cancel: function (res) {
                     },

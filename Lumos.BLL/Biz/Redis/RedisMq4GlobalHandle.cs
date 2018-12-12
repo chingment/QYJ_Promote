@@ -207,6 +207,9 @@ namespace Lumos.BLL.Biz
                         return;
                     }
 
+
+                    var perCount = CurrentDb.PromoteUser.Where(m => m.RefereerId == model.RefereerId && m.RefereerId != m.ClientId).Count();
+
                     var promoteRefereerRewardSets = CurrentDb.PromoteRefereerRewardSet.Where(m => m.PromoteId == model.PromoteId && m.Channel == Enumeration.PromoteRefereerRewardSetChannel.BuyerBuyProductSku).ToList();
 
                     if (promoteRefereerRewardSets.Count > 0)
@@ -217,50 +220,67 @@ namespace Lumos.BLL.Biz
                         {
                             var rewardModel = Newtonsoft.Json.JsonConvert.DeserializeObject<RewardModel>(reward.Reward);
 
+                            var promoteRefereerRewardFactor = CurrentDb.PromoteRefereerRewardFactor.Where(m => m.RefereerId == model.RefereerId && m.PromoteId == reward.PromoteId && m.PromoteRefereerRewardSetId == reward.Id).FirstOrDefault();
+                            if(promoteRefereerRewardFactor == null)
+                            {
+                                promoteRefereerRewardFactor.Id = GuidUtil.New();
+                                promoteRefereerRewardFactor.RefereerId = model.RefereerId;
+                                promoteRefereerRewardFactor.PromoteId = model.PromoteId;
+                                promoteRefereerRewardFactor.Factor = reward.IncreaseFactor;
+                                CurrentDb.PromoteRefereerRewardFactor.Add(promoteRefereerRewardFactor);
+                                CurrentDb.SaveChanges();
+                            }
 
-                            foreach (var gift in rewardModel.Gifts)
+
+
+                            if (perCount == promoteRefereerRewardFactor.Factor)
                             {
 
-                                var giftGive = CurrentDb.GiftGive.Where(m => m.ClientId == model.RefereerId && m.SkuId == gift.SkuId).FirstOrDefault();
-                                if (giftGive == null)
+
+                                foreach (var gift in rewardModel.Gifts)
                                 {
-                                    giftGive = new GiftGive();
-                                    giftGive.Id = GuidUtil.New();
-                                    giftGive.ClientId = model.RefereerId;
-                                    giftGive.CurrentQuantity = gift.Quantity;
-                                    giftGive.AvailableQuantity = gift.Quantity;
-                                    giftGive.LockQuantity = 0;
-                                    giftGive.SkuId = gift.SkuId;
-                                    giftGive.Creator = GuidUtil.New();
-                                    giftGive.CreateTime = DateTime.Now;
-                                    CurrentDb.GiftGive.Add(giftGive);
+
+                                    var giftGive = CurrentDb.GiftGive.Where(m => m.ClientId == model.RefereerId && m.SkuId == gift.SkuId).FirstOrDefault();
+                                    if (giftGive == null)
+                                    {
+                                        giftGive = new GiftGive();
+                                        giftGive.Id = GuidUtil.New();
+                                        giftGive.ClientId = model.RefereerId;
+                                        giftGive.CurrentQuantity = gift.Quantity;
+                                        giftGive.AvailableQuantity = gift.Quantity;
+                                        giftGive.LockQuantity = 0;
+                                        giftGive.SkuId = gift.SkuId;
+                                        giftGive.Creator = GuidUtil.New();
+                                        giftGive.CreateTime = DateTime.Now;
+                                        CurrentDb.GiftGive.Add(giftGive);
+                                        CurrentDb.SaveChanges();
+                                    }
+                                    else
+                                    {
+                                        giftGive.CurrentQuantity += gift.Quantity;
+                                        giftGive.AvailableQuantity += gift.Quantity;
+                                        giftGive.Mender = GuidUtil.New();
+                                        giftGive.MendTime = DateTime.Now;
+                                    }
+
+
+                                    var giftGiveTrans = new GiftGiveTrans();
+                                    giftGiveTrans.Id = GuidUtil.New();
+                                    giftGiveTrans.Sn = SnUtil.Build(Enumeration.BizSnType.GiftGiveTrans, model.RefereerId);
+                                    giftGiveTrans.ClientId = model.RefereerId;
+                                    giftGiveTrans.SkuId = giftGive.SkuId;
+                                    giftGiveTrans.ChangeType = Enumeration.GiftGiveTransType.SignupGift;
+                                    giftGiveTrans.ChangeQuantity = gift.Quantity;
+                                    giftGiveTrans.AvailableQuantity = giftGive.AvailableQuantity;
+                                    giftGiveTrans.CurrentQuantity = giftGive.CurrentQuantity;
+                                    giftGiveTrans.LockQuantity = giftGive.LockQuantity;
+                                    giftGiveTrans.Description = "您推荐的用户()参与报名成功，得到奖品";
+                                    giftGiveTrans.Creator = GuidUtil.New();
+                                    giftGiveTrans.CreateTime = DateTime.Now;
+                                    CurrentDb.GiftGiveTrans.Add(giftGiveTrans);
                                     CurrentDb.SaveChanges();
+
                                 }
-                                else
-                                {
-                                    giftGive.CurrentQuantity += gift.Quantity;
-                                    giftGive.AvailableQuantity += gift.Quantity;
-                                    giftGive.Mender = GuidUtil.New();
-                                    giftGive.MendTime = DateTime.Now;
-                                }
-
-
-                                var giftGiveTrans = new GiftGiveTrans();
-                                giftGiveTrans.Id = GuidUtil.New();
-                                giftGiveTrans.Sn = SnUtil.Build(Enumeration.BizSnType.GiftGiveTrans, model.RefereerId);
-                                giftGiveTrans.ClientId = model.RefereerId;
-                                giftGiveTrans.SkuId = giftGive.SkuId;
-                                giftGiveTrans.ChangeType = Enumeration.GiftGiveTransType.SignupGift;
-                                giftGiveTrans.ChangeQuantity = gift.Quantity;
-                                giftGiveTrans.AvailableQuantity = giftGive.AvailableQuantity;
-                                giftGiveTrans.CurrentQuantity = giftGive.CurrentQuantity;
-                                giftGiveTrans.LockQuantity = giftGive.LockQuantity;
-                                giftGiveTrans.Description = "您推荐的用户()参与报名成功，得到奖品";
-                                giftGiveTrans.Creator = GuidUtil.New();
-                                giftGiveTrans.CreateTime = DateTime.Now;
-                                CurrentDb.GiftGiveTrans.Add(giftGiveTrans);
-                                CurrentDb.SaveChanges();
-
                             }
 
                         }
