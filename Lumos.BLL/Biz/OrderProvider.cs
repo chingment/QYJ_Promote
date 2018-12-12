@@ -322,8 +322,6 @@ namespace Lumos.BLL.Biz
                     return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, string.Format("找不到该订单号({0})", orderSn));
                 }
 
-
-
                 order.Status = Enumeration.OrderStatus.Payed;
                 order.PayTime = this.DateTime;
                 order.MendTime = this.DateTime;
@@ -331,25 +329,29 @@ namespace Lumos.BLL.Biz
                 order.IsInVisiable = false;
 
                 var orderDetails = CurrentDb.OrderDetails.Where(m => m.OrderId == order.Id).ToList();
-                foreach (var item in orderDetails)
-                {
-                    item.Status = Enumeration.OrderDetailsStatus.Payed;
 
-                    if (order.PromoteId != null)
+                foreach (var orderDetail in orderDetails)
+                {
+                    orderDetail.Status = Enumeration.OrderDetailsStatus.Payed;
+
+                    #region  活动处理
+                    if (!string.IsNullOrEmpty(orderDetail.PromoteId))
                     {
-                        var promoteSku = CurrentDb.PromoteSku.Where(m => m.PromoteId == order.PromoteId && m.SkuId == item.SkuId).FirstOrDefault();
+                        var promoteSku = CurrentDb.PromoteSku.Where(m => m.PromoteId == order.PromoteId && m.SkuId == orderDetail.SkuId).FirstOrDefault();
+
                         if (promoteSku != null)
                         {
                             if (promoteSku.StockQuantity > 0)
                             {
-                                promoteSku.LockQuantity -= item.Quantity;
-                                promoteSku.StockQuantity -= item.Quantity;
+                                promoteSku.LockQuantity -= orderDetail.Quantity;
+                                promoteSku.StockQuantity -= orderDetail.Quantity;
                             }
 
-                            promoteSku.SaleQuantity += item.Quantity; ;
+                            promoteSku.SaleQuantity += orderDetail.Quantity; ;
 
                             if (promoteSku.IsCoupon)
                             {
+                                #region 优惠券处理
                                 var clientCoupon = CurrentDb.ClientCoupon.Where(m => m.ClientId == order.ClientId && m.PromoteId == order.PromoteId && m.SkuId == promoteSku.SkuId).FirstOrDefault();
                                 if (clientCoupon == null)
                                 {
@@ -397,88 +399,73 @@ namespace Lumos.BLL.Biz
                                     CurrentDb.ClientCoupon.Add(clientCoupon);
                                     CurrentDb.SaveChanges();
                                 }
+                                #endregion
+                            }
+
+                            if (promoteSku.IsGiftGive)
+                            {
+                                #region 奖品处理
+                                var giftGive = CurrentDb.GiftGive.Where(m => m.ClientId == order.ClientId && m.SkuId == orderDetail.SkuId).FirstOrDefault();
+                                if (giftGive == null)
+                                {
+                                    giftGive = new GiftGive();
+                                    giftGive.Id = GuidUtil.New();
+                                    giftGive.ClientId = order.ClientId;
+                                    giftGive.CurrentQuantity = orderDetail.Quantity;
+                                    giftGive.AvailableQuantity = orderDetail.Quantity;
+                                    giftGive.LockQuantity = 0;
+                                    giftGive.SkuId = orderDetail.SkuId;
+                                    giftGive.Creator = operater;
+                                    giftGive.CreateTime = this.DateTime;
+                                    CurrentDb.GiftGive.Add(giftGive);
+                                    CurrentDb.SaveChanges();
+                                }
+                                else
+                                {
+                                    giftGive.CurrentQuantity += orderDetail.Quantity;
+                                    giftGive.AvailableQuantity += orderDetail.Quantity;
+                                    giftGive.Mender = operater;
+                                    giftGive.MendTime = this.DateTime;
+                                }
+
+                                var giftGiveTrans = new GiftGiveTrans();
+                                giftGiveTrans.Id = GuidUtil.New();
+                                giftGiveTrans.Sn = SnUtil.Build(Enumeration.BizSnType.GiftGiveTrans, order.ClientId);
+                                giftGiveTrans.ClientId = order.ClientId;
+                                giftGiveTrans.SkuId = giftGive.SkuId;
+                                giftGiveTrans.ChangeType = Enumeration.GiftGiveTransType.SignupGift;
+                                giftGiveTrans.ChangeQuantity = orderDetail.Quantity;
+                                giftGiveTrans.AvailableQuantity = giftGive.AvailableQuantity;
+                                giftGiveTrans.CurrentQuantity = giftGive.CurrentQuantity;
+                                giftGiveTrans.LockQuantity = giftGive.LockQuantity;
+                                giftGiveTrans.Description = "参与报名成功，赠送";
+                                giftGiveTrans.Creator = operater;
+                                giftGiveTrans.CreateTime = this.DateTime;
+                                CurrentDb.GiftGiveTrans.Add(giftGiveTrans);
+                                CurrentDb.SaveChanges();
+                                #endregion
                             }
                         }
                     }
+                    #endregion
                 }
 
+                CurrentDb.SaveChanges();
+                ts.Complete();
 
-
-                if (!string.IsNullOrEmpty(order.PromoteId))
-                {
-                    var promote = CurrentDb.Promote.Where(m => m.Id == order.PromoteId).FirstOrDefault();
-                    if (promote != null)
-                    {
-                        switch (promote.Class)
-                        {
-                            case Enumeration.PromoteClass.GiftGive:
-
-                                foreach (var orderDetail in orderDetails)
-                                {
-                                    var giftGive = CurrentDb.GiftGive.Where(m => m.ClientId == order.ClientId && m.SkuId == orderDetail.SkuId).FirstOrDefault();
-                                    if (giftGive == null)
-                                    {
-                                        giftGive = new GiftGive();
-                                        giftGive.Id = GuidUtil.New();
-                                        giftGive.ClientId = order.ClientId;
-                                        giftGive.CurrentQuantity = orderDetail.Quantity;
-                                        giftGive.AvailableQuantity = orderDetail.Quantity;
-                                        giftGive.LockQuantity = 0;
-                                        giftGive.SkuId = orderDetail.SkuId;
-                                        giftGive.Creator = operater;
-                                        giftGive.CreateTime = this.DateTime;
-                                        CurrentDb.GiftGive.Add(giftGive);
-                                        CurrentDb.SaveChanges();
-                                    }
-                                    else
-                                    {
-                                        giftGive.CurrentQuantity += orderDetail.Quantity;
-                                        giftGive.AvailableQuantity += orderDetail.Quantity;
-                                        giftGive.Mender = operater;
-                                        giftGive.MendTime = this.DateTime;
-                                    }
-
-
-                                    var giftGiveTrans = new GiftGiveTrans();
-                                    giftGiveTrans.Id = GuidUtil.New();
-                                    giftGiveTrans.Sn = SnUtil.Build(Enumeration.BizSnType.GiftGiveTrans, order.ClientId);
-                                    giftGiveTrans.ClientId = order.ClientId;
-                                    giftGiveTrans.SkuId = giftGive.SkuId;
-                                    giftGiveTrans.ChangeType = Enumeration.GiftGiveTransType.SignupGift;
-                                    giftGiveTrans.ChangeQuantity = orderDetail.Quantity;
-                                    giftGiveTrans.AvailableQuantity = giftGive.AvailableQuantity;
-                                    giftGiveTrans.CurrentQuantity = giftGive.CurrentQuantity;
-                                    giftGiveTrans.LockQuantity = giftGive.LockQuantity;
-                                    giftGiveTrans.Description = "参与报名成功，赠送";
-                                    giftGiveTrans.Creator = operater;
-                                    giftGiveTrans.CreateTime = this.DateTime;
-                                    CurrentDb.GiftGiveTrans.Add(giftGiveTrans);
-                                    CurrentDb.SaveChanges();
-                                }
-
-
-
-                                break;
-                        }
-                    }
-
-                    CurrentDb.SaveChanges();
-                    ts.Complete();
-
-                    var handlePms = new RedisMqHandlePms4PromoteRefereerRewardByBuyerBuy();
-                    handlePms.OrderId = order.Id;
-                    handlePms.BuyerId = order.ClientId;
-                    handlePms.PromoteId = order.PromoteId;
-                    handlePms.RefereerId = order.RefereerId;
-                    ReidsMqFactory.Global.Push(RedisMqHandleType.PromoteRefereerRewardByBuyerBuy, handlePms);
-
-                }
+                var handlePms = new RedisMqHandlePms4PromoteRefereerRewardByBuyerBuy();
+                handlePms.OrderId = order.Id;
+                handlePms.BuyerId = order.ClientId;
+                handlePms.PromoteId = order.PromoteId;
+                handlePms.RefereerId = order.RefereerId;
+                ReidsMqFactory.Global.Push(RedisMqHandleType.PromoteRefereerRewardByBuyerBuy, handlePms);
 
                 result = new CustomJsonResult(ResultType.Success, ResultCode.Success, string.Format("支付完成通知：订单号({0})通知成功", orderSn));
             }
 
             return result;
         }
+
 
         public CustomJsonResult Cancle(string pOperater, string pOrderId, string cancelReason)
         {

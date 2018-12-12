@@ -34,5 +34,7 @@ namespace Lumos.Entity
         public string ExtAtrrs { get; set; }
 
         public bool IsCoupon { get; set; }
+
+        public bool IsGiftGive { get; set; }
     }
 }
