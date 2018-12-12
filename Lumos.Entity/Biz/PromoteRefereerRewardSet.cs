@@ -16,10 +16,23 @@ namespace Lumos.Entity
         public string Id { get; set; }
         public string PromoteId { get; set; }
         public Enumeration.PromoteRefereerRewardSetChannel Channel { get; set; }
-        public Enumeration.PromoteRefereerRewardSetValueType ValueType { get; set; }
-        public string Value { get; set; }
+        public string Reward { get; set; }
         public int Dept { get; set; }
         public string Creator { get; set; }
         public DateTime CreateTime { get; set; }
+    }
+
+    public class RewardModel
+    {
+        public decimal Money { get; set; }
+
+        public List<GiftModel> Gifts { get; set; }
+
+        public class GiftModel
+        {
+            public string SkuId { get; set; }
+
+            public int Quantity { get; set; }
+        }
     }
 }

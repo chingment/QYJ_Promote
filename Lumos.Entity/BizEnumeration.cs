@@ -22,7 +22,9 @@ namespace Lumos.Entity
             [Remark("资金流水号")]
             FundTrans = 2,
             [Remark("提现单号")]
-            Withraw = 3
+            Withraw = 3,
+            [Remark("赠品派送流水号")]
+            GiftGiveTrans = 4
         }
 
         public enum OrderNotifyLogNotifyFrom
@@ -125,6 +127,14 @@ namespace Lumos.Entity
             WtihdrawExpire = 7
         }
 
+        public enum GiftGiveTransType
+        {
+            [Remark("未知")]
+            Unknow = 0,
+            [Remark("参与报名赠送")]
+            SignupGift = 1
+        }
+
         public enum PromoteRefereerRewardSetValueType
         {
             [Remark("未知")]
@@ -165,12 +175,12 @@ namespace Lumos.Entity
         {
             [Remark("未知")]
             Unknow = 0,
-            [Remark("卡券")]
-            Coupon = 1,
-            [Remark("商品")]
-            ProductSku = 2,
-            [Remark("报名")]
-            Signup = 3
+            [Remark("抢购卡券")]
+            BuyCoupon = 1,
+            [Remark("限时抢购")]
+            BuyProductSkuByFlashSale = 2,
+            [Remark("礼品赠送")]
+            GiftGive = 3
         }
 
         public enum PromoteTargetType
@@ -195,6 +205,6 @@ namespace Lumos.Entity
             BuyGiveRefereer = 2
         }
 
-        
+
     }
 }

@@ -22,7 +22,7 @@ namespace Lumos.BLL.Service.App
 
         public string PromoteId { get; set; }
         //public string PromoteSkuId { get; set; }
-        public string RefereeId { get; set; }
+        public string RefereerId { get; set; }
         public string ClientId { get; set; }
         public string ShareTitle { get; set; }
         public string ShareDesc { get; set; }

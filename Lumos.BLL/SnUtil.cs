@@ -70,6 +70,9 @@ namespace Lumos.BLL
                 case Entity.Enumeration.BizSnType.Withraw:
                     prefix = "20";
                     break;
+                case Entity.Enumeration.BizSnType.GiftGiveTrans:
+                    prefix = "30";
+                    break;
             }
 
             ThreadSafeRandom ran = new ThreadSafeRandom();

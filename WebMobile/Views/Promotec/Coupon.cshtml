@@ -429,7 +429,7 @@
             $.lumos.postJson({
                 url: "/Order/UnifiedOrder",
                 isShowLoading: true,
-                data: { orderId: pConfig.orderId, refereeId: pConfig.refereeId, promoteId: pConfig.promoteId, skus: pConfig.skus },
+                data: { orderId: pConfig.orderId, refereerId: pConfig.refereerId, promoteId: pConfig.promoteId, skus: pConfig.skus },
                 success: function (d) {
                     if (d.result == $.lumos.resultType.success) {
                         var params = d.data;

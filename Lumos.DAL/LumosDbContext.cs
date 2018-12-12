@@ -39,6 +39,10 @@ namespace Lumos.DAL
 
         public IDbSet<Withdraw>  Withdraw { get; set; }
 
+        public IDbSet<GiftGive> GiftGive { get; set; }
+
+        public IDbSet<GiftGiveTrans> GiftGiveTrans { get; set; }
+
         public IDbSet<PromoteBlackList> PromoteBlackList { get; set; }
 
         //public FxDbContext()

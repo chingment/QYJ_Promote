@@ -7,20 +7,22 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+
 namespace Lumos.Entity
 {
-    [Table("FundTrans")]
-    public class FundTrans
+    [Table("GiftGiveTrans")]
+    public class GiftGiveTrans
     {
         [Key]
         public string Id { get; set; }
         public string Sn { get; set; }
         public string ClientId { get; set; }
-        public Enumeration.FundTransChangeType ChangeType { get; set; }
-        public decimal ChangeAmount { get; set; }
-        public decimal CurrentBalance { get; set; }
-        public decimal LockBalance { get; set; }
-        public decimal AvailableBalance { get; set; }
+        public string SkuId { get; set; }
+        public Enumeration.GiftGiveTransType ChangeType { get; set; }
+        public decimal ChangeQuantity { get; set; }
+        public decimal CurrentQuantity { get; set; }
+        public decimal LockQuantity { get; set; }
+        public decimal AvailableQuantity { get; set; }
         public string Description { get; set; }
         public string Creator { get; set; }
         public DateTime CreateTime { get; set; }

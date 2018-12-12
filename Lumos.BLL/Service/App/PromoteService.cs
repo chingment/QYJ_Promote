@@ -20,7 +20,7 @@ namespace Lumos.BLL.Service.App
             var ret = new RetPromoteGetConfig();
             ret.PromoteId = rup.PromoteId;
             ret.ClientId = pClientId;
-            ret.RefereeId = rup.RefereeId;
+            ret.RefereerId = rup.RefereerId;
 
 
             foreach (var promoteSku in promoteSkus)
@@ -191,5 +191,8 @@ namespace Lumos.BLL.Service.App
             double a = sHeight * scale;
             return Convert.ToInt32(a);
         }
+
+
+
     }
 }
