@@ -60,14 +60,21 @@ namespace Lumos.BLL.Service.App
                 this.Bg01 = new ImgModel();
                 this.Bg02 = new ImgModel();
                 this.Bg03 = new ImgModel();
-                this.Bg4GoPersonal = new ImgModel();
+                this.Bg04 = new ImgModel();
+
                 this.Bg4GoInvite = new ImgModel();
                 this.Bg4GoBuy = new ImgModel();
+
+                this.Bg4GoPersonal = new ImgModel();
+                this.Bg4GoPang = new ImgModel();
             }
             public string Title { get; set; }
             public ImgModel Bg01 { get; set; }
             public ImgModel Bg02 { get; set; }
             public ImgModel Bg03 { get; set; }
+            public ImgModel Bg04 { get; set; }
+
+            public ImgModel Bg4GoPang { get; set; }
             public ImgModel Bg4GoPersonal { get; set; }
             public ImgModel Bg4GoInvite { get; set; }
             public ImgModel Bg4GoBuy { get; set; }
@@ -81,7 +88,10 @@ namespace Lumos.BLL.Service.App
                 this.Bg02 = new ImgModel();
                 this.Bg03 = new ImgModel();
                 this.Bg04 = new ImgModel();
+
+                this.Bg4GoPang = new ImgModel();
                 this.Bg4GoPersonal = new ImgModel();
+
                 this.Bg4GoInvite = new ImgModel();
                 this.Bg4GetCoupon = new ImgModel();
                 this.Bg4OpenCoupon = new ImgModel();
@@ -92,6 +102,9 @@ namespace Lumos.BLL.Service.App
             public ImgModel Bg02 { get; set; }
             public ImgModel Bg03 { get; set; }
             public ImgModel Bg04 { get; set; }
+
+            public ImgModel Bg4GoPang { get; set; }
+
             public ImgModel Bg4GoPersonal { get; set; }
             public ImgModel Bg4GetCoupon { get; set; }
             public ImgModel Bg4OpenCoupon { get; set; }
@@ -103,6 +116,7 @@ namespace Lumos.BLL.Service.App
             public string Src { get; set; }
 
             public int Height { get; set; }
+
         }
 
         public class SkuModel

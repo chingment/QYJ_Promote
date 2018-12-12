@@ -101,38 +101,45 @@ namespace Lumos.BLL.Service.App
             else if (rup.PromoteId == "c0c71a0657924059b39895f9e406efff")
             {
                 #region c0c71a0657924059b39895f9e406efff
-                ret.ShareTitle = "超值推荐|¥2480元的早教大课包，双11秒杀仅需¥1111元";
-                ret.ShareDesc = "数量有限\n马上预购双11入场券\n获取秒杀资格吧！";
+                ret.ShareTitle = "寻找有“米”宝宝，承保宝宝一年口粮";
+                ret.ShareDesc = "数量有限\n报名就送！";
                 ret.ShareImgUrl = "http://qyj.17fanju.com/Content/images/promote20181029/share_icon.png";
                 ret.EndDesc = "活动已经结束";
                 ret.NoStartDesc = "活动未开始";
 
 
                 int sumHeight = 1920;
-                ret.CouponPage.Title = "超值推荐|¥2480元的早教大课包，双11秒杀仅需¥1111元";
-                ret.CouponPage.Bg01.Src = "/Content/images/promote20181029/bg_01.png";
-                ret.CouponPage.Bg01.Height = GetHeight(sumHeight, rup.ScreenHeight, 1020);
-                ret.CouponPage.Bg02.Src = "/Content/images/promote20181029/bg_02.jpg";
-                ret.CouponPage.Bg02.Height = GetHeight(sumHeight, rup.ScreenHeight, 200);
-                ret.CouponPage.Bg03.Src = "/Content/images/promote20181029/bg_03.png";
-                ret.CouponPage.Bg03.Height = GetHeight(sumHeight, rup.ScreenHeight, 700);
-                ret.CouponPage.Bg4GoBuy.Src = "/Content/images/promote20181029/bg_btn_buy.png";
-                ret.CouponPage.Bg4GoPersonal.Src = "/Content/images/promote20181029/bg_btn_personal.png";
-                ret.CouponPage.Bg4GoInvite.Src = "/Content/images/promote20181029/bg_btn_invite.png";
+                ret.CouponPage.Title = "寻找有“米”宝宝，承保宝宝一年口粮";
+                ret.CouponPage.Bg01.Src = "/Content/images/promote20181212/bg_01.jpg";
+                ret.CouponPage.Bg01.Height = GetHeight(sumHeight, rup.ScreenHeight, 1159);
+                ret.CouponPage.Bg02.Src = "/Content/images/promote20181212/bg_02.jpg";
+                ret.CouponPage.Bg02.Height = GetHeight(sumHeight, rup.ScreenHeight, 173);
+                ret.CouponPage.Bg03.Src = "/Content/images/promote20181212/bg_03.jpg";
+                ret.CouponPage.Bg03.Height = GetHeight(sumHeight, rup.ScreenHeight, 414);
+                ret.CouponPage.Bg04.Src = "/Content/images/promote20181212/bg_04.jpg";
+                ret.CouponPage.Bg04.Height = GetHeight(sumHeight, rup.ScreenHeight, 174);
 
-                ret.PayResultPage.Title = "恭喜您，抢购成功！";
-                ret.PayResultPage.Bg01.Src = "/Content/images/promote20181029/bg_suc_01.jpg";
-                ret.PayResultPage.Bg01.Height = GetHeight(sumHeight, rup.ScreenHeight, 1177);
-                ret.PayResultPage.Bg02.Src = "/Content/images/promote20181029/bg_suc_02.jpg";
-                ret.PayResultPage.Bg02.Height = GetHeight(sumHeight, rup.ScreenHeight, 200);
-                ret.PayResultPage.Bg03.Src = "/Content/images/promote20181029/bg_suc_03.jpg";
-                ret.PayResultPage.Bg03.Height = GetHeight(sumHeight, rup.ScreenHeight, 260);
-                ret.PayResultPage.Bg04.Src = "/Content/images/promote20181029/bg_suc_04.jpg";
-                ret.PayResultPage.Bg04.Height = GetHeight(sumHeight, rup.ScreenHeight, 283);
-                ret.PayResultPage.Bg4OpenCoupon.Src = "/Content/images/promote20181029/bg_suc_btn_opencoupon.png";
-                ret.PayResultPage.Bg4GetCoupon.Src = "/Content/images/promote20181029/bg_suc_btn_getcoupon.png";
-                ret.PayResultPage.Bg4GoPersonal.Src = "/Content/images/promote20181029/bg_suc_btn_personal.png";
-                ret.PayResultPage.Bg4GoInvite.Src = "/Content/images/promote20181029/bg_suc_btn_invite.png";
+                ret.CouponPage.Bg4GoBuy.Src = "/Content/images/promote20181212/bg_btn_buy.png";
+                ret.CouponPage.Bg4GoInvite.Src = "/Content/images/promote20181212/bg_btn_invite.png";
+
+                ret.CouponPage.Bg4GoPang.Src = "/Content/images/promote20181212/bg_btn_pang.png";
+                ret.CouponPage.Bg4GoPersonal.Src = "/Content/images/promote20181212/bg_btn_personal.png";
+
+                ret.PayResultPage.Title = "恭喜您，报名成功！";
+                ret.PayResultPage.Bg01.Src = "/Content/images/promote20181212/bg_suc_01.jpg";
+                ret.PayResultPage.Bg01.Height = GetHeight(sumHeight, rup.ScreenHeight, 1255);
+                ret.PayResultPage.Bg02.Src = "/Content/images/promote20181212/bg_suc_02.jpg";
+                ret.PayResultPage.Bg02.Height = GetHeight(sumHeight, rup.ScreenHeight, 221);
+                ret.PayResultPage.Bg03.Src = "/Content/images/promote20181212/bg_suc_03.jpg";
+                ret.PayResultPage.Bg03.Height = GetHeight(sumHeight, rup.ScreenHeight, 252);
+                ret.PayResultPage.Bg04.Src = "/Content/images/promote20181212/bg_suc_04.jpg";
+                ret.PayResultPage.Bg04.Height = GetHeight(sumHeight, rup.ScreenHeight, 192);
+                ret.PayResultPage.Bg4OpenCoupon.Src = "/Content/images/promote20181212/bg_suc_btn_opencoupon.png";
+                ret.PayResultPage.Bg4GetCoupon.Src = "/Content/images/promote20181212/bg_suc_btn_getcoupon.png";
+                ret.PayResultPage.Bg4GoInvite.Src = "/Content/images/promote20181212/bg_suc_btn_invite.png";
+
+                ret.PayResultPage.Bg4GoPang.Src = "/Content/images/promote20181212/bg_btn_pang.png";
+                ret.PayResultPage.Bg4GoPersonal.Src = "/Content/images/promote20181212/bg_suc_btn_personal.png";
                 #endregion
             }
 
