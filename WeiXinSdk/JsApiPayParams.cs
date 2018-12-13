@@ -93,6 +93,14 @@ namespace Lumos.WeiXinSdk
             }
         }
 
+        public bool IsBuy
+        {
+            get
+            {
+                return _isBuy;
+            }
+        } 
+
         public JsApiPayParams(string appId, string key, string prepay_id, string orderId, string orderSn,bool isBuy)
         {
             _orderSn = orderSn;
