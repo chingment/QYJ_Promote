@@ -224,6 +224,7 @@ namespace Lumos.BLL.Biz
                             var promoteRefereerRewardFactor = CurrentDb.PromoteRefereerRewardFactor.Where(m => m.RefereerId == model.RefereerId && m.PromoteId == reward.PromoteId && m.PromoteRefereerRewardSetId == reward.Id).FirstOrDefault();
                             if (promoteRefereerRewardFactor == null)
                             {
+                                promoteRefereerRewardFactor = new PromoteRefereerRewardFactor();
                                 promoteRefereerRewardFactor.Id = GuidUtil.New();
                                 promoteRefereerRewardFactor.RefereerId = model.RefereerId;
                                 promoteRefereerRewardFactor.PromoteId = model.PromoteId;

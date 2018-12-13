@@ -486,7 +486,7 @@ namespace Lumos.BLL.Biz
                 }
 
 
-                var refereerRefereeCount = CurrentDb.PromoteUser.Where(m => m.RefereerId == order.RefereerId && m.ClientId != m.RefereerId).Count();
+                var refereerRefereeCount = CurrentDb.PromoteUser.Where(m => m.PromoteId == order.PromoteId && m.RefereerId == order.RefereerId && m.ClientId != m.RefereerId).Count();
 
 
                 CurrentDb.SaveChanges();
