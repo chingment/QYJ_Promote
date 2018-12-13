@@ -23,6 +23,11 @@ namespace WebMobile.Controllers
             return View();
         }
 
+        public ActionResult Pang()
+        {
+            return View();
+        }
+
         public ActionResult CouponGet()
         {
             return View();

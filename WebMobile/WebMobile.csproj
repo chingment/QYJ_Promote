@@ -366,6 +366,7 @@
     <Content Include="Views\ProductSku\Details.cshtml" />
     <Content Include="Views\Order\Details.cshtml" />
     <Content Include="Views\GiftGive\My.cshtml" />
+    <Content Include="Views\Promotec\Pang.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>

@@ -59,9 +59,8 @@
             </div>
             {{else status==2}}
             <div style="width:50%;float:left;text-align: right;">
-                <a href="/GiftGive/My">
-                    <img class="btn-com operate btn-GetCoupon" src="${payResultPage.bg4GetCoupon.src}" style="margin-right:15px;cursor:pointer" />
-                </a>
+                <img class="btn-com operate btn-GetCoupon" src="${payResultPage.bg4GetCoupon.src}" style="margin-right:15px;display: none;cursor:pointer" />
+                <img class="btn-com operate btn-OpenCoupon" src="${payResultPage.bg4OpenCoupon.src}" style="margin-right:15px;display: inline-block;cursor:pointer" />
             </div>
             <div style="width:50%;float:left;text-align:left;">
                 <img class="btn-com operate btn-GoInvite" src="${payResultPage.bg4GoInvite.src}" style="margin-left:15px;display: inline-block;cursor:pointer" />
@@ -171,13 +170,13 @@
                 $('#popd4Info').show();
             });
 
-            //$(".btn-OpenCoupon").live("click", function (e) {
-            //    openCoupon();
-            //});
+            $(".btn-OpenCoupon").live("click", function (e) {
+                openCoupon();
+            });
 
-            //$(".btn-GetCoupon").live("click", function (e) {
-            //    getCoupon();
-            //});
+            $(".btn-GetCoupon").live("click", function (e) {
+                getCoupon();
+            });
 
             $('.btn-GoInvite').live("click", function (e) {
 
@@ -274,6 +273,15 @@
                         if (pConfig.isBuy) {
                             $(couponPage).hide();
                             $(payResultPage).show();
+
+                            if (pConfig.isGet) {
+                                $('.btn-GetCoupon').hide();
+                                $('.btn-OpenCoupon').css("display", "inline-block");
+                            }
+                            else {
+                                $('.btn-GetCoupon').css("display", "inline-block");
+                                $('.btn-OpenCoupon').hide();
+                            }
                         }
                         else {
                             $(couponPage).show();
@@ -395,6 +403,8 @@
 
                                     $.lumos.tips('成功领取卡券');
 
+                                    $('.btn-GetCoupon').hide();
+                                    $('.btn-OpenCoupon').css("display", "inline-block");
 
                                     var l_Data = [];
                                     l_Data.push({ name: "Model.PromoteId", value: pConfig.promoteId });
@@ -438,6 +448,8 @@
                         if (params.isBuy) {
                             $(couponPage).hide();
                             $(payResultPage).show();
+                            $('.btn-GetCoupon').css("display", "inline-block");
+                            $('.btn-OpenCoupon').hide();
                         }
                         else {
                             wx.chooseWXPay({
@@ -452,6 +464,8 @@
 
                                     $(couponPage).hide();
                                     $(payResultPage).show();
+                                    $('.btn-GetCoupon').css("display", "inline-block");
+                                    $('.btn-OpenCoupon').hide();
                                 },
                                 cancel: function (res) {
                                     $.lumos.tips('您已取消支付');
