@@ -36,6 +36,8 @@ namespace Lumos.BLL.Biz
             {
                 lock (lock_UnifiedOrder)
                 {
+                    var ret = new RetOrderUnifiedOrder();
+
                     using (TransactionScope ts = new TransactionScope())
                     {
                         LogUtil.Info("用户id:" + clientId);
@@ -201,20 +203,21 @@ namespace Lumos.BLL.Biz
                             order.PayExpireTime = this.DateTime.AddMinutes(2);
 
                             Task4Factory.Tim2Global.Enter(TimerTaskType.CheckOrderPay, order.PayExpireTime.Value, order);
+
+                            ret.IsBuy = false;
+                            ret.WxPrepayId = order.WxPrepayId;
                         }
                         else
                         {
+                            ret.IsBuy = true;
                             BizFactory.Order.PayCompleted(operater, order.Sn, this.DateTime);
                         }
 
                         CurrentDb.SaveChanges();
                         ts.Complete();
 
-                        var ret = new RetOrderUnifiedOrder();
-                        ret.WxPrepayId = order.WxPrepayId;
                         ret.OrderId = order.Id;
                         ret.OrderSn = order.Sn;
-                        ret.IsBuy = false;
 
                         result = new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Success, ResultCode.Success, "操作成功", ret);
                         LogUtil.Info("去结算结束");

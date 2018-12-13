@@ -103,7 +103,7 @@ namespace Lumos.BLL.Service.App
                 #region c0c71a0657924059b39895f9e406efff
                 ret.ShareTitle = "寻找有“米”宝宝，承保宝宝一年口粮";
                 ret.ShareDesc = "数量有限\n报名就送！";
-                ret.ShareImgUrl = "http://qyj.17fanju.com/Content/images/promote20181029/share_icon.png";
+                ret.ShareImgUrl = "http://qyj.17fanju.com/Content/images/promote20181212/share_icon.png";
                 ret.EndDesc = "活动已经结束";
                 ret.NoStartDesc = "活动未开始";
 
