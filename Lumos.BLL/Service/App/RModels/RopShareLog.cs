@@ -9,7 +9,7 @@ namespace Lumos.BLL.Service.App
     {
         public string Type { get; set; }
         public string PromoteId { get; set; }
-        public string RefereeId { get; set; }
+        public string RefereerId { get; set; }
         public string ShareLink { get; set; }
     }
 }

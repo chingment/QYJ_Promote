@@ -521,7 +521,7 @@ namespace WebMobile.Controllers
             clientShareLog.Id = GuidUtil.New();
             clientShareLog.ClientId = this.CurrentUserId;
             clientShareLog.ShareLink = rop.ShareLink;
-            clientShareLog.RefereeId = rop.RefereeId;
+            clientShareLog.RefereerId = rop.RefereerId;
             clientShareLog.PromoteId = rop.PromoteId;
             clientShareLog.Type = rop.Type;
             clientShareLog.CreateTime = DateTime.Now;

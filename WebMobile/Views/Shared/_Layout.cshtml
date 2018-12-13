@@ -211,10 +211,10 @@
             });
         }
 
-        function shareLog(promoteId, refereeId, shareLink, type) {
+        function shareLog(promoteId, refereerId, shareLink, type) {
             $.lumos.postJson({
                 url: "/Home/ShareLog",
-                data: { promoteId: promoteId, refereeId: refereeId, shareLink: shareLink, type: type },
+                data: { promoteId: promoteId, refereeId: refereerId, shareLink: shareLink, type: type },
                 success: function (d) {
                 }
             });
