@@ -74,6 +74,7 @@
     <Compile Include="Biz\PromoteUser.cs" />
     <Compile Include="Biz\ClientCoupon.cs" />
     <Compile Include="Biz\PromoteUserRelation.cs" />
+    <Compile Include="Biz\Student.cs" />
     <Compile Include="Biz\Withdraw.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SysEnumeration.cs" />

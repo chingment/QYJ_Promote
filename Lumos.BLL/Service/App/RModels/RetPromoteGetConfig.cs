@@ -16,7 +16,7 @@ namespace Lumos.BLL.Service.App
             this.UserInfo = new UserInfoModel();
             this.UserInfo.CtName = "";
             this.UserInfo.CtPhone = "";
-            this.UserInfo.CtIsStudent = "0";
+            this.UserInfo.CtIsStudent = false;
             this.UserInfo.CtSchool = "";
         }
 
@@ -49,7 +49,7 @@ namespace Lumos.BLL.Service.App
         {
             public string CtName { get; set; }
             public string CtPhone { get; set; }
-            public string CtIsStudent { get; set; }
+            public bool CtIsStudent { get; set; }
             public string CtSchool { get; set; }
         }
 

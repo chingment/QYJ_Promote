@@ -12,7 +12,7 @@ namespace Lumos.BLL.Service.App
 
         public string CtName { get; set; }
         public string CtPhone { get; set; }
-        public string CtIsStudent { get; set; }
+        public bool CtIsStudent { get; set; }
         public string CtSchool { get; set; }
     }
 }

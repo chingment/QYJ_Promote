@@ -183,7 +183,7 @@ namespace Lumos.BLL.Service.App
             {
                 ret.UserInfo.CtName = promoteUser.CtName ?? "";
                 ret.UserInfo.CtPhone = promoteUser.CtPhone ?? "";
-                ret.UserInfo.CtIsStudent = promoteUser.CtIsStudent ?? "";
+                ret.UserInfo.CtIsStudent = promoteUser.CtIsStudent;
                 ret.UserInfo.CtSchool = promoteUser.CtSchool ?? "";
             }
 

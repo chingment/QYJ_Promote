@@ -230,24 +230,72 @@
                     return false;
                 }
 
+                ctIsStudent = ctIsStudent == "0" ? false : true;
+
+                var promoteUser = { ctName: ctName, ctPhone: ctPhone, ctSchool: ctSchool, ctIsStudent: ctIsStudent };
+
+                $('#popd4Info').hide();
+
                 $.lumos.postJson({
-                    url: "/Promotec/EditPromoteUserInfo",
+                    url: "/Order/UnifiedOrder",
                     isShowLoading: true,
-                    data: { promoteId: pConfig.promoteId, ctName: ctName, ctPhone: ctPhone, ctIsStudent: ctIsStudent, ctSchool: ctSchool },
+                    data: { orderId: pConfig.orderId, refereerId: pConfig.refereerId, promoteId: pConfig.promoteId, skus: pConfig.skus, promoteUser: promoteUser },
                     success: function (d) {
                         if (d.result == $.lumos.resultType.success) {
-                            $('#popd4Info').hide();
-                            switch (funTpye) {
-                                case "unifiedOrder":
-                                    unifiedOrder();
-                                    break;
+                            var params = d.data;
+                            pConfig.orderSn = params.orderSn;
+
+                            if (params.isBuy) {
+                                $(couponPage).hide();
+                                $(payResultPage).show();
                             }
-                        }
-                        else {
+                            else {
+                                wx.chooseWXPay({
+                                    appId: params.appId,
+                                    timestamp: params.timestamp,
+                                    nonceStr: params.nonceStr,
+                                    package: params.package,
+                                    signType: params.signType,
+                                    paySign: params.paySign,
+                                    success: function (res) {
+                                        $.lumos.tips('您已支付成功');
+
+                                        $(couponPage).hide();
+                                        $(payResultPage).show();
+                                    },
+                                    cancel: function (res) {
+                                        $.lumos.tips('您已取消支付');
+                                    }
+                                });
+                            }
+
+                        } else {
                             $.lumos.tips(d.message);
                         }
                     }
                 });
+
+
+                //$.lumos.postJson({
+                //    url: "/Promotec/EditPromoteUserInfo",
+                //    isShowLoading: true,
+                //    data: { promoteId: pConfig.promoteId, ctName: ctName, ctPhone: ctPhone, ctIsStudent: ctIsStudent, ctSchool: ctSchool },
+                //    success: function (d) {
+                //        if (d.result == $.lumos.resultType.success) {
+                //            $('#popd4Info').hide();
+                //            switch (funTpye) {
+                //                case "unifiedOrder":
+                //                    unifiedOrder();
+                //                    break;
+                //            }
+                //        }
+                //        else {
+                //            $.lumos.tips(d.message);
+                //        }
+                //    }
+                //});
+
+
             });
 
             $("#popd4Info_btn_close").live("click", function (e) {
@@ -434,7 +482,7 @@
                     if (d.result == $.lumos.resultType.success) {
                         var params = d.data;
                         pConfig.orderSn = params.orderSn;
-                        
+
                         if (params.isBuy) {
                             $(couponPage).hide();
                             $(payResultPage).show();

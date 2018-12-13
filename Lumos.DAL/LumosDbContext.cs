@@ -47,6 +47,8 @@ namespace Lumos.DAL
 
         public IDbSet<PromoteRefereerRewardFactor> PromoteRefereerRewardFactor { get; set; }
 
+        public IDbSet<Student> Student { get; set; }
+
         //public FxDbContext()
         //    : base("DefaultConnection")
         //{

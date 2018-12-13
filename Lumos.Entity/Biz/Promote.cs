@@ -21,5 +21,6 @@ namespace Lumos.Entity
         public DateTime CreateTime { get; set; }
         public bool IsNeedBuy { get; set; }
         public Enumeration.PromoteClass Class { get; set; }
+        public Enumeration.PromoteTargetType TargetType { get; set; }
     }
 }

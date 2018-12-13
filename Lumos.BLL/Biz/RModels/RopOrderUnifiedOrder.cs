@@ -11,9 +11,12 @@ namespace Lumos.BLL.Biz
         public RopOrderUnifiedOrder()
         {
             this.Skus = new List<SkuModel>();
+            this.PromoteUser = new PromoteUserModel();
         }
 
         public string PromoteId { get; set; }
+
+        public PromoteUserModel PromoteUser { get; set; }
 
         public string RefereerId { get; set; }
 
@@ -21,9 +24,21 @@ namespace Lumos.BLL.Biz
 
         public List<SkuModel> Skus { get; set; }
 
+
         public class SkuModel
         {
             public string SkuId { get; set; }
+        }
+
+        public class PromoteUserModel
+        {
+            public string CtName { get; set; }
+
+            public string CtPhone { get; set; }
+
+            public string CtSchool { get; set; }
+
+            public bool CtIsStudent { get; set; }
         }
 
     }

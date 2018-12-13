@@ -61,8 +61,49 @@ namespace Lumos.BLL.Biz
                             return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "谢谢参与，已售罄", null);
                         }
 
-                        if (!string.IsNullOrEmpty(rop.PromoteId))
+                        var promote = CurrentDb.Promote.Where(m => m.Id == rop.PromoteId).FirstOrDefault();
+
+                        if (promote != null)
                         {
+                            if (promote.TargetType == Enumeration.PromoteTargetType.Student)
+                            {
+                                var student = CurrentDb.Student.Where(m => m.Phone == rop.PromoteUser.CtPhone).FirstOrDefault();
+                                if (student != null)
+                                {
+                                    return new CustomJsonResult<RetOrderUnifiedOrder>(ResultType.Failure, ResultCode.Failure, "仅限于非学员参与报名，谢谢关注", null);
+                                }
+                            }
+
+
+                            var promoteUser = CurrentDb.PromoteUser.Where(m => m.ClientId == clientId && m.PromoteId == rop.PromoteId).FirstOrDefault();
+
+                            if (promoteUser == null)
+                            {
+                                promoteUser = new PromoteUser();
+                                promoteUser.Id = GuidUtil.New();
+                                promoteUser.PromoteId = rop.PromoteId;
+                                promoteUser.ClientId = clientId;
+                                promoteUser.RefereerId = rop.RefereerId;
+                                promoteUser.CtName = rop.PromoteUser.CtName;
+                                promoteUser.CtPhone = rop.PromoteUser.CtPhone;
+                                promoteUser.CtIsStudent = rop.PromoteUser.CtIsStudent;
+                                promoteUser.CtSchool = rop.PromoteUser.CtSchool;
+                                promoteUser.CreateTime = DateTime.Now;
+                                promoteUser.Creator = operater;
+                                CurrentDb.PromoteUser.Add(promoteUser);
+                            }
+                            else
+                            {
+                                promoteUser.RefereerId = rop.RefereerId;
+                                promoteUser.CtName = rop.PromoteUser.CtName;
+                                promoteUser.CtPhone = rop.PromoteUser.CtPhone;
+                                promoteUser.CtIsStudent = rop.PromoteUser.CtIsStudent;
+                                promoteUser.CtSchool = rop.PromoteUser.CtSchool;
+                            }
+
+
+
+
                             foreach (var sku in rop.Skus)
                             {
                                 var productSku = CurrentDb.ProductSku.Where(m => m.Id == sku.SkuId).FirstOrDefault();
@@ -160,15 +201,6 @@ namespace Lumos.BLL.Biz
                             order.Creator = operater;
                             order.IsInVisiable = true;
                             order.Status = Enumeration.OrderStatus.WaitPay; //待支付状态
-
-                            var promoteUser = CurrentDb.PromoteUser.Where(m => m.ClientId == order.ClientId && m.CtPhone != null).OrderByDescending(m => m.CreateTime).FirstOrDefault();
-                            if (promoteUser != null)
-                            {
-                                order.CtName = promoteUser.CtName;
-                                order.CtPhone = promoteUser.CtPhone;
-                                order.CtIsStudent = promoteUser.CtIsStudent;
-                                order.CtSchool = promoteUser.CtSchool;
-                            }
 
                             CurrentDb.Order.Add(order);
                             CurrentDb.SaveChanges();
