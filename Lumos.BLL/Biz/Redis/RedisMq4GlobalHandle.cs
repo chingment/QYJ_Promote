@@ -32,6 +32,8 @@ namespace Lumos.BLL.Biz
         public string BuyerId { get; set; }
         public string PromoteId { get; set; }
         public string RefereerId { get; set; }
+
+        public int RefereerRefereeCount { get; set; }
     }
 
     public class RedisMq4GlobalHandle
@@ -208,20 +210,19 @@ namespace Lumos.BLL.Biz
                     }
 
 
-                    var perCount = CurrentDb.PromoteUser.Where(m => m.RefereerId == model.RefereerId && m.RefereerId != m.ClientId).Count();
+
 
                     var promoteRefereerRewardSets = CurrentDb.PromoteRefereerRewardSet.Where(m => m.PromoteId == model.PromoteId && m.Channel == Enumeration.PromoteRefereerRewardSetChannel.BuyerBuyProductSku).ToList();
 
                     if (promoteRefereerRewardSets.Count > 0)
                     {
 
-
                         foreach (var reward in promoteRefereerRewardSets)
                         {
                             var rewardModel = Newtonsoft.Json.JsonConvert.DeserializeObject<RewardModel>(reward.Reward);
 
                             var promoteRefereerRewardFactor = CurrentDb.PromoteRefereerRewardFactor.Where(m => m.RefereerId == model.RefereerId && m.PromoteId == reward.PromoteId && m.PromoteRefereerRewardSetId == reward.Id).FirstOrDefault();
-                            if(promoteRefereerRewardFactor == null)
+                            if (promoteRefereerRewardFactor == null)
                             {
                                 promoteRefereerRewardFactor.Id = GuidUtil.New();
                                 promoteRefereerRewardFactor.RefereerId = model.RefereerId;
@@ -231,11 +232,9 @@ namespace Lumos.BLL.Biz
                                 CurrentDb.SaveChanges();
                             }
 
-
-
-                            if (perCount == promoteRefereerRewardFactor.Factor)
+                            if (model.RefereerRefereeCount == promoteRefereerRewardFactor.Factor)
                             {
-
+                                promoteRefereerRewardFactor.Factor += reward.IncreaseFactor;
 
                                 foreach (var gift in rewardModel.Gifts)
                                 {

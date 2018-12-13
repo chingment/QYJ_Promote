@@ -485,6 +485,10 @@ namespace Lumos.BLL.Biz
                     #endregion
                 }
 
+
+                var refereerRefereeCount = CurrentDb.PromoteUser.Where(m => m.RefereerId == order.RefereerId && m.ClientId != m.RefereerId).Count();
+
+
                 CurrentDb.SaveChanges();
                 ts.Complete();
 
@@ -493,6 +497,8 @@ namespace Lumos.BLL.Biz
                 handlePms.BuyerId = order.ClientId;
                 handlePms.PromoteId = order.PromoteId;
                 handlePms.RefereerId = order.RefereerId;
+                handlePms.RefereerRefereeCount = refereerRefereeCount;
+
                 ReidsMqFactory.Global.Push(RedisMqHandleType.PromoteRefereerRewardByBuyerBuy, handlePms);
 
                 result = new CustomJsonResult(ResultType.Success, ResultCode.Success, string.Format("支付完成通知：订单号({0})通知成功", orderSn));
