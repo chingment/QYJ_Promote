@@ -159,11 +159,6 @@
 
     </div>
 
-    <p style="color:red;font-size:12px;line-height:32px;padding-left:10px;">*提示：请出示给工作人员，然后再点击确认领取</p>
-
-    <div style="text-align:center;padding:20px;">
-        <span id="btn_OpenDialogConfirm" class="btn" operate="get" isone="true">确认领取</span>
-    </div>
 </div>
 
 <div id="dialog_confirm" class="dialog-confirm">
@@ -211,6 +206,24 @@
             </div>
         </div>
         {{/each}}
+
+        {{if skus.length>0 }}
+        <p style="color:red;font-size:12px;line-height:32px;padding-left:10px;">*提示：请出示给工作人员，然后再点击确认领取</p>
+        <div style="text-align:center;padding:20px;">
+            <span id="btn_OpenDialogConfirm" class="btn" operate="get" isone="true">确认领取</span>
+        </div>
+        {{else}}
+
+        <div class="list-result" style="display:block">
+            <div class="img">
+                <img src="/Content/images/list_icon_empty.png" />
+            </div>
+            <div class="tips">
+                <span>没有可领取的奖品</span>
+            </div>
+        </div>
+
+        {{/if}}
     </div>
 </script>
 
@@ -242,6 +255,27 @@
                 $(dialog_confirm).find(".btn-cancel").on("click", function () {
                     $(dialog_confirm).hide();
                 });
+
+
+                $(dialog_confirm).find(".btn-sure").off("click");
+                $(dialog_confirm).find(".btn-sure").on("click", function () {
+
+
+                    $.lumos.postJson({
+                        url: "/GiftGive/Take",
+                        isShowLoading: true,
+                        success: function (d) {
+                            $.lumos.tips(d.message);
+                            if (d.result == $.lumos.resultType.success) {
+                                onLoad();
+                                $(dialog_confirm).hide();
+                            }
+                        }
+                    });
+
+                });
+
+
 
             });
 

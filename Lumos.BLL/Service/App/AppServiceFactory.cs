@@ -56,5 +56,13 @@ namespace Lumos.BLL.Service.App
             }
         }
 
+        public static GiftGiveService GiftGive
+        {
+            get
+            {
+                return new GiftGiveService();
+            }
+        }
+
     }
 }

@@ -130,6 +130,7 @@
     <Compile Include="Service\Admin\Sys\SysStaffUserProvider.cs" />
     <Compile Include="Service\Admin\Sys\SysUserProvider.cs" />
     <Compile Include="Service\App\AppServiceFactory.cs" />
+    <Compile Include="Service\App\GiftGiveService.cs.cs" />
     <Compile Include="Service\App\Models\MyCouponModel.cs" />
     <Compile Include="Service\App\Models\MyShareLogModel.cs" />
     <Compile Include="Service\App\Models\MyTranModel.cs" />

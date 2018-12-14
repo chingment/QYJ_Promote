@@ -49,5 +49,10 @@ namespace WebMobile.Controllers
             return new CustomJsonResult(ResultType.Success, ResultCode.Success, "", new { skus = oList });
 
         }
+
+        public CustomJsonResult Take()
+        {
+            return AppServiceFactory.GiftGive.Take(this.CurrentUserId, this.CurrentUserId);
+        }
     }
 }

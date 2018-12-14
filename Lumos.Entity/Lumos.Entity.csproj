@@ -59,6 +59,8 @@
     <Compile Include="Biz\Fund.cs" />
     <Compile Include="Biz\FundTrans.cs" />
     <Compile Include="Biz\GiftGive.cs" />
+    <Compile Include="Biz\GiftGiveTake.cs" />
+    <Compile Include="Biz\GiftGiveTakeDetails.cs" />
     <Compile Include="Biz\GiftGiveTrans.cs" />
     <Compile Include="Biz\Order.cs" />
     <Compile Include="Biz\OrderDetails.cs" />

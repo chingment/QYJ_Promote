@@ -49,6 +49,9 @@ namespace Lumos.DAL
 
         public IDbSet<Student> Student { get; set; }
 
+        public IDbSet<GiftGiveTake> GiftGiveTake { get; set; }
+        public IDbSet<GiftGiveTakeDetails> GiftGiveTakeDetails { get; set; }
+
         //public FxDbContext()
         //    : base("DefaultConnection")
         //{
