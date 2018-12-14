@@ -180,7 +180,7 @@ namespace Lumos.BLL.Biz
             {
                 using (TransactionScope ts = new TransactionScope())
                 {
-                    #region 核销优惠券
+                    #region 购买前奖励
                     var model = ((JObject)this.Pms).ToObject<RedisMqHandlePms4PromoteRefereerRewardByBuyerBuy>();
 
                     var promote = CurrentDb.Promote.Where(m => m.Id == model.PromoteId).FirstOrDefault();
@@ -226,6 +226,7 @@ namespace Lumos.BLL.Biz
                             {
                                 promoteRefereerRewardFactor = new PromoteRefereerRewardFactor();
                                 promoteRefereerRewardFactor.Id = GuidUtil.New();
+                                promoteRefereerRewardFactor.PromoteRefereerRewardSetId = reward.Id;
                                 promoteRefereerRewardFactor.RefereerId = model.RefereerId;
                                 promoteRefereerRewardFactor.PromoteId = model.PromoteId;
                                 promoteRefereerRewardFactor.Factor = reward.IncreaseFactor;
