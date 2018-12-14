@@ -81,6 +81,71 @@
             color: #f18d00;
             font-size: 1.2rem;
         }
+
+
+
+        .dialog-confirm {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            z-index: 99999;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+        }
+
+        .dialog-confirm > .content {
+            position: relative;
+            width: 70%;
+            height: 9rem;
+            top: 30%;
+            z-index: 110;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 3px;
+        }
+
+        .dialog-confirm .tips {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            vertical-align: middle;
+            height: 5.95rem;
+            text-align: center;
+            line-height: 5.95rem;
+            font-size: 18px;
+            color: #111111;
+        }
+
+        .dialog-confirm .tips span {
+            display: block;
+            width: 100%;
+        }
+
+        .dialog-confirm .btnarea {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            display: -webkit-box;
+            display: -moz-box;
+            text-align: center;
+            height: 2.875rem;
+            line-height: 2.875rem;
+            font-size: 18px;
+        }
+
+        .dialog-confirm .btnarea div {
+            -webkit-box-flex: 1;
+            -moz-box-flex: 1;
+            /*padding: 0.5rem 0;*/
+            cursor: pointer;
+        }
+
+        .dialog-confirm .btnarea div:first-child {
+            border-top: 1px solid #f8f8f8;
+            color: #111111;
+        }
     </style>
 }
 
@@ -88,12 +153,43 @@
     <span class="title">待领取奖品</span>
 }
 
-<div id="mypage">
+<div class="gbr-row gbr-page">
+    <div id="giftGive">
 
 
+    </div>
+
+    <p style="color:red;font-size:12px;line-height:32px;padding-left:10px;">*提示：请出示给工作人员，然后再点击确认领取</p>
+
+    <div style="text-align:center;padding:20px;">
+        <span id="btn_OpenDialogConfirm" class="btn" operate="get" isone="true">确认领取</span>
+    </div>
 </div>
 
-<script id="page_tmpl" type="text/x-jquery-tmpl">
+<div id="dialog_confirm" class="dialog-confirm">
+    <div class="content">
+        <div class="tips">
+            <span class="tips_txt">
+
+            </span>
+        </div>
+        <div class="btnarea">
+            <div class="btn-cancel operate">
+                <span>
+                    取消
+                </span>
+            </div>
+            <div class="btn-sure operate">
+                <span>
+                    确定
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script id="giftGive_tmpl" type="text/x-jquery-tmpl">
     <div class="its-odcskus orderSkus">
         {{each(j,it) skus}}
         <div class="it">
@@ -124,7 +220,31 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
+
             onLoad();
+
+            $('#btn_OpenDialogConfirm').live("click", function () {
+
+                var dialog_confirm = $("#dialog_confirm");
+
+                $(dialog_confirm).show();
+                $(dialog_confirm).find(".tips_txt").text("确定已领取奖品？");
+
+                $(dialog_confirm).on("touchmove", function (e) {
+                    e.preventDefault();
+                });
+
+                $(dialog_confirm).on("mousewheel", function (e) {
+                    e.preventDefault();
+                });
+
+                $(dialog_confirm).find(".btn-cancel").off("click");
+                $(dialog_confirm).find(".btn-cancel").on("click", function () {
+                    $(dialog_confirm).hide();
+                });
+
+            });
+
         });
 
         function onLoad() {
@@ -135,10 +255,7 @@
                 success: function (d) {
                     if (d.result == $.lumos.resultType.success) {
                         var data = d.data;
-                        $('#mypage').html($("#page_tmpl").tmpl(data));
-                    }
-                    else {
-                        $('#operate_result').html($("#operate_result_tmpl").tmpl(d.data));
+                        $('#giftGive').html($("#giftGive_tmpl").tmpl(data));
                     }
                 }
             });
