@@ -139,6 +139,7 @@
     <Compile Include="Service\App\Models\RupWithdrawGetList.cs" />
     <Compile Include="Service\App\PersonalService.cs" />
     <Compile Include="Service\App\RModels\RetPersonalGetIndexPageData.cs" />
+    <Compile Include="Service\App\RModels\RetPromoteGetPang.cs" />
     <Compile Include="Service\App\RModels\RopCouponNotifyResult.cs" />
     <Compile Include="Service\App\RModels\RopPromoteUserInfoEdit.cs" />
     <Compile Include="Service\App\RModels\RopShareLog.cs" />

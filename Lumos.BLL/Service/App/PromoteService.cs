@@ -200,6 +200,69 @@ namespace Lumos.BLL.Service.App
         }
 
 
+        public CustomJsonResult GetPang(string operater, string clientId, string promoteId)
+        {
+            CustomJsonResult result = new CustomJsonResult();
+
+
+
+
+            var myCount = (from e_ in CurrentDb.WxUserInfo
+                           join b_ in (from a in CurrentDb.PromoteUser
+                                       where a.RefereerId == clientId && a.PromoteId == promoteId
+                                       group a by a.RefereerId into g
+                                       select new
+                                       {
+                                           RefereerId_ = g.Key,
+                                           Count_ = g.Count()
+                                       })
+                            on e_.ClientId equals b_.RefereerId_
+                           into ud
+                           from ud1 in ud.DefaultIfEmpty()
+                           where e_.ClientId == clientId
+                           select new
+                           {
+                               ID = e_.ClientId,
+                               HeadImgUrl = e_.HeadImgUrl,
+                               Nickname = e_.Nickname,
+                               Count = ud1 == null ? 0 : ud1.Count_
+                           }).FirstOrDefault();
+
+            var ret = new RetPromoteGetPang();
+
+            ret.PangCount.Add(new RetPromoteGetPang.PangCountModel { Nickname = "我", HeadImgUrl = myCount.HeadImgUrl, Count = myCount.Count });
+
+            var pangCount =
+                (from e_ in CurrentDb.WxUserInfo
+                 join b_ in (from a in CurrentDb.PromoteUser
+                             where a.PromoteId == promoteId
+                             group a by a.RefereerId into g
+                             select new
+                             {
+                                 RefereerId_ = g.Key,
+                                 Count_ = g.Count()
+                             })
+                  on e_.ClientId equals b_.RefereerId_
+                 into ud
+                 from ud1 in ud.DefaultIfEmpty()
+                 select new
+                 {
+                     ID = e_.ClientId,
+                     HeadImgUrl = e_.HeadImgUrl,
+                     Nickname = e_.Nickname,
+                     Count = ud1 == null ? 0 : ud1.Count_
+                 }).Where(m => m.Count > 0).OrderByDescending(m => m.Count).Take(10).ToList();
+
+            foreach (var item in pangCount)
+            {
+                ret.PangCount.Add(new RetPromoteGetPang.PangCountModel { Nickname = item.Nickname, HeadImgUrl = item.HeadImgUrl, Count = item.Count });
+            }
+
+
+            result = new CustomJsonResult(ResultType.Success, ResultCode.Success, "获取", ret);
+
+            return result;
+        }
 
     }
 }

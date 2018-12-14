@@ -212,6 +212,12 @@ namespace WebMobile.Controllers
         }
 
         [HttpGet]
+        public CustomJsonResult GetPang(string promoteId)
+        {
+            return AppServiceFactory.Promote.GetPang(this.CurrentUserId, this.CurrentUserId, promoteId);
+        }
+
+        [HttpGet]
         [AllowAnonymous]
 
         public CustomJsonResult UpdateBlackList()

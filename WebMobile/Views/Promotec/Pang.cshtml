@@ -3,7 +3,147 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section styles{
+    <style type="text/css">
+        body {
+            background-color: #df0041;
+        }
 
-<div class="gbr gbr-main">
+        .its-odcskus {
+            color: #fff;
+            margin:0 3rem;
+        }
 
+        .its-odcskus .it {
+            display: flex;
+            flex-direction: row;
+            padding: 5px 0px;
+        }
+
+
+        .its-odcskus .it-l {
+            display: inline-block;
+            overflow: hidden;
+            text-align: right;
+        }
+
+        .its-odcskus .it-l .imgUrl {
+            align-items: center;
+            display: flex;
+            width: 60px;
+            height: 60px;
+            border-radius: 40px;
+        }
+
+        .its-odcskus .it-l .imgUrl .img {
+            width: 4.4rem;
+            height: 4.4rem;
+        }
+
+        .its-odcskus .it-m {
+            flex: 1;
+            display: flex;
+        }
+
+        .its-odcskus .it-ml {
+            flex: 1;
+            line-height: 1.4rem;
+            align-items: center;
+            display: flex;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            word-break: break-all;
+            -webkit-box-orient: vertical;
+            padding-left: .3rem;
+        }
+
+        .its-odcskus .it-mr {
+            text-align: center;
+            width: 3rem;
+            align-items: center;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .its-odcskus .it-r {
+            text-align: center;
+            align-items: center;
+            display: flex;
+            justify-content: flex-end;
+            margin-left: 1rem;
+        }
+
+        .its-odcskus .name {
+           font-size: 1.2rem;
+        }
+
+        .its-odcskus .quantity {
+            font-size: 1.2rem;
+        }
+
+    </style>
+
+}
+
+<div class="gbr-row gbr-page">
+    <div>
+        <img src="~/Content/images/pang_top.jpg" style="width:100%" />
+    </div>
+    <div id="pang">
+
+    </div>
 </div>
+
+
+<script id="pang_tmpl" type="text/x-jquery-tmpl">
+    <div class="its-odcskus orderSkus">
+        {{each(j,it) pangCount}}
+        <div class="it">
+            <div class="it-l">
+                <div class="imgUrl">
+                    <image class="img" src="${it.headImgUrl}"></image>
+                </div>
+            </div>
+            <div class="it-m">
+                <div class="it-ml">
+                    <text class='name'>${it.nickname}</text>
+                </div>
+            </div>
+            <div class="it-r">
+                <text class='quantity'> ${it.count}人</text>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</script>
+
+@section scripts{
+
+
+
+    <script type="text/javascript">
+
+        var promoteId = $.lumos.getUrlParamValue("promoteId");
+
+        $(document).ready(function () {
+            onLoad();
+        });
+
+        function onLoad() {
+
+            $.lumos.getJson({
+                url: "/Promotec/GetPang",
+                urlParams: { promoteId: promoteId },
+                isShowLoading: true,
+                success: function (d) {
+                    if (d.result == $.lumos.resultType.success) {
+                        var data = d.data;
+                        //alert(JSON.stringify(data));
+                        $('#pang').html($("#pang_tmpl").tmpl(data));
+                    }
+                }
+            });
+        }
+    </script>
+}

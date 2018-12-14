@@ -223,6 +223,7 @@
     <Content Include="Content\images\operate_result_ic_2.png" />
     <Content Include="Content\images\operate_result_ic_3.png" />
     <Content Include="Content\images\operate_result_ic_4.png" />
+    <Content Include="Content\images\pang_top.jpg" />
     <Content Include="Content\images\personal_info_headerimg.jpg" />
     <Content Include="Content\images\loading.gif" />
     <Content Include="Content\images\list_nav_item_icon_next.png" />
