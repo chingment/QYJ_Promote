@@ -16,7 +16,7 @@ namespace Lumos.BLL.Service.App
             var promote = CurrentDb.Promote.Where(m => m.Id == rup.PromoteId).FirstOrDefault();
 
 
-            var promoteBlackList = CurrentDb.PromoteBlackList.Where(m => m.PromoteId == rup.PromoteId && m.ClientId == pClientId).FirstOrDefault();
+            var promoteBlackList = CurrentDb.PromoteBlackList.Where(m => m.ClientId == pClientId).FirstOrDefault();
 
             if (promoteBlackList != null)
             {
