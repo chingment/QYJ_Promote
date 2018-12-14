@@ -275,7 +275,7 @@ namespace Lumos.BLL.Biz
                                     giftGiveTrans.AvailableQuantity = giftGive.AvailableQuantity;
                                     giftGiveTrans.CurrentQuantity = giftGive.CurrentQuantity;
                                     giftGiveTrans.LockQuantity = giftGive.LockQuantity;
-                                    giftGiveTrans.Description = "您推荐的用户()参与报名成功，得到奖品";
+                                    giftGiveTrans.Description = "您推荐的用户参与报名成功，得到奖品";
                                     giftGiveTrans.Creator = GuidUtil.New();
                                     giftGiveTrans.CreateTime = DateTime.Now;
                                     CurrentDb.GiftGiveTrans.Add(giftGiveTrans);
