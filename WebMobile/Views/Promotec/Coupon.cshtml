@@ -90,7 +90,7 @@
     </div>
 </script>
 
-<div class="gbr gbr-main">
+<div id="page" class="gbr-row gbr-page">
     <div id="config">
         <div id="config_couponPage" style="display:none"></div>
         <div id="config_payResultPage" style="display:none"></div>
@@ -330,6 +330,9 @@
 
                         $('#txt_ctName').val(pConfig.userInfo.ctName);
                         $('#txt_ctPhone').val(pConfig.userInfo.ctPhone);
+                    }
+                    else {
+                        $('#operate_result').html($("#operate_result_tmpl").tmpl(d.data));
                     }
                 }
             });
