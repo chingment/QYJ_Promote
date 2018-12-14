@@ -140,6 +140,9 @@ namespace Lumos.BLL.Service.App
 
                 ret.PayResultPage.Bg4GoPang.Src = "/Content/images/promote20181212/bg_btn_pang.png";
                 ret.PayResultPage.Bg4GoPersonal.Src = "/Content/images/promote20181212/bg_suc_btn_personal.png";
+
+
+                ret.SuccessTips = "恭喜您，报名成功";
                 #endregion
             }
 

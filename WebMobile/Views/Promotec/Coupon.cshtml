@@ -486,6 +486,7 @@
                         if (params.isBuy) {
                             $(couponPage).hide();
                             $(payResultPage).show();
+                            $.lumos.tips(pConfig.successTips);
                         }
                         else {
                             wx.chooseWXPay({
