@@ -29,9 +29,9 @@ a, a:active, a:visited, a:hover, a:focus {
 .btn {
 	cursor: pointer;
 	border: 0;
-	background: rgb(241,141,0);
+
 	border-radius: 12px;
-	width: 100%;
+
 	padding: 0.5em 0;
 	font-size: 18px;
 	color: #fff;

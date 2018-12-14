@@ -12,7 +12,25 @@ namespace Lumos.BLL.Service.App
         {
             CustomJsonResult result = new CustomJsonResult();
 
+
             var promote = CurrentDb.Promote.Where(m => m.Id == rup.PromoteId).FirstOrDefault();
+
+
+            var promoteBlackList = CurrentDb.PromoteBlackList.Where(m => m.PromoteId == rup.PromoteId && m.ClientId == pClientId).FirstOrDefault();
+
+            if (promoteBlackList != null)
+            {
+
+                var ret_Operate = new RetOperateResult();
+                ret_Operate.Result = RetOperateResult.ResultType.Success;
+                ret_Operate.Remarks = "";
+                ret_Operate.Message = "服务器繁忙，谢谢关注！";
+                ret_Operate.IsComplete = true;
+                ret_Operate.Buttons.Add(new RetOperateResult.Button() { Name = "回到首页", Color = "green", Url = "/Personal/Index" });
+                ret_Operate.Buttons.Add(new RetOperateResult.Button() { Name = "个人中心", Color = "red", Url = "/Personal/Index" });
+                return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, "服务器繁忙，谢谢关注！", ret_Operate);
+            }
+
 
             var promoteSkus = CurrentDb.PromoteSku.Where(m => m.PromoteId == rup.PromoteId).ToList();
 
