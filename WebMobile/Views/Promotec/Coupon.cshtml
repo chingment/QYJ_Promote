@@ -102,8 +102,7 @@
         <div class="popd-inter">
             <div id="popd4Info_btn_close" class="popd-close operate" style="position: absolute; right: -6px;top:-16px;"> <img src="~/Content/images/promote20180910/popd_close.png" style="width:32px;height:32px;" /></div>
             <div>
-                <p style="color:#fb6088;text-align:center;font-size:18px;font-weight:bold; line-height:24px;margin-top:20px;">领取卡券</p>
-                <p style="color:#fb6088;text-align:center;font-size:18px;font-weight:bold; line-height:24px;">请先填写以下信息</p>
+                <p style="color:#fb6088;text-align:center;font-size:18px;font-weight:bold; line-height:24px;margin-top:20px;">请先填写以下信息</p>
 
                 <div style="margin-top:20px;margin-bottom:20px;">
 
@@ -484,9 +483,9 @@
                         pConfig.orderSn = params.orderSn;
 
                         if (params.isBuy) {
+                            $.lumos.tips(pConfig.successTips);
                             $(couponPage).hide();
                             $(payResultPage).show();
-                            $.lumos.tips(pConfig.successTips);
                         }
                         else {
                             wx.chooseWXPay({
