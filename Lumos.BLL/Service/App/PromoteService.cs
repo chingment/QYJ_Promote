@@ -119,7 +119,7 @@ namespace Lumos.BLL.Service.App
             else if (rup.PromoteId == "c0c71a0657924059b39895f9e406efff")
             {
                 #region c0c71a0657924059b39895f9e406efff
-                ret.ShareTitle = "寻找有“米”宝宝，承保宝宝一年口粮";
+                ret.ShareTitle = "寻找有“米”宝宝，承包宝宝一年口粮";
                 ret.ShareDesc = "数量有限\n报名就送！";
                 ret.ShareImgUrl = "http://qyj.17fanju.com/Content/images/promote20181212/share_icon.png";
                 ret.EndDesc = "活动已经结束";
@@ -127,7 +127,7 @@ namespace Lumos.BLL.Service.App
 
 
                 int sumHeight = 1920;
-                ret.CouponPage.Title = "寻找有“米”宝宝，承保宝宝一年口粮";
+                ret.CouponPage.Title = "寻找有“米”宝宝，承包宝宝一年口粮";
                 ret.CouponPage.Bg01.Src = "/Content/images/promote20181212/bg_01.jpg";
                 ret.CouponPage.Bg01.Height = GetHeight(sumHeight, rup.ScreenHeight, 1159);
                 ret.CouponPage.Bg02.Src = "/Content/images/promote20181212/bg_02.jpg";
