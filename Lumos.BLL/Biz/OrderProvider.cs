@@ -65,7 +65,7 @@ namespace Lumos.BLL.Biz
 
                         if (promote != null)
                         {
-                            if (promote.TargetType == Enumeration.PromoteTargetType.Student)
+                            if (promote.TargetType == Enumeration.PromoteTargetType.NotStudent)
                             {
                                 var student = CurrentDb.Student.Where(m => m.Phone == rop.PromoteUser.CtPhone).FirstOrDefault();
                                 if (student != null)
