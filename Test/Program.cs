@@ -20,7 +20,7 @@ namespace Test
     public sealed class Cat
     {
         public event EventHandler Calling;
-
+        
         public void Call()
         {
             Console.WriteLine("猫叫了...");
@@ -185,7 +185,7 @@ namespace Test
             int x =4;
             var promoteId = "akkk753c5fe14e26bbecad576b6a6kkk";
             var clientId = "0000000000000000000000000000000" + (x + 1).ToString();
-            var refereeId = "0000000000000000000000000000000" + x.ToString();
+            var refereerId = "0000000000000000000000000000000" + x.ToString();
             var createTime = DateTime.Now;
 
 
@@ -196,7 +196,7 @@ namespace Test
                 promoteUser.Id = GuidUtil.New();
                 promoteUser.PromoteId = promoteId;
                 promoteUser.ClientId = clientId;
-                promoteUser.RefereerId = refereeId;
+                promoteUser.RefereerId = refereerId;
                 promoteUser.CreateTime = createTime;
                 promoteUser.Creator = operater;
                 CurrentDb.PromoteUser.Add(promoteUser);
@@ -210,7 +210,7 @@ namespace Test
                 promoteUserRelation.Id = GuidUtil.New();
                 promoteUserRelation.PromoteId = promoteId;
                 promoteUserRelation.ClientId = clientId;
-                promoteUserRelation.RefereerId = refereeId;
+                promoteUserRelation.RefereerId = refereerId;
                 promoteUserRelation.RefereerDept = 1;
                 promoteUserRelation.CreateTime = createTime;
                 promoteUserRelation.Creator = operater;
@@ -226,19 +226,19 @@ namespace Test
             for (int i = 0; i < promoteUserFathers.Count; i++)
             {
                 int dept2 = (i + 1);
-                string refereeId2 = promoteUserFathers[i].RefereerId;
+                string refereerId2 = promoteUserFathers[i].RefereerId;
                 //string clientId2 = promoteUserFathers[i].ClientId;
-                Console.WriteLine("用户Id: " + clientId + "是用户Id:" + refereeId2 + "的" + dept2 + "级分销商");
+                Console.WriteLine("用户Id: " + clientId + "是用户Id:" + refereerId2 + "的" + dept2 + "级分销商");
 
 
-                var promoteUserRelation2 = CurrentDb.PromoteUserRelation.Where(m => m.ClientId == clientId && m.RefereerId == refereeId2 && m.PromoteId == promoteId && m.RefereerDept == dept2).FirstOrDefault();
+                var promoteUserRelation2 = CurrentDb.PromoteUserRelation.Where(m => m.ClientId == clientId && m.RefereerId == refereerId2 && m.PromoteId == promoteId && m.RefereerDept == dept2).FirstOrDefault();
                 if (promoteUserRelation2 == null)
                 {
                     promoteUserRelation2 = new PromoteUserRelation();
                     promoteUserRelation2.Id = GuidUtil.New();
                     promoteUserRelation2.ClientId = clientId;
                     promoteUserRelation2.PromoteId = promoteId;
-                    promoteUserRelation2.RefereerId = refereeId2;
+                    promoteUserRelation2.RefereerId = refereerId2;
                     promoteUserRelation2.RefereerDept = dept2;
                     promoteUserRelation2.CreateTime = createTime;
                     promoteUserRelation2.Creator = operater;

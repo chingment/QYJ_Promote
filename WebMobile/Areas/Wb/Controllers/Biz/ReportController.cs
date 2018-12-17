@@ -331,7 +331,7 @@ namespace WebMobile.Areas.Wb.Controllers
             else
             {
                 #region POST
-                StringBuilder sql = new StringBuilder(" select ClientId, Nickname,b.Num from WxUserInfo a inner join (select  RefereeId, count(*) as Num from[dbo].[ClientCoupon]   ");
+                StringBuilder sql = new StringBuilder(" select ClientId, Nickname,b.Num from WxUserInfo a inner join (select  RefereerId, count(*) as Num from[dbo].[ClientCoupon]   ");
 
 
                 if (model.PromoteId != null)
@@ -339,7 +339,7 @@ namespace WebMobile.Areas.Wb.Controllers
                     sql.Append(" where  PromoteId ='" + model.PromoteId + "'"); ;
                 }
 
-                sql.Append(" group by RefereeId) b on a.ClientId = b.RefereeId ");
+                sql.Append(" group by RefereerId) b on a.ClientId = b.RefereerId ");
 
                 sql.Append(" where 1=1 ");
 
@@ -357,7 +357,7 @@ namespace WebMobile.Areas.Wb.Controllers
                     var num = dtData.Rows[r]["Num"].ToString().Trim();
 
 
-                    string sql2 = "  select b.Nickname,  a.IsBuy,a.BuyTime,a.IsGet,a.GetTime,a.IsConsume,a.ConsumeTime from ClientCoupon a inner join WxUserInfo  b on a.ClientId=b.ClientId    where a.RefereeId='" + clientId + "' ";
+                    string sql2 = "  select b.Nickname,  a.IsBuy,a.BuyTime,a.IsGet,a.GetTime,a.IsConsume,a.ConsumeTime from ClientCoupon a inner join WxUserInfo  b on a.ClientId=b.ClientId    where a.RefereerId='" + clientId + "' ";
 
                     DataTable dtData2 = DatabaseFactory.GetIDBOptionBySql().GetDataSet(sql2).Tables[0].ToStringDataTable();
 

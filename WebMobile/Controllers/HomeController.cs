@@ -426,7 +426,7 @@ namespace WebMobile.Controllers
                     //设置二维码的边距,单位不是固定像素
                     options.Margin = 1;
                     writer.Options = options;
-                    System.Drawing.Image oImg1 = writer.Write(string.Format("http://qyj.17fanju.com/Promotec/Coupon?promoteId={0}&refereeId={1}", promoteId, clientId));
+                    System.Drawing.Image oImg1 = writer.Write(string.Format("http://qyj.17fanju.com/Promotec/Coupon?promoteId={0}&refereerId={1}", promoteId, clientId));
                     System.Drawing.Bitmap map = new Bitmap(oImg);
                     oImg.Dispose();
                     Graphics g = Graphics.FromImage(map);
@@ -540,12 +540,12 @@ namespace WebMobile.Controllers
         {
             var uri = new Uri(Request.UrlReferrer.AbsoluteUri);
             string promoteId = HttpUtility.ParseQueryString(uri.Query).Get("promoteId");
-            string refereeId = HttpUtility.ParseQueryString(uri.Query).Get("refereeId");
+            string refereerId = HttpUtility.ParseQueryString(uri.Query).Get("refereerId");
             var clientAccessLog = new ClientAccessLog();
             clientAccessLog.Id = GuidUtil.New();
             clientAccessLog.ClientId = this.CurrentUserId;
             clientAccessLog.AccessUrl = Request.UrlReferrer.AbsoluteUri;
-            clientAccessLog.RefereeId = refereeId;
+            clientAccessLog.RefereerId = refereerId;
             clientAccessLog.PromoteId = promoteId;
             clientAccessLog.CreateTime = DateTime.Now;
             clientAccessLog.Creator = this.CurrentUserId;

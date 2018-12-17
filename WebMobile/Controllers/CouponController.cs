@@ -71,7 +71,7 @@ namespace WebMobile.Controllers
                         myCoupon.StatusName = "待领取";
                         myCoupon.GetMethod = "url";
                         //myCoupon.GetUrl = string.Format("/Promotec/CouponGet?promoteId={0}&orderSn={1}&isSuccessed={2}", item.PromoteId, item.OrderSn, "True");
-                        myCoupon.GetUrl = string.Format("/Promotec/Coupon?promoteId={0}&refereeId={1}", item.PromoteId, item.RefereerId == null ? "" : item.RefereerId);
+                        myCoupon.GetUrl = string.Format("/Promotec/Coupon?promoteId={0}&refereerId={1}", item.PromoteId, item.RefereerId == null ? "" : item.RefereerId);
                     }
                     else
                     {
