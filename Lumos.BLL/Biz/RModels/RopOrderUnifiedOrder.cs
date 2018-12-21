@@ -18,6 +18,8 @@ namespace Lumos.BLL.Biz
 
         public PromoteUserModel PromoteUser { get; set; }
 
+        public string BcId { get; set; }
+
         public string RefereerId { get; set; }
 
         public string OrderId { get; set; }

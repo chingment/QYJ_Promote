@@ -204,10 +204,11 @@ namespace WebMobile.Controllers
             var rup = new RupPromoteGetConfig();
             string promoteId = HttpUtility.ParseQueryString(uri.Query).Get("promoteId");
             string refereerId = HttpUtility.ParseQueryString(uri.Query).Get("refereerId");
-
+            string bcId = HttpUtility.ParseQueryString(uri.Query).Get("bcId");
             rup.PromoteId = promoteId;
             rup.RefereerId = refereerId;
             rup.ScreenHeight = screenHeight;
+            rup.BcId = bcId;
             return AppServiceFactory.Promote.GetConfig(this.CurrentUserId, this.CurrentUserId, rup);
         }
 

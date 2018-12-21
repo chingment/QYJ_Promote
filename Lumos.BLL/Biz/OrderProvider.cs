@@ -83,6 +83,7 @@ namespace Lumos.BLL.Biz
                                 promoteUser.Id = GuidUtil.New();
                                 promoteUser.PromoteId = rop.PromoteId;
                                 promoteUser.ClientId = clientId;
+                                promoteUser.BroadcastChannelId = rop.BcId;
                                 promoteUser.RefereerId = rop.RefereerId;
                                 promoteUser.CtName = rop.PromoteUser.CtName;
                                 promoteUser.CtPhone = rop.PromoteUser.CtPhone;
@@ -94,6 +95,7 @@ namespace Lumos.BLL.Biz
                             }
                             else
                             {
+                                promoteUser.BroadcastChannelId = rop.BcId;
                                 promoteUser.RefereerId = rop.RefereerId;
                                 promoteUser.CtName = rop.PromoteUser.CtName;
                                 promoteUser.CtPhone = rop.PromoteUser.CtPhone;
@@ -170,6 +172,7 @@ namespace Lumos.BLL.Biz
                                 orderDetails.Id = GuidUtil.New();
                                 orderDetails.ClientId = clientId;
                                 orderDetails.OrderId = orderId;
+                                orderDetails.BroadcastChannelId = rop.BcId;
                                 orderDetails.PromoteId = rop.PromoteId;
                                 orderDetails.SkuId = productSku.Id;
                                 orderDetails.SkuName = productSku.Name;
@@ -191,6 +194,7 @@ namespace Lumos.BLL.Biz
                             order.Id = orderId;
                             order.ClientId = clientId;
                             order.Sn = SnUtil.Build(Enumeration.BizSnType.Order, order.ClientId);
+                            order.BroadcastChannelId = rop.BcId;
                             order.PromoteId = rop.PromoteId;
                             order.RefereerId = rop.RefereerId;
                             order.OriginalAmount = l_orderDetails.Sum(m => m.OriginalAmount);

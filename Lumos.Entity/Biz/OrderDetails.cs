@@ -19,6 +19,7 @@ namespace Lumos.Entity
         public string OrderId { get; set; }
         public int Quantity { get; set; }
         public decimal SalePrice { get; set; }
+        public string BroadcastChannelId { get; set; }
         public string PromoteId { get; set; }
         public string SkuId { get; set; }
         public string SkuName { get; set; }

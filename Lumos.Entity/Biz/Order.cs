@@ -27,6 +27,8 @@ namespace Lumos.Entity
         public string Creator { get; set; }
         public DateTime CreateTime { get; set; }
         public string PromoteId { get; set; }
+
+        public string BroadcastChannelId { get; set; }
         public string Mender { get; set; }
         public DateTime? MendTime { get; set; }
         public string WxPrepayId { get; set; }

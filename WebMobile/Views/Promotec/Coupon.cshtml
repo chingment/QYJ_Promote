@@ -238,7 +238,7 @@
                 $.lumos.postJson({
                     url: "/Order/UnifiedOrder",
                     isShowLoading: true,
-                    data: { orderId: pConfig.orderId, refereerId: pConfig.refereerId, promoteId: pConfig.promoteId, skus: pConfig.skus, promoteUser: promoteUser },
+                    data: { orderId: pConfig.orderId, refereerId: pConfig.refereerId, bcId: pConfig.BcId, promoteId: pConfig.promoteId, skus: pConfig.skus, promoteUser: promoteUser },
                     success: function (d) {
                         if (d.result == $.lumos.resultType.success) {
                             var params = d.data;
@@ -347,9 +347,10 @@
 
             var promoteId = pConfig.promoteId;
             var refereerId = pConfig.clientId;
+            var bcId = pConfig.BcId;
             var shareTitle = pConfig.shareTitle;
             var shareDesc = pConfig.shareDesc;
-            var shareLink = 'http://qyj.17fanju.com/Promotec/Coupon?promoteId=' + promoteId + '&refereerId=' + refereerId;
+            var shareLink = 'http://qyj.17fanju.com/Promotec/Coupon?promoteId=' + promoteId + '&refereerId=' + refereerId + "&bcId=" + bcId;
             var shareImgUrl = pConfig.shareImgUrl;
             wx.ready(function () {
 
@@ -479,7 +480,7 @@
             $.lumos.postJson({
                 url: "/Order/UnifiedOrder",
                 isShowLoading: true,
-                data: { orderId: pConfig.orderId, refereerId: pConfig.refereerId, promoteId: pConfig.promoteId, skus: pConfig.skus },
+                data: { orderId: pConfig.orderId, refereerId: pConfig.refereerId,bcId: pConfig.BcId, promoteId: pConfig.promoteId, skus: pConfig.skus },
                 success: function (d) {
                     if (d.result == $.lumos.resultType.success) {
                         var params = d.data;

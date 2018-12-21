@@ -39,7 +39,7 @@ namespace Lumos.BLL.Service.App
             ret.PromoteId = rup.PromoteId;
             ret.ClientId = pClientId;
             ret.RefereerId = rup.RefereerId;
-
+            ret.BcId = rup.BcId;
 
             foreach (var promoteSku in promoteSkus)
             {

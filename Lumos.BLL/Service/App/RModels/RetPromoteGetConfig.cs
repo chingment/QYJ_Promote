@@ -40,6 +40,8 @@ namespace Lumos.BLL.Service.App
 
         public string SuccessTips { get; set; }
 
+        public string BcId { get; set; }
+
         public CouponPageModel CouponPage { get; set; }
 
         public PayResultPageModel PayResultPage { get; set; }

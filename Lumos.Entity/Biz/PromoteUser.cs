@@ -16,6 +16,7 @@ namespace Lumos.Entity
         public string Id { get; set; }
        
         public string ClientId { get; set; }
+        public string BroadcastChannelId { get; set; }
         public string RefereerId { get; set; }
         public string PromoteId { get; set; }
         public string Creator { get; set; }
