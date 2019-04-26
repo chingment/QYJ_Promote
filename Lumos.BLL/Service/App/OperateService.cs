@@ -60,8 +60,8 @@ namespace Lumos.BLL.Service.App
                     ret.Remarks = "3个工作日内校区客服会致电联系您上课时间等情况，请保持电话畅通，谢谢";
                     ret.Message = "支付成功";
                     ret.IsComplete = true;
-                    ret.Buttons.Add(new RetOperateResult.Button() { Name = "回到首页", Color = "red", Url = "/Personal/Index" });
-                    ret.Buttons.Add(new RetOperateResult.Button() { Name = "查看详情", Color = "green", Url = string.Format("/Order/Details?id={0}", order.Id) });
+                    ret.Buttons.Add(new RetOperateResult.Button() { Name = "回到首页", Color = "red", OpVal = "/Personal/Index" });
+                    ret.Buttons.Add(new RetOperateResult.Button() { Name = "查看详情", Color = "green", OpVal = string.Format("/Order/Details?id={0}", order.Id) });
                     ret.Fields.Add(new RetOperateResult.Field() { Name = "订单号", Value = order.Sn });
                     ret.Fields.Add(new RetOperateResult.Field() { Name = "支付金额", Value = order.ChargeAmount.ToF2Price() });
                     ret.Fields.Add(new RetOperateResult.Field() { Name = "提交时间", Value = order.SubmitTime.ToUnifiedFormatDateTime() });
@@ -72,8 +72,8 @@ namespace Lumos.BLL.Service.App
                     ret.Result = RetOperateResult.ResultType.Success;
                     ret.Message = "该订单已经完成";
                     ret.IsComplete = true;
-                    ret.Buttons.Add(new RetOperateResult.Button() { Name = "回到首页", Color = "red", Url = "/Personal/Index" });
-                    ret.Buttons.Add(new RetOperateResult.Button() { Name = "查看详情", Color = "green", Url = string.Format("/Order/Details?id={0}", order.Id) });
+                    ret.Buttons.Add(new RetOperateResult.Button() { Name = "回到首页", Color = "red", OpVal = "/Personal/Index" });
+                    ret.Buttons.Add(new RetOperateResult.Button() { Name = "查看详情", Color = "green", OpVal = string.Format("/Order/Details?id={0}", order.Id) });
                     ret.Fields.Add(new RetOperateResult.Field() { Name = "订单号", Value = order.Sn });
                     ret.Fields.Add(new RetOperateResult.Field() { Name = "支付金额", Value = order.ChargeAmount.ToF2Price() });
                     ret.Fields.Add(new RetOperateResult.Field() { Name = "提交时间", Value = order.SubmitTime.ToUnifiedFormatDateTime() });
@@ -85,8 +85,8 @@ namespace Lumos.BLL.Service.App
                     ret.Result = RetOperateResult.ResultType.Success;
                     ret.Message = "该订单已经取消";
                     ret.IsComplete = true;
-                    ret.Buttons.Add(new RetOperateResult.Button() { Name = "回到首页", Color = "red", Url = "" });
-                    ret.Buttons.Add(new RetOperateResult.Button() { Name = "查看详情", Color = "green", Url = string.Format("/Order/Details?id={0}", order.Id) });
+                    ret.Buttons.Add(new RetOperateResult.Button() { Name = "回到首页", Color = "red", OpVal = "" });
+                    ret.Buttons.Add(new RetOperateResult.Button() { Name = "查看详情", Color = "green", OpVal = string.Format("/Order/Details?id={0}", order.Id) });
                     ret.Fields.Add(new RetOperateResult.Field() { Name = "订单号", Value = order.Sn });
                     ret.Fields.Add(new RetOperateResult.Field() { Name = "提交时间", Value = order.SubmitTime.ToUnifiedFormatDateTime() });
                     ret.Fields.Add(new RetOperateResult.Field() { Name = "取消时间", Value = order.CancledTime.ToUnifiedFormatDateTime() });
@@ -143,8 +143,8 @@ namespace Lumos.BLL.Service.App
                     break;
             }
 
-            ret.Buttons.Add(new RetOperateResult.Button() { Name = "继续提现", Color = "red", Url = "/Withdraw/Apply" });
-            ret.Buttons.Add(new RetOperateResult.Button() { Name = "回到首页", Color = "green", Url = "/Personal/Index" });
+            ret.Buttons.Add(new RetOperateResult.Button() { Name = "继续提现", Color = "red", OpVal = "/Withdraw/Apply" });
+            ret.Buttons.Add(new RetOperateResult.Button() { Name = "回到首页", Color = "green", OpVal = "/Personal/Index" });
 
             ret.Fields.Add(new RetOperateResult.Field() { Name = "流水号", Value = withdraw.Sn });
             ret.Fields.Add(new RetOperateResult.Field() { Name = "提现金额", Value = withdraw.Amount.ToF2Price() });

@@ -20,8 +20,8 @@ namespace Lumos.BLL.Service.App
                 ret_Operate.Remarks = "";
                 ret_Operate.Message = "该商品不存在";
                 ret_Operate.IsComplete = true;
-                ret_Operate.Buttons.Add(new RetOperateResult.Button() { Name = "回到首页", Color = "green", Url = "/Personal/Index" });
-                ret_Operate.Buttons.Add(new RetOperateResult.Button() { Name = "个人中心", Color = "red", Url = "/Personal/Index" });
+                ret_Operate.Buttons.Add(new RetOperateResult.Button() { Name = "回到首页", Color = "green", OpVal = "/Personal/Index" });
+                ret_Operate.Buttons.Add(new RetOperateResult.Button() { Name = "个人中心", Color = "red", OpVal = "/Personal/Index" });
                 return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, "该商品不存在", ret_Operate);
             }
 
@@ -33,8 +33,8 @@ namespace Lumos.BLL.Service.App
                 ret_Operate.Remarks = "";
                 ret_Operate.Message = "该活动无效";
                 ret_Operate.IsComplete = true;
-                ret_Operate.Buttons.Add(new RetOperateResult.Button() { Name = "回到首页", Color = "green", Url = "/Personal/Index" });
-                ret_Operate.Buttons.Add(new RetOperateResult.Button() { Name = "个人中心", Color = "red", Url = "/Personal/Index" });
+                ret_Operate.Buttons.Add(new RetOperateResult.Button() { Name = "回到首页", Color = "green", OpVal = "/Personal/Index" });
+                ret_Operate.Buttons.Add(new RetOperateResult.Button() { Name = "个人中心", Color = "red", OpVal = "/Personal/Index" });
                 return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, "该活动无效", ret_Operate);
             }
 
@@ -46,8 +46,8 @@ namespace Lumos.BLL.Service.App
                 ret_Operate.Remarks = "";
                 ret_Operate.Message = "您已购买成功";
                 ret_Operate.IsComplete = true;
-                ret_Operate.Buttons.Add(new RetOperateResult.Button() { Name = "个人中心", Color = "red", Url = "/Personal/Index" });
-                ret_Operate.Buttons.Add(new RetOperateResult.Button() { Name = "查看详情", Color = "green", Url = string.Format("/Order/Details?id={0}", order.Id) });
+                ret_Operate.Buttons.Add(new RetOperateResult.Button() { Name = "个人中心", Color = "red", OpVal = "/Personal/Index" });
+                ret_Operate.Buttons.Add(new RetOperateResult.Button() { Name = "查看详情", Color = "green", OpVal = string.Format("/Order/Details?id={0}", order.Id) });
                 return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, "您已购买成功", ret_Operate);
             }
 
@@ -59,8 +59,8 @@ namespace Lumos.BLL.Service.App
                 ret_Operate.Remarks = "";
                 ret_Operate.Message = "该商品不存在";
                 ret_Operate.IsComplete = true;
-                ret_Operate.Buttons.Add(new RetOperateResult.Button() { Name = "回到首页", Color = "green", Url = "/Personal/Index" });
-                ret_Operate.Buttons.Add(new RetOperateResult.Button() { Name = "个人中心", Color = "red", Url = "/Personal/Index" });
+                ret_Operate.Buttons.Add(new RetOperateResult.Button() { Name = "回到首页", Color = "green", OpVal = "/Personal/Index" });
+                ret_Operate.Buttons.Add(new RetOperateResult.Button() { Name = "个人中心", Color = "red", OpVal = "/Personal/Index" });
                 return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, "该商品不存在注", ret_Operate);
             }
 
@@ -112,8 +112,8 @@ namespace Lumos.BLL.Service.App
                         ret_Operate.Remarks = "";
                         ret_Operate.Message = "您没有秒杀权限，谢谢关注！";
                         ret_Operate.IsComplete = true;
-                        ret_Operate.Buttons.Add(new RetOperateResult.Button() { Name = "回到首页", Color = "green", Url = "/Personal/Index" });
-                        ret_Operate.Buttons.Add(new RetOperateResult.Button() { Name = "个人中心", Color = "red", Url = "/Personal/Index" });
+                        ret_Operate.Buttons.Add(new RetOperateResult.Button() { Name = "回到首页", Color = "green", OpVal = "/Personal/Index" });
+                        ret_Operate.Buttons.Add(new RetOperateResult.Button() { Name = "个人中心", Color = "red", OpVal = "/Personal/Index" });
                         return new CustomJsonResult(ResultType.Failure, ResultCode.Failure, "您没有秒杀权限，谢谢关注！", ret_Operate);
                     }
                 }
